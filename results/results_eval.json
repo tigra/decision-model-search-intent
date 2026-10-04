@@ -1,0 +1,1900 @@
+{
+ "split": "eval",
+ "data": "data/eval_raw.jsonl",
+ "n_queries": 1000,
+ "split_rows": 1000,
+ "metric_definitions": {
+  "Category, exact node": {
+   "measure": "accuracy",
+   "counted_over": "all queries; the predicted node must equal the gold node (same depth; 'no category' is a value)"
+  },
+  "Category correct at L1": {
+   "measure": "accuracy",
+   "counted_over": "queries with a gold category; predicted path has the gold L1 node"
+  },
+  "Category correct at L2": {
+   "measure": "accuracy",
+   "counted_over": "queries whose gold category is at depth \u2265 2; predicted path has the gold L2 node"
+  },
+  "Category correct at L3": {
+   "measure": "accuracy",
+   "counted_over": "queries whose gold category is at depth 3; predicted node is the gold L3 node"
+  },
+  "'No category' precision": {
+   "measure": "precision",
+   "counted_over": "queries predicted as 'no category'"
+  },
+  "'No category' recall": {
+   "measure": "recall",
+   "counted_over": "queries whose gold is 'no category'"
+  },
+  "Filters precision": {
+   "measure": "precision (micro)",
+   "counted_over": "predicted attribute=value pairs, pooled over all queries"
+  },
+  "Filters recall": {
+   "measure": "recall (micro)",
+   "counted_over": "gold attribute=value pairs, pooled over all queries"
+  },
+  "Filters F1": {
+   "measure": "F1 (micro)",
+   "counted_over": "harmonic mean of the two rows above"
+  },
+  "Filter set exact match": {
+   "measure": "accuracy",
+   "counted_over": "all queries; predicted filter set equals the gold set (incl. both empty)"
+  },
+  "Word-role accuracy": {
+   "measure": "accuracy",
+   "counted_over": "all words of all queries; role category / filter / residual"
+  },
+  "Residual words precision": {
+   "measure": "precision",
+   "counted_over": "words predicted 'residual'"
+  },
+  "Residual words recall": {
+   "measure": "recall",
+   "counted_over": "words whose gold role is 'residual'"
+  },
+  "Residual words F1": {
+   "measure": "F1",
+   "counted_over": "harmonic mean of the two rows above"
+  },
+  "**Whole query exactly right**": {
+   "measure": "accuracy",
+   "counted_over": "all queries; category exact, filter set exact, and the set of residual word positions exact"
+  },
+  "Latency p50 / p95": {
+   "measure": "seconds",
+   "counted_over": "all queries; one request each, sequential, warm model"
+  },
+  "Server prefill / field evaluation": {
+   "measure": "mean seconds",
+   "counted_over": "mlx backend only (nimble's own timings)"
+  },
+  "Questions / input tokens": {
+   "measure": "mean per query",
+   "counted_over": "server-reported input tokens (Ollama: every question charged the full prompt; mlx: tokens actually processed)"
+  }
+ },
+ "runs": [
+  {
+   "run": "embedded@ollama:nimble",
+   "scheme": "embedded",
+   "backend": "ollama",
+   "model": "nimble",
+   "served_models": [
+    "not recorded"
+   ],
+   "backend_info": "Ollama 0.35 `/v1/systemone` (llama.cpp, GGUF); questions scored one after another, split into several requests when the prompt exceeds the model context",
+   "decoding": {
+    "none_thr": 0.7,
+    "filter_min_prob": 0.95,
+    "word_weights": {
+     "category": 8.0,
+     "filter": 1.0,
+     "residual": 1.0
+    }
+   },
+   "metrics": {
+    "category_exact": {
+     "value": 0.917,
+     "correct": 917,
+     "counted": 1000,
+     "ci95": [
+      0.8982631299588786,
+      0.9325452366200719
+     ]
+    },
+    "category_level": {
+     "L1": {
+      "value": 0.976890756302521,
+      "correct": 930,
+      "counted": 952,
+      "ci95": [
+       0.965257869684385,
+       0.9846903225683898
+      ]
+     },
+     "L2": {
+      "value": 0.9826789838337182,
+      "correct": 851,
+      "counted": 866,
+      "ci95": [
+       0.9716188593107536,
+       0.9894756664051926
+      ]
+     },
+     "L3": {
+      "value": 0.9836734693877551,
+      "correct": 482,
+      "counted": 490,
+      "ci95": [
+       0.9681174451046999,
+       0.9917044897019263
+      ]
+     }
+    },
+    "no_category": {
+     "precision": {
+      "value": 0.6818181818181818,
+      "correct": 15,
+      "counted": 22,
+      "ci95": [
+       0.47318222782839336,
+       0.8363961264530752
+      ]
+     },
+     "recall": {
+      "value": 0.3125,
+      "correct": 15,
+      "counted": 48,
+      "ci95": [
+       0.19945512167731494,
+       0.4533333725049633
+      ]
+     },
+     "f1": 0.42857142857142855,
+     "counts": {
+      "tp": 15,
+      "fp": 7,
+      "fn": 33
+     }
+    },
+    "filters_micro": {
+     "precision": {
+      "value": 0.9043309631544926,
+      "correct": 1399,
+      "counted": 1547,
+      "ci95": [
+       0.8886558217639947,
+       0.918002962730824
+      ]
+     },
+     "recall": {
+      "value": 0.9203947368421053,
+      "correct": 1399,
+      "counted": 1520,
+      "ci95": [
+       0.9057028917012684,
+       0.9329669542984733
+      ]
+     },
+     "f1": 0.9122921421584609,
+     "counts": {
+      "tp": 1399,
+      "fp": 148,
+      "fn": 121
+     }
+    },
+    "filter_set_exact": {
+     "value": 0.77,
+     "correct": 770,
+     "counted": 1000,
+     "ci95": [
+      0.7429127286442809,
+      0.7950207461190684
+     ]
+    },
+    "word_role_accuracy": {
+     "value": 0.8407460545193687,
+     "correct": 4688,
+     "counted": 5576,
+     "ci95": [
+      0.8309074558353093,
+      0.8501154606575172
+     ]
+    },
+    "word_role_confusion": {
+     "category->category": 1678,
+     "category->filter": 46,
+     "category->residual": 30,
+     "filter->category": 74,
+     "filter->filter": 1954,
+     "filter->residual": 450,
+     "residual->category": 105,
+     "residual->filter": 183,
+     "residual->residual": 1056
+    },
+    "residual_words": {
+     "precision": {
+      "value": 0.6875,
+      "correct": 1056,
+      "counted": 1536,
+      "ci95": [
+       0.6638759847526026,
+       0.7101884644738634
+      ]
+     },
+     "recall": {
+      "value": 0.7857142857142857,
+      "correct": 1056,
+      "counted": 1344,
+      "ci95": [
+       0.7629786899898023,
+       0.8068212034101343
+      ]
+     },
+     "f1": 0.7333333333333334,
+     "counts": {
+      "tp": 1056,
+      "fp": 480,
+      "fn": 288
+     }
+    },
+    "whole_query_exact": {
+     "value": 0.424,
+     "correct": 424,
+     "counted": 1000,
+     "ci95": [
+      0.39371789757876074,
+      0.45486379100637064
+     ]
+    },
+    "per_attribute_filters": {
+     "style": {
+      "P": 0.994535519125683,
+      "R": 1.0,
+      "F1": 0.9972602739726028,
+      "support": 182
+     },
+     "leg_material": {
+      "P": 0.6741573033707865,
+      "R": 0.9090909090909091,
+      "F1": 0.7741935483870969,
+      "support": 132
+     },
+     "feature": {
+      "P": 0.9953917050691244,
+      "R": 0.9818181818181818,
+      "F1": 0.9885583524027459,
+      "support": 220
+     },
+     "material": {
+      "P": 0.968944099378882,
+      "R": 0.8432432432432433,
+      "F1": 0.9017341040462428,
+      "support": 185
+     },
+     "room": {
+      "P": 0.7704918032786885,
+      "R": 0.9591836734693877,
+      "F1": 0.8545454545454545,
+      "support": 147
+     },
+     "leg_color": {
+      "P": 0.8633540372670807,
+      "R": 0.9788732394366197,
+      "F1": 0.9174917491749175,
+      "support": 142
+     },
+     "width": {
+      "P": 1.0,
+      "R": 0.27710843373493976,
+      "F1": 0.43396226415094347,
+      "support": 83
+     },
+     "shape": {
+      "P": 1.0,
+      "R": 0.9393939393939394,
+      "F1": 0.96875,
+      "support": 66
+     },
+     "seat_count": {
+      "P": 0.9285714285714286,
+      "R": 1.0,
+      "F1": 0.962962962962963,
+      "support": 13
+     },
+     "color": {
+      "P": 0.9210526315789473,
+      "R": 0.995260663507109,
+      "F1": 0.9567198177676538,
+      "support": 211
+     },
+     "bed_size": {
+      "P": 1.0,
+      "R": 0.9902912621359223,
+      "F1": 0.9951219512195122,
+      "support": 103
+     },
+     "firmness": {
+      "P": 1.0,
+      "R": 0.9722222222222222,
+      "F1": 0.9859154929577464,
+      "support": 36
+     }
+    },
+    "latency": {
+     "n": 1000,
+     "mean_s": 15.641783252844018,
+     "p50_s": 15.563778479500115,
+     "p90_s": 16.792119121400003,
+     "p95_s": 17.269592474649766,
+     "p99_s": 18.332625996249895,
+     "min_s": 13.592057833000581,
+     "max_s": 19.027511166000295,
+     "queries_per_s": 0.0639313295572088,
+     "mean_questions": 23.576,
+     "ms_per_question": 663.4621332220906,
+     "mean_input_tokens": 126963.245,
+     "truncated_queries": 0
+    }
+   }
+  },
+  {
+   "run": "router@ollama:nimble",
+   "scheme": "router",
+   "backend": "ollama",
+   "model": "nimble",
+   "served_models": [
+    "not recorded"
+   ],
+   "backend_info": "Ollama 0.35 `/v1/systemone` (llama.cpp, GGUF); questions scored one after another, split into several requests when the prompt exceeds the model context",
+   "decoding": {
+    "none_thr": 0.5,
+    "filter_min_prob": 0.95,
+    "word_weights": {
+     "category": 8.0,
+     "filter": 1.0,
+     "residual": 1.0
+    }
+   },
+   "metrics": {
+    "category_exact": {
+     "value": 0.836,
+     "correct": 836,
+     "counted": 1000,
+     "ci95": [
+      0.8117721376883166,
+      0.8576561864616289
+     ]
+    },
+    "category_level": {
+     "L1": {
+      "value": 0.8665966386554622,
+      "correct": 825,
+      "counted": 952,
+      "ci95": [
+       0.843517616618383,
+       0.8867289012146974
+      ]
+     },
+     "L2": {
+      "value": 0.8926096997690531,
+      "correct": 773,
+      "counted": 866,
+      "ci95": [
+       0.8702273834843189,
+       0.9115241446099914
+      ]
+     },
+     "L3": {
+      "value": 0.8571428571428571,
+      "correct": 420,
+      "counted": 490,
+      "ci95": [
+       0.8233767270662131,
+       0.8853525496897343
+      ]
+     }
+    },
+    "no_category": {
+     "precision": {
+      "value": 0.25,
+      "correct": 23,
+      "counted": 92,
+      "ci95": [
+       0.1727513473118804,
+       0.3472900543341689
+      ]
+     },
+     "recall": {
+      "value": 0.4791666666666667,
+      "correct": 23,
+      "counted": 48,
+      "ci95": [
+       0.34471090015787464,
+       0.6167100436401562
+      ]
+     },
+     "f1": 0.32857142857142857,
+     "counts": {
+      "tp": 23,
+      "fp": 69,
+      "fn": 25
+     }
+    },
+    "filters_micro": {
+     "precision": {
+      "value": 0.912534435261708,
+      "correct": 1325,
+      "counted": 1452,
+      "ci95": [
+       0.8968925925191221,
+       0.9259991286681278
+      ]
+     },
+     "recall": {
+      "value": 0.8717105263157895,
+      "correct": 1325,
+      "counted": 1520,
+      "ci95": [
+       0.8539566546054478,
+       0.8875902358325085
+      ]
+     },
+     "f1": 0.8916554508748318,
+     "counts": {
+      "tp": 1325,
+      "fp": 127,
+      "fn": 195
+     }
+    },
+    "filter_set_exact": {
+     "value": 0.742,
+     "correct": 742,
+     "counted": 1000,
+     "ci95": [
+      0.7139913530592009,
+      0.7681564280249861
+     ]
+    },
+    "word_role_accuracy": {
+     "value": 0.8394906743185079,
+     "correct": 4681,
+     "counted": 5576,
+     "ci95": [
+      0.8296224009708631,
+      0.8488914837243583
+     ]
+    },
+    "word_role_confusion": {
+     "category->category": 1619,
+     "category->filter": 73,
+     "category->residual": 62,
+     "filter->category": 39,
+     "filter->filter": 2006,
+     "filter->residual": 433,
+     "residual->category": 75,
+     "residual->filter": 213,
+     "residual->residual": 1056
+    },
+    "residual_words": {
+     "precision": {
+      "value": 0.6808510638297872,
+      "correct": 1056,
+      "counted": 1551,
+      "ci95": [
+       0.6572294021285098,
+       0.7035790557877178
+      ]
+     },
+     "recall": {
+      "value": 0.7857142857142857,
+      "correct": 1056,
+      "counted": 1344,
+      "ci95": [
+       0.7629786899898023,
+       0.8068212034101343
+      ]
+     },
+     "f1": 0.7295336787564767,
+     "counts": {
+      "tp": 1056,
+      "fp": 495,
+      "fn": 288
+     }
+    },
+    "whole_query_exact": {
+     "value": 0.373,
+     "correct": 373,
+     "counted": 1000,
+     "ci95": [
+      0.3435655079201235,
+      0.4034065243208197
+     ]
+    },
+    "per_attribute_filters": {
+     "style": {
+      "P": 0.9944444444444445,
+      "R": 0.9835164835164835,
+      "F1": 0.9889502762430938,
+      "support": 182
+     },
+     "leg_material": {
+      "P": 0.6807228915662651,
+      "R": 0.8560606060606061,
+      "F1": 0.7583892617449665,
+      "support": 132
+     },
+     "feature": {
+      "P": 0.9953271028037384,
+      "R": 0.9681818181818181,
+      "F1": 0.9815668202764977,
+      "support": 220
+     },
+     "material": {
+      "P": 0.9727891156462585,
+      "R": 0.772972972972973,
+      "F1": 0.8614457831325301,
+      "support": 185
+     },
+     "room": {
+      "P": 0.845679012345679,
+      "R": 0.9319727891156463,
+      "F1": 0.8867313915857604,
+      "support": 147
+     },
+     "leg_color": {
+      "P": 0.8653846153846154,
+      "R": 0.9507042253521126,
+      "F1": 0.906040268456376,
+      "support": 142
+     },
+     "width": {
+      "P": 1.0,
+      "R": 0.27710843373493976,
+      "F1": 0.43396226415094347,
+      "support": 83
+     },
+     "shape": {
+      "P": 0.9166666666666666,
+      "R": 0.6666666666666666,
+      "F1": 0.7719298245614035,
+      "support": 66
+     },
+     "seat_count": {
+      "P": 0.8125,
+      "R": 1.0,
+      "F1": 0.896551724137931,
+      "support": 13
+     },
+     "color": {
+      "P": 0.9311926605504587,
+      "R": 0.9620853080568721,
+      "F1": 0.9463869463869464,
+      "support": 211
+     },
+     "bed_size": {
+      "P": 1.0,
+      "R": 0.883495145631068,
+      "F1": 0.9381443298969072,
+      "support": 103
+     },
+     "firmness": {
+      "P": 1.0,
+      "R": 0.8611111111111112,
+      "F1": 0.9253731343283582,
+      "support": 36
+     }
+    },
+    "latency": {
+     "n": 1000,
+     "mean_s": 15.980134783322944,
+     "p50_s": 15.854817208000895,
+     "p90_s": 17.629302487498716,
+     "p95_s": 18.025364738953247,
+     "p99_s": 18.99598781425022,
+     "min_s": 13.659709540999756,
+     "max_s": 19.637332416998106,
+     "queries_per_s": 0.06257769496685421,
+     "mean_questions": 24.576,
+     "ms_per_question": 650.2333489307838,
+     "mean_input_tokens": 132800.879,
+     "truncated_queries": 0
+    }
+   }
+  },
+  {
+   "run": "embedded@ollama:tev1",
+   "scheme": "embedded",
+   "backend": "ollama",
+   "model": "tev1",
+   "served_models": [
+    "tev1"
+   ],
+   "backend_info": "Ollama 0.35 `/v1/systemone` (llama.cpp, GGUF); questions scored one after another, split into several requests when the prompt exceeds the model context",
+   "decoding": {
+    "none_thr": 0.7,
+    "filter_min_prob": 0.7,
+    "word_weights": {
+     "category": 16,
+     "filter": 1.0,
+     "residual": 1.0
+    }
+   },
+   "metrics": {
+    "category_exact": {
+     "value": 0.942,
+     "correct": 942,
+     "counted": 1000,
+     "ci95": [
+      0.9257500917212245,
+      0.9548669299284063
+     ]
+    },
+    "category_level": {
+     "L1": {
+      "value": 0.9873949579831933,
+      "correct": 940,
+      "counted": 952,
+      "ci95": [
+       0.9780971949681674,
+       0.9927749662769594
+      ]
+     },
+     "L2": {
+      "value": 0.9896073903002309,
+      "correct": 857,
+      "counted": 866,
+      "ci95": [
+       0.9803671525082327,
+       0.994522988409378
+      ]
+     },
+     "L3": {
+      "value": 0.9775510204081632,
+      "correct": 479,
+      "counted": 490,
+      "ci95": [
+       0.9602526658196368,
+       0.9874196242426018
+      ]
+     }
+    },
+    "no_category": {
+     "precision": {
+      "value": 0.8888888888888888,
+      "correct": 24,
+      "counted": 27,
+      "ci95": [
+       0.7194181745602705,
+       0.9614803521050127
+      ]
+     },
+     "recall": {
+      "value": 0.5,
+      "correct": 24,
+      "counted": 48,
+      "ci95": [
+       0.36389098932037767,
+       0.6361090106796223
+      ]
+     },
+     "f1": 0.64,
+     "counts": {
+      "tp": 24,
+      "fp": 3,
+      "fn": 24
+     }
+    },
+    "filters_micro": {
+     "precision": {
+      "value": 0.786218122626153,
+      "correct": 1449,
+      "counted": 1843,
+      "ci95": [
+       0.766915155005233,
+       0.804330370328396
+      ]
+     },
+     "recall": {
+      "value": 0.9532894736842106,
+      "correct": 1449,
+      "counted": 1520,
+      "ci95": [
+       0.9414901636511399,
+       0.9628033009714299
+      ]
+     },
+     "f1": 0.8617305976806424,
+     "counts": {
+      "tp": 1449,
+      "fp": 394,
+      "fn": 71
+     }
+    },
+    "filter_set_exact": {
+     "value": 0.612,
+     "correct": 612,
+     "counted": 1000,
+     "ci95": [
+      0.5814233569164107,
+      0.6417194178002379
+     ]
+    },
+    "word_role_accuracy": {
+     "value": 0.6840028694404591,
+     "correct": 3814,
+     "counted": 5576,
+     "ci95": [
+      0.671676770235246,
+      0.6960756046708803
+     ]
+    },
+    "word_role_confusion": {
+     "category->category": 1746,
+     "category->filter": 4,
+     "category->residual": 4,
+     "filter->category": 1102,
+     "filter->filter": 1116,
+     "filter->residual": 260,
+     "residual->category": 251,
+     "residual->filter": 141,
+     "residual->residual": 952
+    },
+    "residual_words": {
+     "precision": {
+      "value": 0.7828947368421053,
+      "correct": 952,
+      "counted": 1216,
+      "ci95": [
+       0.7588505239649692,
+       0.8051571307993872
+      ]
+     },
+     "recall": {
+      "value": 0.7083333333333334,
+      "correct": 952,
+      "counted": 1344,
+      "ci95": [
+       0.6834662420711587,
+       0.7320128468662951
+      ]
+     },
+     "f1": 0.74375,
+     "counts": {
+      "tp": 952,
+      "fp": 264,
+      "fn": 392
+     }
+    },
+    "whole_query_exact": {
+     "value": 0.336,
+     "correct": 336,
+     "counted": 1000,
+     "ci95": [
+      0.3074010775632927,
+      0.3658541451730435
+     ]
+    },
+    "per_attribute_filters": {
+     "style": {
+      "P": 1.0,
+      "R": 0.9945054945054945,
+      "F1": 0.9972451790633609,
+      "support": 182
+     },
+     "leg_material": {
+      "P": 0.6294416243654822,
+      "R": 0.9393939393939394,
+      "F1": 0.7537993920972643,
+      "support": 132
+     },
+     "feature": {
+      "P": 0.8171641791044776,
+      "R": 0.9954545454545455,
+      "F1": 0.8975409836065573,
+      "support": 220
+     },
+     "material": {
+      "P": 0.8082191780821918,
+      "R": 0.9567567567567568,
+      "F1": 0.8762376237623762,
+      "support": 185
+     },
+     "room": {
+      "P": 0.5161290322580645,
+      "R": 0.9795918367346939,
+      "F1": 0.6760563380281689,
+      "support": 147
+     },
+     "color": {
+      "P": 0.832,
+      "R": 0.985781990521327,
+      "F1": 0.9023861171366594,
+      "support": 211
+     },
+     "leg_color": {
+      "P": 0.7734806629834254,
+      "R": 0.9859154929577465,
+      "F1": 0.8668730650154799,
+      "support": 142
+     },
+     "width": {
+      "P": 0.8269230769230769,
+      "R": 0.5180722891566265,
+      "F1": 0.6370370370370371,
+      "support": 83
+     },
+     "shape": {
+      "P": 1.0,
+      "R": 0.9545454545454546,
+      "F1": 0.9767441860465117,
+      "support": 66
+     },
+     "seat_count": {
+      "P": 0.8,
+      "R": 0.9230769230769231,
+      "F1": 0.8571428571428571,
+      "support": 13
+     },
+     "bed_size": {
+      "P": 1.0,
+      "R": 0.9902912621359223,
+      "F1": 0.9951219512195122,
+      "support": 103
+     },
+     "firmness": {
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "support": 36
+     }
+    },
+    "latency": {
+     "n": 1000,
+     "mean_s": 13.074774902484963,
+     "p50_s": 12.96077887500087,
+     "p90_s": 14.143380582198644,
+     "p95_s": 15.58521419014878,
+     "p99_s": 16.95775388725182,
+     "min_s": 9.890292832,
+     "max_s": 17.439573751000353,
+     "queries_per_s": 0.07648315228814702,
+     "mean_questions": 23.576,
+     "ms_per_question": 554.5798652224704,
+     "mean_input_tokens": 19264.039,
+     "truncated_queries": 0
+    }
+   }
+  },
+  {
+   "run": "embedded@ollama:tev1:0.8b",
+   "scheme": "embedded",
+   "backend": "ollama",
+   "model": "tev1:0.8b",
+   "served_models": [
+    "tev1:0.8b"
+   ],
+   "backend_info": "Ollama 0.35 `/v1/systemone` (llama.cpp, GGUF); questions scored one after another, split into several requests when the prompt exceeds the model context",
+   "decoding": {
+    "none_thr": 0.7,
+    "filter_min_prob": 0.7,
+    "word_weights": {
+     "category": 8.0,
+     "filter": 1.0,
+     "residual": 1.0
+    }
+   },
+   "metrics": {
+    "category_exact": {
+     "value": 0.727,
+     "correct": 727,
+     "counted": 1000,
+     "ci95": [
+      0.6985580635351872,
+      0.7537045245065915
+     ]
+    },
+    "category_level": {
+     "L1": {
+      "value": 0.8088235294117647,
+      "correct": 770,
+      "counted": 952,
+      "ci95": [
+       0.782622329560479,
+       0.832542358814666
+      ]
+     },
+     "L2": {
+      "value": 0.8071593533487298,
+      "correct": 699,
+      "counted": 866,
+      "ci95": [
+       0.779548806516065,
+       0.8320568007577192
+      ]
+     },
+     "L3": {
+      "value": 0.7959183673469388,
+      "correct": 390,
+      "counted": 490,
+      "ci95": [
+       0.7579953248410469,
+       0.8292375044710238
+      ]
+     }
+    },
+    "no_category": {
+     "precision": {
+      "value": null,
+      "correct": 0,
+      "counted": 0,
+      "ci95": null
+     },
+     "recall": {
+      "value": 0.0,
+      "correct": 0,
+      "counted": 48,
+      "ci95": [
+       0.0,
+       0.0741026511527422
+      ]
+     },
+     "f1": 0.0,
+     "counts": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 48
+     }
+    },
+    "filters_micro": {
+     "precision": {
+      "value": 0.6435832274459975,
+      "correct": 1013,
+      "counted": 1574,
+      "ci95": [
+       0.6195987678546971,
+       0.6668685175813062
+      ]
+     },
+     "recall": {
+      "value": 0.6664473684210527,
+      "correct": 1013,
+      "counted": 1520,
+      "ci95": [
+       0.6423511468671408,
+       0.6897043633643689
+      ]
+     },
+     "f1": 0.6548157724628313,
+     "counts": {
+      "tp": 1013,
+      "fp": 561,
+      "fn": 507
+     }
+    },
+    "filter_set_exact": {
+     "value": 0.326,
+     "correct": 326,
+     "counted": 1000,
+     "ci95": [
+      0.29766062459508447,
+      0.3556711361129795
+     ]
+    },
+    "word_role_accuracy": {
+     "value": 0.31563845050215206,
+     "correct": 1760,
+     "counted": 5576,
+     "ci95": [
+      0.3035696884766259,
+      0.3279610703893605
+     ]
+    },
+    "word_role_confusion": {
+     "category->category": 1754,
+     "filter->category": 2471,
+     "filter->filter": 6,
+     "filter->residual": 1,
+     "residual->category": 1341,
+     "residual->filter": 3
+    },
+    "residual_words": {
+     "precision": {
+      "value": 0.0,
+      "correct": 0,
+      "counted": 1,
+      "ci95": [
+       0.0,
+       0.7934567085261071
+      ]
+     },
+     "recall": {
+      "value": 0.0,
+      "correct": 0,
+      "counted": 1344,
+      "ci95": [
+       0.0,
+       0.0028501865501109323
+      ]
+     },
+     "f1": 0.0,
+     "counts": {
+      "tp": 0,
+      "fp": 1,
+      "fn": 1344
+     }
+    },
+    "whole_query_exact": {
+     "value": 0.09,
+     "correct": 90,
+     "counted": 1000,
+     "ci95": [
+      0.07379587888497004,
+      0.10934217795587022
+     ]
+    },
+    "per_attribute_filters": {
+     "style": {
+      "P": 0.8963414634146342,
+      "R": 0.8076923076923077,
+      "F1": 0.8497109826589596,
+      "support": 182
+     },
+     "material": {
+      "P": 0.29577464788732394,
+      "R": 0.34054054054054056,
+      "F1": 0.3165829145728643,
+      "support": 185
+     },
+     "leg_material": {
+      "P": 0.601063829787234,
+      "R": 0.8560606060606061,
+      "F1": 0.70625,
+      "support": 132
+     },
+     "feature": {
+      "P": 0.5740181268882175,
+      "R": 0.8636363636363636,
+      "F1": 0.689655172413793,
+      "support": 220
+     },
+     "room": {
+      "P": 0.5596707818930041,
+      "R": 0.9251700680272109,
+      "F1": 0.6974358974358974,
+      "support": 147
+     },
+     "color": {
+      "P": 0.75,
+      "R": 0.4976303317535545,
+      "F1": 0.5982905982905983,
+      "support": 211
+     },
+     "leg_color": {
+      "P": 0.8872180451127819,
+      "R": 0.8309859154929577,
+      "F1": 0.8581818181818182,
+      "support": 142
+     },
+     "width": {
+      "P": 0.8076923076923077,
+      "R": 0.25301204819277107,
+      "F1": 0.38532110091743116,
+      "support": 83
+     },
+     "shape": {
+      "P": 0.9649122807017544,
+      "R": 0.8333333333333334,
+      "F1": 0.8943089430894309,
+      "support": 66
+     },
+     "seat_count": {
+      "P": 0.8333333333333334,
+      "R": 0.38461538461538464,
+      "F1": 0.5263157894736842,
+      "support": 13
+     },
+     "bed_size": {
+      "P": 0.7735849056603774,
+      "R": 0.39805825242718446,
+      "F1": 0.5256410256410255,
+      "support": 103
+     },
+     "firmness": {
+      "P": 0.95,
+      "R": 0.5277777777777778,
+      "F1": 0.6785714285714285,
+      "support": 36
+     }
+    },
+    "latency": {
+     "n": 1000,
+     "mean_s": 2.200499990974987,
+     "p50_s": 2.169560458500257,
+     "p90_s": 2.337413437799887,
+     "p95_s": 2.425445944099965,
+     "p99_s": 2.542594762419878,
+     "min_s": 1.9752179580000018,
+     "max_s": 2.6746529179999357,
+     "queries_per_s": 0.45444217409740806,
+     "mean_questions": 23.576,
+     "ms_per_question": 93.33644345838935,
+     "mean_input_tokens": 19264.039,
+     "truncated_queries": 0
+    }
+   }
+  },
+  {
+   "run": "embedded@ollaya:jeb:4b",
+   "scheme": "embedded",
+   "backend": "ollaya",
+   "model": "jeb:4b",
+   "served_models": [
+    "jeb:4b"
+   ],
+   "backend_info": "Ollaya 0.9 local server (TypeSafe-compatible `/v1/systemone`), model as named in the run",
+   "decoding": {
+    "none_thr": 0.7,
+    "filter_min_prob": 0.7,
+    "word_weights": {
+     "category": 16,
+     "filter": 1.0,
+     "residual": 1.0
+    }
+   },
+   "metrics": {
+    "category_exact": {
+     "value": 0.918,
+     "correct": 918,
+     "counted": 1000,
+     "ci95": [
+      0.8993524099554584,
+      0.9334483028263192
+     ]
+    },
+    "category_level": {
+     "L1": {
+      "value": 0.9726890756302521,
+      "correct": 926,
+      "counted": 952,
+      "ci95": [
+       0.9602833019745363,
+       0.9812953026812978
+      ]
+     },
+     "L2": {
+      "value": 0.9745958429561201,
+      "correct": 844,
+      "counted": 866,
+      "ci95": [
+       0.9618349760942813,
+       0.9831646652197235
+      ]
+     },
+     "L3": {
+      "value": 0.9551020408163265,
+      "correct": 468,
+      "counted": 490,
+      "ci95": [
+       0.9329576576240918,
+       0.9701659350420587
+      ]
+     }
+    },
+    "no_category": {
+     "precision": {
+      "value": 0.9,
+      "correct": 9,
+      "counted": 10,
+      "ci95": [
+       0.5958436145024278,
+       0.9821242504842788
+      ]
+     },
+     "recall": {
+      "value": 0.1875,
+      "correct": 9,
+      "counted": 48,
+      "ci95": [
+       0.10191276348200173,
+       0.31940139348846214
+      ]
+     },
+     "f1": 0.31034482758620696,
+     "counts": {
+      "tp": 9,
+      "fp": 1,
+      "fn": 39
+     }
+    },
+    "filters_micro": {
+     "precision": {
+      "value": 0.8604076590487956,
+      "correct": 1393,
+      "counted": 1619,
+      "ci95": [
+       0.8426712463461562,
+       0.876437753571026
+      ]
+     },
+     "recall": {
+      "value": 0.9164473684210527,
+      "correct": 1393,
+      "counted": 1520,
+      "ci95": [
+       0.9014641303682945,
+       0.9293308813967077
+      ]
+     },
+     "f1": 0.887543803759159,
+     "counts": {
+      "tp": 1393,
+      "fp": 226,
+      "fn": 127
+     }
+    },
+    "filter_set_exact": {
+     "value": 0.72,
+     "correct": 720,
+     "counted": 1000,
+     "ci95": [
+      0.6913693871201185,
+      0.7469467775018697
+     ]
+    },
+    "word_role_accuracy": {
+     "value": 0.7552008608321378,
+     "correct": 4211,
+     "counted": 5576,
+     "ci95": [
+      0.743741916623639,
+      0.7663084045180939
+     ]
+    },
+    "word_role_confusion": {
+     "category->category": 1717,
+     "category->filter": 7,
+     "category->residual": 30,
+     "filter->category": 544,
+     "filter->filter": 1589,
+     "filter->residual": 345,
+     "residual->category": 169,
+     "residual->filter": 270,
+     "residual->residual": 905
+    },
+    "residual_words": {
+     "precision": {
+      "value": 0.70703125,
+      "correct": 905,
+      "counted": 1280,
+      "ci95": [
+       0.681508008691418,
+       0.7313155047388993
+      ]
+     },
+     "recall": {
+      "value": 0.6733630952380952,
+      "correct": 905,
+      "counted": 1344,
+      "ci95": [
+       0.6478264321064422,
+       0.6979115240450817
+      ]
+     },
+     "f1": 0.6897865853658536,
+     "counts": {
+      "tp": 905,
+      "fp": 375,
+      "fn": 439
+     }
+    },
+    "whole_query_exact": {
+     "value": 0.365,
+     "correct": 365,
+     "counted": 1000,
+     "ci95": [
+      0.3357299509340308,
+      0.39530331168429467
+     ]
+    },
+    "per_attribute_filters": {
+     "style": {
+      "P": 0.9945054945054945,
+      "R": 0.9945054945054945,
+      "F1": 0.9945054945054945,
+      "support": 182
+     },
+     "leg_material": {
+      "P": 0.6946107784431138,
+      "R": 0.8787878787878788,
+      "F1": 0.7759197324414716,
+      "support": 132
+     },
+     "feature": {
+      "P": 0.9267241379310345,
+      "R": 0.9772727272727273,
+      "F1": 0.9513274336283186,
+      "support": 220
+     },
+     "material": {
+      "P": 0.9072847682119205,
+      "R": 0.7405405405405405,
+      "F1": 0.8154761904761904,
+      "support": 185
+     },
+     "room": {
+      "P": 0.7164948453608248,
+      "R": 0.9455782312925171,
+      "F1": 0.81524926686217,
+      "support": 147
+     },
+     "color": {
+      "P": 0.7827715355805244,
+      "R": 0.990521327014218,
+      "F1": 0.8744769874476988,
+      "support": 211
+     },
+     "leg_color": {
+      "P": 0.8471337579617835,
+      "R": 0.9366197183098591,
+      "F1": 0.8896321070234114,
+      "support": 142
+     },
+     "width": {
+      "P": 0.9821428571428571,
+      "R": 0.6626506024096386,
+      "F1": 0.7913669064748201,
+      "support": 83
+     },
+     "shape": {
+      "P": 0.9696969696969697,
+      "R": 0.9696969696969697,
+      "F1": 0.9696969696969697,
+      "support": 66
+     },
+     "seat_count": {
+      "P": 0.7692307692307693,
+      "R": 0.7692307692307693,
+      "F1": 0.7692307692307693,
+      "support": 13
+     },
+     "bed_size": {
+      "P": 1.0,
+      "R": 0.9514563106796117,
+      "F1": 0.9751243781094527,
+      "support": 103
+     },
+     "firmness": {
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "support": 36
+     }
+    },
+    "latency": {
+     "n": 1000,
+     "mean_s": 11.035789735301979,
+     "p50_s": 10.76917406250027,
+     "p90_s": 12.76276955390058,
+     "p95_s": 13.287122664601474,
+     "p99_s": 14.518348201419702,
+     "min_s": 8.85225654199985,
+     "max_s": 17.105888791000325,
+     "queries_per_s": 0.09061426721470933,
+     "mean_questions": 23.576,
+     "ms_per_question": 468.0942371607558,
+     "mean_input_tokens": 8327.892,
+     "truncated_queries": 0
+    }
+   }
+  },
+  {
+   "run": "embedded@ollaya:winnow:e4b",
+   "scheme": "embedded",
+   "backend": "ollaya",
+   "model": "winnow:e4b",
+   "served_models": [
+    "winnow:e4b"
+   ],
+   "backend_info": "Ollaya 0.9 local server (TypeSafe-compatible `/v1/systemone`), model as named in the run",
+   "decoding": {
+    "none_thr": 0.7,
+    "filter_min_prob": 0.5,
+    "word_weights": {
+     "category": 8.0,
+     "filter": 1.0,
+     "residual": 1.0
+    }
+   },
+   "metrics": {
+    "category_exact": {
+     "value": 0.966,
+     "correct": 966,
+     "counted": 1000,
+     "ci95": [
+      0.952864531539886,
+      0.9755687989775981
+     ]
+    },
+    "category_level": {
+     "L1": {
+      "value": 0.9852941176470589,
+      "correct": 938,
+      "counted": 952,
+      "ci95": [
+       0.9754671950730578,
+       0.9912201723735987
+      ]
+     },
+     "L2": {
+      "value": 0.9884526558891455,
+      "correct": 856,
+      "counted": 866,
+      "ci95": [
+       0.97887500359306,
+       0.9937158681242735
+      ]
+     },
+     "L3": {
+      "value": 0.9653061224489796,
+      "correct": 473,
+      "counted": 490,
+      "ci95": [
+       0.945144963267163,
+       0.9782280373063003
+      ]
+     }
+    },
+    "no_category": {
+     "precision": {
+      "value": 0.9565217391304348,
+      "correct": 44,
+      "counted": 46,
+      "ci95": [
+       0.8546747708094659,
+       0.9879948064111691
+      ]
+     },
+     "recall": {
+      "value": 0.9166666666666666,
+      "correct": 44,
+      "counted": 48,
+      "ci95": [
+       0.8044643483893369,
+       0.9671167756500444
+      ]
+     },
+     "f1": 0.9361702127659574,
+     "counts": {
+      "tp": 44,
+      "fp": 2,
+      "fn": 4
+     }
+    },
+    "filters_micro": {
+     "precision": {
+      "value": 0.8170504044803982,
+      "correct": 1313,
+      "counted": 1607,
+      "ci95": [
+       0.7973983815096243,
+       0.8351901982737634
+      ]
+     },
+     "recall": {
+      "value": 0.8638157894736842,
+      "correct": 1313,
+      "counted": 1520,
+      "ci95": [
+       0.8456531352468382,
+       0.8801440867216392
+      ]
+     },
+     "f1": 0.839782539174928,
+     "counts": {
+      "tp": 1313,
+      "fp": 294,
+      "fn": 207
+     }
+    },
+    "filter_set_exact": {
+     "value": 0.619,
+     "correct": 619,
+     "counted": 1000,
+     "ci95": [
+      0.588498978327013,
+      0.6485902198094261
+     ]
+    },
+    "word_role_accuracy": {
+     "value": 0.6990674318507891,
+     "correct": 3898,
+     "counted": 5576,
+     "ci95": [
+      0.6868947870848423,
+      0.7109659693925459
+     ]
+    },
+    "word_role_confusion": {
+     "category->category": 1742,
+     "category->filter": 12,
+     "filter->category": 457,
+     "filter->filter": 2021,
+     "residual->category": 199,
+     "residual->filter": 1010,
+     "residual->residual": 135
+    },
+    "residual_words": {
+     "precision": {
+      "value": 1.0,
+      "correct": 135,
+      "counted": 135,
+      "ci95": [
+       0.9723310592790634,
+       1.0
+      ]
+     },
+     "recall": {
+      "value": 0.10044642857142858,
+      "correct": 135,
+      "counted": 1344,
+      "ci95": [
+       0.08549700478991325,
+       0.11767345678361289
+      ]
+     },
+     "f1": 0.18255578093306288,
+     "counts": {
+      "tp": 135,
+      "fp": 0,
+      "fn": 1209
+     }
+    },
+    "whole_query_exact": {
+     "value": 0.245,
+     "correct": 245,
+     "counted": 1000,
+     "ci95": [
+      0.21935194381744014,
+      0.2725997744616191
+     ]
+    },
+    "per_attribute_filters": {
+     "style": {
+      "P": 0.9835164835164835,
+      "R": 0.9835164835164835,
+      "F1": 0.9835164835164835,
+      "support": 182
+     },
+     "leg_material": {
+      "P": 0.7716049382716049,
+      "R": 0.946969696969697,
+      "F1": 0.8503401360544217,
+      "support": 132
+     },
+     "feature": {
+      "P": 0.9081632653061225,
+      "R": 0.8090909090909091,
+      "F1": 0.8557692307692307,
+      "support": 220
+     },
+     "room": {
+      "P": 0.44398340248962653,
+      "R": 0.7278911564625851,
+      "F1": 0.5515463917525774,
+      "support": 147
+     },
+     "material": {
+      "P": 0.96875,
+      "R": 0.6702702702702703,
+      "F1": 0.7923322683706071,
+      "support": 185
+     },
+     "color": {
+      "P": 0.7945736434108527,
+      "R": 0.9715639810426541,
+      "F1": 0.8742004264392323,
+      "support": 211
+     },
+     "leg_color": {
+      "P": 0.8789808917197452,
+      "R": 0.971830985915493,
+      "F1": 0.9230769230769231,
+      "support": 142
+     },
+     "width": {
+      "P": 0.8266666666666667,
+      "R": 0.7469879518072289,
+      "F1": 0.7848101265822784,
+      "support": 83
+     },
+     "shape": {
+      "P": 0.9104477611940298,
+      "R": 0.9242424242424242,
+      "F1": 0.9172932330827067,
+      "support": 66
+     },
+     "seat_count": {
+      "P": 0.8,
+      "R": 0.9230769230769231,
+      "F1": 0.8571428571428571,
+      "support": 13
+     },
+     "bed_size": {
+      "P": 0.97,
+      "R": 0.941747572815534,
+      "F1": 0.9556650246305418,
+      "support": 103
+     },
+     "firmness": {
+      "P": 0.9615384615384616,
+      "R": 0.6944444444444444,
+      "F1": 0.8064516129032258,
+      "support": 36
+     }
+    },
+    "latency": {
+     "n": 1000,
+     "mean_s": 6.252151152088998,
+     "p50_s": 6.238392167000029,
+     "p90_s": 6.651663154200015,
+     "p95_s": 6.7695815774002766,
+     "p99_s": 7.012290927580307,
+     "min_s": 4.790551582999996,
+     "max_s": 7.742386457999601,
+     "queries_per_s": 0.15994494945405716,
+     "mean_questions": 23.576,
+     "ms_per_question": 265.19134510048343,
+     "mean_input_tokens": 9098.679,
+     "truncated_queries": 0
+    }
+   }
+  }
+ ],
+ "paired_mcnemar": [
+  {
+   "reference": "embedded@ollama:nimble",
+   "run": "router@ollama:nimble",
+   "metric": "category",
+   "correct_only_reference": 112,
+   "correct_only_run": 31,
+   "p_value": 5.8353811898951184e-12
+  },
+  {
+   "reference": "embedded@ollama:nimble",
+   "run": "router@ollama:nimble",
+   "metric": "full",
+   "correct_only_reference": 79,
+   "correct_only_run": 28,
+   "p_value": 8.420013817717514e-07
+  },
+  {
+   "reference": "embedded@ollama:nimble",
+   "run": "embedded@ollama:tev1",
+   "metric": "category",
+   "correct_only_reference": 19,
+   "correct_only_run": 44,
+   "p_value": 0.0022275315109880345
+  },
+  {
+   "reference": "embedded@ollama:nimble",
+   "run": "embedded@ollama:tev1",
+   "metric": "full",
+   "correct_only_reference": 176,
+   "correct_only_run": 88,
+   "p_value": 6.546567604721898e-08
+  },
+  {
+   "reference": "embedded@ollama:nimble",
+   "run": "embedded@ollama:tev1:0.8b",
+   "metric": "category",
+   "correct_only_reference": 212,
+   "correct_only_run": 22,
+   "p_value": 3.440016276319106e-40
+  },
+  {
+   "reference": "embedded@ollama:nimble",
+   "run": "embedded@ollama:tev1:0.8b",
+   "metric": "full",
+   "correct_only_reference": 356,
+   "correct_only_run": 22,
+   "p_value": 8.36944005883208e-79
+  },
+  {
+   "reference": "embedded@ollama:nimble",
+   "run": "embedded@ollaya:jeb:4b",
+   "metric": "category",
+   "correct_only_reference": 38,
+   "correct_only_run": 39,
+   "p_value": 1.0
+  },
+  {
+   "reference": "embedded@ollama:nimble",
+   "run": "embedded@ollaya:jeb:4b",
+   "metric": "full",
+   "correct_only_reference": 132,
+   "correct_only_run": 73,
+   "p_value": 4.561358490864986e-05
+  },
+  {
+   "reference": "embedded@ollama:nimble",
+   "run": "embedded@ollaya:winnow:e4b",
+   "metric": "category",
+   "correct_only_reference": 14,
+   "correct_only_run": 63,
+   "p_value": 1.414072408794608e-08
+  },
+  {
+   "reference": "embedded@ollama:nimble",
+   "run": "embedded@ollaya:winnow:e4b",
+   "metric": "full",
+   "correct_only_reference": 273,
+   "correct_only_run": 94,
+   "p_value": 2.3337944057299408e-21
+  },
+  {
+   "reference": "router@ollama:nimble",
+   "run": "embedded@ollama:tev1",
+   "metric": "category",
+   "correct_only_reference": 24,
+   "correct_only_run": 130,
+   "p_value": 8.237363476318047e-19
+  },
+  {
+   "reference": "router@ollama:nimble",
+   "run": "embedded@ollama:tev1",
+   "metric": "full",
+   "correct_only_reference": 162,
+   "correct_only_run": 125,
+   "p_value": 0.03340409269767498
+  },
+  {
+   "reference": "router@ollama:nimble",
+   "run": "embedded@ollama:tev1:0.8b",
+   "metric": "category",
+   "correct_only_reference": 210,
+   "correct_only_run": 101,
+   "p_value": 6.139705821704244e-10
+  },
+  {
+   "reference": "router@ollama:nimble",
+   "run": "embedded@ollama:tev1:0.8b",
+   "metric": "full",
+   "correct_only_reference": 315,
+   "correct_only_run": 32,
+   "p_value": 1.3173763542817182e-59
+  },
+  {
+   "reference": "router@ollama:nimble",
+   "run": "embedded@ollaya:jeb:4b",
+   "metric": "category",
+   "correct_only_reference": 38,
+   "correct_only_run": 120,
+   "p_value": 4.198185799467499e-11
+  },
+  {
+   "reference": "router@ollama:nimble",
+   "run": "embedded@ollaya:jeb:4b",
+   "metric": "full",
+   "correct_only_reference": 120,
+   "correct_only_run": 112,
+   "p_value": 0.645917319440978
+  },
+  {
+   "reference": "router@ollama:nimble",
+   "run": "embedded@ollaya:winnow:e4b",
+   "metric": "category",
+   "correct_only_reference": 9,
+   "correct_only_run": 139,
+   "p_value": 4.386133898244458e-31
+  },
+  {
+   "reference": "router@ollama:nimble",
+   "run": "embedded@ollaya:winnow:e4b",
+   "metric": "full",
+   "correct_only_reference": 242,
+   "correct_only_run": 114,
+   "p_value": 1.0159449506896627e-11
+  },
+  {
+   "reference": "embedded@ollama:tev1",
+   "run": "embedded@ollama:tev1:0.8b",
+   "metric": "category",
+   "correct_only_reference": 225,
+   "correct_only_run": 10,
+   "p_value": 4.4172193513798663e-54
+  },
+  {
+   "reference": "embedded@ollama:tev1",
+   "run": "embedded@ollama:tev1:0.8b",
+   "metric": "full",
+   "correct_only_reference": 269,
+   "correct_only_run": 23,
+   "p_value": 2.2066291366615798e-54
+  },
+  {
+   "reference": "embedded@ollama:tev1",
+   "run": "embedded@ollaya:jeb:4b",
+   "metric": "category",
+   "correct_only_reference": 36,
+   "correct_only_run": 12,
+   "p_value": 0.0007172696733945827
+  },
+  {
+   "reference": "embedded@ollama:tev1",
+   "run": "embedded@ollaya:jeb:4b",
+   "metric": "full",
+   "correct_only_reference": 87,
+   "correct_only_run": 116,
+   "p_value": 0.04912147946089739
+  },
+  {
+   "reference": "embedded@ollama:tev1",
+   "run": "embedded@ollaya:winnow:e4b",
+   "metric": "category",
+   "correct_only_reference": 14,
+   "correct_only_run": 38,
+   "p_value": 0.001195120320007348
+  },
+  {
+   "reference": "embedded@ollama:tev1",
+   "run": "embedded@ollaya:winnow:e4b",
+   "metric": "full",
+   "correct_only_reference": 178,
+   "correct_only_run": 87,
+   "p_value": 2.3731032328309626e-08
+  },
+  {
+   "reference": "embedded@ollama:tev1:0.8b",
+   "run": "embedded@ollaya:jeb:4b",
+   "metric": "category",
+   "correct_only_reference": 14,
+   "correct_only_run": 205,
+   "p_value": 1.115260208869462e-44
+  },
+  {
+   "reference": "embedded@ollama:tev1:0.8b",
+   "run": "embedded@ollaya:jeb:4b",
+   "metric": "full",
+   "correct_only_reference": 25,
+   "correct_only_run": 300,
+   "p_value": 4.99880640157706e-61
+  },
+  {
+   "reference": "embedded@ollama:tev1:0.8b",
+   "run": "embedded@ollaya:winnow:e4b",
+   "metric": "category",
+   "correct_only_reference": 8,
+   "correct_only_run": 247,
+   "p_value": 1.4164435778098606e-62
+  },
+  {
+   "reference": "embedded@ollama:tev1:0.8b",
+   "run": "embedded@ollaya:winnow:e4b",
+   "metric": "full",
+   "correct_only_reference": 14,
+   "correct_only_run": 169,
+   "p_value": 5.78138113420262e-35
+  },
+  {
+   "reference": "embedded@ollaya:jeb:4b",
+   "run": "embedded@ollaya:winnow:e4b",
+   "metric": "category",
+   "correct_only_reference": 11,
+   "correct_only_run": 59,
+   "p_value": 4.466174729063311e-09
+  },
+  {
+   "reference": "embedded@ollaya:jeb:4b",
+   "run": "embedded@ollaya:winnow:e4b",
+   "metric": "full",
+   "correct_only_reference": 200,
+   "correct_only_run": 80,
+   "p_value": 5.045030324178897e-13
+  }
+ ]
+}

@@ -1,0 +1,1664 @@
+{
+ "categories": {
+  "seating": {
+   "name": "Seating",
+   "synonyms": [
+    "seating",
+    "seats"
+   ],
+   "level": 1,
+   "parent": null,
+   "children": [
+    "sofas",
+    "chairs",
+    "stools",
+    "benches",
+    "ottomans",
+    "recliners",
+    "bean_bags",
+    "chaise_lounges"
+   ]
+  },
+  "sofas": {
+   "name": "Sofas",
+   "synonyms": [
+    "sofa",
+    "couch",
+    "settee"
+   ],
+   "level": 2,
+   "parent": "seating",
+   "children": [
+    "sectional_sofa",
+    "loveseat",
+    "sleeper_sofa",
+    "chesterfield",
+    "futon"
+   ]
+  },
+  "sectional_sofa": {
+   "name": "Sectional sofa",
+   "synonyms": [
+    "sectional",
+    "l shaped couch",
+    "corner sofa",
+    "sectional couch"
+   ],
+   "level": 3,
+   "parent": "sofas",
+   "children": []
+  },
+  "loveseat": {
+   "name": "Loveseat",
+   "synonyms": [
+    "loveseat",
+    "love seat",
+    "two seater sofa"
+   ],
+   "level": 3,
+   "parent": "sofas",
+   "children": []
+  },
+  "sleeper_sofa": {
+   "name": "Sleeper sofa",
+   "synonyms": [
+    "sleeper sofa",
+    "sofa bed",
+    "pull out couch"
+   ],
+   "level": 3,
+   "parent": "sofas",
+   "children": []
+  },
+  "chesterfield": {
+   "name": "Chesterfield sofa",
+   "synonyms": [
+    "chesterfield",
+    "chesterfield sofa"
+   ],
+   "level": 3,
+   "parent": "sofas",
+   "children": []
+  },
+  "futon": {
+   "name": "Futon",
+   "synonyms": [
+    "futon",
+    "futon couch"
+   ],
+   "level": 3,
+   "parent": "sofas",
+   "children": []
+  },
+  "chairs": {
+   "name": "Chairs",
+   "synonyms": [
+    "chair",
+    "chairs"
+   ],
+   "level": 2,
+   "parent": "seating",
+   "children": [
+    "accent_chair",
+    "dining_chair",
+    "office_chair",
+    "gaming_chair",
+    "rocking_chair",
+    "lounge_chair"
+   ]
+  },
+  "accent_chair": {
+   "name": "Accent chair",
+   "synonyms": [
+    "accent chair",
+    "armchair",
+    "arm chair"
+   ],
+   "level": 3,
+   "parent": "chairs",
+   "children": []
+  },
+  "dining_chair": {
+   "name": "Dining chair",
+   "synonyms": [
+    "dining chair",
+    "kitchen chair"
+   ],
+   "level": 3,
+   "parent": "chairs",
+   "children": []
+  },
+  "office_chair": {
+   "name": "Office chair",
+   "synonyms": [
+    "office chair",
+    "desk chair",
+    "task chair"
+   ],
+   "level": 3,
+   "parent": "chairs",
+   "children": []
+  },
+  "gaming_chair": {
+   "name": "Gaming chair",
+   "synonyms": [
+    "gaming chair",
+    "gamer chair"
+   ],
+   "level": 3,
+   "parent": "chairs",
+   "children": []
+  },
+  "rocking_chair": {
+   "name": "Rocking chair",
+   "synonyms": [
+    "rocking chair",
+    "rocker"
+   ],
+   "level": 3,
+   "parent": "chairs",
+   "children": []
+  },
+  "lounge_chair": {
+   "name": "Lounge chair",
+   "synonyms": [
+    "lounge chair",
+    "lounger"
+   ],
+   "level": 3,
+   "parent": "chairs",
+   "children": []
+  },
+  "stools": {
+   "name": "Stools",
+   "synonyms": [
+    "stool",
+    "stools"
+   ],
+   "level": 2,
+   "parent": "seating",
+   "children": [
+    "bar_stool",
+    "counter_stool",
+    "step_stool"
+   ]
+  },
+  "bar_stool": {
+   "name": "Bar stool",
+   "synonyms": [
+    "bar stool",
+    "barstool"
+   ],
+   "level": 3,
+   "parent": "stools",
+   "children": []
+  },
+  "counter_stool": {
+   "name": "Counter stool",
+   "synonyms": [
+    "counter stool",
+    "counter height stool"
+   ],
+   "level": 3,
+   "parent": "stools",
+   "children": []
+  },
+  "step_stool": {
+   "name": "Step stool",
+   "synonyms": [
+    "step stool"
+   ],
+   "level": 3,
+   "parent": "stools",
+   "children": []
+  },
+  "benches": {
+   "name": "Benches",
+   "synonyms": [
+    "bench",
+    "benches"
+   ],
+   "level": 2,
+   "parent": "seating",
+   "children": []
+  },
+  "ottomans": {
+   "name": "Ottomans & poufs",
+   "synonyms": [
+    "ottoman",
+    "pouf",
+    "footstool",
+    "foot rest"
+   ],
+   "level": 2,
+   "parent": "seating",
+   "children": []
+  },
+  "recliners": {
+   "name": "Recliners",
+   "synonyms": [
+    "recliner",
+    "recliner chair",
+    "lazy boy"
+   ],
+   "level": 2,
+   "parent": "seating",
+   "children": []
+  },
+  "bean_bags": {
+   "name": "Bean bags",
+   "synonyms": [
+    "bean bag",
+    "beanbag chair"
+   ],
+   "level": 2,
+   "parent": "seating",
+   "children": []
+  },
+  "chaise_lounges": {
+   "name": "Chaise lounges",
+   "synonyms": [
+    "chaise",
+    "chaise lounge",
+    "daybed chaise"
+   ],
+   "level": 2,
+   "parent": "seating",
+   "children": []
+  },
+  "tables": {
+   "name": "Tables",
+   "synonyms": [
+    "table",
+    "tables"
+   ],
+   "level": 1,
+   "parent": null,
+   "children": [
+    "coffee_tables",
+    "dining_tables",
+    "side_tables",
+    "console_tables",
+    "vanity_tables",
+    "kitchen_islands"
+   ]
+  },
+  "coffee_tables": {
+   "name": "Coffee tables",
+   "synonyms": [
+    "coffee table",
+    "cocktail table",
+    "center table"
+   ],
+   "level": 2,
+   "parent": "tables",
+   "children": [
+    "lift_top_coffee_table",
+    "nesting_coffee_table"
+   ]
+  },
+  "lift_top_coffee_table": {
+   "name": "Lift-top coffee table",
+   "synonyms": [
+    "lift top coffee table",
+    "lift-top coffee table"
+   ],
+   "level": 3,
+   "parent": "coffee_tables",
+   "children": []
+  },
+  "nesting_coffee_table": {
+   "name": "Nesting coffee tables",
+   "synonyms": [
+    "nesting coffee table",
+    "nesting tables"
+   ],
+   "level": 3,
+   "parent": "coffee_tables",
+   "children": []
+  },
+  "dining_tables": {
+   "name": "Dining tables",
+   "synonyms": [
+    "dining table",
+    "kitchen table",
+    "dinner table"
+   ],
+   "level": 2,
+   "parent": "tables",
+   "children": [
+    "drop_leaf_table",
+    "pub_table",
+    "trestle_table"
+   ]
+  },
+  "drop_leaf_table": {
+   "name": "Drop-leaf table",
+   "synonyms": [
+    "drop leaf table",
+    "drop-leaf table",
+    "gateleg table"
+   ],
+   "level": 3,
+   "parent": "dining_tables",
+   "children": []
+  },
+  "pub_table": {
+   "name": "Pub table",
+   "synonyms": [
+    "pub table",
+    "bar table",
+    "bistro table"
+   ],
+   "level": 3,
+   "parent": "dining_tables",
+   "children": []
+  },
+  "trestle_table": {
+   "name": "Trestle table",
+   "synonyms": [
+    "trestle table"
+   ],
+   "level": 3,
+   "parent": "dining_tables",
+   "children": []
+  },
+  "side_tables": {
+   "name": "Side tables",
+   "synonyms": [
+    "side table",
+    "end table",
+    "accent table",
+    "sofa side table"
+   ],
+   "level": 2,
+   "parent": "tables",
+   "children": []
+  },
+  "console_tables": {
+   "name": "Console tables",
+   "synonyms": [
+    "console table",
+    "entryway table",
+    "sofa table",
+    "hallway table"
+   ],
+   "level": 2,
+   "parent": "tables",
+   "children": []
+  },
+  "vanity_tables": {
+   "name": "Vanity tables",
+   "synonyms": [
+    "vanity table",
+    "makeup vanity",
+    "dressing table"
+   ],
+   "level": 2,
+   "parent": "tables",
+   "children": []
+  },
+  "kitchen_islands": {
+   "name": "Kitchen islands",
+   "synonyms": [
+    "kitchen island",
+    "kitchen cart",
+    "island cart"
+   ],
+   "level": 2,
+   "parent": "tables",
+   "children": []
+  },
+  "beds": {
+   "name": "Beds",
+   "synonyms": [
+    "bed",
+    "beds"
+   ],
+   "level": 1,
+   "parent": null,
+   "children": [
+    "bed_frames",
+    "kids_beds",
+    "daybeds",
+    "murphy_beds",
+    "headboards",
+    "cribs"
+   ]
+  },
+  "bed_frames": {
+   "name": "Bed frames",
+   "synonyms": [
+    "bed frame",
+    "bedframe"
+   ],
+   "level": 2,
+   "parent": "beds",
+   "children": [
+    "platform_bed",
+    "canopy_bed",
+    "sleigh_bed",
+    "upholstered_bed"
+   ]
+  },
+  "platform_bed": {
+   "name": "Platform bed",
+   "synonyms": [
+    "platform bed",
+    "low profile bed"
+   ],
+   "level": 3,
+   "parent": "bed_frames",
+   "children": []
+  },
+  "canopy_bed": {
+   "name": "Canopy bed",
+   "synonyms": [
+    "canopy bed",
+    "four poster bed",
+    "four-poster bed"
+   ],
+   "level": 3,
+   "parent": "bed_frames",
+   "children": []
+  },
+  "sleigh_bed": {
+   "name": "Sleigh bed",
+   "synonyms": [
+    "sleigh bed"
+   ],
+   "level": 3,
+   "parent": "bed_frames",
+   "children": []
+  },
+  "upholstered_bed": {
+   "name": "Upholstered bed",
+   "synonyms": [
+    "upholstered bed",
+    "padded bed"
+   ],
+   "level": 3,
+   "parent": "bed_frames",
+   "children": []
+  },
+  "kids_beds": {
+   "name": "Kids beds",
+   "synonyms": [
+    "kids bed",
+    "children bed",
+    "toddler bed"
+   ],
+   "level": 2,
+   "parent": "beds",
+   "children": [
+    "bunk_bed",
+    "loft_bed",
+    "trundle_bed"
+   ]
+  },
+  "bunk_bed": {
+   "name": "Bunk bed",
+   "synonyms": [
+    "bunk bed",
+    "bunkbed",
+    "bunk beds"
+   ],
+   "level": 3,
+   "parent": "kids_beds",
+   "children": []
+  },
+  "loft_bed": {
+   "name": "Loft bed",
+   "synonyms": [
+    "loft bed",
+    "high sleeper"
+   ],
+   "level": 3,
+   "parent": "kids_beds",
+   "children": []
+  },
+  "trundle_bed": {
+   "name": "Trundle bed",
+   "synonyms": [
+    "trundle bed",
+    "trundle"
+   ],
+   "level": 3,
+   "parent": "kids_beds",
+   "children": []
+  },
+  "daybeds": {
+   "name": "Daybeds",
+   "synonyms": [
+    "daybed",
+    "day bed"
+   ],
+   "level": 2,
+   "parent": "beds",
+   "children": []
+  },
+  "murphy_beds": {
+   "name": "Murphy beds",
+   "synonyms": [
+    "murphy bed",
+    "wall bed",
+    "fold down bed"
+   ],
+   "level": 2,
+   "parent": "beds",
+   "children": []
+  },
+  "headboards": {
+   "name": "Headboards",
+   "synonyms": [
+    "headboard",
+    "head board"
+   ],
+   "level": 2,
+   "parent": "beds",
+   "children": []
+  },
+  "cribs": {
+   "name": "Cribs",
+   "synonyms": [
+    "crib",
+    "baby crib",
+    "cot"
+   ],
+   "level": 2,
+   "parent": "beds",
+   "children": []
+  },
+  "mattresses": {
+   "name": "Mattresses & bed bases",
+   "synonyms": [
+    "sleep products",
+    "mattresses and bases",
+    "mattress and foundation"
+   ],
+   "level": 1,
+   "parent": null,
+   "children": [
+    "mattress",
+    "box_springs",
+    "adjustable_bases",
+    "mattress_toppers"
+   ]
+  },
+  "mattress": {
+   "name": "Mattresses",
+   "synonyms": [
+    "mattress",
+    "mattresses"
+   ],
+   "level": 2,
+   "parent": "mattresses",
+   "children": [
+    "memory_foam_mattress",
+    "hybrid_mattress",
+    "innerspring_mattress",
+    "latex_mattress"
+   ]
+  },
+  "memory_foam_mattress": {
+   "name": "Memory foam mattress",
+   "synonyms": [
+    "memory foam mattress",
+    "foam mattress"
+   ],
+   "level": 3,
+   "parent": "mattress",
+   "children": []
+  },
+  "hybrid_mattress": {
+   "name": "Hybrid mattress",
+   "synonyms": [
+    "hybrid mattress"
+   ],
+   "level": 3,
+   "parent": "mattress",
+   "children": []
+  },
+  "innerspring_mattress": {
+   "name": "Innerspring mattress",
+   "synonyms": [
+    "innerspring mattress",
+    "spring mattress",
+    "pocket spring mattress"
+   ],
+   "level": 3,
+   "parent": "mattress",
+   "children": []
+  },
+  "latex_mattress": {
+   "name": "Latex mattress",
+   "synonyms": [
+    "latex mattress"
+   ],
+   "level": 3,
+   "parent": "mattress",
+   "children": []
+  },
+  "box_springs": {
+   "name": "Box springs",
+   "synonyms": [
+    "box spring",
+    "boxspring",
+    "foundation"
+   ],
+   "level": 2,
+   "parent": "mattresses",
+   "children": []
+  },
+  "adjustable_bases": {
+   "name": "Adjustable bases",
+   "synonyms": [
+    "adjustable base",
+    "adjustable bed base",
+    "power base"
+   ],
+   "level": 2,
+   "parent": "mattresses",
+   "children": []
+  },
+  "mattress_toppers": {
+   "name": "Mattress toppers",
+   "synonyms": [
+    "mattress topper",
+    "mattress pad",
+    "topper"
+   ],
+   "level": 2,
+   "parent": "mattresses",
+   "children": []
+  },
+  "storage": {
+   "name": "Storage furniture",
+   "synonyms": [
+    "storage furniture",
+    "storage units",
+    "storage unit"
+   ],
+   "level": 1,
+   "parent": null,
+   "children": [
+    "dressers",
+    "nightstands",
+    "bookcases",
+    "cabinets",
+    "wardrobes",
+    "tv_stands",
+    "sideboards",
+    "shoe_storage"
+   ]
+  },
+  "dressers": {
+   "name": "Dressers & chests",
+   "synonyms": [
+    "dresser",
+    "chest of drawers",
+    "drawer chest",
+    "tallboy"
+   ],
+   "level": 2,
+   "parent": "storage",
+   "children": []
+  },
+  "nightstands": {
+   "name": "Nightstands",
+   "synonyms": [
+    "nightstand",
+    "night stand",
+    "bedside table",
+    "night table"
+   ],
+   "level": 2,
+   "parent": "storage",
+   "children": []
+  },
+  "bookcases": {
+   "name": "Bookcases & shelves",
+   "synonyms": [
+    "bookcase",
+    "bookshelf",
+    "shelving unit",
+    "book shelf"
+   ],
+   "level": 2,
+   "parent": "storage",
+   "children": [
+    "ladder_shelf",
+    "cube_organizer",
+    "wall_shelf"
+   ]
+  },
+  "ladder_shelf": {
+   "name": "Ladder shelf",
+   "synonyms": [
+    "ladder shelf",
+    "leaning shelf",
+    "ladder bookcase"
+   ],
+   "level": 3,
+   "parent": "bookcases",
+   "children": []
+  },
+  "cube_organizer": {
+   "name": "Cube organizer",
+   "synonyms": [
+    "cube organizer",
+    "cube shelf",
+    "cubby"
+   ],
+   "level": 3,
+   "parent": "bookcases",
+   "children": []
+  },
+  "wall_shelf": {
+   "name": "Wall shelf",
+   "synonyms": [
+    "wall shelf",
+    "floating shelf",
+    "wall mounted shelf"
+   ],
+   "level": 3,
+   "parent": "bookcases",
+   "children": []
+  },
+  "cabinets": {
+   "name": "Cabinets",
+   "synonyms": [
+    "cabinet",
+    "cupboard"
+   ],
+   "level": 2,
+   "parent": "storage",
+   "children": [
+    "accent_cabinet",
+    "curio_cabinet",
+    "pantry_cabinet"
+   ]
+  },
+  "accent_cabinet": {
+   "name": "Accent cabinet",
+   "synonyms": [
+    "accent cabinet",
+    "accent chest"
+   ],
+   "level": 3,
+   "parent": "cabinets",
+   "children": []
+  },
+  "curio_cabinet": {
+   "name": "Curio cabinet",
+   "synonyms": [
+    "curio cabinet",
+    "display cabinet",
+    "china cabinet",
+    "vitrine"
+   ],
+   "level": 3,
+   "parent": "cabinets",
+   "children": []
+  },
+  "pantry_cabinet": {
+   "name": "Pantry cabinet",
+   "synonyms": [
+    "pantry cabinet",
+    "kitchen pantry",
+    "larder"
+   ],
+   "level": 3,
+   "parent": "cabinets",
+   "children": []
+  },
+  "wardrobes": {
+   "name": "Wardrobes & armoires",
+   "synonyms": [
+    "wardrobe",
+    "armoire",
+    "closet cabinet"
+   ],
+   "level": 2,
+   "parent": "storage",
+   "children": []
+  },
+  "tv_stands": {
+   "name": "TV stands",
+   "synonyms": [
+    "tv stand",
+    "media console",
+    "entertainment center",
+    "tv unit"
+   ],
+   "level": 2,
+   "parent": "storage",
+   "children": []
+  },
+  "sideboards": {
+   "name": "Sideboards & buffets",
+   "synonyms": [
+    "sideboard",
+    "buffet",
+    "credenza"
+   ],
+   "level": 2,
+   "parent": "storage",
+   "children": []
+  },
+  "shoe_storage": {
+   "name": "Shoe storage",
+   "synonyms": [
+    "shoe rack",
+    "shoe cabinet",
+    "shoe organizer",
+    "shoe bench"
+   ],
+   "level": 2,
+   "parent": "storage",
+   "children": []
+  },
+  "desks": {
+   "name": "Desks & workstations",
+   "synonyms": [
+    "office furniture",
+    "workstation",
+    "desks and workstations"
+   ],
+   "level": 1,
+   "parent": null,
+   "children": [
+    "desk",
+    "filing_cabinets",
+    "desk_hutches",
+    "drafting_tables"
+   ]
+  },
+  "desk": {
+   "name": "Desks",
+   "synonyms": [
+    "desk",
+    "desks"
+   ],
+   "level": 2,
+   "parent": "desks",
+   "children": [
+    "standing_desk",
+    "l_shaped_desk",
+    "writing_desk",
+    "computer_desk",
+    "gaming_desk"
+   ]
+  },
+  "standing_desk": {
+   "name": "Standing desk",
+   "synonyms": [
+    "standing desk",
+    "stand up desk",
+    "sit stand desk"
+   ],
+   "level": 3,
+   "parent": "desk",
+   "children": []
+  },
+  "l_shaped_desk": {
+   "name": "L-shaped desk",
+   "synonyms": [
+    "l shaped desk",
+    "l-shaped desk",
+    "corner desk"
+   ],
+   "level": 3,
+   "parent": "desk",
+   "children": []
+  },
+  "writing_desk": {
+   "name": "Writing desk",
+   "synonyms": [
+    "writing desk",
+    "secretary desk"
+   ],
+   "level": 3,
+   "parent": "desk",
+   "children": []
+  },
+  "computer_desk": {
+   "name": "Computer desk",
+   "synonyms": [
+    "computer desk",
+    "pc desk"
+   ],
+   "level": 3,
+   "parent": "desk",
+   "children": []
+  },
+  "gaming_desk": {
+   "name": "Gaming desk",
+   "synonyms": [
+    "gaming desk"
+   ],
+   "level": 3,
+   "parent": "desk",
+   "children": []
+  },
+  "filing_cabinets": {
+   "name": "Filing cabinets",
+   "synonyms": [
+    "filing cabinet",
+    "file cabinet",
+    "file drawer"
+   ],
+   "level": 2,
+   "parent": "desks",
+   "children": []
+  },
+  "desk_hutches": {
+   "name": "Desk hutches",
+   "synonyms": [
+    "desk hutch",
+    "hutch"
+   ],
+   "level": 2,
+   "parent": "desks",
+   "children": []
+  },
+  "drafting_tables": {
+   "name": "Drafting tables",
+   "synonyms": [
+    "drafting table",
+    "drawing table",
+    "craft table"
+   ],
+   "level": 2,
+   "parent": "desks",
+   "children": []
+  }
+ },
+ "attributes": {
+  "color": {
+   "description": "Main color of the item",
+   "values": {
+    "black": [
+     "black"
+    ],
+    "white": [
+     "white"
+    ],
+    "grey": [
+     "grey",
+     "gray"
+    ],
+    "beige": [
+     "beige",
+     "sand"
+    ],
+    "brown": [
+     "brown",
+     "chocolate"
+    ],
+    "blue": [
+     "blue",
+     "light blue"
+    ],
+    "navy": [
+     "navy",
+     "navy blue"
+    ],
+    "green": [
+     "green",
+     "sage",
+     "olive green"
+    ],
+    "emerald": [
+     "emerald",
+     "emerald green"
+    ],
+    "red": [
+     "red",
+     "burgundy"
+    ],
+    "pink": [
+     "pink",
+     "blush"
+    ],
+    "yellow": [
+     "yellow",
+     "mustard"
+    ],
+    "orange": [
+     "orange",
+     "rust",
+     "terracotta"
+    ],
+    "cream": [
+     "cream",
+     "ivory",
+     "off white"
+    ],
+    "charcoal": [
+     "charcoal",
+     "dark grey"
+    ],
+    "teal": [
+     "teal",
+     "turquoise"
+    ],
+    "purple": [
+     "purple",
+     "lavender"
+    ]
+   }
+  },
+  "material": {
+   "description": "Main material or upholstery of the item (not the legs)",
+   "values": {
+    "leather": [
+     "leather",
+     "genuine leather"
+    ],
+    "faux_leather": [
+     "faux leather",
+     "vegan leather",
+     "pu leather"
+    ],
+    "velvet": [
+     "velvet"
+    ],
+    "linen": [
+     "linen"
+    ],
+    "boucle": [
+     "boucle",
+     "boucl\u00e9"
+    ],
+    "fabric": [
+     "fabric",
+     "upholstered fabric"
+    ],
+    "microfiber": [
+     "microfiber",
+     "microfibre"
+    ],
+    "solid_wood": [
+     "solid wood",
+     "wooden",
+     "wood"
+    ],
+    "oak": [
+     "oak"
+    ],
+    "walnut": [
+     "walnut"
+    ],
+    "pine": [
+     "pine"
+    ],
+    "acacia": [
+     "acacia"
+    ],
+    "mango_wood": [
+     "mango wood"
+    ],
+    "bamboo": [
+     "bamboo"
+    ],
+    "metal": [
+     "metal",
+     "steel",
+     "iron"
+    ],
+    "glass": [
+     "glass",
+     "tempered glass"
+    ],
+    "marble": [
+     "marble",
+     "marble top"
+    ],
+    "rattan": [
+     "rattan",
+     "wicker",
+     "cane"
+    ],
+    "plastic": [
+     "plastic",
+     "acrylic"
+    ],
+    "engineered_wood": [
+     "mdf",
+     "particle board",
+     "engineered wood"
+    ]
+   }
+  },
+  "leg_material": {
+   "description": "Material of the legs or base only",
+   "values": {
+    "wood": [
+     "wood legs",
+     "wooden legs"
+    ],
+    "oak": [
+     "oak legs"
+    ],
+    "walnut": [
+     "walnut legs"
+    ],
+    "metal": [
+     "metal legs",
+     "steel legs",
+     "iron legs"
+    ],
+    "chrome": [
+     "chrome legs",
+     "chrome base"
+    ],
+    "acrylic": [
+     "acrylic legs",
+     "lucite legs"
+    ],
+    "hairpin": [
+     "hairpin legs"
+    ]
+   }
+  },
+  "leg_color": {
+   "description": "Color of the legs or base only",
+   "values": {
+    "black": [
+     "black legs",
+     "black base"
+    ],
+    "white": [
+     "white legs"
+    ],
+    "gold": [
+     "gold legs",
+     "gold base"
+    ],
+    "brass": [
+     "brass legs"
+    ],
+    "silver": [
+     "silver legs",
+     "silver base"
+    ],
+    "natural": [
+     "natural wood legs",
+     "light wood legs"
+    ],
+    "dark_brown": [
+     "dark legs",
+     "dark brown legs",
+     "espresso legs"
+    ]
+   }
+  },
+  "style": {
+   "description": "Design style",
+   "values": {
+    "modern": [
+     "modern"
+    ],
+    "contemporary": [
+     "contemporary"
+    ],
+    "mid_century": [
+     "mid century",
+     "mid-century",
+     "mcm",
+     "mid century modern"
+    ],
+    "farmhouse": [
+     "farmhouse"
+    ],
+    "industrial": [
+     "industrial"
+    ],
+    "scandinavian": [
+     "scandinavian",
+     "scandi",
+     "nordic"
+    ],
+    "traditional": [
+     "traditional",
+     "classic"
+    ],
+    "rustic": [
+     "rustic"
+    ],
+    "bohemian": [
+     "boho",
+     "bohemian"
+    ],
+    "minimalist": [
+     "minimalist",
+     "minimal"
+    ],
+    "glam": [
+     "glam",
+     "hollywood glam"
+    ],
+    "coastal": [
+     "coastal",
+     "beach style"
+    ],
+    "japandi": [
+     "japandi"
+    ],
+    "vintage": [
+     "vintage",
+     "retro"
+    ],
+    "art_deco": [
+     "art deco"
+    ]
+   }
+  },
+  "shape": {
+   "description": "Shape of the top or body",
+   "values": {
+    "round": [
+     "round",
+     "circular"
+    ],
+    "square": [
+     "square"
+    ],
+    "rectangular": [
+     "rectangular",
+     "rectangle"
+    ],
+    "oval": [
+     "oval"
+    ],
+    "curved": [
+     "curved",
+     "rounded"
+    ],
+    "hexagonal": [
+     "hexagon",
+     "hexagonal"
+    ]
+   }
+  },
+  "bed_size": {
+   "description": "Bed or mattress size",
+   "values": {
+    "twin": [
+     "twin",
+     "single"
+    ],
+    "twin_xl": [
+     "twin xl"
+    ],
+    "full": [
+     "full",
+     "double"
+    ],
+    "queen": [
+     "queen",
+     "queen size"
+    ],
+    "king": [
+     "king",
+     "king size"
+    ],
+    "california_king": [
+     "california king",
+     "cal king"
+    ]
+   }
+  },
+  "width": {
+   "description": "Width / length of the item as a size bucket (number with inch, in, \", ft or cm)",
+   "values": {
+    "under_30in": [],
+    "30_to_48in": [],
+    "48_to_72in": [],
+    "72_to_90in": [],
+    "over_90in": []
+   }
+  },
+  "seat_count": {
+   "description": "Number of people it seats",
+   "values": {
+    "seats_2": [
+     "2 seater",
+     "seats 2",
+     "for 2"
+    ],
+    "seats_3": [
+     "3 seater",
+     "seats 3",
+     "three seat"
+    ],
+    "seats_4": [
+     "4 seater",
+     "seats 4",
+     "for 4",
+     "4 person"
+    ],
+    "seats_6": [
+     "6 seater",
+     "seats 6",
+     "for 6",
+     "6 person"
+    ],
+    "seats_8": [
+     "8 seater",
+     "seats 8",
+     "for 8",
+     "8 person"
+    ]
+   }
+  },
+  "firmness": {
+   "description": "Mattress firmness",
+   "values": {
+    "soft": [
+     "soft",
+     "plush"
+    ],
+    "medium": [
+     "medium",
+     "medium firm"
+    ],
+    "firm": [
+     "firm"
+    ],
+    "extra_firm": [
+     "extra firm"
+    ]
+   }
+  },
+  "feature": {
+   "description": "A functional feature",
+   "values": {
+    "with_storage": [
+     "with storage",
+     "storage"
+    ],
+    "with_drawers": [
+     "with drawers",
+     "drawers"
+    ],
+    "reclining": [
+     "reclining",
+     "power reclining"
+    ],
+    "swivel": [
+     "swivel"
+    ],
+    "foldable": [
+     "foldable",
+     "folding"
+    ],
+    "extendable": [
+     "extendable",
+     "expandable",
+     "extending"
+    ],
+    "adjustable_height": [
+     "adjustable height",
+     "height adjustable"
+    ],
+    "stackable": [
+     "stackable",
+     "stacking"
+    ],
+    "usb_charging": [
+     "with usb",
+     "usb charging",
+     "with charging station"
+    ],
+    "glass_doors": [
+     "with glass doors",
+     "glass doors"
+    ],
+    "tufted": [
+     "tufted",
+     "button tufted"
+    ],
+    "cooling": [
+     "cooling",
+     "cooling gel"
+    ],
+    "wheels": [
+     "on wheels",
+     "with casters",
+     "rolling"
+    ]
+   }
+  },
+  "room": {
+   "description": "Room or place of use",
+   "values": {
+    "outdoor": [
+     "outdoor",
+     "patio",
+     "garden"
+    ],
+    "kids_room": [
+     "kids",
+     "for kids",
+     "nursery"
+    ],
+    "office": [
+     "home office",
+     "office"
+    ],
+    "bedroom": [
+     "bedroom"
+    ],
+    "living_room": [
+     "living room"
+    ],
+    "dining_room": [
+     "dining room"
+    ],
+    "entryway": [
+     "entryway",
+     "hallway",
+     "entry"
+    ],
+    "bathroom": [
+     "bathroom"
+    ]
+   }
+  }
+ },
+ "width_buckets_inch": {
+  "under_30in": [
+   0,
+   30
+  ],
+  "30_to_48in": [
+   30,
+   48
+  ],
+  "48_to_72in": [
+   48,
+   72
+  ],
+  "72_to_90in": [
+   72,
+   90
+  ],
+  "over_90in": [
+   90,
+   1000
+  ]
+ },
+ "applicable_l1": {
+  "seating": [
+   "color",
+   "material",
+   "leg_material",
+   "leg_color",
+   "style",
+   "feature",
+   "room"
+  ],
+  "tables": [
+   "color",
+   "material",
+   "leg_material",
+   "leg_color",
+   "style",
+   "shape",
+   "width",
+   "feature",
+   "room"
+  ],
+  "beds": [
+   "color",
+   "material",
+   "style",
+   "bed_size",
+   "feature",
+   "room"
+  ],
+  "mattresses": [
+   "bed_size",
+   "firmness",
+   "feature"
+  ],
+  "storage": [
+   "color",
+   "material",
+   "leg_material",
+   "leg_color",
+   "style",
+   "width",
+   "feature",
+   "room"
+  ],
+  "desks": [
+   "color",
+   "material",
+   "leg_material",
+   "leg_color",
+   "style",
+   "width",
+   "shape",
+   "feature",
+   "room"
+  ]
+ },
+ "applicable_l2": {
+  "sofas": [
+   "color",
+   "material",
+   "leg_material",
+   "leg_color",
+   "style",
+   "feature",
+   "room",
+   "width",
+   "seat_count",
+   "shape"
+  ],
+  "benches": [
+   "color",
+   "material",
+   "leg_material",
+   "leg_color",
+   "style",
+   "feature",
+   "room",
+   "width"
+  ],
+  "ottomans": [
+   "color",
+   "material",
+   "leg_material",
+   "leg_color",
+   "style",
+   "feature",
+   "room",
+   "shape"
+  ],
+  "dining_tables": [
+   "color",
+   "material",
+   "leg_material",
+   "leg_color",
+   "style",
+   "shape",
+   "width",
+   "feature",
+   "room",
+   "seat_count"
+  ],
+  "headboards": [
+   "color",
+   "material",
+   "style",
+   "bed_size",
+   "feature"
+  ],
+  "cribs": [
+   "color",
+   "material",
+   "style",
+   "feature"
+  ],
+  "box_springs": [
+   "bed_size"
+  ],
+  "adjustable_bases": [
+   "bed_size",
+   "feature"
+  ],
+  "mattress_toppers": [
+   "bed_size",
+   "firmness",
+   "feature"
+  ]
+ },
+ "residual_phrases": [
+  "cheap",
+  "affordable",
+  "best",
+  "highly rated",
+  "on sale",
+  "sale",
+  "deals",
+  "clearance",
+  "free shipping",
+  "near me",
+  "for my mom",
+  "gift",
+  "2024",
+  "2025",
+  "reviews",
+  "ikea",
+  "like west elm",
+  "like pottery barn",
+  "for small apartment",
+  "for small spaces",
+  "comfortable",
+  "sturdy",
+  "easy to assemble",
+  "heavy duty",
+  "under $300",
+  "under 500 dollars",
+  "luxury",
+  "budget",
+  "fast delivery",
+  "in stock",
+  "used",
+  "for my cat",
+  "pet friendly",
+  "for tall people",
+  "ergonomic",
+  "quality",
+  "brand new",
+  "handmade",
+  "made in usa",
+  "for studio",
+  "bundle",
+  "set"
+ ]
+}

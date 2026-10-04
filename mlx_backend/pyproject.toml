@@ -1,0 +1,14 @@
+[project]
+name = "sidm-mlx-backend"
+version = "0.1.0"
+description = "nimble's MLX ParallelScorer behind a /v1/systemone-compatible HTTP server"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "mlx==0.32.2",
+    "mlx-lm==0.31.3",
+    "transformers==5.17.0",
+    "huggingface_hub",
+]
+
+[tool.uv]
+package = false

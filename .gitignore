@@ -1,0 +1,31 @@
+# Python and tooling
+.venv/
+**/.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.idea/
+.vscode/
+.DS_Store
+
+# Logs (dataset generation, eval runs, servers, model conversion)
+*.log
+
+# Data: early generation attempts (the dataset is data/eval_raw.jsonl)
+data/old/
+
+# Results: tracked are everything the README points readers to, all written by `make results`:
+#   per-query predictions results/*.jsonl, results/tuned_settings.json, the main tables
+#   results/results_{eval,dev}.{md,json}, results/mcnemar_*.txt, the per-run eval reports
+#   results/report_eval_*.md, and the latency benchmarks results/bench/.
+# Ignored: orchestration scripts of past long runs, ad-hoc per-run tables (`make dev/eval`),
+# ad-hoc reports (`make report SPLIT=dev`) and report side files.
+results/*.sh
+results/results_*_*.md
+results/results_*_*.json
+results/report_*.md
+!results/report_eval_*.md
+results/*.metrics.json
+results/compare_*.md
+
+# Models, servers and caches live outside the repo (~/sidm-models, ~/.ollama); see `make doctor`.

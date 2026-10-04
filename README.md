@@ -79,6 +79,7 @@ One assumption is that Jev's value comes in parallelization of question answerin
   - Every question's text is in one shared prompt (~5.4k tokens), prefilled once at ~500 tok/s (~11 s). Then each question is answered from a ~13-token suffix (~0.18 s each, sequential).
   - nimble's batched MLX `ParallelScorer` is no faster here (17.4 s): batching the suffixes saves little at this prompt length.
   - The real levers are fewer or shorter questions, or a server that puts the static questions before the query, so they could be cached across queries.
+  - **AWS's Strands Decider 2B shows the other layout:** it encodes the state once and adds only each question's suffix, at **3.9 s per query**. But its accuracy is much lower (whole query 0.193).
 - **The data are synthetic and cleaner than real queries,** so the accuracies are upper bounds.
 
 ## First 15 minutes
@@ -88,7 +89,7 @@ One assumption is that Jev's value comes in parallelization of question answerin
 4. **Read the shipped results.** No commands are needed:
    - [`results/results_eval.md`](results/results_eval.md): all metrics on 1,000 eval queries, with counts and confidence intervals;
    - [`results/mcnemar_eval.txt`](results/mcnemar_eval.txt): which runs are significantly better than which;
-   - the dev counterparts, `results_dev.md` and `mcnemar_dev.txt`, for all 14 runs;
+   - the dev counterparts, `results_dev.md` and `mcnemar_dev.txt`, for all 15 runs;
    - per-run error analysis in `results/report_eval_<run>.md` (per-attribute scores, confusions, worst queries).
 5. **Try the parser:** `make ollama-pull MODEL=nimble` (9.5 GB, needs Ollama ≥ 0.35), then `make parse Q="blue velvet sofa for my mom"`.
 
@@ -216,13 +217,14 @@ The decoder lives in `src/sidm/parser.py`.
 **Eval is never used for tuning.** Dev results are optimistic because dev is the tuning set.
 
 ## Backends and models
-The same request can be served by four ablatable backends (`--backend`). A run is named `<scheme>@<backend>:<model>`, e.g. `embedded@ollaya:jeb:4b`.
+The same request can be served by five ablatable backends (`--backend`). A run is named `<scheme>@<backend>:<model>`, e.g. `embedded@ollaya:jeb:4b`.
 
 | Backend | Server | How a request is scored |
 |---|---|---|
 | `ollama` (default) | Ollama 0.35, `localhost:11434` | one prefill of the whole question set, then **one question at a time**. Requests that exceed a model's context are split automatically (tev1) |
 | `mlx` | `mlx_backend/server.py` (nimble's `ParallelScorer`), `localhost:11500` | one prefill, then fields batched (`--mode parallel`) or one at a time (`--mode cached_serial`) |
 | `ollaya` | [Ollaya](https://github.com/ollaya-dev/ollaya) 0.9, `localhost:11435` | per model family: most score all questions in one batched pass; `winnow` shares the state prefix and runs questions sequentially |
+| `decider` | [Strands Decider](https://github.com/strands-labs/strands-decider)'s own server (`decider_backend/serve.sh`), `localhost:11600` | **the state is encoded once, then only each question's short suffix is added**, batched up to 32 per pass |
 | `jev` | TypeSafe's hosted API, `https://api.typesafe.ai` | hosted Jev, needs `TYPESAFE_API_KEY` |
 
 ### Models tested
@@ -241,6 +243,7 @@ The same request can be served by four ablatable backends (`--backend`). A run i
 | `laya:typed-decisions` | ollaya | ModernBERT-large fine-tune, ONNX on the CPU | dev |
 | `von` | ollaya | ModernBERT-large encoder (395M), ONNX on the CPU | dev |
 | `nli:modernbert-large` | ollaya | NLI cross-encoder, one pair per option | dev |
+| `strands-decider-2b` (AWS Strands Labs) | decider | Qwen3.5-2B-Base, LoRA + pointer head, MLX (`StrandsAgents/strands-decider-2B-hobson-v19`) | dev + eval |
 | `jev-latest` (TypeSafe) | jev | hosted | not yet: implemented, waiting for an API key |
 
 **Not tested:**
@@ -276,6 +279,17 @@ make ollaya-pull MODEL=jeb:4b
 make parse BACKEND=ollaya MODEL=jeb:4b
 ```
 
+### Strands Decider (AWS Strands Labs)
+A 2B decision model released Oct 2026. It runs in its own Python 3.12 environment, `decider_backend/`, installed from its GitHub repo at a pinned commit, because the PyPI release (0.1.0) lacks the MLX device and `--strict-window`.
+```bash
+make decider-setup      # once: uv sync of decider_backend/
+make decider-serve      # unloads Ollama/Ollaya; first start downloads ~4 GB (LoRA + head + Qwen3.5-2B-Base) into ~/sidm-models/hf-home
+make parse BACKEND=decider
+```
+- **Its engine evaluates questions differently from nimble on Ollama.** It encodes the state once, keeps that cache, and forwards only each question's own tokens, batched (up to 32 per pass). Question texts are *not* re-read for every query in one shared prompt, which is what dominates nimble's latency on Ollama (see "Latency analysis").
+- **Options:** our 24-option questions are accepted.
+- **Window:** the server runs with `--strict-window`, so a prompt longer than its window is refused rather than silently cut. Our requests fit.
+
 ### Jev (TypeSafe hosted)
 Needs an API key:
 ```bash
@@ -300,19 +314,23 @@ make dev BACKEND=jev && make tune BACKEND=jev && make eval BACKEND=jev
 - **Detailed per-run reports:** `results/report_eval_<run>.md`, one per eval run, e.g. [`report_eval_nimble_embedded.md`](results/report_eval_nimble_embedded.md). Each has per-attribute filter scores, the word-role confusion matrix, the top category confusions and the 20 worst queries with gold vs predicted parse.
 
 ### Eval: 1,000 queries (decoding tuned per model on dev)
-| Metric (measure) | nimble embedded (ollama) | nimble router (ollama) | tev1 4B (ollama) | tev1 0.8B (ollama) | jeb:4b (ollaya) | winnow:e4b (ollaya) |
-|---|---|---|---|---|---|---|
-| Category, exact node (accuracy) | 0.917 | 0.836 | 0.942 | 0.727 | 0.918 | **0.966** |
-| Category correct at L1 (accuracy) | 0.977 | 0.867 | **0.987** | 0.809 | 0.973 | 0.985 |
-| Filters F1 (micro) | **0.912** | 0.892 | 0.862 | 0.655 | 0.888 | 0.840 |
-| Filter set exact match (accuracy) | **0.770** | 0.742 | 0.612 | 0.326 | 0.720 | 0.619 |
-| Word-role accuracy | **0.841** | 0.839 | 0.684 | 0.316 | 0.755 | 0.699 |
-| Residual words F1 | 0.733 | 0.730 | **0.744** | 0.000 | 0.690 | 0.183 |
-| **Whole query exactly right** (accuracy) | **0.424** | 0.373 | 0.336 | 0.090 | 0.365 | 0.245 |
-| Latency p50, clean runs | 15.6 s | 15.9 s | 10.7 s | **2.2 s** | 11.0 s | 6.0 s |
+| Metric (measure) | nimble embedded (ollama) | nimble router (ollama) | tev1 4B (ollama) | tev1 0.8B (ollama) | jeb:4b (ollaya) | winnow:e4b (ollaya) | Strands Decider 2B (decider) |
+|---|---|---|---|---|---|---|---|
+| Category, exact node (accuracy) | 0.917 | 0.836 | 0.942 | 0.727 | 0.918 | **0.966** | 0.743 |
+| Category correct at L1 (accuracy) | 0.977 | 0.867 | **0.987** | 0.809 | 0.973 | 0.985 | 0.803 |
+| Filters F1 (micro) | **0.912** | 0.892 | 0.862 | 0.655 | 0.888 | 0.840 | 0.798 |
+| Filter set exact match (accuracy) | **0.770** | 0.742 | 0.612 | 0.326 | 0.720 | 0.619 | 0.508 |
+| Word-role accuracy | **0.841** | 0.839 | 0.684 | 0.316 | 0.755 | 0.699 | 0.655 |
+| Residual words F1 | 0.733 | 0.730 | **0.744** | 0.000 | 0.690 | 0.183 | 0.297 |
+| **Whole query exactly right** (accuracy) | **0.424** | 0.373 | 0.336 | 0.090 | 0.365 | 0.245 | 0.193 |
+| Latency p50, clean runs | 15.6 s | 15.9 s | 10.7 s | **2.2 s** | 11.0 s | 6.0 s | 3.9 s |
 
 - **Latency:** for tev1 4B, jeb and winnow it comes from a clean 30-query benchmark (`make bench`). Their full evals ran in parallel with CPU jobs, which inflated those latencies.
 - **tev1 0.8B is the fastest decoder (2.2 s) but far behind:** whole query 0.090, with near-uniform word roles and no residual words found.
+- **Strands Decider 2B is ~4× faster than nimble (3.9 s vs 15.6 s) but much less accurate** (whole query 0.193).
+  - Its engine encodes the state once and adds only each question's suffix, so it avoids re-reading all question texts per query.
+  - It's weaker on category (0.743; e.g. "coffee table" vs "desk") and on residual words.
+  - Every model except tev1 0.8B beats it on the whole query (p ≤ 0.0002); it beats tev1 0.8B (141 vs 38 queries).
 - **nimble with the `embedded` scheme is best on the whole query.** Every other run is significantly worse (McNemar p < 0.001).
 - **On category, winnow:e4b and tev1 4B are significantly better than nimble** (p < 0.0001 and p = 0.002). jeb:4b ties nimble on category (p = 1.0).
 - **jeb:4b beats tev1 4B on the whole query** (116 vs 87 queries, p = 0.049), but tev1 is better at category.
@@ -330,6 +348,7 @@ Ranked by whole-query exact match. Latency is from clean runs.
 | nimble (router) | ollama | 0.35 | 0.85 | 15.4 s |
 | winnow:e4b | ollaya | 0.29 | 0.96 | 6.0 s |
 | decider:2b | ollaya (CPU) | 0.24 | 0.82 | 46.7 s |
+| Strands Decider 2B | decider (MLX) | 0.22 | 0.76 | 3.9 s |
 | decision:eos | ollaya (CPU) | 0.11 | 0.76 | 25.8 s |
 | kev:0.8b | ollaya (CPU) | 0.11 | 0.76 | 20.0 s |
 | tev1 0.8B | ollama | 0.10 | 0.75 | 2.2 s |
@@ -340,7 +359,7 @@ Ranked by whole-query exact match. Latency is from clean runs.
 
 - **Dev is the tuning set,** so these numbers are optimistic.
 - **The encoders and small decoders answer word-role questions almost uniformly** (word accuracy ≈ 0.33, residual F1 = 0), and they are weak on filters.
-- **Models scoring at least 0.24 on dev got the 1,000-query eval,** plus tev1 0.8B as the fastest decoder.
+- **Models scoring at least 0.24 on dev got the 1,000-query eval,** plus tev1 0.8B as the fastest decoder and Strands Decider as a newly released model.
 
 ### How runs are compared: McNemar's test
 McNemar's test checks whether **two runs scored on the same queries** really differ in accuracy, or whether the difference could be chance.
@@ -411,6 +430,7 @@ McNemar's test checks whether **two runs scored on the same queries** really dif
 | `embedded@mlx:nimble` (dev only so far) | 10.5 GB after `make mlx-convert` (~40 GB peak) | ~4.8 h |
 | `embedded@ollama:tev1` | 4.5 GB | ~3 h |
 | `embedded@ollama:tev1:0.8b` | 0.8 GB | ~40 min |
+| `embedded@decider:strands-decider-2b` | 4.3 GB (downloaded on first `make decider-serve`) | ~1.1 h |
 | `embedded@ollaya:jeb:4b` | 4.5 GB | ~3 h |
 | `embedded@ollaya:winnow:e4b` | 8 GB | ~1.7 h |
 | Ollaya CPU models (dev only) | 0.8–3.6 GB | 20–47 s per query |

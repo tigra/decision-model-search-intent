@@ -35,6 +35,8 @@ BACKEND_INFO = {
     "mlx": "nimble's MLX `ParallelScorer` (8-bit, `lm_head` in bf16) via `mlx_backend/server.py`; "
            "one prefill, then fields batched or one at a time (mode recorded per query)",
     "ollaya": "Ollaya 0.9 local server (TypeSafe-compatible `/v1/systemone`), model as named in the run",
+    "decider": "AWS Strands Labs' Strands Decider 2B (`StrandsAgents/strands-decider-2B-hobson-v19`, MLX) via its own "
+               "`/v1/systemone` server; the state is encoded once and only each question's suffix is added, batched",
     "jev": "TypeSafe's hosted Jev API (`https://api.typesafe.ai`); latency includes the network round trip",
 }
 

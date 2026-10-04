@@ -1,4 +1,4 @@
-dev split, 100 queries; 182 tests
+dev split, 100 queries; 210 tests
 category embedded@ollama:nimble               vs router@ollama:nimble                    9:3    p=0.1460   no significant difference
 full     embedded@ollama:nimble               vs router@ollama:nimble                   10:1    p=0.0117   embedded@ollama:nimble better
 category embedded@ollama:nimble               vs embedded@mlx:nimble                     1:2    p=1.0000   no significant difference
@@ -25,6 +25,8 @@ category embedded@ollama:nimble               vs embedded@ollaya:von            
 full     embedded@ollama:nimble               vs embedded@ollaya:von                    39:1    p=<0.0001  embedded@ollama:nimble better
 category embedded@ollama:nimble               vs embedded@ollaya:nli:modernbert-large   39:2    p=<0.0001  embedded@ollama:nimble better
 full     embedded@ollama:nimble               vs embedded@ollaya:nli:modernbert-large   42:2    p=<0.0001  embedded@ollama:nimble better
+category embedded@ollama:nimble               vs embedded@decider:strands-decider-2b    17:2    p=0.0007   embedded@ollama:nimble better
+full     embedded@ollama:nimble               vs embedded@decider:strands-decider-2b    33:11   p=0.0013   embedded@ollama:nimble better
 category router@ollama:nimble                 vs embedded@mlx:nimble                     3:10   p=0.0923   no significant difference
 full     router@ollama:nimble                 vs embedded@mlx:nimble                     5:13   p=0.0963   no significant difference
 category router@ollama:nimble                 vs embedded@ollama:tev1                    7:13   p=0.2632   no significant difference
@@ -49,6 +51,8 @@ category router@ollama:nimble                 vs embedded@ollaya:von            
 full     router@ollama:nimble                 vs embedded@ollaya:von                    31:2    p=<0.0001  router@ollama:nimble better
 category router@ollama:nimble                 vs embedded@ollaya:nli:modernbert-large   38:7    p=<0.0001  router@ollama:nimble better
 full     router@ollama:nimble                 vs embedded@ollaya:nli:modernbert-large   33:2    p=<0.0001  router@ollama:nimble better
+category router@ollama:nimble                 vs embedded@decider:strands-decider-2b    16:7    p=0.0931   no significant difference
+full     router@ollama:nimble                 vs embedded@decider:strands-decider-2b    27:14   p=0.0596   no significant difference
 category embedded@mlx:nimble                  vs embedded@ollama:tev1                    4:3    p=1.0000   no significant difference
 full     embedded@mlx:nimble                  vs embedded@ollama:tev1                   14:13   p=1.0000   no significant difference
 category embedded@mlx:nimble                  vs embedded@ollama:tev1:0.8b              21:4    p=0.0009   embedded@mlx:nimble better
@@ -71,6 +75,8 @@ category embedded@mlx:nimble                  vs embedded@ollaya:von            
 full     embedded@mlx:nimble                  vs embedded@ollaya:von                    39:2    p=<0.0001  embedded@mlx:nimble better
 category embedded@mlx:nimble                  vs embedded@ollaya:nli:modernbert-large   38:0    p=<0.0001  embedded@mlx:nimble better
 full     embedded@mlx:nimble                  vs embedded@ollaya:nli:modernbert-large   41:2    p=<0.0001  embedded@mlx:nimble better
+category embedded@mlx:nimble                  vs embedded@decider:strands-decider-2b    16:0    p=<0.0001  embedded@mlx:nimble better
+full     embedded@mlx:nimble                  vs embedded@decider:strands-decider-2b    32:11   p=0.0019   embedded@mlx:nimble better
 category embedded@ollama:tev1                 vs embedded@ollama:tev1:0.8b              20:4    p=0.0015   embedded@ollama:tev1 better
 full     embedded@ollama:tev1                 vs embedded@ollama:tev1:0.8b              34:2    p=<0.0001  embedded@ollama:tev1 better
 category embedded@ollama:tev1                 vs embedded@ollaya:jeb:4b                  4:3    p=1.0000   no significant difference
@@ -91,6 +97,8 @@ category embedded@ollama:tev1                 vs embedded@ollaya:von            
 full     embedded@ollama:tev1                 vs embedded@ollaya:von                    37:1    p=<0.0001  embedded@ollama:tev1 better
 category embedded@ollama:tev1                 vs embedded@ollaya:nli:modernbert-large   38:1    p=<0.0001  embedded@ollama:tev1 better
 full     embedded@ollama:tev1                 vs embedded@ollaya:nli:modernbert-large   38:0    p=<0.0001  embedded@ollama:tev1 better
+category embedded@ollama:tev1                 vs embedded@decider:strands-decider-2b    16:1    p=0.0003   embedded@ollama:tev1 better
+full     embedded@ollama:tev1                 vs embedded@decider:strands-decider-2b    27:7    p=0.0008   embedded@ollama:tev1 better
 category embedded@ollama:tev1:0.8b            vs embedded@ollaya:jeb:4b                  3:18   p=0.0015   embedded@ollaya:jeb:4b better
 full     embedded@ollama:tev1:0.8b            vs embedded@ollaya:jeb:4b                  2:29   p=<0.0001  embedded@ollaya:jeb:4b better
 category embedded@ollama:tev1:0.8b            vs embedded@ollaya:winnow:e4b              2:23   p=<0.0001  embedded@ollaya:winnow:e4b better
@@ -109,6 +117,8 @@ category embedded@ollama:tev1:0.8b            vs embedded@ollaya:von            
 full     embedded@ollama:tev1:0.8b            vs embedded@ollaya:von                     9:5    p=0.4240   no significant difference
 category embedded@ollama:tev1:0.8b            vs embedded@ollaya:nli:modernbert-large   31:10   p=0.0015   embedded@ollama:tev1:0.8b better
 full     embedded@ollama:tev1:0.8b            vs embedded@ollaya:nli:modernbert-large    8:2    p=0.1094   no significant difference
+category embedded@ollama:tev1:0.8b            vs embedded@decider:strands-decider-2b    13:14   p=1.0000   no significant difference
+full     embedded@ollama:tev1:0.8b            vs embedded@decider:strands-decider-2b     5:17   p=0.0169   embedded@decider:strands-decider-2b better
 category embedded@ollaya:jeb:4b               vs embedded@ollaya:winnow:e4b              1:7    p=0.0703   no significant difference
 full     embedded@ollaya:jeb:4b               vs embedded@ollaya:winnow:e4b             20:12   p=0.2153   no significant difference
 category embedded@ollaya:jeb:4b               vs embedded@ollaya:decider:2b             12:4    p=0.0768   no significant difference
@@ -125,6 +135,8 @@ category embedded@ollaya:jeb:4b               vs embedded@ollaya:von            
 full     embedded@ollaya:jeb:4b               vs embedded@ollaya:von                    33:2    p=<0.0001  embedded@ollaya:jeb:4b better
 category embedded@ollaya:jeb:4b               vs embedded@ollaya:nli:modernbert-large   38:2    p=<0.0001  embedded@ollaya:jeb:4b better
 full     embedded@ollaya:jeb:4b               vs embedded@ollaya:nli:modernbert-large   34:1    p=<0.0001  embedded@ollaya:jeb:4b better
+category embedded@ollaya:jeb:4b               vs embedded@decider:strands-decider-2b    16:2    p=0.0013   embedded@ollaya:jeb:4b better
+full     embedded@ollaya:jeb:4b               vs embedded@decider:strands-decider-2b    27:12   p=0.0237   embedded@ollaya:jeb:4b better
 category embedded@ollaya:winnow:e4b           vs embedded@ollaya:decider:2b             15:1    p=0.0005   embedded@ollaya:winnow:e4b better
 full     embedded@ollaya:winnow:e4b           vs embedded@ollaya:decider:2b              9:4    p=0.2668   no significant difference
 category embedded@ollaya:winnow:e4b           vs embedded@ollaya:decision:eos           21:1    p=<0.0001  embedded@ollaya:winnow:e4b better
@@ -139,6 +151,8 @@ category embedded@ollaya:winnow:e4b           vs embedded@ollaya:von            
 full     embedded@ollaya:winnow:e4b           vs embedded@ollaya:von                    23:0    p=<0.0001  embedded@ollaya:winnow:e4b better
 category embedded@ollaya:winnow:e4b           vs embedded@ollaya:nli:modernbert-large   43:1    p=<0.0001  embedded@ollaya:winnow:e4b better
 full     embedded@ollaya:winnow:e4b           vs embedded@ollaya:nli:modernbert-large   25:0    p=<0.0001  embedded@ollaya:winnow:e4b better
+category embedded@ollaya:winnow:e4b           vs embedded@decider:strands-decider-2b    21:1    p=<0.0001  embedded@ollaya:winnow:e4b better
+full     embedded@ollaya:winnow:e4b           vs embedded@decider:strands-decider-2b    13:6    p=0.1671   no significant difference
 category embedded@ollaya:decider:2b           vs embedded@ollaya:decision:eos           11:5    p=0.2101   no significant difference
 full     embedded@ollaya:decider:2b           vs embedded@ollaya:decision:eos           17:4    p=0.0072   embedded@ollaya:decider:2b better
 category embedded@ollaya:decider:2b           vs embedded@ollaya:kev:0.8b               16:10   p=0.3269   no significant difference
@@ -151,6 +165,8 @@ category embedded@ollaya:decider:2b           vs embedded@ollaya:von            
 full     embedded@ollaya:decider:2b           vs embedded@ollaya:von                    19:1    p=<0.0001  embedded@ollaya:decider:2b better
 category embedded@ollaya:decider:2b           vs embedded@ollaya:nli:modernbert-large   31:3    p=<0.0001  embedded@ollaya:decider:2b better
 full     embedded@ollaya:decider:2b           vs embedded@ollaya:nli:modernbert-large   20:0    p=<0.0001  embedded@ollaya:decider:2b better
+category embedded@ollaya:decider:2b           vs embedded@decider:strands-decider-2b    10:4    p=0.1796   no significant difference
+full     embedded@ollaya:decider:2b           vs embedded@decider:strands-decider-2b    11:9    p=0.8238   no significant difference
 category embedded@ollaya:decision:eos         vs embedded@ollaya:kev:0.8b               10:10   p=1.0000   no significant difference
 full     embedded@ollaya:decision:eos         vs embedded@ollaya:kev:0.8b                5:5    p=1.0000   no significant difference
 category embedded@ollaya:decision:eos         vs embedded@ollaya:laya:en                13:13   p=1.0000   no significant difference
@@ -161,6 +177,8 @@ category embedded@ollaya:decision:eos         vs embedded@ollaya:von            
 full     embedded@ollaya:decision:eos         vs embedded@ollaya:von                     9:4    p=0.2668   no significant difference
 category embedded@ollaya:decision:eos         vs embedded@ollaya:nli:modernbert-large   32:10   p=0.0009   embedded@ollaya:decision:eos better
 full     embedded@ollaya:decision:eos         vs embedded@ollaya:nli:modernbert-large    9:2    p=0.0654   no significant difference
+category embedded@ollaya:decision:eos         vs embedded@decider:strands-decider-2b     9:9    p=1.0000   no significant difference
+full     embedded@ollaya:decision:eos         vs embedded@decider:strands-decider-2b     4:15   p=0.0192   embedded@decider:strands-decider-2b better
 category embedded@ollaya:kev:0.8b             vs embedded@ollaya:laya:en                17:17   p=1.0000   no significant difference
 full     embedded@ollaya:kev:0.8b             vs embedded@ollaya:laya:en                 7:6    p=1.0000   no significant difference
 category embedded@ollaya:kev:0.8b             vs embedded@ollaya:laya:typed-decisions   17:14   p=0.7201   no significant difference
@@ -169,15 +187,25 @@ category embedded@ollaya:kev:0.8b             vs embedded@ollaya:von            
 full     embedded@ollaya:kev:0.8b             vs embedded@ollaya:von                     8:3    p=0.2266   no significant difference
 category embedded@ollaya:kev:0.8b             vs embedded@ollaya:nli:modernbert-large   31:9    p=0.0007   embedded@ollaya:kev:0.8b better
 full     embedded@ollaya:kev:0.8b             vs embedded@ollaya:nli:modernbert-large    7:0    p=0.0156   embedded@ollaya:kev:0.8b better
+category embedded@ollaya:kev:0.8b             vs embedded@decider:strands-decider-2b    14:14   p=1.0000   no significant difference
+full     embedded@ollaya:kev:0.8b             vs embedded@decider:strands-decider-2b     3:14   p=0.0127   embedded@decider:strands-decider-2b better
 category embedded@ollaya:laya:en              vs embedded@ollaya:laya:typed-decisions   10:7    p=0.6291   no significant difference
 full     embedded@ollaya:laya:en              vs embedded@ollaya:laya:typed-decisions    6:2    p=0.2891   no significant difference
 category embedded@ollaya:laya:en              vs embedded@ollaya:von                    29:8    p=0.0008   embedded@ollaya:laya:en better
 full     embedded@ollaya:laya:en              vs embedded@ollaya:von                     6:2    p=0.2891   no significant difference
 category embedded@ollaya:laya:en              vs embedded@ollaya:nli:modernbert-large   28:6    p=0.0002   embedded@ollaya:laya:en better
 full     embedded@ollaya:laya:en              vs embedded@ollaya:nli:modernbert-large    8:2    p=0.1094   no significant difference
+category embedded@ollaya:laya:en              vs embedded@decider:strands-decider-2b     9:9    p=1.0000   no significant difference
+full     embedded@ollaya:laya:en              vs embedded@decider:strands-decider-2b     3:15   p=0.0075   embedded@decider:strands-decider-2b better
 category embedded@ollaya:laya:typed-decisions vs embedded@ollaya:von                    32:14   p=0.0114   embedded@ollaya:laya:typed-decisions better
 full     embedded@ollaya:laya:typed-decisions vs embedded@ollaya:von                     2:2    p=1.0000   no significant difference
 category embedded@ollaya:laya:typed-decisions vs embedded@ollaya:nli:modernbert-large   30:11   p=0.0043   embedded@ollaya:laya:typed-decisions better
 full     embedded@ollaya:laya:typed-decisions vs embedded@ollaya:nli:modernbert-large    6:4    p=0.7539   no significant difference
+category embedded@ollaya:laya:typed-decisions vs embedded@decider:strands-decider-2b     5:8    p=0.5811   no significant difference
+full     embedded@ollaya:laya:typed-decisions vs embedded@decider:strands-decider-2b     2:18   p=0.0004   embedded@decider:strands-decider-2b better
 category embedded@ollaya:von                  vs embedded@ollaya:nli:modernbert-large   17:16   p=1.0000   no significant difference
 full     embedded@ollaya:von                  vs embedded@ollaya:nli:modernbert-large    4:2    p=0.6875   no significant difference
+category embedded@ollaya:von                  vs embedded@decider:strands-decider-2b     9:30   p=0.0011   embedded@decider:strands-decider-2b better
+full     embedded@ollaya:von                  vs embedded@decider:strands-decider-2b     3:19   p=0.0009   embedded@decider:strands-decider-2b better
+category embedded@ollaya:nli:modernbert-large vs embedded@decider:strands-decider-2b     8:30   p=0.0005   embedded@decider:strands-decider-2b better
+full     embedded@ollaya:nli:modernbert-large vs embedded@decider:strands-decider-2b     1:19   p=<0.0001  embedded@decider:strands-decider-2b better

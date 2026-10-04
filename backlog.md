@@ -187,3 +187,14 @@ The original plan follows.
   - Print an ETA up front (rows × measured latency).
   - A GPU guard that refuses to start while another server holds a model (`FORCE=1` to override).
 - **Shipping as a repo:** ship the code, `data/eval_raw.jsonl`, the predictions (`results/*.jsonl`, ~75 MB), `tuned_settings.json`, the tables and the docs. Add a `.gitignore` for logs, `.venv`, `results/bench/` scratch and the per-run ad-hoc tables. State in the docs that `make data` builds a *new* dataset, since regeneration isn't deterministic.
+
+## Strands Decider (AWS Strands Labs)
+**Status:** implemented as `--backend decider` (`decider_backend/`) and evaluated on dev and all 1,000 eval queries.
+- **Result:** whole query 0.193, category 0.743, p50 3.9 s on MLX.
+- **Speed:** about 4× faster than nimble on Ollama, thanks to its state-once / question-suffix layout.
+- **Weak spots:** category, e.g. "coffee table" → desks, and residual words.
+
+Follow-ups:
+- **Question style.** Its training data probably favours short, self-contained questions. Try one category question per L2 group, or fewer options with clearer descriptions.
+- **Combinations.** Use it as a fast first stage (category group), or try it on just the filter questions.
+- **`--device mps` vs `mlx`** latency, and a check of the `num_slots` limit: we use ≤ 24 options and all were accepted.

@@ -21,6 +21,7 @@ EVAL_RUNS = [
     "embedded@ollama:tev1:0.8b",
     "embedded@ollaya:jeb:4b",
     "embedded@ollaya:winnow:e4b",
+    "embedded@decider:strands-decider-2b",
 ]
 DEV_RUNS = [
     "embedded@ollama:nimble",
@@ -37,6 +38,7 @@ DEV_RUNS = [
     "embedded@ollaya:laya:typed-decisions",
     "embedded@ollaya:von",
     "embedded@ollaya:nli:modernbert-large",
+    "embedded@decider:strands-decider-2b",
 ]
 PRESETS = {"eval": EVAL_RUNS, "dev": DEV_RUNS}
 SPLIT_SIZES = {"dev": 100, "eval": 1000}

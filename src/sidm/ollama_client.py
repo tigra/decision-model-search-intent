@@ -4,6 +4,7 @@
   ollama: Ollama's llama.cpp runner (questions scored sequentially)
   mlx:    nimble's MLX ParallelScorer via mlx_backend/server.py
   ollaya: Ollaya's local server (encoder classifiers and decoders; scripts/ollaya_serve.sh)
+  decider: AWS Strands Labs' Strands Decider server (decider_backend/serve.sh)
   jev:    TypeSafe's hosted Jev API (needs TYPESAFE_API_KEY)
 """
 import json
@@ -66,6 +67,8 @@ BACKENDS = {
     "ollama": Backend(HOST, "nimble"),
     "mlx": Backend(os.environ.get("SIDM_MLX_URL", "http://localhost:11500"), "nimble"),
     "ollaya": Backend(os.environ.get("SIDM_OLLAYA_URL", "http://localhost:11435"), "jeb:4b"),
+    # serves one checkpoint (StrandsAgents/strands-decider-2B-hobson-v19); the model field is a label
+    "decider": Backend(os.environ.get("SIDM_DECIDER_URL", "http://localhost:11600"), "strands-decider-2b"),
     # jev-latest moves with releases; the versioned model that answered is recorded from the response.
     "jev": Backend(os.environ.get("TYPESAFE_BASE_URL", "https://api.typesafe.ai"),
                    os.environ.get("TYPESAFE_DEFAULT_MODEL", "jev-latest"), api_key_env="TYPESAFE_API_KEY",
@@ -109,12 +112,14 @@ START_FIX = {
     "ollama": "start the Ollama app (or `ollama serve`)",
     "mlx": "make mlx-serve   (first time: make mlx-convert)",
     "ollaya": "make ollaya-serve",
+    "decider": "make decider-serve   (first time: make decider-setup)",
     "jev": "check the network connection and TYPESAFE_BASE_URL",
 }
 PULL_FIX = {
     "ollama": "make ollama-pull MODEL=%s",
     "ollaya": "make ollaya-pull MODEL=%s",
     "mlx": "make mlx-convert   (the MLX server serves one converted nimble model)",
+    "decider": "make decider-serve   (it serves one checkpoint; weights download on first start)",
     "jev": "check the model name (e.g. jev-latest, jev-1.13.0)",
 }
 

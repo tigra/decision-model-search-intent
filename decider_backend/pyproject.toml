@@ -1,0 +1,11 @@
+[project]
+name = "sidm-decider-backend"
+version = "0.1.0"
+description = "AWS Strands Labs' Strands Decider served behind its /v1/systemone-compatible server"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "strands-decider[mlx] @ git+https://github.com/strands-labs/strands-decider@75c9fd32e664954cdc18481434018aa507eee8fb",
+]
+
+[tool.uv]
+package = false

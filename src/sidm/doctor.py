@@ -94,6 +94,14 @@ def main():
     _line(OK if health else BAD, "server running" if health else "server not running",
           None if health else ("make mlx-serve" if configs else "make mlx-convert, then make mlx-serve"))
 
+    print("\nStrands Decider (backend `decider`, %s)" % BACKENDS["decider"].url)
+    if not Path("decider_backend/.venv").exists():
+        _line(BAD, "environment not set up", "make decider-setup")
+    up = _get(BACKENDS["decider"].url + "/openapi.json") is not None
+    state["decider"] = up
+    _line(OK if up else BAD, "server running" if up else "server not running",
+          None if up else "make decider-serve   (first start downloads ~4 GB)")
+
     print("\nJev (backend `jev`, %s)" % BACKENDS["jev"].url)
     key = os.environ.get("TYPESAFE_API_KEY")
     state["jev"] = bool(key)
@@ -118,6 +126,8 @@ def main():
         elif backend == "mlx":
             avail = state["mlx"]
             fix = None if avail else ("make mlx-serve" if configs else "make mlx-convert, then make mlx-serve")
+        elif backend == "decider":
+            avail, fix = state["decider"], None if state["decider"] else "make decider-serve"
         elif backend == "jev":
             avail, fix = state["jev"], None if state["jev"] else "export TYPESAFE_API_KEY=<key>"
         runnable += avail

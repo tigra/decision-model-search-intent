@@ -22,7 +22,7 @@ words:     cheap/R grey/F oak/F coffee/C table/C with/F storage/F      (C catego
 1. **Category** `c ∈ T ∪ {none}`: the **most specific node the query names**, at any depth. "seating" means the L1 group; "grey sectional" means the L3 node. `none` means the query names no product type, e.g. "minimalist furniture".
 2. **Filters** `F ⊆ {(a, v) : a ∈ A, v ∈ V_a}`: the attribute values the query explicitly requests, at most one value per attribute (possibly none).
 3. **Word roles** `r_i ∈ {category, filter, residual}` for every word `w_i`.
-   - **The residual terms** are the words with role `residual`: price, quality and shopping words, brands, recipients ("cheap", "for my mom", "ikea").
+   - **The residual terms** are the words with role `residual`: words that do not denote category and filters (can probably influence the scoring of search results)
    - **Connecting words** take the role of the phrase they belong to: "**with** storage" and "**under** 30 inch" are filter, "chest **of** drawers" is category, and "**for** my mom" is residual.
 
 **Scoring** (definitions with counts are in `results/results_eval.md`):
@@ -36,18 +36,23 @@ words:     cheap/R grey/F oak/F coffee/C table/C with/F storage/F      (C catego
 
 Two further measures: **latency** per query on local hardware, and paired significance tests between systems.
 
-## Solution idea: one request, all questions, one decision model
-Each query becomes **one `/v1/systemone` request**. The query is the `state`, and every sub-decision is a named `choice` question about it:
+## Solution idea: one request, all questions, the decision model
+Each query becomes **one Jev-shaped `/v1/systemone` request**. The query is the `state`, and every sub-decision is a named `choice` question about it:
 - **Category:** one question per top-level product group, e.g. "which kind of table, if any?". Each lists that group's L2/L3 types, plus "not this group" and "only the general word".
 - **Filters:** one question per attribute (color, material, legs, style, size, width, …), each with `not_specified` plus the attribute's values.
 - **Word roles:** one question per word of the query ("role of word 3, `oak`?"): `category`, `filter` or `residual`. This gives a token-level tagging, and the words tagged `residual` are the residual terms.
 
-The decision model returns a probability for every option of every question. A small decoder turns those into the parse:
-- the most confident category;
-- filters above a probability threshold;
+A decision model doesn't generate text. For every question it returns:
+- the chosen option;
+- a **probability for every option**;
+- a **confidence**: one number for how peaked that distribution is. Ollaya, for instance, defines it as (K·p_max − 1)/(K − 1); Ollama doesn't document its definition.
+
+A small decoder turns the **per-option probabilities** into the parse. It doesn't use the confidence. The parse consists of:
+- the most probable category;
+- filters whose value probability clears a threshold;
 - the word roles.
 
-Its thresholds are tuned on a dev split. Because the whole parse is a single typed request, it is easy to ablate, and every part can be scored separately.
+The models themselves are used as they are, with no training or fine-tuning. Only the decoder's few **thresholds and weights are tuned**, on a dev split and per model (see "What tuning means"). Because the whole parse is a single typed request, it is easy to ablate, and every part can be scored separately.
 
 One assumption is that Jev's value comes in parallelization of question answering and thus low latency, so it is interesting to see if other decision models have similar properties of a decoder.
 
@@ -182,6 +187,33 @@ The decoder lives in `src/sidm/parser.py`.
 - **Word roles:** argmax over the three roles, with the `category` probability up-weighted.
 - **Thresholds and weights are tuned per model on dev** (`make tune` → `results/tuned_settings.json`), because models are calibrated very differently. The nimble defaults are: no-category threshold 0.70, filter p ≥ 0.95, `category` weight ×8.
 - **Schemes:** the two category schemes are an ablation defined in `CategoryScheme` (`src/sidm/parser.py`). Everything else is shared.
+
+### What tuning means
+**No model is trained or fine-tuned.** "Tuning" only sets three parameters of the decoder above:
+
+| Parameter | What it controls | Why it's needed | nimble value |
+|---|---|---|---|
+| No-category threshold | how strong the "no group claims the query" signal must be before predicting *no category* | the probabilities alone don't separate "none" from a weak match | 0.70 |
+| Filter probability threshold | the minimum probability for a filter value to count | without it, models add attributes the query never mentions | 0.95 |
+| Word-role `category` weight | a multiplier on the `category` probability before the argmax over the three roles | models under-predict `category` for words | ×8 |
+
+**How the values are chosen** (`make tune`, i.e. `evaluate tune --apply`):
+- a small grid search with two passes of coordinate ascent: no-category threshold 0.3–1.0, filter threshold 0–0.98, weight 1–16;
+- it maximizes **whole-query exact match on the 100 dev queries**; ties keep the current value;
+- it re-decodes the stored raw answers, so no model calls are needed;
+- the result is saved per `backend:model` in `results/tuned_settings.json`. Runs without an entry use the backend defaults, which are nimble's values.
+
+**Why per model:** models are calibrated very differently. A threshold that suits nimble can wipe out another model's filters or word roles.
+
+**Effect** (eval, whole query exactly right; plain argmax with `--untuned` vs tuned):
+
+| Run | Untuned | Tuned | Mainly through |
+|---|---|---|---|
+| nimble, embedded | 0.318 | **0.424** | filters F1 0.830 → 0.912 |
+| nimble, router | 0.197 | **0.373** | category 0.626 → 0.836 (group-max instead of top-down), filters |
+| jeb:4b | 0.230 | **0.365** | filters F1 0.852 → 0.888 |
+
+**Eval is never used for tuning.** Dev results are optimistic because dev is the tuning set.
 
 ## Backends and models
 The same request can be served by four ablatable backends (`--backend`). A run is named `<scheme>@<backend>:<model>`, e.g. `embedded@ollaya:jeb:4b`.

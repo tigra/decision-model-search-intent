@@ -168,13 +168,12 @@ The original plan follows.
 - **Same fairness rules** as the MLX ablation: same rows and questions, decoding re-tuned per model on dev, and precision and size recorded.
 
 ## Jev (TypeSafe hosted) backend
-**Status:** implemented as `--backend jev`. It runs once an API key is available (`TYPESAFE_API_KEY`).
-- **Code path tested** against local Ollama via `TYPESAFE_BASE_URL`.
-- **Plan:**
-  1. A few-row trial with `--limit`, to check limits, usage and cost.
-  2. The 100 dev queries, then `evaluate tune`, recorded in `TUNED_BY_BACKEND["jev"]`.
-  3. The 1,000 eval queries, compared with `embedded@ollama:nimble` and `embedded@mlx:nimble` in `results_table`.
-- **To verify on the real API:** the question and option limits (we use ≤ 26 options), the rate limits, whether `state` objects are accepted as-is, and the latency distribution with network included.
+**Status:** done (2026-10-05): dev 100 + eval 1,000 with `jev-latest`, served as `jev-1.13.0`. Eval whole query 0.535 at 0.3 s p50 (network included); the best run on every part except residual words. No rate limits or errors hit; ~5.3k input / ~2.5k output tokens per query.
+- **Open:**
+  - Probabilities come rounded to 2 decimals, which coarsens the thresholds; tuning kept nimble's values.
+  - Residual words F1 0.695 (nimble 0.733): check which residual words it labels as filters.
+  - A hybrid with Jev's category and filters plus a local model's residual words would be cheap to test (re-decoding only).
+  - `jev-latest` moves; re-running later gives a newer model. Pin `MODEL=jev-1.13.0` to reproduce.
 - **Third-party reference:** 236–276 ms median for a 5-question request ([search result](https://www.kunalganglani.com/blog/ollaya-ollama-decision-setup)). Our requests have ~24 questions.
 
 ## Next, from the model comparison (see README "Results")

@@ -20,7 +20,7 @@ from matplotlib.colors import LinearSegmentedColormap  # noqa: E402
 
 from sidm import evaluate as E  # noqa: E402
 from sidm import schema as S  # noqa: E402
-from sidm.ollama_client import friendly_main  # noqa: E402
+from sidm.ollama_client import BACKENDS, friendly_main  # noqa: E402
 from sidm.results_table import wilson  # noqa: E402
 from sidm.runs import DEV_RUNS, EVAL_RUNS, split_run  # noqa: E402
 
@@ -30,7 +30,7 @@ DATA = "data/eval_raw.jsonl"
 # ---------------------------------------------------------------- style
 INK, INK2, MUTED, GRID, AXIS = "#0b0b0b", "#52514e", "#898781", "#e1e0d9", "#c3c2b7"
 NEUTRAL = "#f0efec"
-PALETTE = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#4a3aa7"]  # validated on #ffffff
+PALETTE = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#4a3aa7", "#e34948"]  # validated on #ffffff
 BLUE_RAMP = ["#ffffff", "#cde2fb", "#86b6ef", "#3987e5", "#256abf", "#184f95", "#0d366b"]
 RED_POLE, BLUE_POLE = "#e34948", "#2a78d6"
 
@@ -43,6 +43,7 @@ NAMES = {
     "embedded@ollaya:winnow:e4b": "winnow:e4b",
     "embedded@decider:strands-decider-2b": "Strands Decider 2B",
     "embedded@mlx:nimble": "nimble (MLX)",
+    "embedded@jev:jev-latest": "Jev (hosted)",
 }
 COLOR = {run: PALETTE[i] for i, run in enumerate(EVAL_RUNS)}
 MARKER = {"ollama": "o", "ollaya": "s", "decider": "D", "mlx": "^", "jev": "P"}
@@ -146,7 +147,7 @@ def fig_eval_table():
         lat.append((statistics.median(eval_latencies(r)[0]), INFLATED.get(r)))
     cmap = LinearSegmentedColormap.from_list("seq", BLUE_RAMP[1:6])  # worst run still gets a visible cell
     n_rows, n_cols = len(rows) + 1, len(runs)
-    fig, ax = plt.subplots(figsize=(12.5, 6.2))
+    fig, ax = plt.subplots(figsize=(1.75 * len(runs) + 2, 6.2))
 
     def cell(i, j, shade, text, sub, bold):
         ax.add_patch(plt.Rectangle((j + 0.03, i + 0.05), 0.94, 0.9, color=cmap(shade), linewidth=0))
@@ -200,26 +201,30 @@ def fig_accuracy_latency():
         ax.scatter(p50, acc, s=70, color=COLOR[run], marker=MARKER[split_run(run)[1]], edgecolor="white",
                    linewidth=2, zorder=3, label=name(run))
         ax.annotate(name(run) + (" (latency %s)" % INFLATED[run] if run in INFLATED else ""), (p50, acc), xytext=(8, 4), textcoords="offset points", fontsize=8.5, color=INK2)
-    # Pareto frontier: no other run is both faster and more accurate
-    front = sorted(p for p in pts if not any(q[0] <= p[0] and q[1] > p[1] for q in pts if q is not p))
+    # Pareto frontier of the local runs (a hosted API's latency is another machine plus the network): no other
+    # local run is both faster and more accurate
+    local = [p for p in pts if not BACKENDS[split_run(p[2])[1]].remote]
+    front = sorted(p for p in local if not any(q[0] <= p[0] and q[1] > p[1] for q in local if q is not p))
     ax.plot([p[0] for p in front], [p[1] for p in front], color=AXIS, linewidth=1.2, zorder=1)
     ax.set_xscale("log")
-    ax.set_xticks([2, 3, 5, 10, 15, 20])
+    ax.set_xticks([0.3, 0.5, 1, 2, 5, 10, 20])
     ax.get_xaxis().set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: "%g s" % v))
     ax.xaxis.set_minor_formatter(matplotlib.ticker.NullFormatter())
-    ax.set_xlim(1.6, 24)
-    ax.set_ylim(0, 0.5)
+    ax.set_xlim(min(p[0] for p in pts) / 1.5, 26)
+    ax.set_ylim(0, math.ceil((max(p[1] for p in pts) + 0.06) * 10) / 10)
     ax.yaxis.grid(True)
     ax.set_axisbelow(True)
-    ax.set_xlabel("p50 latency per query, M3 Max (log scale)")
+    ax.set_xlabel("p50 latency per query: M3 Max, or the hosted API (log scale)")
     ax.set_ylabel("whole query exactly right")
     ax.set_title("Accuracy vs latency, 1,000 eval queries")
     handles = [plt.Line2D([], [], marker=MARKER[b], linestyle="", color=MUTED, markersize=7, label=lbl)
-               for b, lbl in (("ollama", "Ollama"), ("ollaya", "Ollaya"), ("decider", "Strands Decider server"))]
+               for b, lbl in (("ollama", "Ollama"), ("ollaya", "Ollaya"), ("decider", "Strands Decider server"),
+                              ("jev", "TypeSafe API (hosted, incl. network)"))
+               if any(split_run(r)[1] == b for r in EVAL_RUNS)]
     ax.legend(handles=handles, title="backend (marker)", loc="lower right", title_fontsize=8.5)
     save(fig, "accuracy_vs_latency.svg",
-         "Vertical lines: 95% Wilson intervals of the accuracy. Grey line: Pareto frontier. Latency: p50 over the "
-         "same 1,000 queries.")
+         "Vertical lines: 95% Wilson intervals of the accuracy. Grey line: Pareto frontier of the local runs (M3 Max). "
+         "Latency: p50 over the same 1,000 queries.")
 
 
 # ---------------------------------------------------------------- 2. accuracy by part
@@ -263,7 +268,7 @@ def fig_mcnemar():
     runs = [r["run"] for r in result["runs"]]
     tests = {(t["reference"], t["run"], t["metric"]): t for t in result["paired_mcnemar"]}
     cmap = LinearSegmentedColormap.from_list("div", [RED_POLE, "#f4b3b2", NEUTRAL, "#a9c9f0", BLUE_POLE])
-    fig, axes = plt.subplots(1, 2, figsize=(12.5, 5.8))
+    fig, axes = plt.subplots(1, 2, figsize=(1.6 * len(runs) + 1.5, 0.75 * len(runs) + 0.6))
     for ax, (metric, title) in zip(axes, (("full", "Whole query exactly right"), ("category", "Category, exact node"))):
         n = len(runs)
         for i, a in enumerate(runs):
@@ -337,7 +342,9 @@ def _reliability(P, kind):
 
 def fig_calibration():
     runs = EVAL_RUNS
-    fig, axes = plt.subplots(2, 4, figsize=(11.5, 6.2), sharex=True, sharey=True)
+    ncol = 4 if len(runs) <= 7 else 3
+    nrow = math.ceil((len(runs) + 1) / ncol)  # +1 cell for the legend
+    fig, axes = plt.subplots(nrow, ncol, figsize=(2.9 * ncol, 3.1 * nrow), sharex=True, sharey=True)
     axes = axes.ravel()
     series = (("filters", "filter questions", PALETTE[0]), ("words", "word-role questions", PALETTE[1]))
     for ax, run in zip(axes, runs):
@@ -354,7 +361,8 @@ def fig_calibration():
         ax.set_ylim(0, 1.0)
         ax.grid(True)
         ax.set_axisbelow(True)
-    axes[-1].axis("off")
+    for ax in axes[len(runs):]:
+        ax.axis("off")
     axes[-1].legend(handles=[plt.Line2D([], [], color=c, marker="o", label=l) for _, l, c in series] +
                     [plt.Line2D([], [], color=AXIS, linewidth=1, label="perfect calibration")],
                     loc="center", fontsize=8.5)
@@ -438,7 +446,7 @@ def fig_latency_questions():
                 linestyle="--" if run in INFLATED else "-", markeredgecolor="white", markeredgewidth=1,
                 label=name(run) + (" (%s)" % INFLATED[run] if run in INFLATED else ""))
     ax.set_yscale("log")
-    ax.set_yticks([1, 2, 5, 10, 20])
+    ax.set_yticks([0.2, 0.5, 1, 2, 5, 10, 20])
     ax.get_yaxis().set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: "%g s" % v))
     ax.yaxis.set_minor_formatter(matplotlib.ticker.NullFormatter())
     ax.yaxis.grid(True)
@@ -515,7 +523,7 @@ def fig_tuning():
     ax1.set_yticklabels([name(r) for r in reversed(runs)])
     ax1.tick_params(axis="y", length=0)
     ax1.spines["left"].set_visible(False)
-    ax1.set_xlim(0, 0.5)
+    ax1.set_xlim(0, math.ceil((max(metrics(r)["full_query_exact_acc"] for r in runs) + 0.07) * 10) / 10)
     ax1.xaxis.grid(True)
     ax1.set_axisbelow(True)
     ax1.set_xlabel("whole query exactly right (eval)")

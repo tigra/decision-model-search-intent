@@ -30,6 +30,7 @@ DATA = "data/eval_raw.jsonl"
 # ---------------------------------------------------------------- style
 INK, INK2, MUTED, GRID, AXIS = "#0b0b0b", "#52514e", "#898781", "#e1e0d9", "#c3c2b7"
 NEUTRAL = "#f0efec"
+BAND = "#f5f4f0"  # alternating row background, lighter than the grid
 PALETTE = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#4a3aa7", "#e34948"]  # validated on #ffffff
 BLUE_RAMP = ["#ffffff", "#cde2fb", "#86b6ef", "#3987e5", "#256abf", "#184f95", "#0d366b"]
 RED_POLE, BLUE_POLE = "#e34948", "#2a78d6"
@@ -242,6 +243,8 @@ def fig_accuracy_by_part():
     runs = EVAL_RUNS
     for i, (label, fn) in enumerate(PARTS):
         y0 = len(PARTS) - 1 - i
+        if i % 2 == 0:  # alternate row bands, so each metric's group of dots reads as one block
+            ax.axhspan(y0 - 0.5, y0 + 0.5, color=BAND, linewidth=0, zorder=0)
         for j, run in enumerate(runs):
             v, lo, hi = fn(metrics(run))
             y = y0 + (j - (len(runs) - 1) / 2) * 0.1
@@ -249,6 +252,7 @@ def fig_accuracy_by_part():
                 ax.plot([lo, hi], [y, y], color=COLOR[run], linewidth=1.4, solid_capstyle="round")
             ax.scatter(v, y, s=42, color=COLOR[run], marker=MARKER[split_run(run)[1]], edgecolor="white",
                        linewidth=1.5, zorder=3, label=name(run) if i == 0 else None)
+    ax.set_ylim(-0.5, len(PARTS) - 0.5)
     ax.set_yticks(range(len(PARTS)))
     ax.set_yticklabels([p[0] for p in reversed(PARTS)])
     ax.tick_params(axis="y", length=0)

@@ -339,7 +339,7 @@ make dev BACKEND=jev && make tune BACKEND=jev && make eval BACKEND=jev
 ### Dev: all runs (100 queries)
 Ranked by whole-query exact match. Latency is from clean runs.
 
-| Model | Backend | Whole query | Category | p50 latency |
+| Model | Backend | Whole query | Category | p50 latency (M3 Max) |
 |---|---|---|---|---|
 | nimble (embedded) | ollama | 0.44 | 0.91 | 16.1 s |
 | nimble (embedded) | mlx | 0.43 | 0.92 | 17.4 s |
@@ -424,7 +424,7 @@ McNemar's test checks whether **two runs scored on the same queries** really dif
 
 **Time and space per run**, from the measured p50 latency on an M3 Max with one model loaded; dev takes a tenth of eval:
 
-| Run | Model size | Eval (1,000 queries) |
+| Run | Model size | Eval time (1,000 queries) on M3 Max|
 |---|---|---|
 | `embedded@ollama:nimble`, `router@ollama:nimble` | 9.5 GB | ~4.3 h each |
 | `embedded@mlx:nimble` (dev only so far) | 10.5 GB after `make mlx-convert` (~40 GB peak) | ~4.8 h |

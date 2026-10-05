@@ -1,6 +1,7 @@
 # Search intent parsing with Jev-style decision models
 
 An experiment in parsing a furniture e-commerce search query into three parts with a **decision model**: a model that answers typed multiple-choice questions with calibrated probabilities instead of generating text (TypeSafe's Jev API and its open counterparts).
+Study accuracy and latency (measured on Mac M3 Max GPU), on a synthetic dataset.
 
 For example:
 ```
@@ -36,7 +37,7 @@ words:     cheap/R grey/F oak/F coffee/C table/C with/F storage/F      (C catego
 
 Two further measures: **latency** per query on local hardware, and paired significance tests between systems.
 
-## Solution idea: one request, all questions, the decision model
+## Solution idea: answer all questions with a one decision model request
 Each query becomes **one Jev-shaped `/v1/systemone` request**. The query is the `state`, and every sub-decision is a named `choice` question about it:
 - **Category:** one question per top-level product group, e.g. "which kind of table, if any?". Each lists that group's L2/L3 types, plus "not this group" and "only the general word".
 - **Filters:** one question per attribute (color, material, legs, style, size, width, …), each with `not_specified` plus the attribute's values.
@@ -328,6 +329,10 @@ make dev BACKEND=jev && make tune BACKEND=jev && make eval BACKEND=jev
 - **Figures:** `docs/figures/*.svg`, drawn from the shipped files by `make figures` (`src/sidm/figures.py`; also part of `make results`).
 
 ### Eval: 1,000 queries (decoding tuned per model on dev)
+![Eval results](docs/figures/eval_results.svg)
+
+*The table below as a figure. Bold marks the best run in each row; darker cells are closer to the row's best (for latency, faster). nimble embedded leads on filters, word roles and the whole query; winnow and tev1 4B on category; tev1 0.8B and Strands Decider on speed.*
+
 | Metric (measure) | nimble embedded (ollama) | nimble router (ollama) | tev1 4B (ollama) | tev1 0.8B (ollama) | jeb:4b (ollaya) | winnow:e4b (ollaya) | Strands Decider 2B (decider) |
 |---|---|---|---|---|---|---|---|
 | Category, exact node (accuracy) | 0.917 | 0.836 | 0.942 | 0.727 | 0.918 | **0.966** | 0.743 |

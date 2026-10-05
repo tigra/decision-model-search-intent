@@ -133,6 +133,70 @@ def prop(k_n):
     return k / n, lo, hi
 
 
+# ---------------------------------------------------------------- 0. eval results table
+def fig_eval_table():
+    """The README's eval table as a figure: cell shade = position between the row's worst and best run."""
+    result = json.loads(Path("results/results_eval.json").read_text())
+    by_run = {r["run"]: r["metrics"] for r in result["runs"]}
+    runs = [r for r in EVAL_RUNS if r in by_run]
+    rows = [  # (label, value with optional interval, higher is better)
+        ("Category, exact node", lambda m: (m["category_exact"]["value"], m["category_exact"]["ci95"]), True),
+        ("Category correct at L1", lambda m: (m["category_level"]["L1"]["value"], m["category_level"]["L1"]["ci95"]), True),
+        ("Filters F1 (micro)", lambda m: (m["filters_micro"]["f1"], None), True),
+        ("Filter set exact match", lambda m: (m["filter_set_exact"]["value"], m["filter_set_exact"]["ci95"]), True),
+        ("Word-role accuracy", lambda m: (m["word_role_accuracy"]["value"], m["word_role_accuracy"]["ci95"]), True),
+        ("Residual words F1", lambda m: (m["residual_words"]["f1"], None), True),
+        ("Whole query exactly right", lambda m: (m["whole_query_exact"]["value"], m["whole_query_exact"]["ci95"]), True),
+    ]
+    cells = [[fn(by_run[r]) for r in runs] for _, fn, _ in rows]
+    lat = []
+    for r in runs:
+        values, _, kind = clean_latencies(r)
+        lat.append((statistics.median(values), kind))
+    cmap = LinearSegmentedColormap.from_list("seq", BLUE_RAMP[1:6])  # worst run still gets a visible cell
+    n_rows, n_cols = len(rows) + 1, len(runs)
+    fig, ax = plt.subplots(figsize=(12.5, 6.2))
+
+    def cell(i, j, shade, text, sub, bold):
+        ax.add_patch(plt.Rectangle((j + 0.03, i + 0.05), 0.94, 0.9, color=cmap(shade), linewidth=0))
+        r, g, b, _ = cmap(shade)  # white text where the cell is darker than mid-grey (relative luminance)
+        dark = 0.2126 * r ** 2.2 + 0.7152 * g ** 2.2 + 0.0722 * b ** 2.2 < 0.3
+        ax.text(j + 0.5, i + (0.42 if sub else 0.5), text, ha="center", va="center", fontsize=9.5,
+                fontweight="bold" if bold else "normal", color="white" if dark else INK)
+        if sub:
+            ax.text(j + 0.5, i + 0.72, sub, ha="center", va="center", fontsize=7, color="white" if dark else INK)
+
+    for i, ((label, _, _), row) in enumerate(zip(rows, cells)):
+        vals = [v for v, _ in row]
+        lo_v, hi_v = min(vals), max(vals)
+        for j, (v, ci) in enumerate(row):
+            cell(i, j, (v - lo_v) / ((hi_v - lo_v) or 1), "%.3f" % v,
+                 "%.2f–%.2f" % tuple(ci) if ci else None, v == hi_v)
+    i = len(rows)  # latency: lower is better, so the fastest run gets the darkest shade
+    lv = [v for v, _ in lat]
+    for j, (v, kind) in enumerate(lat):
+        cell(i, j, (max(lv) - v) / ((max(lv) - min(lv)) or 1), "%.1f s" % v,
+             "30-query bench" if kind == "bench" else "1,000 eval", v == min(lv))
+    labels = [r[0] for r in rows] + ["Latency p50, clean runs"]
+    ax.set_xlim(0, n_cols)
+    ax.set_ylim(n_rows, -0.55)
+    ax.set_yticks([k + 0.5 for k in range(n_rows)])
+    ax.set_yticklabels(labels)
+    ax.set_xticks([])
+    for j, r in enumerate(runs):  # column header: run color chip (same color as every other figure) + name
+        ax.add_patch(plt.Rectangle((j + 0.08, -0.42), 0.12, 0.22, color=COLOR[r], linewidth=0, clip_on=False))
+        ax.text(j + 0.26, -0.31, name(r), ha="left", va="center", fontsize=8.5, color=INK)
+        ax.text(j + 0.26, -0.1, split_run(r)[1], ha="left", va="center", fontsize=7.5, color=MUTED)
+    ax.axhline(len(rows) + 0.0, color=AXIS, linewidth=0.8)
+    ax.tick_params(length=0)
+    for sp in ax.spines.values():
+        sp.set_visible(False)
+    ax.set_title("Eval results, 1,000 queries (decoding tuned per model on dev)", pad=6)
+    save(fig, "eval_results.svg", "Bold: best run in the row. Shade: position between the row's worst (light) and "
+                                  "best (dark) run; for latency, faster is darker. Small text: 95% Wilson interval, "
+                                  "or where the latency comes from.")
+
+
 # ---------------------------------------------------------------- 1. accuracy vs latency
 def fig_accuracy_latency():
     fig, ax = plt.subplots(figsize=(7.2, 4.4))
@@ -589,7 +653,7 @@ def fig_scheme_ablation():
                                             "group decision into the group questions (other_product option).")
 
 
-FIGURES = [fig_accuracy_latency, fig_accuracy_by_part, fig_mcnemar, fig_calibration, fig_difficulty,
+FIGURES = [fig_eval_table, fig_accuracy_latency, fig_accuracy_by_part, fig_mcnemar, fig_calibration, fig_difficulty,
            fig_latency_questions, fig_tuning, fig_filter_attributes, fig_word_roles, fig_dataset, fig_scheme_ablation]
 
 

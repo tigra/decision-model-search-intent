@@ -47,17 +47,10 @@ NAMES = {
 COLOR = {run: PALETTE[i] for i, run in enumerate(EVAL_RUNS)}
 MARKER = {"ollama": "o", "ollaya": "s", "decider": "D", "mlx": "^", "jev": "P"}
 
-# Latency measured with nothing else running. Eval runs of tev1 4B, jeb and winnow overlapped CPU jobs, so
-# their clean numbers come from the 30-query benchmark (make bench); the other runs ran alone.
-CLEAN_LATENCY = {
-    "embedded@ollama:nimble": ("eval", None),
-    "router@ollama:nimble": ("eval", None),
-    "embedded@ollama:tev1": ("bench", "results/bench/ollama-tev1.jsonl"),
-    "embedded@ollama:tev1:0.8b": ("eval", None),
-    "embedded@ollaya:jeb:4b": ("bench", "results/bench/ollaya-jeb-4b.jsonl"),
-    "embedded@ollaya:winnow:e4b": ("bench", "results/bench/ollaya-winnow-e4b.jsonl"),
-    "embedded@decider:strands-decider-2b": ("eval", None),
-}
+# Latency comes from the 1,000-query eval runs. tev1 4B's eval overlapped CPU jobs: at the same question count
+# it is ~19% slower than in a 30-query run with nothing else running (results/bench/ollama-tev1.jsonl), so it is
+# labeled. jeb and winnow overlapped too but match their clean benchmarks (within 1%).
+INFLATED = {"embedded@ollama:tev1": "inflated ~19%"}
 
 
 def name(run):
@@ -121,10 +114,9 @@ def metrics(run, split="eval", tuned=True):
     return _METRICS[key]
 
 
-def clean_latencies(run):
-    kind, path = CLEAN_LATENCY.get(run, ("eval", None))
-    P = preds(run, "eval") if kind == "eval" else [json.loads(l) for l in open(path)]
-    return [p["pred"]["latency_s"] for p in P], [p["pred"]["n_questions"] for p in P], kind
+def eval_latencies(run):
+    P = preds(run, "eval")
+    return [p["pred"]["latency_s"] for p in P], [p["pred"]["n_questions"] for p in P]
 
 
 def prop(k_n):
@@ -151,8 +143,7 @@ def fig_eval_table():
     cells = [[fn(by_run[r]) for r in runs] for _, fn, _ in rows]
     lat = []
     for r in runs:
-        values, _, kind = clean_latencies(r)
-        lat.append((statistics.median(values), kind))
+        lat.append((statistics.median(eval_latencies(r)[0]), INFLATED.get(r)))
     cmap = LinearSegmentedColormap.from_list("seq", BLUE_RAMP[1:6])  # worst run still gets a visible cell
     n_rows, n_cols = len(rows) + 1, len(runs)
     fig, ax = plt.subplots(figsize=(12.5, 6.2))
@@ -174,10 +165,9 @@ def fig_eval_table():
                  "%.2f–%.2f" % tuple(ci) if ci else None, v == hi_v)
     i = len(rows)  # latency: lower is better, so the fastest run gets the darkest shade
     lv = [v for v, _ in lat]
-    for j, (v, kind) in enumerate(lat):
-        cell(i, j, (max(lv) - v) / ((max(lv) - min(lv)) or 1), "%.1f s" % v,
-             "30-query bench" if kind == "bench" else "1,000 eval", v == min(lv))
-    labels = [r[0] for r in rows] + ["Latency p50, clean runs"]
+    for j, (v, note) in enumerate(lat):
+        cell(i, j, (max(lv) - v) / ((max(lv) - min(lv)) or 1), "%.1f s" % v, note, v == min(lv))
+    labels = [r[0] for r in rows] + ["Latency p50"]
     ax.set_xlim(0, n_cols)
     ax.set_ylim(n_rows, -0.55)
     ax.set_yticks([k + 0.5 for k in range(n_rows)])
@@ -193,8 +183,8 @@ def fig_eval_table():
         sp.set_visible(False)
     ax.set_title("Eval results, 1,000 queries (decoding tuned per model on dev)", pad=6)
     save(fig, "eval_results.svg", "Bold: best run in the row. Shade: position between the row's worst (light) and "
-                                  "best (dark) run; for latency, faster is darker. Small text: 95% Wilson interval, "
-                                  "or where the latency comes from.")
+                                  "best (dark) run; for latency, faster is darker. Small text: 95% Wilson interval. "
+                                  "tev1 4B's latency is inflated by CPU jobs that ran alongside it.")
 
 
 # ---------------------------------------------------------------- 1. accuracy vs latency
@@ -204,13 +194,12 @@ def fig_accuracy_latency():
     for run in EVAL_RUNS:
         m = metrics(run)
         acc, lo, hi = prop(m["full_query_exact_counts"])
-        lat, _, kind = clean_latencies(run)
-        p50 = statistics.median(lat)
+        p50 = statistics.median(eval_latencies(run)[0])
         pts.append((p50, acc, run))
         ax.errorbar(p50, acc, yerr=[[acc - lo], [hi - acc]], fmt="none", ecolor=COLOR[run], elinewidth=1.4, capsize=0)
         ax.scatter(p50, acc, s=70, color=COLOR[run], marker=MARKER[split_run(run)[1]], edgecolor="white",
                    linewidth=2, zorder=3, label=name(run))
-        ax.annotate(name(run), (p50, acc), xytext=(8, 4), textcoords="offset points", fontsize=8.5, color=INK2)
+        ax.annotate(name(run) + (" (latency %s)" % INFLATED[run] if run in INFLATED else ""), (p50, acc), xytext=(8, 4), textcoords="offset points", fontsize=8.5, color=INK2)
     # Pareto frontier: no other run is both faster and more accurate
     front = sorted(p for p in pts if not any(q[0] <= p[0] and q[1] > p[1] for q in pts if q is not p))
     ax.plot([p[0] for p in front], [p[1] for p in front], color=AXIS, linewidth=1.2, zorder=1)
@@ -229,8 +218,8 @@ def fig_accuracy_latency():
                for b, lbl in (("ollama", "Ollama"), ("ollaya", "Ollaya"), ("decider", "Strands Decider server"))]
     ax.legend(handles=handles, title="backend (marker)", loc="lower right", title_fontsize=8.5)
     save(fig, "accuracy_vs_latency.svg",
-         "Whiskers: 95% Wilson intervals. Grey line: Pareto frontier. Latency from runs with nothing else running "
-         "(tev1 4B, jeb, winnow: 30-query benchmark).")
+         "Vertical lines: 95% Wilson intervals of the accuracy. Grey line: Pareto frontier. Latency: p50 over the "
+         "same 1,000 queries.")
 
 
 # ---------------------------------------------------------------- 2. accuracy by part
@@ -438,15 +427,16 @@ def fig_difficulty():
 def fig_latency_questions():
     fig, ax = plt.subplots(figsize=(7.6, 4.6))
     for run in EVAL_RUNS:
-        lat, nq, kind = clean_latencies(run)
+        lat, nq = eval_latencies(run)
         by = defaultdict(list)
         for l, q in zip(lat, nq):
             by[q].append(l)
-        xs = sorted(q for q in by if len(by[q]) >= (3 if kind == "bench" else 10))
+        xs = sorted(q for q in by if len(by[q]) >= 10)
         med = [statistics.median(by[q]) for q in xs]
         ax.scatter(nq, lat, s=6, color=COLOR[run], alpha=0.18, linewidth=0, rasterized=True)
         ax.plot(xs, med, color=COLOR[run], marker=MARKER[split_run(run)[1]], markersize=5,
-                markeredgecolor="white", markeredgewidth=1, label="%s%s" % (name(run), " (bench)" if kind == "bench" else ""))
+                linestyle="--" if run in INFLATED else "-", markeredgecolor="white", markeredgewidth=1,
+                label=name(run) + (" (%s)" % INFLATED[run] if run in INFLATED else ""))
     ax.set_yscale("log")
     ax.set_yticks([1, 2, 5, 10, 20])
     ax.get_yaxis().set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: "%g s" % v))
@@ -455,10 +445,62 @@ def fig_latency_questions():
     ax.set_axisbelow(True)
     ax.set_xlabel("questions in the request (18 fixed + 1 per query word)")
     ax.set_ylabel("latency per query (log scale)")
-    ax.set_title("Latency vs request size, M3 Max")
+    ax.set_title("Latency vs request size, 1,000 eval queries, M3 Max")
     ax.legend(loc="upper left", bbox_to_anchor=(1.01, 1), fontsize=8.5)
-    save(fig, "latency_vs_questions.svg", "Dots: single queries; lines: median per question count. Clean runs "
-                                          "only (tev1 4B, jeb, winnow from the 30-query benchmark).")
+    save(fig, "latency_vs_eval_request_size.svg", "Dots: single queries; lines: median per question count "
+                                                  "(counts with ≥ 10 queries). Question counts vary only with query length.")
+
+
+# ---------------------------------------------------------------- 7b. controlled sweep (make sweep)
+SWEEP_RUNS = [r for r in EVAL_RUNS if not r.startswith("router@")] + ["embedded@mlx:nimble"]  # router: same model
+
+
+def fig_latency_sweep():
+    from sidm.bench import QUERY, sweep_path
+    fig, ax = plt.subplots(figsize=(8.4, 4.8))
+    found = 0
+    for run in SWEEP_RUNS:
+        _, backend, model = split_run(run)
+        path = sweep_path(backend, model)
+        if not path.exists():
+            continue
+        found += 1
+        rows = [json.loads(l) for l in path.read_text().splitlines() if l.strip()]
+        by = defaultdict(list)
+        for r in rows:
+            by[r["n_questions"]].append(r["latency_s"])
+        xs = sorted(by)
+        med = [statistics.median(by[n]) for n in xs]
+        color = COLOR.get(run, INK2)
+        ax.scatter([r["n_questions"] for r in rows], [r["latency_s"] for r in rows], s=7, color=color, alpha=0.3,
+                   linewidth=0)
+        # least-squares slope over N: the cost of one more question
+        mx, my = statistics.mean(xs), statistics.mean(med)
+        slope = sum((x - mx) * (y - my) for x, y in zip(xs, med)) / sum((x - mx) ** 2 for x in xs)
+        ax.plot(xs, med, color=color, marker=MARKER[backend], markersize=4, markeredgecolor="white",
+                markeredgewidth=0.8, linewidth=1.8, label="%s: %+.0f ms per question" % (name(run), 1000 * slope))
+    if not found:
+        plt.close(fig)
+        print("skipped latency_sweep.svg: no results/bench/sweep_*.jsonl (make sweep)")
+        return
+    ax.set_yscale("log")
+    ax.set_yticks([0.5, 1, 2, 5, 10, 20])
+    ax.get_yaxis().set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: "%g s" % v))
+    ax.yaxis.set_minor_formatter(matplotlib.ticker.NullFormatter())
+    ax.yaxis.grid(True)
+    ax.set_axisbelow(True)
+    for x, lbl in ((6, "category"), (18, "filters"), (29, "words")):  # where each question block ends
+        ax.axvline(x + 0.5, color=GRID, linewidth=1, zorder=0)
+        ax.text(x + 0.3, 1.0, lbl, transform=ax.get_xaxis_transform(), ha="right", va="top", fontsize=7.5,
+                color=MUTED)
+    ax.set_xlim(0, 30)
+    ax.set_xlabel("questions sent: the first N of the full request")
+    ax.set_ylabel("latency per request (log scale)")
+    ax.set_title("Latency vs number of questions, controlled sweep, M3 Max")
+    ax.legend(loc="upper left", bbox_to_anchor=(1.01, 1), fontsize=8.5)
+    save(fig, "latency_sweep.svg", 'One request ("%s", 29 questions) sent with its first N questions, 3 times per N '
+                                   "in shuffled order, a different first word each time (no prefill reuse). "
+                                   "Lines: median; slope: least-squares fit of the medians." % QUERY)
 
 
 # ---------------------------------------------------------------- 8. tuning effect
@@ -654,7 +696,7 @@ def fig_scheme_ablation():
 
 
 FIGURES = [fig_eval_table, fig_accuracy_latency, fig_accuracy_by_part, fig_mcnemar, fig_calibration, fig_difficulty,
-           fig_latency_questions, fig_tuning, fig_filter_attributes, fig_word_roles, fig_dataset, fig_scheme_ablation]
+           fig_latency_questions, fig_latency_sweep, fig_tuning, fig_filter_attributes, fig_word_roles, fig_dataset, fig_scheme_ablation]
 
 
 @friendly_main

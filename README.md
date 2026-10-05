@@ -12,6 +12,10 @@ residual:  cheap
 words:     cheap/R grey/F oak/F coffee/C table/C with/F storage/F      (C category, F filter, R residual)
 ```
 
+![Accuracy vs latency](docs/figures/accuracy_vs_latency.svg)
+
+*The main result: share of the 1,000 eval queries parsed exactly right vs p50 latency per query, for every model evaluated. The best accuracy (nimble, 0.42) costs ~16 s per query; the fastest models are 4–7× faster but much less accurate. Details in "Results".*
+
 ## Problem formulation
 **Given:**
 - **A query** `q = w_1 … w_N`: free text split into N whitespace-separated words, possibly with typos.
@@ -74,7 +78,7 @@ One assumption is that Jev's value comes in parallelization of question answerin
 - **Embedding the group decision beats an explicit top-level question:** category 0.917 vs 0.836. The top-level question picked wrong groups confidently.
 - **Other models win on parts.**
   - `winnow:e4b` (Ollaya) has the best category accuracy (0.966) and is fast (6 s), but barely finds residual words.
-  - `tev1` 4B is also better at category (0.942) and ~30% faster, but weaker at filters and word roles.
+  - `tev1` 4B is also better at category (0.942) and ~30% faster (10.7 s in a clean benchmark), but weaker at filters and word roles.
 - **Encoders and small models fail the word-role questions:** their role probabilities are nearly uniform, so they give an effectively constant answer. They can't resolve "role of word N" against the numbered word list in the state.
 - **Latency is dominated by one prefill of the whole question set.** A query takes ~16 s with nimble.
   - Every question's text is in one shared prompt (~5.4k tokens), prefilled once at ~500 tok/s (~11 s). Then each question is answered from a ~13-token suffix (~0.18 s each, sequential).
@@ -334,7 +338,7 @@ make dev BACKEND=jev && make tune BACKEND=jev && make eval BACKEND=jev
 
 *Exact numbers with counts and definitions: [`results/results_eval.md`](results/results_eval.md). Bold marks the best run in each row; darker cells are closer to the row's best (for latency, faster). nimble embedded leads on filters, word roles and the whole query; winnow and tev1 4B on category; tev1 0.8B and Strands Decider on speed.*
 
-- **Latency:** for tev1 4B, jeb and winnow it comes from a clean 30-query benchmark (`make bench`). Their full evals ran in parallel with CPU jobs, which inflated those latencies.
+- **Latency** is the p50 over the same 1,000 queries, one request at a time. tev1 4B's eval ran alongside CPU jobs: at the same question count it is ~19% slower than in a 30-query benchmark with nothing else running (`make bench`: 10.7 s), so its 13.0 s is labeled inflated. jeb's and winnow's evals overlapped too, but match their benchmarks within 1%.
 - **tev1 0.8B is the fastest decoder (2.2 s) but far behind:** whole query 0.090, with near-uniform word roles and no residual words found.
 - **Strands Decider 2B is ~4× faster than nimble (3.9 s vs 15.6 s) but much less accurate** (whole query 0.193).
   - Its engine encodes the state once and adds only each question's suffix, so it avoids re-reading all question texts per query.
@@ -488,11 +492,11 @@ McNemar's test checks whether **two runs scored on the same queries** really dif
   - **Ollaya's models weren't analyzed;** their engines (ONNX, MLX, llama.cpp) score questions differently.
 
 ### All models: latency vs request size
-![Latency vs request size](docs/figures/latency_vs_questions.svg)
+![Latency vs request size on eval](docs/figures/latency_vs_eval_request_size.svg)
 
 *Every model gets slower with each extra question, i.e. each extra query word. nimble goes from ~14 s at 20 questions to ~18 s at 31; Strands Decider from 3.4 s to 5.1 s.*
 
-### Where the time goes: Ollama's server log (nimble)
+### Where the time goes: analyzing Ollama's server log (nimble)
 Below is one nimble request from `~/.ollama/logs/server.log`: an embedded eval query (id 264, "storage furniture with glass doors chrome legs", 25 questions, 16.83 s wall time). Lines are trimmed, and `…` marks omitted lines.
 The request ran as **26 server tasks: one prefill task plus one task per question**.
 

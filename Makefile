@@ -29,7 +29,7 @@ RUN            = $(SCHEME)@$(BACKEND):$(MODEL_RESOLVED)
 PRED           = $(shell $(PY) -c "from sidm.evaluate import pred_path; print(pred_path('$(1)', '$(MODEL_RESOLVED)', '$(SCHEME)', '$(BACKEND)'))" 2>/dev/null)
 LIMIT_ARG      = $(if $(LIMIT),--limit $(LIMIT))
 
-.PHONY: help doctor runs setup schema parse data preview run dev eval tune report bench results mcnemar figures example-doc \
+.PHONY: help doctor runs setup schema parse data preview run dev eval tune report bench sweep results mcnemar figures example-doc \
         ollama-pull ollama-rm ollama-unload mlx-convert mlx-serve mlx-stop ollaya-serve ollaya-pull ollaya-rm ollaya-stop decider-setup decider-serve decider-stop status
 
 help: ## List targets and variables
@@ -83,6 +83,9 @@ report: ## Detailed report (per-attribute, confusions, worst queries) for SPLIT
 bench: ## Clean latency benchmark: first LIMIT (default 30) dev queries, nothing else running
 	$(PY) -u -m sidm.evaluate run --split dev --limit $(or $(LIMIT),30) --backend $(BACKEND) \
 	  --model $(MODEL_RESOLVED) --scheme $(SCHEME) --out "results/bench/$(BACKEND)-$(subst :,-,$(MODEL_RESOLVED)).jsonl"
+
+sweep: ## Latency vs number of questions: one request with its first N questions, N = 1..29, 3 repeats [OVERWRITE=1]
+	$(PY) -u -m sidm.bench --backend $(BACKEND) --model $(MODEL_RESOLVED) $(if $(OVERWRITE),--overwrite)
 
 ##@ Results (from saved predictions; no model calls)
 results: ## Regenerate tables results_{eval,dev}.{md,json}, mcnemar_*.txt, report_eval_*.md, docs/figures (runs: src/sidm/runs.py) [STRICT=1]

@@ -496,9 +496,10 @@ def fig_latency_sweep():
     ax.set_axisbelow(True)
     ax.set_ylim(0, None)
     ax.get_yaxis().set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: "%g s" % v))
-    for lo, hi, lbl in ((1, 6, "category questions"), (7, 18, "filter questions"), (19, 29, "word questions")):
-        if lo > 1:
-            ax.axvline(lo - 0.5, color=AXIS, linewidth=0.8, zorder=0)
+    blocks = ((1, 6, "category questions"), (7, 18, "filter questions"), (19, 29, "word questions"))
+    for k, (lo, hi, lbl) in enumerate(blocks):
+        if k % 2 == 0:  # alternate column bands mark the three question blocks
+            ax.axvspan(lo - 0.5, hi + 0.5, color=BAND, linewidth=0, zorder=0)
         ax.text((lo + hi) / 2, 1.01, lbl, transform=ax.get_xaxis_transform(), ha="center", va="bottom",
                 fontsize=8, color=INK2)
     ax.set_xlim(0.5, 29.5)

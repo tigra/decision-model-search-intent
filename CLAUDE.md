@@ -64,7 +64,7 @@ uv run python -m sidm.schema                  # rebuild data/schema.json and run
 - **Oversized prompts are split automatically.** `ollama_client.system_one_split` handles them, e.g. tev1's 2k context in Ollama.
 - **Per-model tuned decoding** lives in `results/tuned_settings.json` (keys `"<backend>:<model>"`), written by `evaluate tune --apply` on a dev run.
 - **The `jev` backend** is TypeSafe's hosted `/v1/systemone`.
-  - It needs `TYPESAFE_API_KEY`; the base URL is `TYPESAFE_BASE_URL` (default `https://api.typesafe.ai`).
+  - It needs `TYPESAFE_API_KEY`; the base URL is `TYPESAFE_BASE_URL` (default `https://api.typesafe.ai`). Both can live in the git-ignored `.env` at the repo root (template `.env.example`), loaded by `ollama_client.load_env_file()` on import; the environment wins over `.env`. Shell scripts and the Makefile don't read `.env`.
   - The default model is `jev-latest`. Each prediction records the versioned `served_model`.
   - Retries on 429/5xx. `results_table` runs can pin a model: `embedded@jev:jev-1.13.0`.
   - To test the code path without a key, point `TYPESAFE_BASE_URL` at local Ollama with `--model nimble`.

@@ -13,6 +13,37 @@ import sys
 import time
 import urllib.error
 import urllib.request
+from pathlib import Path
+
+ENV_FILE = Path(__file__).resolve().parents[2] / ".env"
+
+
+def load_env_file(path=ENV_FILE):
+    """Set variables from the repo's .env (KEY=value lines; `export`, quotes and # comments allowed).
+    Variables already set in the environment win. Returns the names it set."""
+    if not path.exists():
+        return []
+    loaded = []
+    for line in path.read_text().splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        key = key.strip()
+        if key.startswith("export "):
+            key = key[len("export "):].strip()
+        value = value.strip()
+        if len(value) >= 2 and value[0] == value[-1] and value[0] in "'\"":
+            value = value[1:-1]
+        elif " #" in value:  # inline comment after an unquoted value
+            value = value.split(" #", 1)[0].rstrip()
+        if key and key not in os.environ:
+            os.environ[key] = value
+            loaded.append(key)
+    return loaded
+
+
+ENV_LOADED = load_env_file()  # every entry point imports this module, so .env applies everywhere
 
 HOST = os.environ.get("OLLAMA_HOST_URL", "http://localhost:11434")
 
@@ -58,7 +89,7 @@ class Backend:
             key = os.environ.get(self.api_key_env)
             if not key:
                 raise SidmError("%s is not set (needed for this backend)" % self.api_key_env,
-                                "export %s=<your key>" % self.api_key_env)
+                                "put %s=<your key> in .env (see .env.example), or export it" % self.api_key_env)
             h["Authorization"] = "Bearer " + key
         return h
 

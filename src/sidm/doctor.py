@@ -11,7 +11,7 @@ import shutil
 import urllib.request
 from pathlib import Path
 
-from sidm.ollama_client import BACKENDS, friendly_main
+from sidm.ollama_client import BACKENDS, ENV_FILE, ENV_LOADED, friendly_main
 from sidm.runs import DEV_RUNS, EVAL_RUNS, run_status, split_run
 
 MODELS_DIR = Path(os.environ.get("SIDM_MODELS_DIR", Path.home() / "sidm-models"))
@@ -105,8 +105,10 @@ def main():
     print("\nJev (backend `jev`, %s)" % BACKENDS["jev"].url)
     key = os.environ.get("TYPESAFE_API_KEY")
     state["jev"] = bool(key)
-    _line(OK if key else BAD, "TYPESAFE_API_KEY %s" % ("set" if key else "not set"),
-          None if key else "export TYPESAFE_API_KEY=<key>   (only needed for jev runs; paid API)")
+    source = "from .env" if "TYPESAFE_API_KEY" in ENV_LOADED else "from the environment"
+    _line(OK if key else BAD, "TYPESAFE_API_KEY %s" % ("set (%s)" % source if key else "not set"),
+          None if key else "put TYPESAFE_API_KEY=<key> in %s (cp .env.example .env), or export it   "
+                           "(only needed for jev runs; paid API)" % ENV_FILE.name)
 
     print("\nRuns of the study (src/sidm/runs.py): can they be re-run here?")
     runnable = 0
@@ -129,7 +131,7 @@ def main():
         elif backend == "decider":
             avail, fix = state["decider"], None if state["decider"] else "make decider-serve"
         elif backend == "jev":
-            avail, fix = state["jev"], None if state["jev"] else "export TYPESAFE_API_KEY=<key>"
+            avail, fix = state["jev"], None if state["jev"] else "put TYPESAFE_API_KEY=<key> in .env"
         runnable += avail
         _line(OK if avail else BAD, "%-*s  %s" % (width, run, stored), fix)
     print("\n%d of %d runs can be re-run on this machine right now (one model on the GPU at a time)." % (runnable, len(runs)))

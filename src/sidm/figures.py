@@ -505,7 +505,7 @@ def fig_latency_sweep():
     ax.set_xlim(0.5, 29.5)
     ax.set_xlabel("questions sent: the first N of the full 29-question request")
     ax.set_ylabel("latency per request")
-    ax.set_title("Latency vs number of questions, controlled sweep, M3 Max", pad=20)
+    ax.set_title("Latency vs number of questions, controlled sweep, M3 Max (Jev: hosted API)", pad=20)
     ax.legend(loc="upper left", bbox_to_anchor=(1.01, 1), fontsize=8.5)
     save(fig, "latency_sweep.svg", 'One request ("%s") sent with its first N questions, 3 times per N in shuffled '
                                    "order.\nEvery request starts with a new first word, so no prefill is reused. "

@@ -508,7 +508,7 @@ McNemar's test checks whether **two runs scored on the same queries** really dif
 
 ![Latency vs number of questions, controlled sweep](docs/figures/latency_sweep.svg)
 
-*The controlled sweep (`make sweep`, `src/sidm/bench.py`): one 29-question request sent with only its first N questions, N = 1…29, three times each in shuffled order, one model at a time with nothing else running. Raw data: `results/bench/sweep_<model>.jsonl`.*
+*The controlled sweep (`make sweep`, `src/sidm/bench.py`): one 29-question request sent with only its first N questions, N = 1…29, three times each in shuffled order, one model at a time with nothing else running (Jev: the hosted API, measured from this Mac). Raw data: `results/bench/sweep_<model>.jsonl`.*
 
 What one more question costs, by question type (least-squares slope of the medians over each block):
 
@@ -521,8 +521,10 @@ What one more question costs, by question type (least-squares slope of the media
 | jeb:4b | 0.78 s | 620 ms | 424 ms | 336 ms | 12.8 s |
 | winnow:e4b | 0.90 s | 372 ms | 192 ms | 92 ms | 6.1 s |
 | Strands Decider 2B | 0.28 s | 160 ms | 164 ms | 159 ms | 4.8 s |
+| Jev (hosted, incl. network) | 0.34 s | ~0 ms | ~0 ms | ~0 ms | 0.35 s |
 
 - **For every model except Strands Decider, a question costs roughly in proportion to its text.** Category questions carry long option lists (up to 24 product types each) and cost 2–4× a word question, whose options are just three roles. That fits the shared-prompt layout: all question texts are prefilled for every query.
+- **Jev's latency doesn't depend on the number of questions at all:** 0.34 s for 1 question, 0.35 s for 29, with slopes within ±5 ms per question, i.e. noise. Its questions are evaluated in parallel, or at a cost hidden by the network round trip.
 - **Strands Decider pays a flat ~160 ms per question, whatever the text length.** Its engine forwards each question as its own suffix, so the cost tracks the number of questions, not the total text.
 - **For latency, cut questions with long option lists first.** For nimble on Ollama, one category question costs about as much as three word questions.
 - **Prefill reuse must be ruled out when measuring this.** Ollama's llama.cpp runner keeps up to ~8 GB of earlier prompts in RAM (`cache state: N prompts` in `server.log`) and resumes from the best-matching one, not just the previous one. A first sweep that reused 11 first words in rotation let requests skip up to ~70% of their prefill. The sweep therefore gives every request a never-repeated first word.

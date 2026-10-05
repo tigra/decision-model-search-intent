@@ -14,7 +14,11 @@ words:     cheap/R grey/F oak/F coffee/C table/C with/F storage/F      (C catego
 
 ![Accuracy vs latency](docs/figures/accuracy_vs_latency.svg)
 
-*The main result: share of the 1,000 eval queries parsed exactly right vs p50 latency per query, for every model evaluated. TypeSafe's hosted Jev is both the most accurate (0.535) and the fastest (0.3 s, including the network). Among local models on the M3 Max, accuracy costs time: nimble reaches 0.42 at ~16 s, and the 4–7× faster models are much less accurate. Details in "Results".*
+## TL;DR
+The main results: 
+* TypeSafe's hosted Jev is both the *most accurate* and *the fastest* (~0.3 s, including the network).
+* Jev's latency is really flat, unlike in local models
+* Among local models on the M3 Max, accuracy costs time: nimble reaches 0.42 at ~16 s, and the 4–7× faster models are much less accurate.
 
 ## Problem formulation
 **Given:**
@@ -345,6 +349,10 @@ make dev BACKEND=jev && make tune BACKEND=jev && make eval BACKEND=jev
 
 *Exact numbers with counts and definitions: [`results/results_eval.md`](results/results_eval.md). Bold marks the best run in each row; darker cells are closer to the row's best (for latency, faster). Jev leads every row except residual words (tev1 4B). Among local runs, nimble embedded leads on filters, word roles and the whole query; winnow and tev1 4B on category; tev1 0.8B and Strands Decider on speed.*
 
+- **Low "whole query exactly right" scores are expected, for every model.** It's the strictest possible measure: one query counts only if the category node, the whole filter set and the role of every single word are all right.
+  - **Errors compound across the parts.** nimble embedded gets the category right on 0.917 of the queries, the filter set on 0.770, and every residual word on 0.527. Jev gets 0.987, 0.800 and 0.651. Multiplied, that's 0.37 and 0.51, close to their whole-query scores of 0.424 and 0.535 (errors are somewhat correlated, so the real score is a bit higher than the product).
+  - **The word roles are the bottleneck.** A 7-word query needs 7 roles right, and the boundary between filter, category and residual words follows the dataset's labeling convention (e.g. "furniture" is residual, "with" in "with storage" belongs to the filter). The models are used as they are, never trained on that convention.
+  - **So compare runs with each other, and per part,** rather than reading whole-query accuracy as "how often the parse is usable". A search engine would act on the category and filters, which are right far more often.
 - **Latency** is the p50 over the same 1,000 queries, one request at a time. tev1 4B's eval ran alongside CPU jobs: at the same question count it is ~19% slower than in a 30-query benchmark with nothing else running (`make bench`: 10.7 s), so its 13.0 s is labeled inflated. jeb's and winnow's evals overlapped too, but match their benchmarks within 1%.
 - **tev1 0.8B is the fastest decoder (2.2 s) but far behind:** whole query 0.090, with near-uniform word roles and no residual words found.
 - **Strands Decider 2B is ~4× faster than nimble (3.9 s vs 15.6 s) but much less accurate** (whole query 0.193).

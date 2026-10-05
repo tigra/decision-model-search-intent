@@ -239,7 +239,9 @@ PARTS = [
 
 
 def fig_accuracy_by_part():
-    fig, ax = plt.subplots(figsize=(7.6, 4.8))
+    # accuracy rows share a 0-1 axis; latency gets its own panel and log axis below (never a second y-axis)
+    fig, (ax, lat_ax) = plt.subplots(2, 1, figsize=(7.6, 6.0), gridspec_kw={"height_ratios": [len(PARTS), 1.25],
+                                                                            "hspace": 0.32})
     runs = EVAL_RUNS
     for i, (label, fn) in enumerate(PARTS):
         y0 = len(PARTS) - 1 - i
@@ -262,8 +264,29 @@ def fig_accuracy_by_part():
     ax.spines["left"].set_visible(False)
     ax.set_title("Who wins which part, 1,000 eval queries")
     ax.legend(loc="upper left", bbox_to_anchor=(1.01, 1), fontsize=8.5)
-    save(fig, "accuracy_by_part.svg", "Lines: 95% Wilson intervals (proportions only; F1 has none). "
-                                       "Decoding tuned per model on dev.")
+
+    lat_ax.axhspan(-0.5, 0.5, color=BAND, linewidth=0, zorder=0)  # continues the row banding
+    for j, run in enumerate(runs):
+        p50 = statistics.median(eval_latencies(run)[0])
+        y = (j - (len(runs) - 1) / 2) * 0.1
+        lat_ax.scatter(p50, y, s=42, color=COLOR[run], marker=MARKER[split_run(run)[1]],
+                       facecolor="white" if run in INFLATED else COLOR[run], edgecolor=COLOR[run] if run in INFLATED
+                       else "white", linewidth=1.5, zorder=3)
+    lat_ax.set_xscale("log")
+    lat_ax.set_xticks([0.3, 0.5, 1, 2, 5, 10, 20])
+    lat_ax.get_xaxis().set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: "%g s" % v))
+    lat_ax.xaxis.set_minor_formatter(matplotlib.ticker.NullFormatter())
+    lat_ax.set_xlim(0.2, 26)
+    lat_ax.set_ylim(-0.5, 0.5)
+    lat_ax.set_yticks([0])
+    lat_ax.set_yticklabels(["Latency p50\n(lower is better)"])
+    lat_ax.tick_params(axis="y", length=0)
+    lat_ax.xaxis.grid(True)
+    lat_ax.set_axisbelow(True)
+    lat_ax.spines["left"].set_visible(False)
+    save(fig, "accuracy_by_part.svg", "Lines: 95% Wilson intervals (proportions only; F1 has none). Decoding tuned "
+                                       "per model on dev.\nLatency: log scale, own axis; hollow = inflated by CPU jobs "
+                                       "running alongside (tev1 4B); Jev is a hosted API incl. network.")
 
 
 # ---------------------------------------------------------------- 4. McNemar heatmaps

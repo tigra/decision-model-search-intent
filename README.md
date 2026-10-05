@@ -365,7 +365,7 @@ make dev BACKEND=jev && make tune BACKEND=jev && make eval BACKEND=jev
 
 ![Accuracy by part](docs/figures/accuracy_by_part.svg)
 
-*Jev leads on every part except residual words. Among local models none wins every part: winnow and tev1 4B lead on category, nimble on filters, word roles and the whole query. Residual words separate the models most: from 0 (tev1 0.8B) to 0.74 (tev1 4B).*
+*Jev leads on every part except residual words. Among local models none wins every part: winnow and tev1 4B lead on category, nimble on filters, word roles and the whole query. Residual words separate the models most: from 0 (tev1 0.8B) to 0.74 (tev1 4B). The bottom panel adds each run's p50 latency on its own log axis.*
 
 ![Accuracy by difficulty](docs/figures/accuracy_by_difficulty.svg)
 

@@ -285,7 +285,7 @@ make parse BACKEND=mlx
 ### Other models on Ollama (tev1)
 `make ollama-pull MODEL=tev1`, then `make parse MODEL=tev1`.
 - **Ollama renders tev1 like nimble,** with one shared prompt holding every question (~5.4k tokens). But tev1's context is ~2k tokens.
-- **The client splits the request automatically.** The server answers `prompt has N tokens; expected 1–M`, so the client cuts the questions into balanced chunks that fit and merges the answers: 7–8 requests per query for tev1.
+- **The client splits the request automatically.** The server answers `prompt has N tokens; expected 1–M`, so the client cuts the questions into balanced chunks that fit and merges the answers: 6–7 requests per query for tev1 on dev. In the eval runs the client kept the largest split it had needed (11) for all later queries, so most eval queries went out as 8–11 requests; this costs ~3% latency (measured in the sweep below) and is fixed for new runs.
   - The chunk count is learned once per model.
   - Each prediction records `n_requests`, and latency is the sum of the requests.
 
@@ -485,16 +485,37 @@ McNemar's test checks whether **two runs scored on the same queries** really dif
 - **Jev needs `TYPESAFE_API_KEY` and is a paid API.** Start with `LIMIT=5`.
 
 ## Latency analysis
-- **All models were timed end to end:** p50 latencies are in "Results", and the figure below shows latency vs request size.
+- **All models were timed end to end:** p50 latencies are in "Results". Two figures below show latency vs request size: as it varies naturally over the eval queries, and in a controlled sweep over the number of questions.
 - **Only `nimble` was analyzed step by step:** on Ollama from its llama.cpp server log, and on MLX from nimble's own `ParallelScorer` timings. Every subsection below that is marked "(nimble)" covers nimble only.
-  - **tev1 should behave much the same:** Ollama renders it with the same shared prompt, split into 7–8 requests because of its 2k context.
+  - **tev1 should behave much the same:** Ollama renders it with the same shared prompt, split into several requests because of its 2k context.
   - **Strands Decider is compared only by its source code and total time** (the timeline and layout diagrams below). Its server's steps weren't timed.
   - **Ollaya's models weren't analyzed;** their engines (ONNX, MLX, llama.cpp) score questions differently.
 
 ### All models: latency vs request size
 ![Latency vs request size on eval](docs/figures/latency_vs_eval_request_size.svg)
 
-*Every model gets slower with each extra question, i.e. each extra query word. nimble goes from ~14 s at 20 questions to ~18 s at 31; Strands Decider from 3.4 s to 5.1 s.*
+*Over the eval queries, every model gets slower with each extra question, i.e. each extra query word. nimble goes from ~14 s at 20 questions to ~18 s at 31; Strands Decider from 3.4 s to 5.1 s. The question count here varies only with query length (19–34).*
+
+![Latency vs number of questions, controlled sweep](docs/figures/latency_sweep.svg)
+
+*The controlled sweep (`make sweep`, `src/sidm/bench.py`): one 29-question request sent with only its first N questions, N = 1…29, three times each in shuffled order, one model at a time with nothing else running. Raw data: `results/bench/sweep_<model>.jsonl`.*
+
+What one more question costs, by question type (least-squares slope of the medians over each block):
+
+| Model | 1 question | per category question (1–6) | per filter question (7–18) | per word question (19–29) | all 29 |
+|---|---|---|---|---|---|
+| nimble (Ollama) | 1.80 s | 951 ms | 595 ms | 304 ms | 17.6 s |
+| nimble (MLX) | 2.14 s | 1,146 ms | 721 ms | 262 ms | 18.7 s |
+| tev1 4B | 1.02 s | 601 ms | 390 ms | 237 ms | 11.5 s |
+| tev1 0.8B | 0.21 s | 134 ms | 86 ms | 55 ms | 2.6 s |
+| jeb:4b | 0.78 s | 620 ms | 424 ms | 336 ms | 12.8 s |
+| winnow:e4b | 0.90 s | 372 ms | 192 ms | 92 ms | 6.1 s |
+| Strands Decider 2B | 0.28 s | 160 ms | 164 ms | 159 ms | 4.8 s |
+
+- **For every model except Strands Decider, a question costs roughly in proportion to its text.** Category questions carry long option lists (up to 24 product types each) and cost 2–4× a word question, whose options are just three roles. That fits the shared-prompt layout: all question texts are prefilled for every query.
+- **Strands Decider pays a flat ~160 ms per question, whatever the text length.** Its engine forwards each question as its own suffix, so the cost tracks the number of questions, not the total text.
+- **For latency, cut questions with long option lists first.** For nimble on Ollama, one category question costs about as much as three word questions.
+- **Prefill reuse must be ruled out when measuring this.** Ollama's llama.cpp runner keeps up to ~8 GB of earlier prompts in RAM (`cache state: N prompts` in `server.log`) and resumes from the best-matching one, not just the previous one. A first sweep that reused 11 first words in rotation let requests skip up to ~70% of their prefill. The sweep therefore gives every request a never-repeated first word.
 
 ### Where the time goes: analyzing Ollama's server log (nimble)
 Below is one nimble request from `~/.ollama/logs/server.log`: an embedded eval query (id 264, "storage furniture with glass doors chrome legs", 25 questions, 16.83 s wall time). Lines are trimmed, and `…` marks omitted lines.
@@ -579,8 +600,9 @@ This is read from the log. The prompt format is confirmed by nimble's source.
 4. **The questions are answered one after another,** not in parallel.
    - All tasks run on one slot. Each restores the 50 MB checkpoint, processes its suffix and reads the answer.
    - At ~16 ms per token, these tiny suffixes are ~8× less efficient than the bulk prefill (~2 ms per token).
-5. **Nothing carries over between queries.**
-   - The query comes right after the 86-token preamble, so consecutive queries share only 86 tokens.
+5. **Nothing carries over between different queries.**
+   - The query comes right after the 86-token preamble, so different queries share only 86 tokens with any earlier prompt.
+   - Ollama does keep a RAM cache of earlier prompts (up to ~8 GB) and resumes from the best match. That helps only when a prompt repeats an earlier one beyond the preamble: the same query again, or a query starting with the same words.
    - nimble's hybrid/recurrent memory can only be restored from checkpoints, not cut back to an arbitrary prefix.
    - The reported `input_tokens` (~130k) charges every question the full prompt. The actual compute is one ~5.4k prefill plus 25 short suffixes.
 

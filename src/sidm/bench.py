@@ -27,6 +27,7 @@ from sidm.parser import build_request
 QUERY = "grey mid century modern sectional with oak legs cheap free shipping"  # 11 words -> 29 questions
 NONCE = "%04x" % random.SystemRandom().randrange(16 ** 4)  # new per process: no reuse across runs either
 SCHEME = "embedded"
+PROBE_OFFSET = 500  # probe requests get first words no timed request uses
 
 
 def sweep_path(backend, model):
@@ -73,7 +74,14 @@ def main():
     with open(out, "a") as f:
         for i, (k, n, rep) in enumerate(todo, 1):
             query, state, questions = request(k, n)
-            resp, latency, n_requests = system_one_split(model, state, questions, backend=args.backend)
+            # Fewest requests that fit this N (tev1's 2k context in Ollama), not the split learned for a larger N.
+            # Found with a probe that has its own first word: the chunks a failed try sends are prefilled and land
+            # in the prompt cache, which the timed request must not be able to reuse.
+            split = None
+            if args.backend == "ollama":
+                _, probe_state, _ = request(k + PROBE_OFFSET, n)
+                split = system_one_split(model, probe_state, questions, backend=args.backend, learned=False)[2]
+            resp, latency, n_requests = system_one_split(model, state, questions, backend=args.backend, start=split)
             row = {"backend": args.backend, "model": model, "served_model": resp.get("model"), "query": query,
                    "n_questions": n, "repeat": rep, "order": k, "latency_s": latency, "n_requests": n_requests,
                    "usage": resp.get("usage"), "server_metrics": resp.get("metrics")}

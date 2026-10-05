@@ -457,7 +457,7 @@ SWEEP_RUNS = [r for r in EVAL_RUNS if not r.startswith("router@")] + ["embedded@
 
 def fig_latency_sweep():
     from sidm.bench import QUERY, sweep_path
-    fig, ax = plt.subplots(figsize=(8.4, 4.8))
+    fig, ax = plt.subplots(figsize=(8.8, 5.0))
     found = 0
     for run in SWEEP_RUNS:
         _, backend, model = split_run(run)
@@ -474,33 +474,29 @@ def fig_latency_sweep():
         color = COLOR.get(run, INK2)
         ax.scatter([r["n_questions"] for r in rows], [r["latency_s"] for r in rows], s=7, color=color, alpha=0.3,
                    linewidth=0)
-        # least-squares slope over N: the cost of one more question
-        mx, my = statistics.mean(xs), statistics.mean(med)
-        slope = sum((x - mx) * (y - my) for x, y in zip(xs, med)) / sum((x - mx) ** 2 for x in xs)
         ax.plot(xs, med, color=color, marker=MARKER[backend], markersize=4, markeredgecolor="white",
-                markeredgewidth=0.8, linewidth=1.8, label="%s: %+.0f ms per question" % (name(run), 1000 * slope))
+                markeredgewidth=0.8, linewidth=1.8, label="%s: %.1f s at N=%d" % (name(run), med[-1], xs[-1]))
     if not found:
         plt.close(fig)
         print("skipped latency_sweep.svg: no results/bench/sweep_*.jsonl (make sweep)")
         return
-    ax.set_yscale("log")
-    ax.set_yticks([0.5, 1, 2, 5, 10, 20])
-    ax.get_yaxis().set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: "%g s" % v))
-    ax.yaxis.set_minor_formatter(matplotlib.ticker.NullFormatter())
     ax.yaxis.grid(True)
     ax.set_axisbelow(True)
-    for x, lbl in ((6, "category"), (18, "filters"), (29, "words")):  # where each question block ends
-        ax.axvline(x + 0.5, color=GRID, linewidth=1, zorder=0)
-        ax.text(x + 0.3, 1.0, lbl, transform=ax.get_xaxis_transform(), ha="right", va="top", fontsize=7.5,
-                color=MUTED)
-    ax.set_xlim(0, 30)
-    ax.set_xlabel("questions sent: the first N of the full request")
-    ax.set_ylabel("latency per request (log scale)")
-    ax.set_title("Latency vs number of questions, controlled sweep, M3 Max")
+    ax.set_ylim(0, None)
+    ax.get_yaxis().set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: "%g s" % v))
+    for lo, hi, lbl in ((1, 6, "category questions"), (7, 18, "filter questions"), (19, 29, "word questions")):
+        if lo > 1:
+            ax.axvline(lo - 0.5, color=AXIS, linewidth=0.8, zorder=0)
+        ax.text((lo + hi) / 2, 1.01, lbl, transform=ax.get_xaxis_transform(), ha="center", va="bottom",
+                fontsize=8, color=INK2)
+    ax.set_xlim(0.5, 29.5)
+    ax.set_xlabel("questions sent: the first N of the full 29-question request")
+    ax.set_ylabel("latency per request")
+    ax.set_title("Latency vs number of questions, controlled sweep, M3 Max", pad=20)
     ax.legend(loc="upper left", bbox_to_anchor=(1.01, 1), fontsize=8.5)
-    save(fig, "latency_sweep.svg", 'One request ("%s", 29 questions) sent with its first N questions, 3 times per N '
-                                   "in shuffled order, a different first word each time (no prefill reuse). "
-                                   "Lines: median; slope: least-squares fit of the medians." % QUERY)
+    save(fig, "latency_sweep.svg", 'One request ("%s") sent with its first N questions, 3 times per N in shuffled '
+                                   "order.\nEvery request starts with a new first word, so no prefill is reused. "
+                                   "Dots: single requests; lines: median." % QUERY)
 
 
 # ---------------------------------------------------------------- 8. tuning effect

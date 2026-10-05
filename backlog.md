@@ -59,6 +59,7 @@ Checks:
    - Check: the order (preamble → state → questions → key → answer cue), the separator token, whether the ~9-token cue is the ChatML assistant header with an empty think block, and how options are labelled (letters?).
 
 3. **Latency vs number of questions.** This would turn the log-based breakdown into a measured cost model.
+   - **Sweep A is done** for all 7 models (`make sweep`, README "All models: latency vs request size"). Still open: fit `a + b · prefill_tokens + c · N` from the server log per request, and sweeps B and C.
    - **Is there caching between queries?** Only when two consecutive prompts share a long prefix.
      - Between our normal queries there is effectively none: the shared prefix is 86 tokens (`sim = 0.016 (86/5450)`), and llama.cpp logs "forcing full prompt re-processing".
      - Re-sending an identical request *is* cached: it took 5.8 s instead of 15 s, because the previous prefill's checkpoint matches.

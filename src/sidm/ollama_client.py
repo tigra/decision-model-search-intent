@@ -185,19 +185,22 @@ def _chunks(names, k):
     return [names[i:i + size] for i in range(0, len(names), size)]
 
 
-def system_one_split(model, state, questions, backend="ollama", **kw):
+def system_one_split(model, state, questions, backend="ollama", learned=True, start=None, **kw):
     """Like system_one, but splits the questions over several requests when the rendered prompt exceeds the
     model's context (e.g. tev1's 2k window in Ollama; the server reports `has N tokens; expected 1–M`).
 
     Questions are answered independently anyway; a split only removes the other questions from the context.
-    Returns (merged_response, summed_latency_of_successful_requests, n_requests).
+    The split that worked is remembered per (backend, model) and tried first next time. `learned=False` starts
+    from one request instead (the fewest requests for this question set); `start` forces the first try.
+    Returns (merged_response, summed_latency_of_successful_requests, n_requests actually sent).
     """
     names = list(questions)
-    k = _LEARNED_CHUNKS.get((backend, model), 1)
+    k = start or (_LEARNED_CHUNKS.get((backend, model), 1) if learned else 1)
     while True:
         answers, usage, latency, models = {}, {"input_tokens": 0, "output_tokens": 0}, 0.0, set()
+        parts = _chunks(names, k)
         try:
-            for part in _chunks(names, k):
+            for part in parts:
                 resp, lat = system_one(model, state, {n: questions[n] for n in part}, backend=backend, **kw)
                 answers.update(resp["answers"])
                 for key in usage:
@@ -213,5 +216,8 @@ def system_one_split(model, state, questions, backend="ollama", **kw):
             k = min(len(names), max(k + 1, math.ceil(k * have / (limit * 0.8))))
             _LEARNED_CHUNKS[(backend, model)] = k
             continue
-        resp = {"model": "/".join(sorted(m for m in models if m)), "answers": answers, "usage": usage}
-        return resp, latency, k
+        merged = {"model": "/".join(sorted(m for m in models if m)), "answers": answers, "usage": usage}
+        if len(parts) == 1 and "metrics" in resp:  # server-side timings (mlx backend) are per request
+            merged["metrics"] = resp["metrics"]
+        resp = merged
+        return resp, latency, len(parts)

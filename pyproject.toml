@@ -13,3 +13,7 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/sidm"]
+
+[dependency-groups]
+# only for `make figures` (docs/figures/*.svg); the package itself stays stdlib-only
+figures = ["matplotlib>=3.8"]

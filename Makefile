@@ -29,7 +29,7 @@ RUN            = $(SCHEME)@$(BACKEND):$(MODEL_RESOLVED)
 PRED           = $(shell $(PY) -c "from sidm.evaluate import pred_path; print(pred_path('$(1)', '$(MODEL_RESOLVED)', '$(SCHEME)', '$(BACKEND)'))" 2>/dev/null)
 LIMIT_ARG      = $(if $(LIMIT),--limit $(LIMIT))
 
-.PHONY: help doctor runs setup schema parse data preview run dev eval tune report bench results mcnemar example-doc \
+.PHONY: help doctor runs setup schema parse data preview run dev eval tune report bench results mcnemar figures example-doc \
         ollama-pull ollama-rm ollama-unload mlx-convert mlx-serve mlx-stop ollaya-serve ollaya-pull ollaya-rm ollaya-stop decider-setup decider-serve decider-stop status
 
 help: ## List targets and variables
@@ -85,11 +85,14 @@ bench: ## Clean latency benchmark: first LIMIT (default 30) dev queries, nothing
 	  --model $(MODEL_RESOLVED) --scheme $(SCHEME) --out "results/bench/$(BACKEND)-$(subst :,-,$(MODEL_RESOLVED)).jsonl"
 
 ##@ Results (from saved predictions; no model calls)
-results: ## Regenerate tables results_{eval,dev}.{md,json}, mcnemar_*.txt, report_eval_*.md (runs: src/sidm/runs.py) [STRICT=1]
+results: ## Regenerate tables results_{eval,dev}.{md,json}, mcnemar_*.txt, report_eval_*.md, docs/figures (runs: src/sidm/runs.py) [STRICT=1]
 	scripts/make_results.sh $(if $(STRICT),--strict)
 
 mcnemar: ## Print the pairwise McNemar tests of results/results_SPLIT.json [METRIC=category|full] [SIG=1]
 	@$(PY) -m sidm.results_table --show-tests results/results_$(SPLIT).json $(if $(METRIC),--metric $(METRIC)) $(if $(SIG),--significant)
+
+figures: ## Redraw the README figures docs/figures/*.svg from shipped results (needs matplotlib: uv group `figures`)
+	uv run --group figures python -m sidm.figures
 
 example-doc: ## Rebuild docs/example_request.md from cached responses
 	$(PY) -m sidm.example_doc

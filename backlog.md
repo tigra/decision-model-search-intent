@@ -19,6 +19,8 @@ Ideas deliberately left out of the first experiment.
 - Real query logs, or LLM-paraphrased hard cases (ambiguity: "oak" as material vs leg material, "storage bench").
 - Multilingual queries; heavier typo noise.
 
+- **"furniture" in queries without a product type.** Gold labels it residual ("modern plastic furniture"), but every model tags it as category, so no run gets any of the 48 no-category eval queries right (docs/figures/accuracy_by_difficulty.svg). Decide the convention (a category word for the root, or a stop word) and relabel, or describe it in the word-role question.
+
 ## Serving
 - Concurrency / throughput tests (`OLLAMA_NUM_PARALLEL`), batching several queries per request as separate question groups.
 - Question-count vs latency curve; caching of the static criteria prefix.
@@ -198,3 +200,7 @@ Follow-ups:
 - **Question style.** Its training data probably favours short, self-contained questions. Try one category question per L2 group, or fewer options with clearer descriptions.
 - **Combinations.** Use it as a fast first stage (category group), or try it on just the filter questions.
 - **`--device mps` vs `mlx`** latency, and a check of the `num_slots` limit: we use ≤ 24 options and all were accepted.
+
+## Figures (docs/figures, `make figures`)
+- Interactive versions (hover tooltips) as a published HTML page; the SVGs are static.
+- Add a jev column to every figure once the Jev run exists (EVAL_RUNS order fixes its color).

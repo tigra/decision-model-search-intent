@@ -90,6 +90,7 @@ uv run python -m sidm.schema                  # rebuild data/schema.json and run
 - **Don't run qwen3 generation and nimble at the same time.** Ollama won't swap models while one is busy, and memory is tight (36 GB, heavy swapping). Generation uses `num_ctx=4096` for the same reason.
 - **Manual gold fixes:** rows marked `manual_fix` in `flags` were corrected by hand. The original file is `data/eval_raw.before_review.jsonl`, and `data/REVIEW.md` records the dataset review.
 - **Synthetic data:** the category tree must be a **product-type ontology, not room-based**. Rooms are only an attribute.
+- **Figures:** `src/sidm/figures.py` (`make figures`, matplotlib from the uv group `figures`; the package stays stdlib-only) draws `docs/figures/*.svg` from shipped files only. Colors are fixed per run in `EVAL_RUNS` order; clean latency comes from `results/bench/` for tev1 4B, jeb and winnow (`CLEAN_LATENCY`). Output is deterministic (fixed hashsalt, no date).
 - **Run registry:** `src/sidm/runs.py` (`EVAL_RUNS`, `DEV_RUNS`) defines the runs in the shipped tables; `make results` builds them via `results_table --preset`, plus the readable tests `results/mcnemar_*.txt`.
 - **Prediction file names** come only from `evaluate.pred_path` (`results/<split>_<label>_<scheme>.jsonl`). Colons in model tags become `-` in file names (`tev1:0.8b` → `tev1-0.8b`), while run names keep them (`embedded@ollama:tev1:0.8b`).
 - **Runs resume** (completed queries are skipped). `OVERWRITE=1` (`--overwrite`) deletes a run's stored predictions for the split and re-runs it from scratch.

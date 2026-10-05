@@ -72,7 +72,7 @@ One assumption is that Jev's value comes in parallelization of question answerin
   - It's significantly better on the whole query than every other run (McNemar p < 0.001), mainly thanks to filters and word roles.
 - **Embedding the group decision beats an explicit top-level question:** category 0.917 vs 0.836. The top-level question picked wrong groups confidently.
 - **Other models win on parts.**
-  - `winnow:e4b` (Ollaya) has the best category accuracy (0.966) and is fastest (6 s), but barely finds residual words.
+  - `winnow:e4b` (Ollaya) has the best category accuracy (0.966) and is fast (6 s), but barely finds residual words.
   - `tev1` 4B is also better at category (0.942) and ~30% faster, but weaker at filters and word roles.
 - **Encoders and small models fail the word-role questions:** their role probabilities are nearly uniform, so they give an effectively constant answer. They can't resolve "role of word N" against the numbered word list in the state.
 - **Latency is dominated by one prefill of the whole question set.** A query takes ~16 s with nimble.
@@ -109,6 +109,11 @@ To re-run models and check the numbers, see "Reproducing the results" below.
   - **dev** = ids 0–99, used for all tuning.
   - **eval** = ids 100–1099, 1,000 queries.
 - **Review:** `data/REVIEW.md` records the manual review and a few hand fixes. `data/preview.txt` is a readable dump (`make preview`).
+
+
+![Dataset statistics](docs/figures/dataset_stats.svg)
+
+*Most queries name an L2 or L3 product type and 1–2 filters; queries are 4–6 words long typically, up to 11+.*
 
 ## Request design
 ### Request shape
@@ -216,6 +221,14 @@ The decoder lives in `src/sidm/parser.py`.
 
 **Eval is never used for tuning.** Dev results are optimistic because dev is the tuning set.
 
+![Calibration of raw probabilities](docs/figures/calibration_eval.svg)
+
+*Why thresholds are tuned per model: models are calibrated very differently. nimble's and tev1 4B's filter probabilities are close to honest (ECE ≤ 0.01). Strands Decider and tev1 0.8B are under-confident on filters (curve above the diagonal), so a high threshold would throw away correct filters. jeb and winnow are over-confident on word roles (curve below the diagonal).*
+
+![Effect of tuning](docs/figures/tuning_effect.svg)
+
+*Left: tuning helps every run except winnow, most of all nimble router (+0.18, from group-max category decoding) and jeb (+0.13). Right: for nimble, the filter threshold trades recall for precision; F1 peaks near the chosen 0.95.*
+
 ## Backends and models
 The same request can be served by five ablatable backends (`--backend`). A run is named `<scheme>@<backend>:<model>`, e.g. `embedded@ollaya:jeb:4b`.
 
@@ -312,6 +325,7 @@ make dev BACKEND=jev && make tune BACKEND=jev && make eval BACKEND=jev
 - **Per-query predictions with raw answers:** `results/<split>_<label>_<scheme>.jsonl`.
 - **Readable significance tests:** `results/mcnemar_eval.txt` and `results/mcnemar_dev.txt`, every pair of runs with the winner or "no significant difference".
 - **Detailed per-run reports:** `results/report_eval_<run>.md`, one per eval run, e.g. [`report_eval_nimble_embedded.md`](results/report_eval_nimble_embedded.md). Each has per-attribute filter scores, the word-role confusion matrix, the top category confusions and the 20 worst queries with gold vs predicted parse.
+- **Figures:** `docs/figures/*.svg`, drawn from the shipped files by `make figures` (`src/sidm/figures.py`; also part of `make results`).
 
 ### Eval: 1,000 queries (decoding tuned per model on dev)
 | Metric (measure) | nimble embedded (ollama) | nimble router (ollama) | tev1 4B (ollama) | tev1 0.8B (ollama) | jeb:4b (ollaya) | winnow:e4b (ollaya) | Strands Decider 2B (decider) |
@@ -335,6 +349,27 @@ make dev BACKEND=jev && make tune BACKEND=jev && make eval BACKEND=jev
 - **On category, winnow:e4b and tev1 4B are significantly better than nimble** (p < 0.0001 and p = 0.002). jeb:4b ties nimble on category (p = 1.0).
 - **jeb:4b beats tev1 4B on the whole query** (116 vs 87 queries, p = 0.049), but tev1 is better at category.
 - **A hybrid could combine the strengths:** category from winnow or tev1, filters and word roles from nimble. Not tried yet.
+
+
+![Accuracy vs latency](docs/figures/accuracy_vs_latency.svg)
+
+*Accuracy grows steadily with latency. The Pareto frontier runs tev1 0.8B → Strands Decider → winnow → jeb → nimble embedded; tev1 4B and nimble router are dominated. No run is both fast and accurate.*
+
+![Accuracy by part](docs/figures/accuracy_by_part.svg)
+
+*No model wins every part. winnow and tev1 4B lead on category, nimble on filters, word roles and the whole query. Residual words separate the models most: from 0 (tev1 0.8B) to 0.74 (tev1 4B).*
+
+![Accuracy by difficulty](docs/figures/accuracy_by_difficulty.svg)
+
+*The whole query gets much harder with more filters (nimble: 0.73 with none, 0.19 with three) and more words (0.82 for 1–3 words, 0.18 for 7+). Typos cost ~0.1. Queries that name only an L1 group are harder than specific ones. No run gets a query without a product type right: models tag the word "furniture" as category, while the gold labels make it residual (a labeling convention worth revisiting, see `backlog.md`).*
+
+![Filter F1 per attribute](docs/figures/filter_f1_by_attribute.svg)
+
+*Width (inches mapped to a bucket) is nimble's weakest attribute (0.43); jeb and winnow do much better on it (0.79, 0.78). Room is weak for winnow and Strands Decider. A hybrid could take each attribute from the model best at it.*
+
+![Category errors by scheme](docs/figures/category_scheme_errors.svg)
+
+*The `embedded` scheme halves nimble's category errors (83 vs 164). An explicit top-level question mostly fails by picking "no category" or the wrong group; with `embedded`, the remaining errors are mainly the wrong node within the right group.*
 
 ### Dev: all runs (100 queries)
 Ranked by whole-query exact match. Latency is from clean runs.
@@ -361,6 +396,11 @@ Ranked by whole-query exact match. Latency is from clean runs.
 - **The encoders and small decoders answer word-role questions almost uniformly** (word accuracy ≈ 0.33, residual F1 = 0), and they are weak on filters.
 - **Models scoring at least 0.24 on dev got the 1,000-query eval,** plus tev1 0.8B as the fastest decoder and Strands Decider as a newly released model.
 
+
+![Word-role confusion on dev](docs/figures/word_role_confusion_dev.svg)
+
+*The encoders and small decoders answer every word-role question with the same role (one dark column). winnow and Strands Decider label most residual words as filters, which is why their residual F1 is low.*
+
 ### How runs are compared: McNemar's test
 McNemar's test checks whether **two runs scored on the same queries** really differ in accuracy, or whether the difference could be chance.
 
@@ -380,6 +420,10 @@ McNemar's test checks whether **two runs scored on the same queries** really dif
 - **Caveats:** p doesn't measure *how big* a difference is. And with many pairs tested, about 1 in 20 truly-equal pairs will show p < 0.05 by chance.
 
 **Why not just compare accuracies with their confidence intervals?** All runs answer the same queries, and their errors are correlated (some queries are hard for every model). McNemar uses that pairing directly.
+
+![Pairwise McNemar tests on eval](docs/figures/mcnemar_eval.svg)
+
+*Each cell is "queries only the row run got right : only the column run got right" with its p-value. On the whole query, nimble embedded's row is all blue: it is significantly better than every other run. On category, winnow's row is nearly all blue.*
 
 **Where to find the tests:**
 - The tables test every run against the first one, then show all-pairs matrices for category and whole-query exact match. Each cell is "only row right : only column right", with the p-value, and is bold when p < 0.05.
@@ -446,6 +490,10 @@ This section analyzes **`nimble` only**: on Ollama, from its llama.cpp server lo
 - **tev1 should behave much the same:** Ollama renders it with the same shared prompt, split into 7–8 requests because of its 2k context.
 - **Ollaya's models weren't analyzed;** their engines (ONNX, MLX, llama.cpp) score questions differently.
 
+![Latency vs request size](docs/figures/latency_vs_questions.svg)
+
+*All models (not only nimble) get slower with every extra question, i.e. every extra query word. nimble goes from ~14 s at 20 questions to ~18 s at 31; Strands Decider from 3.4 s to 5.1 s.*
+
 ### Where the time goes: Ollama's server log (nimble)
 Below is one nimble request from `~/.ollama/logs/server.log`: an embedded eval query (id 264, "storage furniture with glass doors chrome legs", 25 questions, 16.83 s wall time). Lines are trimmed, and `…` marks omitted lines.
 The request ran as **26 server tasks: one prefill task plus one task per question**.
@@ -480,6 +528,41 @@ slot      release: id  0 | task 35100 | stop processing: n_tokens = 5458, trunca
 | Prefill task: the shared prompt + the first ~4 tokens of question 1's suffix; answers no question | 1 | 10.84 s (5,450 tokens at ~500 tok/s) | 64% |
 | Question tasks: question 1 continues from the live state; questions 2–25 each restore the checkpoint; each processes ~9–13 tokens and reads one constrained answer token | 25 | 4.59 s (mean 184 ms each) | 27% |
 | Rest: rendering, tokenization, scheduling, HTTP | n/a | ~1.4 s | 8% |
+
+The same request as a timeline, next to Strands Decider's whole request for comparison (its p50; not split into steps):
+
+```mermaid
+gantt
+    title One query, M3 Max (seconds)
+    dateFormat x
+    axisFormat %S s
+    section nimble on Ollama
+    Prefill shared prompt (5,450 tokens, ~500 tok/s)  :n1, 0, 10840
+    25 question tasks, sequential (~184 ms each)      :n2, 10840, 15430
+    Rendering, tokenization, HTTP                     :n3, 15430, 16830
+    section Strands Decider 2B
+    Whole request (state once, batched suffixes)      :d1, 0, 3900
+```
+
+How the two engines lay out the computation (nimble: confirmed by the log and nimble's source; Strands Decider: from its source):
+
+```mermaid
+flowchart TB
+    subgraph N["nimble on Ollama"]
+        direction LR
+        N1["one prompt: system + state +<br/>ALL question texts with options<br/>~5.4k tokens, prefilled once"]
+        N1 --> N2["question 1:<br/>Requested field: key<br/>→ 1 answer token"]
+        N2 --> N3["question 2: restore checkpoint,<br/>~13-token suffix → 1 token"]
+        N3 --> N4["… one question<br/>after another (25 here)"]
+    end
+    subgraph D["Strands Decider"]
+        direction LR
+        D1["state encoded once,<br/>cache broadcast"]
+        D1 --> D2["each question's own text + options<br/>as a suffix, up to 32 per<br/>batched forward pass"]
+        D2 --> D3["pointer head<br/>scores the options"]
+    end
+    N ~~~ D
+```
 
 ### How `/v1/systemone` is computed (Ollama, nimble)
 This is read from the log. The prompt format is confirmed by nimble's source.
@@ -609,6 +692,7 @@ scripts/make_results.sh                                                         
   - `doctor.py`: the machine check (`make doctor`).
   - `cli.py`: the `sidm` command.
   - `example_doc.py`: builds `docs/example_request.md`.
+  - `figures.py`: the README figures (`make figures`; needs matplotlib from the `figures` uv dependency group).
   - `preview.py`: the readable dataset dump.
 - **`mlx_backend/`**, a separate Python 3.12 project:
   - `convert_model.py`: reusable adapter → MLX conversion.
@@ -630,5 +714,6 @@ scripts/make_results.sh                                                         
   - `bench/`: latency benchmarks.
   - Run logs and the helper scripts used for the long runs.
 - **`docs/example_request.md`:** a real request and response.
+- **`docs/figures/`:** the README figures (SVG, regenerated by `make figures`).
 - **`backlog.md`:** findings and next experiments.
 - **`CLAUDE.md`:** notes for coding agents.

@@ -46,7 +46,17 @@ NAMES = {
     "embedded@mlx:nimble": "nimble (MLX)",
     "embedded@jev:jev-latest": "Jev (hosted)",
 }
-COLOR = {run: PALETTE[i] for i, run in enumerate(EVAL_RUNS)}
+COLOR = {run: PALETTE[i] for i, run in enumerate(EVAL_RUNS)}  # fixed per run (registry order), never by rank
+
+
+def _best_first(runs):
+    """Display order for figures: the hosted reference (Jev) first, next to the best local run (nimble embedded),
+    then the registry order. Colors don't depend on it."""
+    return sorted(runs, key=lambda r: (split_run(r)[1] != "jev", runs.index(r)))
+
+
+FIG_RUNS = _best_first(EVAL_RUNS)
+FIG_DEV_RUNS = _best_first(DEV_RUNS)
 MARKER = {"ollama": "o", "ollaya": "s", "decider": "D", "mlx": "^", "jev": "P"}
 
 # Latency comes from the 1,000-query eval runs. tev1 4B's eval overlapped CPU jobs: at the same question count
@@ -132,7 +142,7 @@ def fig_eval_table():
     """The README's eval table as a figure: cell shade = position between the row's worst and best run."""
     result = json.loads(Path("results/results_eval.json").read_text())
     by_run = {r["run"]: r["metrics"] for r in result["runs"]}
-    runs = [r for r in EVAL_RUNS if r in by_run]
+    runs = [r for r in FIG_RUNS if r in by_run]
     rows = [  # (label, value with optional interval, higher is better)
         ("Category, exact node", lambda m: (m["category_exact"]["value"], m["category_exact"]["ci95"]), True),
         ("Category correct at L1", lambda m: (m["category_level"]["L1"]["value"], m["category_level"]["L1"]["ci95"]), True),
@@ -193,7 +203,7 @@ def fig_eval_table():
 def fig_accuracy_latency():
     fig, ax = plt.subplots(figsize=(7.2, 4.4))
     pts = []
-    for run in EVAL_RUNS:
+    for run in FIG_RUNS:
         m = metrics(run)
         acc, lo, hi = prop(m["full_query_exact_counts"])
         p50 = statistics.median(eval_latencies(run)[0])
@@ -242,14 +252,14 @@ def fig_accuracy_by_part():
     # accuracy rows share a 0-1 axis; latency gets its own panel and log axis below (never a second y-axis)
     fig, (ax, lat_ax) = plt.subplots(2, 1, figsize=(7.6, 6.0), gridspec_kw={"height_ratios": [len(PARTS), 1.25],
                                                                             "hspace": 0.32})
-    runs = EVAL_RUNS
+    runs = FIG_RUNS
     for i, (label, fn) in enumerate(PARTS):
         y0 = len(PARTS) - 1 - i
         if i % 2 == 0:  # alternate row bands, so each metric's group of dots reads as one block
             ax.axhspan(y0 - 0.5, y0 + 0.5, color=BAND, linewidth=0, zorder=0)
         for j, run in enumerate(runs):
             v, lo, hi = fn(metrics(run))
-            y = y0 + (j - (len(runs) - 1) / 2) * 0.1
+            y = y0 + ((len(runs) - 1) / 2 - j) * 0.1  # first run on top, as in the legend
             if lo is not None:
                 ax.plot([lo, hi], [y, y], color=COLOR[run], linewidth=1.4, solid_capstyle="round")
             ax.scatter(v, y, s=42, color=COLOR[run], marker=MARKER[split_run(run)[1]], edgecolor="white",
@@ -268,7 +278,7 @@ def fig_accuracy_by_part():
     lat_ax.axhspan(-0.5, 0.5, color=BAND, linewidth=0, zorder=0)  # continues the row banding
     for j, run in enumerate(runs):
         p50 = statistics.median(eval_latencies(run)[0])
-        y = (j - (len(runs) - 1) / 2) * 0.1
+        y = ((len(runs) - 1) / 2 - j) * 0.1
         lat_ax.scatter(p50, y, s=42, color=COLOR[run], marker=MARKER[split_run(run)[1]],
                        facecolor="white" if run in INFLATED else COLOR[run], edgecolor=COLOR[run] if run in INFLATED
                        else "white", linewidth=1.5, zorder=3)
@@ -292,7 +302,7 @@ def fig_accuracy_by_part():
 # ---------------------------------------------------------------- 4. McNemar heatmaps
 def fig_mcnemar():
     result = json.loads(Path("results/results_eval.json").read_text())
-    runs = [r["run"] for r in result["runs"]]
+    runs = [r for r in FIG_RUNS if r in {x["run"] for x in result["runs"]}]
     tests = {(t["reference"], t["run"], t["metric"]): t for t in result["paired_mcnemar"]}
     cmap = LinearSegmentedColormap.from_list("div", [RED_POLE, "#f4b3b2", NEUTRAL, "#a9c9f0", BLUE_POLE])
     fig, axes = plt.subplots(1, 2, figsize=(1.6 * len(runs) + 1.5, 0.75 * len(runs) + 0.6))
@@ -368,7 +378,7 @@ def _reliability(P, kind):
 
 
 def fig_calibration():
-    runs = EVAL_RUNS
+    runs = FIG_RUNS
     ncol = 4 if len(runs) <= 7 else 3
     nrow = math.ceil((len(runs) + 1) / ncol)  # +1 cell for the legend
     fig, axes = plt.subplots(nrow, ncol, figsize=(2.9 * ncol, 3.1 * nrow), sharex=True, sharey=True)
@@ -421,7 +431,7 @@ def fig_difficulty():
              "query words": ["1–3", "4–6", "7+"], "typo": ["no typo", "typo"]}
     cols = [(f, v) for f, vals in order.items() for v in vals]
     counts = Counter((f, _strata(g[i])[f]) for i in eval_ids for f in order)
-    runs = EVAL_RUNS
+    runs = FIG_RUNS
     grid = []
     for run in runs:
         per_q = metrics(run)["per_query"]
@@ -461,7 +471,7 @@ def fig_difficulty():
 # ---------------------------------------------------------------- 7. latency vs questions
 def fig_latency_questions():
     fig, ax = plt.subplots(figsize=(7.6, 4.6))
-    for run in EVAL_RUNS:
+    for run in FIG_RUNS:
         lat, nq = eval_latencies(run)
         by = defaultdict(list)
         for l, q in zip(lat, nq):
@@ -487,7 +497,7 @@ def fig_latency_questions():
 
 
 # ---------------------------------------------------------------- 7b. controlled sweep (make sweep)
-SWEEP_RUNS = [r for r in EVAL_RUNS if not r.startswith("router@")] + ["embedded@mlx:nimble"]  # router: same model
+SWEEP_RUNS = [r for r in FIG_RUNS if not r.startswith("router@")] + ["embedded@mlx:nimble"]  # router: same model
 
 
 def fig_latency_sweep():
@@ -538,7 +548,7 @@ def fig_latency_sweep():
 # ---------------------------------------------------------------- 8. tuning effect
 def fig_tuning():
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4.4), gridspec_kw={"width_ratios": [1.15, 1]})
-    runs = EVAL_RUNS
+    runs = FIG_RUNS
     for i, run in enumerate(runs):
         u = metrics(run, tuned=False)["full_query_exact_acc"]
         t = metrics(run)["full_query_exact_acc"]
@@ -585,7 +595,7 @@ def fig_tuning():
 
 # ---------------------------------------------------------------- 9. per-attribute filter F1
 def fig_filter_attributes():
-    runs = EVAL_RUNS
+    runs = FIG_RUNS
     per = [metrics(run)["filters_per_attr"] for run in runs]
     attrs = sorted(per[0], key=lambda a: -per[0][a]["support"])
     grid = [[per[i][a]["F1"] if per[i][a]["support"] else float("nan") for i in range(len(runs))] for a in attrs]
@@ -611,7 +621,7 @@ def fig_filter_attributes():
 # ---------------------------------------------------------------- 10. word-role confusion (dev, all runs)
 def fig_word_roles():
     roles = ["category", "filter", "residual"]
-    runs = DEV_RUNS
+    runs = FIG_DEV_RUNS
     ncol = 5
     nrow = math.ceil(len(runs) / ncol)
     cmap = LinearSegmentedColormap.from_list("seq", BLUE_RAMP)

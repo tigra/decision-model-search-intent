@@ -485,14 +485,17 @@ McNemar's test checks whether **two runs scored on the same queries** really dif
 - **Keep the Mac awake** during long runs.
 - **Jev needs `TYPESAFE_API_KEY` and is a paid API.** Start with `LIMIT=5`.
 
-## Latency analysis (nimble only)
-This section analyzes **`nimble` only**: on Ollama, from its llama.cpp server log, and on MLX via nimble's own `ParallelScorer` timings. The other models were only timed end to end (p50 latencies in "Results").
-- **tev1 should behave much the same:** Ollama renders it with the same shared prompt, split into 7–8 requests because of its 2k context.
-- **Ollaya's models weren't analyzed;** their engines (ONNX, MLX, llama.cpp) score questions differently.
+## Latency analysis
+- **All models were timed end to end:** p50 latencies are in "Results", and the figure below shows latency vs request size.
+- **Only `nimble` was analyzed step by step:** on Ollama from its llama.cpp server log, and on MLX from nimble's own `ParallelScorer` timings. Every subsection below that is marked "(nimble)" covers nimble only.
+  - **tev1 should behave much the same:** Ollama renders it with the same shared prompt, split into 7–8 requests because of its 2k context.
+  - **Strands Decider is compared only by its source code and total time** (the timeline and layout diagrams below). Its server's steps weren't timed.
+  - **Ollaya's models weren't analyzed;** their engines (ONNX, MLX, llama.cpp) score questions differently.
 
+### All models: latency vs request size
 ![Latency vs request size](docs/figures/latency_vs_questions.svg)
 
-*All models (not only nimble) get slower with every extra question, i.e. every extra query word. nimble goes from ~14 s at 20 questions to ~18 s at 31; Strands Decider from 3.4 s to 5.1 s.*
+*Every model gets slower with each extra question, i.e. each extra query word. nimble goes from ~14 s at 20 questions to ~18 s at 31; Strands Decider from 3.4 s to 5.1 s.*
 
 ### Where the time goes: Ollama's server log (nimble)
 Below is one nimble request from `~/.ollama/logs/server.log`: an embedded eval query (id 264, "storage furniture with glass doors chrome legs", 25 questions, 16.83 s wall time). Lines are trimmed, and `…` marks omitted lines.

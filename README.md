@@ -97,6 +97,7 @@ One assumption is that Jev's value comes in parallelization of question answerin
 To re-run models and check the numbers, see "Reproducing the results" below.
 
 ## Dataset
+Frankly, the synthetic dataset is the biggest weakness of this study. Not really checked by a human.
 - **Schema** (`src/sidm/schema.py`):
   - A product-type ontology: 6 L1 groups, 36 L2 and 41 L3 nodes, each with surface synonyms.
   - 12 categorical attributes with surface forms.
@@ -331,18 +332,7 @@ make dev BACKEND=jev && make tune BACKEND=jev && make eval BACKEND=jev
 ### Eval: 1,000 queries (decoding tuned per model on dev)
 ![Eval results](docs/figures/eval_results.svg)
 
-*The table below as a figure. Bold marks the best run in each row; darker cells are closer to the row's best (for latency, faster). nimble embedded leads on filters, word roles and the whole query; winnow and tev1 4B on category; tev1 0.8B and Strands Decider on speed.*
-
-| Metric (measure) | nimble embedded (ollama) | nimble router (ollama) | tev1 4B (ollama) | tev1 0.8B (ollama) | jeb:4b (ollaya) | winnow:e4b (ollaya) | Strands Decider 2B (decider) |
-|---|---|---|---|---|---|---|---|
-| Category, exact node (accuracy) | 0.917 | 0.836 | 0.942 | 0.727 | 0.918 | **0.966** | 0.743 |
-| Category correct at L1 (accuracy) | 0.977 | 0.867 | **0.987** | 0.809 | 0.973 | 0.985 | 0.803 |
-| Filters F1 (micro) | **0.912** | 0.892 | 0.862 | 0.655 | 0.888 | 0.840 | 0.798 |
-| Filter set exact match (accuracy) | **0.770** | 0.742 | 0.612 | 0.326 | 0.720 | 0.619 | 0.508 |
-| Word-role accuracy | **0.841** | 0.839 | 0.684 | 0.316 | 0.755 | 0.699 | 0.655 |
-| Residual words F1 | 0.733 | 0.730 | **0.744** | 0.000 | 0.690 | 0.183 | 0.297 |
-| **Whole query exactly right** (accuracy) | **0.424** | 0.373 | 0.336 | 0.090 | 0.365 | 0.245 | 0.193 |
-| Latency p50, clean runs | 15.6 s | 15.9 s | 10.7 s | **2.2 s** | 11.0 s | 6.0 s | 3.9 s |
+*Exact numbers with counts and definitions: [`results/results_eval.md`](results/results_eval.md). Bold marks the best run in each row; darker cells are closer to the row's best (for latency, faster). nimble embedded leads on filters, word roles and the whole query; winnow and tev1 4B on category; tev1 0.8B and Strands Decider on speed.*
 
 - **Latency:** for tev1 4B, jeb and winnow it comes from a clean 30-query benchmark (`make bench`). Their full evals ran in parallel with CPU jobs, which inflated those latencies.
 - **tev1 0.8B is the fastest decoder (2.2 s) but far behind:** whole query 0.090, with near-uniform word roles and no residual words found.

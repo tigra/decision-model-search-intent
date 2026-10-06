@@ -343,12 +343,13 @@ PARTS = [
     ("Word-role accuracy", lambda m: prop(m["token_counts"])),
     ("Residual words F1", lambda m: (m["residual_word_PRF"][2], None, None)),
     ("Whole query exactly right", lambda m: prop(m["full_query_exact_counts"])),
+    ("Weighted query score", lambda m: (m["weighted_score"]["mean"], *m["weighted_score"]["ci95"])),
 ]
 
 
 def fig_accuracy_by_part():
     # accuracy rows share a 0-1 axis; latency gets its own panel and log axis below (never a second y-axis)
-    fig, (ax, lat_ax) = plt.subplots(2, 1, figsize=(7.6, 6.0), gridspec_kw={"height_ratios": [len(PARTS), 1.25],
+    fig, (ax, lat_ax) = plt.subplots(2, 1, figsize=(7.6, 6.8), gridspec_kw={"height_ratios": [len(PARTS), 1.25],
                                                                             "hspace": 0.32})
     runs = FIG_RUNS
     for i, (label, fn) in enumerate(PARTS):
@@ -392,7 +393,8 @@ def fig_accuracy_by_part():
     lat_ax.xaxis.grid(True)
     lat_ax.set_axisbelow(True)
     lat_ax.spines["left"].set_visible(False)
-    save(fig, "accuracy_by_part.svg", "Lines: 95% Wilson intervals (proportions only; F1 has none). Decoding tuned "
+    save(fig, "accuracy_by_part.svg", "Lines: 95% intervals (Wilson for proportions, normal for the mean score; F1 "
+                                       "has none). Weighted query score: see sidm/score.py. Decoding tuned "
                                        "per model on dev.\nLatency: log scale, own axis; hollow = inflated by CPU jobs "
                                        "running alongside (tev1 4B); Jev is a hosted API incl. network.")
 

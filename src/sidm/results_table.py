@@ -28,6 +28,7 @@ from sidm import evaluate as E
 from sidm.ollama_client import DEFAULT_MODELS, SidmError, friendly_main
 from sidm.parser import SCHEMES, tuned_settings
 from sidm.runs import PRESETS
+from sidm.score import paired_permutation_p, rank_ranges
 
 DEFAULT_RUNS = ["embedded@ollama:nimble", "router@ollama:nimble", "embedded@mlx:nimble", "embedded@jev:jev-latest"]
 BACKEND_INFO = {
@@ -122,6 +123,10 @@ SPEC = [
     ("Residual words F1", "F1", "harmonic mean of the two rows above", lambda m, L: f1(m["residual_counts"])),
     ("**Whole query exactly right**", "accuracy", "all queries; category exact, filter set exact, and the set of "
      "residual word positions exact", lambda m, L: prop(*m["full_query_exact_counts"])),
+    ("**Weighted query score**", "mean (0–1)", "all queries; per query the weighted mean of category credit (0.45; "
+     "partial for the right branch), filters F0.5 (0.30), residual words F2 (0.17) and the other word roles (0.08), "
+     "over the parts the query involves (`sidm/score.py`); 95% interval of the mean",
+     lambda m, L: score_cell(m["weighted_score"])),
     ("Latency p50 / p95", "seconds", "all queries; one request each, sequential, warm model",
      lambda m, L: "%.1f s / %.1f s" % (L["p50_s"], L["p95_s"])),
     ("Server prefill / field evaluation", "mean seconds", "mlx backend only (nimble's own timings)",
@@ -130,6 +135,10 @@ SPEC = [
      "full prompt; mlx: tokens actually processed)",
      lambda m, L: "%.1f / %.0fk" % (L["mean_questions"], (L["mean_input_tokens"] or 0) / 1000)),
 ]
+
+
+def score_cell(ws):
+    return "%.3f [%.3f–%.3f]" % (ws["mean"], ws["ci95"][0], ws["ci95"][1])
 
 
 def _prop(k, n):
@@ -156,6 +165,7 @@ def metrics_json(m, L):
         "word_role_confusion": m["token_confusion"],
         "residual_words": _prf(m["residual_counts"]),
         "whole_query_exact": _prop(*m["full_query_exact_counts"]),
+        "weighted_score": m["weighted_score"],
         "per_attribute_filters": m["filters_per_attr"],
         "latency": {k: v for k, v in L.items() if k != "p50_by_query_length"},
     }
@@ -215,7 +225,7 @@ def build_table(split, runs, data, strict=False):
 
     result = {"split": split, "data": data, "n_queries": len(ids), "split_rows": len(split_ids),
               "metric_definitions": {label: {"measure": measure, "counted_over": over} for label, measure, over, _ in SPEC},
-              "runs": [], "paired_mcnemar": []}
+              "runs": [], "paired_mcnemar": [], "paired_score_tests": []}
     for run, m, L in cols:
         scheme, backend, model = parse_run(run)
         cfg, sc = tuned_settings(backend, SCHEMES[scheme], model)
@@ -242,6 +252,19 @@ def build_table(split, runs, data, strict=False):
                     result["paired_mcnemar"].append({"reference": run_a, "run": run_b, "metric": key,
                                                      "correct_only_reference": only_a, "correct_only_run": only_b,
                                                      "p_value": p})
+
+        # the weighted query score: paired sign-flip test on per-query scores, every pair
+        score_tests = {}
+        for i, (run_a, m_a, _) in enumerate(cols):
+            for run_b, m_b, _ in cols[i + 1:]:
+                a = [m_a["per_query"][q]["score"] for q in order]
+                b = [m_b["per_query"][q]["score"] for q in order]
+                diff, p = (sum(a) - sum(b)) / len(order), paired_permutation_p(a, b)
+                score_tests[run_a, run_b] = (diff, p)
+                result["paired_score_tests"].append({"reference": run_a, "run": run_b, "metric": "score",
+                                                     "mean_diff_reference_minus_run": diff, "p_value": p})
+        result["score_rank_ranges"] = rank_ranges(
+            {run: [m["per_query"][q]["score_parts"] for q in order] for run, m, _ in cols})
 
         ref = cols[0][0]
         lines += ["", "## Paired comparison against `%s` (exact McNemar test, same queries)" % ref, "",
@@ -270,12 +293,37 @@ def build_table(split, runs, data, strict=False):
                     cell = "%d:%d p=%s" % (a, b, "<0.0001" if p < 1e-4 else "%.4f" % p)
                     cells.append("**%s**" % cell if p < 0.05 else cell)
                 lines.append("| `%s` | %s |" % (row, " | ".join(cells)))
+        lines += ["", "## All pairs: weighted query score (paired sign-flip test)", "",
+                  "Cell (row, column) = the row run's mean score minus the column run's, and the p-value. "
+                  "**Bold** = significant at p < 0.05.", "",
+                  "| | " + " | ".join("`%s`" % n for n in names[1:]) + " |",
+                  "|---|" + "---|" * (len(names) - 1)]
+        for i, row in enumerate(names[:-1]):
+            cells = []
+            for j, col in enumerate(names[1:], 1):
+                if j <= i:
+                    cells.append("")
+                    continue
+                diff, p = score_tests[row, col]
+                cell = "%+.3f p=%s" % (diff, "<0.0001" if p < 1e-4 else "%.4f" % p)
+                cells.append("**%s**" % cell if p < 0.05 else cell)
+            lines.append("| `%s` | %s |" % (row, " | ".join(cells)))
+        rr = result["score_rank_ranges"]
+        lines += ["", "## Weighted query score: how much the ranking depends on the weights", "",
+                  "Rank of each run over 300 random weight vectors that keep the order category ≥ filters ≥ "
+                  "residual words ≥ other word roles.", "", "| Run | Score | Rank range | Most often |",
+                  "|---|---|---|---|"]
+        for run, m, _ in sorted(cols, key=lambda c: -c[1]["weighted_score"]["mean"]):
+            lines.append("| `%s` | %.3f | %d–%d | %d |" % (run, m["weighted_score"]["mean"], rr[run]["min"],
+                                                           rr[run]["max"], rr[run]["mode"]))
     return "\n".join(lines) + "\n", result
 
 
 def show_tests(json_path, metric=None, significant_only=False, alpha=0.05):
     """Print the pairwise McNemar tests stored in a results JSON, one readable line each."""
     result = json.loads(Path(json_path).read_text())
+    if metric == "score":
+        return _show_score_tests(result, significant_only, alpha)
     tests = [t for t in result["paired_mcnemar"] if metric in (None, t["metric"])]
     width = max(len(r["run"]) for r in result["runs"])
     shown = [t for t in tests if not significant_only or t["p_value"] < alpha]
@@ -290,6 +338,20 @@ def show_tests(json_path, metric=None, significant_only=False, alpha=0.05):
         print("%-8s %-*s vs %-*s %4d:%-4d p=%-8s %s" % (
             t["metric"], width, t["reference"], width, t["run"], a, b,
             "<0.0001" if p < 1e-4 else "%.4f" % p, verdict))
+
+
+def _show_score_tests(result, significant_only, alpha):
+    tests = result.get("paired_score_tests", [])
+    width = max(len(r["run"]) for r in result["runs"])
+    shown = [t for t in tests if not significant_only or t["p_value"] < alpha]
+    print("%s split, %d queries; weighted query score, %d paired sign-flip tests%s" % (
+        result["split"], result["n_queries"], len(tests),
+        ", showing the %d with p < %g" % (len(shown), alpha) if significant_only else ""))
+    for t in shown:
+        d, p = t["mean_diff_reference_minus_run"], t["p_value"]
+        verdict = "no significant difference" if p >= alpha else "%s better" % (t["reference"] if d > 0 else t["run"])
+        print("score    %-*s vs %-*s %+.3f  p=%-8s %s" % (width, t["reference"], width, t["run"], d,
+                                                       "<0.0001" if p < 1e-4 else "%.4f" % p, verdict))
 
 
 @friendly_main
@@ -309,7 +371,8 @@ def main():
     ap.add_argument("--md", default=None, help="output file (default results/results_<split>.md)")
     ap.add_argument("--show-tests", metavar="JSON", default=None,
                     help="print the pairwise McNemar tests of an existing results JSON and exit")
-    ap.add_argument("--metric", choices=["category", "full"], default=None, help="with --show-tests: one metric only")
+    ap.add_argument("--metric", choices=["category", "full", "score"], default=None,
+                    help="with --show-tests: one metric only (score = the weighted query score's tests)")
     ap.add_argument("--significant", action="store_true", help="with --show-tests: only p < 0.05")
     args = ap.parse_args()
     if args.show_tests:

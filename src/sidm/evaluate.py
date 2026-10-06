@@ -20,6 +20,7 @@ from pathlib import Path
 from sidm import schema as S
 from sidm.ollama_client import DEFAULT_MODELS, friendly_main
 from sidm.parser import SCHEMES, DEFAULT_SCHEME, TUNED_FILE, decode, override_tuning, parse, tuned_settings
+from sidm.score import query_parts, query_score, summarize
 
 DEV_IDS = range(0, 100)
 
@@ -197,9 +198,12 @@ def compute(gold_rows, preds, cat_key="category", filt_key="filters"):
         cat_ok = gr["category"] == p["pred"][cat_key]
         ok = cat_ok and set(gr["filters"].items()) == set(p["pred"][filt_key].items()) and gres == pres
         full += ok
-        m["per_query"][p["id"]] = {"category": cat_ok, "full": ok}
+        parts = query_parts(gr, p["pred"], cat_key, filt_key)
+        m["per_query"][p["id"]] = {"category": cat_ok, "full": ok, "score": query_score(parts), "score_parts": parts}
     m["full_query_exact_acc"] = full / n
     m["full_query_exact_counts"] = [full, n]
+    # the forgiving whole-query metric (sidm/score.py)
+    m["weighted_score"] = summarize([q["score_parts"] for q in m["per_query"].values()])
     return m
 
 

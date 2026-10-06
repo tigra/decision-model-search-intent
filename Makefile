@@ -94,7 +94,7 @@ independence: ## Are answers independent of the other questions? Same state, que
 results: ## Regenerate tables results_{eval,dev}.{md,json}, mcnemar_*.txt, report_eval_*.md, docs/figures (runs: src/sidm/runs.py) [STRICT=1]
 	scripts/make_results.sh $(if $(STRICT),--strict)
 
-mcnemar: ## Print the pairwise McNemar tests of results/results_SPLIT.json [METRIC=category|full] [SIG=1]
+mcnemar: ## Print the pairwise tests of results/results_SPLIT.json: McNemar [METRIC=category|full], weighted score [METRIC=score] [SIG=1]
 	@$(PY) -m sidm.results_table --show-tests results/results_$(SPLIT).json $(if $(METRIC),--metric $(METRIC)) $(if $(SIG),--significant)
 
 figures: ## Redraw the README figures docs/figures/*.svg from shipped results (needs matplotlib: uv group `figures`)

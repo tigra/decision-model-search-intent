@@ -38,6 +38,7 @@
 | Residual words recall | recall | words whose gold role is 'residual' | 0.808 (105/130) [0.73–0.87] | 0.808 (105/130) [0.73–0.87] | 0.785 (102/130) [0.71–0.85] | 0.792 (103/130) [0.71–0.85] | 0.000 (0/130) [0.00–0.03] | 0.754 (98/130) [0.67–0.82] | 0.062 (8/130) [0.03–0.12] | 0.108 (14/130) [0.07–0.17] | 0.000 (0/130) [0.00–0.03] | 0.000 (0/130) [0.00–0.03] | 0.000 (0/130) [0.00–0.03] | 0.000 (0/130) [0.00–0.03] | 0.000 (0/130) [0.00–0.03] | 0.000 (0/130) [0.00–0.03] | 0.215 (28/130) [0.15–0.29] | 0.654 (85/130) [0.57–0.73] |
 | Residual words F1 | F1 | harmonic mean of the two rows above | 0.737 | 0.719 | 0.756 | 0.792 | 0.000 | 0.734 | 0.116 | 0.194 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.337 | 0.773 |
 | **Whole query exactly right** | accuracy | all queries; category exact, filter set exact, and the set of residual word positions exact | 0.440 (44/100) [0.35–0.54] | 0.350 (35/100) [0.26–0.45] | 0.430 (43/100) [0.34–0.53] | 0.420 (42/100) [0.33–0.52] | 0.100 (10/100) [0.06–0.17] | 0.370 (37/100) [0.28–0.47] | 0.290 (29/100) [0.21–0.39] | 0.240 (24/100) [0.17–0.33] | 0.110 (11/100) [0.06–0.19] | 0.110 (11/100) [0.06–0.19] | 0.100 (10/100) [0.06–0.17] | 0.060 (6/100) [0.03–0.12] | 0.060 (6/100) [0.03–0.12] | 0.040 (4/100) [0.02–0.10] | 0.220 (22/100) [0.15–0.31] | 0.570 (57/100) [0.47–0.66] |
+| **Weighted query score** | mean (0–1) | all queries; per query the weighted mean of category credit (0.45; partial for the right branch), filters F0.5 (0.30), residual words F2 (0.17) and the other word roles (0.08), over the parts the query involves (`sidm/score.py`); 95% interval of the mean | 0.883 [0.854–0.912] | 0.834 [0.796–0.872] | 0.889 [0.861–0.917] | 0.841 [0.800–0.882] | 0.631 [0.579–0.683] | 0.848 [0.813–0.882] | 0.830 [0.800–0.860] | 0.762 [0.719–0.805] | 0.618 [0.565–0.670] | 0.618 [0.569–0.667] | 0.576 [0.518–0.633] | 0.468 [0.416–0.521] | 0.403 [0.343–0.463] | 0.395 [0.337–0.454] | 0.726 [0.674–0.778] | 0.916 [0.889–0.943] |
 | Latency p50 / p95 | seconds | all queries; one request each, sequential, warm model | 16.1 s / 17.4 s | 15.4 s / 16.9 s | 17.4 s / 19.3 s | 10.2 s / 11.5 s | 2.3 s / 2.7 s | 10.7 s / 12.6 s | 6.4 s / 6.8 s | 75.1 s / 121.4 s | 35.1 s / 42.4 s | 31.4 s / 41.2 s | 1.1 s / 1.3 s | 14.6 s / 18.0 s | 13.0 s / 15.3 s | 5.7 s / 6.7 s | 3.9 s / 4.5 s | 0.3 s / 0.4 s |
 | Server prefill / field evaluation | mean seconds | mlx backend only (nimble's own timings) | n/a | n/a | 13.14 s / 3.23 s | n/a | n/a | n/a | n/a | n/a | n/a | n/a | n/a | n/a | n/a | n/a | n/a | n/a |
 | Questions / input tokens | mean per query | server-reported input tokens (Ollama: every question charged the full prompt; mlx: tokens actually processed) | 23.7 / 128k | 24.7 / 134k | 23.7 / 7k | 23.7 / 25k | 23.7 / 25k | 23.7 / 8k | 23.7 / 9k | 23.7 / 8k | 23.7 / 10k | 23.7 / 7k | 23.7 / 7k | 23.7 / 7k | 23.7 / 6k | 23.7 / 44k | 23.7 / 4k | 23.7 / 5k |
@@ -120,3 +121,48 @@ Cell (row, column) = queries correct only with the row run : only with the colum
 | `embedded@ollaya:von` |  |  |  |  |  |  |  |  |  |  |  |  | 4:2 p=0.6875 | **3:19 p=0.0009** | **0:51 p=<0.0001** |
 | `embedded@ollaya:nli:modernbert-large` |  |  |  |  |  |  |  |  |  |  |  |  |  | **1:19 p=<0.0001** | **0:53 p=<0.0001** |
 | `embedded@decider:strands-decider-2b` |  |  |  |  |  |  |  |  |  |  |  |  |  |  | **5:40 p=<0.0001** |
+
+## All pairs: weighted query score (paired sign-flip test)
+
+Cell (row, column) = the row run's mean score minus the column run's, and the p-value. **Bold** = significant at p < 0.05.
+
+| | `router@ollama:nimble` | `embedded@mlx:nimble` | `embedded@ollama:tev1` | `embedded@ollama:tev1:0.8b` | `embedded@ollaya:jeb:4b` | `embedded@ollaya:winnow:e4b` | `embedded@ollaya:decider:2b` | `embedded@ollaya:decision:eos` | `embedded@ollaya:kev:0.8b` | `embedded@ollaya:laya:en` | `embedded@ollaya:laya:typed-decisions` | `embedded@ollaya:von` | `embedded@ollaya:nli:modernbert-large` | `embedded@decider:strands-decider-2b` | `embedded@jev:jev-latest` |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| `embedded@ollama:nimble` | **+0.049 p=0.0105** | -0.006 p=0.5641 | **+0.042 p=0.0420** | **+0.252 p=<0.0001** | **+0.035 p=0.0222** | **+0.053 p=0.0052** | **+0.121 p=<0.0001** | **+0.265 p=<0.0001** | **+0.265 p=<0.0001** | **+0.307 p=<0.0001** | **+0.414 p=<0.0001** | **+0.480 p=<0.0001** | **+0.488 p=<0.0001** | **+0.157 p=<0.0001** | **-0.033 p=0.0337** |
+| `router@ollama:nimble` |  | **-0.055 p=0.0068** | -0.007 p=0.8077 | **+0.203 p=<0.0001** | -0.013 p=0.5400 | +0.004 p=0.8576 | **+0.073 p=0.0071** | **+0.217 p=<0.0001** | **+0.217 p=<0.0001** | **+0.259 p=<0.0001** | **+0.366 p=<0.0001** | **+0.431 p=<0.0001** | **+0.439 p=<0.0001** | **+0.108 p=0.0006** | **-0.082 p=0.0004** |
+| `embedded@mlx:nimble` |  |  | **+0.048 p=0.0100** | **+0.258 p=<0.0001** | **+0.041 p=0.0066** | **+0.059 p=0.0010** | **+0.128 p=<0.0001** | **+0.271 p=<0.0001** | **+0.271 p=<0.0001** | **+0.314 p=<0.0001** | **+0.421 p=<0.0001** | **+0.486 p=<0.0001** | **+0.494 p=<0.0001** | **+0.163 p=<0.0001** | -0.027 p=0.0677 |
+| `embedded@ollama:tev1` |  |  |  | **+0.210 p=<0.0001** | -0.007 p=0.6971 | +0.011 p=0.6273 | **+0.080 p=0.0007** | **+0.223 p=<0.0001** | **+0.223 p=<0.0001** | **+0.266 p=<0.0001** | **+0.373 p=<0.0001** | **+0.438 p=<0.0001** | **+0.446 p=<0.0001** | **+0.115 p=<0.0001** | **-0.075 p=0.0008** |
+| `embedded@ollama:tev1:0.8b` |  |  |  |  | **-0.217 p=<0.0001** | **-0.199 p=<0.0001** | **-0.131 p=<0.0001** | +0.013 p=0.6389 | +0.013 p=0.6314 | +0.055 p=0.1029 | **+0.162 p=<0.0001** | **+0.228 p=<0.0001** | **+0.235 p=<0.0001** | **-0.095 p=0.0040** | **-0.285 p=<0.0001** |
+| `embedded@ollaya:jeb:4b` |  |  |  |  |  | +0.018 p=0.3898 | **+0.086 p=0.0005** | **+0.230 p=<0.0001** | **+0.230 p=<0.0001** | **+0.272 p=<0.0001** | **+0.379 p=<0.0001** | **+0.444 p=<0.0001** | **+0.452 p=<0.0001** | **+0.122 p=<0.0001** | **-0.068 p=<0.0001** |
+| `embedded@ollaya:winnow:e4b` |  |  |  |  |  |  | **+0.068 p=0.0011** | **+0.212 p=<0.0001** | **+0.212 p=<0.0001** | **+0.254 p=<0.0001** | **+0.362 p=<0.0001** | **+0.427 p=<0.0001** | **+0.435 p=<0.0001** | **+0.104 p=0.0003** | **-0.086 p=<0.0001** |
+| `embedded@ollaya:decider:2b` |  |  |  |  |  |  |  | **+0.144 p=<0.0001** | **+0.144 p=<0.0001** | **+0.186 p=<0.0001** | **+0.293 p=<0.0001** | **+0.358 p=<0.0001** | **+0.366 p=<0.0001** | +0.036 p=0.1303 | **-0.155 p=<0.0001** |
+| `embedded@ollaya:decision:eos` |  |  |  |  |  |  |  |  | -0.000 p=0.9990 | +0.042 p=0.1703 | **+0.149 p=<0.0001** | **+0.215 p=<0.0001** | **+0.222 p=<0.0001** | **-0.108 p=0.0008** | **-0.298 p=<0.0001** |
+| `embedded@ollaya:kev:0.8b` |  |  |  |  |  |  |  |  |  | +0.042 p=0.2166 | **+0.149 p=<0.0001** | **+0.215 p=<0.0001** | **+0.222 p=<0.0001** | **-0.108 p=0.0009** | **-0.298 p=<0.0001** |
+| `embedded@ollaya:laya:en` |  |  |  |  |  |  |  |  |  |  | **+0.107 p=0.0002** | **+0.172 p=<0.0001** | **+0.180 p=<0.0001** | **-0.150 p=<0.0001** | **-0.341 p=<0.0001** |
+| `embedded@ollaya:laya:typed-decisions` |  |  |  |  |  |  |  |  |  |  |  | +0.065 p=0.0637 | +0.073 p=0.0529 | **-0.257 p=<0.0001** | **-0.448 p=<0.0001** |
+| `embedded@ollaya:von` |  |  |  |  |  |  |  |  |  |  |  |  | +0.008 p=0.8214 | **-0.323 p=<0.0001** | **-0.513 p=<0.0001** |
+| `embedded@ollaya:nli:modernbert-large` |  |  |  |  |  |  |  |  |  |  |  |  |  | **-0.331 p=<0.0001** | **-0.521 p=<0.0001** |
+| `embedded@decider:strands-decider-2b` |  |  |  |  |  |  |  |  |  |  |  |  |  |  | **-0.190 p=<0.0001** |
+
+## Weighted query score: how much the ranking depends on the weights
+
+Rank of each run over 300 random weight vectors that keep the order category ≥ filters ≥ residual words ≥ other word roles.
+
+| Run | Score | Rank range | Most often |
+|---|---|---|---|
+| `embedded@jev:jev-latest` | 0.916 | 1–1 | 1 |
+| `embedded@mlx:nimble` | 0.889 | 2–3 | 2 |
+| `embedded@ollama:nimble` | 0.883 | 2–4 | 3 |
+| `embedded@ollaya:jeb:4b` | 0.848 | 4–6 | 4 |
+| `embedded@ollama:tev1` | 0.841 | 4–7 | 6 |
+| `router@ollama:nimble` | 0.834 | 4–7 | 6 |
+| `embedded@ollaya:winnow:e4b` | 0.830 | 2–7 | 7 |
+| `embedded@ollaya:decider:2b` | 0.762 | 8–9 | 8 |
+| `embedded@decider:strands-decider-2b` | 0.726 | 8–9 | 9 |
+| `embedded@ollama:tev1:0.8b` | 0.631 | 10–11 | 10 |
+| `embedded@ollaya:kev:0.8b` | 0.618 | 10–12 | 12 |
+| `embedded@ollaya:decision:eos` | 0.618 | 11–12 | 11 |
+| `embedded@ollaya:laya:en` | 0.576 | 13–13 | 13 |
+| `embedded@ollaya:laya:typed-decisions` | 0.468 | 14–14 | 14 |
+| `embedded@ollaya:von` | 0.403 | 15–15 | 15 |
+| `embedded@ollaya:nli:modernbert-large` | 0.395 | 16–16 | 16 |

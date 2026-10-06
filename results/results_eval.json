@@ -64,6 +64,10 @@
    "measure": "accuracy",
    "counted_over": "all queries; category exact, filter set exact, and the set of residual word positions exact"
   },
+  "**Weighted query score**": {
+   "measure": "mean (0\u20131)",
+   "counted_over": "all queries; per query the weighted mean of category credit (0.45; partial for the right branch), filters F0.5 (0.30), residual words F2 (0.17) and the other word roles (0.08), over the parts the query involves (`sidm/score.py`); 95% interval of the mean"
+  },
   "Latency p50 / p95": {
    "measure": "seconds",
    "counted_over": "all queries; one request each, sequential, warm model"
@@ -250,6 +254,42 @@
       0.39371789757876074,
       0.45486379100637064
      ]
+    },
+    "weighted_score": {
+     "mean": 0.8795698367042604,
+     "ci95": [
+      0.869447170431291,
+      0.8896925029772297
+     ],
+     "n": 1000,
+     "parts": {
+      "category": {
+       "mean": 0.9296666666666666,
+       "present_in": 1000
+      },
+      "filters": {
+       "mean": 0.8980642109454886,
+       "present_in": 862
+      },
+      "residual": {
+       "mean": 0.6214330676016641,
+       "present_in": 775
+      },
+      "other_roles": {
+       "mean": 0.8845781746031746,
+       "present_in": 1000
+      }
+     },
+     "weights": {
+      "category": 0.45,
+      "filters": 0.3,
+      "residual": 0.17,
+      "other_roles": 0.08
+     },
+     "beta": {
+      "filters": 0.5,
+      "residual": 2.0
+     }
     },
     "per_attribute_filters": {
      "style": {
@@ -515,6 +555,42 @@
       0.4034065243208197
      ]
     },
+    "weighted_score": {
+     "mean": 0.8241550486626252,
+     "ci95": [
+      0.8097255058714106,
+      0.8385845914538399
+     ],
+     "n": 1000,
+     "parts": {
+      "category": {
+       "mean": 0.8416666666666667,
+       "present_in": 1000
+      },
+      "filters": {
+       "mean": 0.8651967648079891,
+       "present_in": 857
+      },
+      "residual": {
+       "mean": 0.6184902031430389,
+       "present_in": 777
+      },
+      "other_roles": {
+       "mean": 0.8812484487734488,
+       "present_in": 1000
+      }
+     },
+     "weights": {
+      "category": 0.45,
+      "filters": 0.3,
+      "residual": 0.17,
+      "other_roles": 0.08
+     },
+     "beta": {
+      "filters": 0.5,
+      "residual": 2.0
+     }
+    },
     "per_attribute_filters": {
      "style": {
       "P": 0.9944444444444445,
@@ -779,6 +855,42 @@
       0.3658541451730435
      ]
     },
+    "weighted_score": {
+     "mean": 0.8500030174086951,
+     "ci95": [
+      0.8406176164630086,
+      0.8593884183543816
+     ],
+     "n": 1000,
+     "parts": {
+      "category": {
+       "mean": 0.9541666666666667,
+       "present_in": 1000
+      },
+      "filters": {
+       "mean": 0.8231214386964141,
+       "present_in": 878
+      },
+      "residual": {
+       "mean": 0.5713261421186263,
+       "present_in": 716
+      },
+      "other_roles": {
+       "mean": 0.70142113997114,
+       "present_in": 1000
+      }
+     },
+     "weights": {
+      "category": 0.45,
+      "filters": 0.3,
+      "residual": 0.17,
+      "other_roles": 0.08
+     },
+     "beta": {
+      "filters": 0.5,
+      "residual": 2.0
+     }
+    },
     "per_attribute_filters": {
      "style": {
       "P": 1.0,
@@ -1036,6 +1148,42 @@
       0.07379587888497004,
       0.10934217795587022
      ]
+    },
+    "weighted_score": {
+     "mean": 0.6024473409063658,
+     "ci95": [
+      0.5860201204169746,
+      0.6188745613957569
+     ],
+     "n": 1000,
+     "parts": {
+      "category": {
+       "mean": 0.7508333333333334,
+       "present_in": 1000
+      },
+      "filters": {
+       "mean": 0.5916854179993022,
+       "present_in": 869
+      },
+      "residual": {
+       "mean": 0.0,
+       "present_in": 627
+      },
+      "other_roles": {
+       "mean": 0.4854479437229437,
+       "present_in": 1000
+      }
+     },
+     "weights": {
+      "category": 0.45,
+      "filters": 0.3,
+      "residual": 0.17,
+      "other_roles": 0.08
+     },
+     "beta": {
+      "filters": 0.5,
+      "residual": 2.0
+     }
     },
     "per_attribute_filters": {
      "style": {
@@ -1301,6 +1449,42 @@
       0.39530331168429467
      ]
     },
+    "weighted_score": {
+     "mean": 0.8526258822128729,
+     "ci95": [
+      0.8419394961502648,
+      0.8633122682754811
+     ],
+     "n": 1000,
+     "parts": {
+      "category": {
+       "mean": 0.9276666666666666,
+       "present_in": 1000
+      },
+      "filters": {
+       "mean": 0.8659619822075382,
+       "present_in": 867
+      },
+      "residual": {
+       "mean": 0.5340044940996034,
+       "present_in": 757
+      },
+      "other_roles": {
+       "mean": 0.8085972943722943,
+       "present_in": 1000
+      }
+     },
+     "weights": {
+      "category": 0.45,
+      "filters": 0.3,
+      "residual": 0.17,
+      "other_roles": 0.08
+     },
+     "beta": {
+      "filters": 0.5,
+      "residual": 2.0
+     }
+    },
     "per_attribute_filters": {
      "style": {
       "P": 0.9945054945054945,
@@ -1563,6 +1747,42 @@
       0.2725997744616191
      ]
     },
+    "weighted_score": {
+     "mean": 0.8262168516449175,
+     "ci95": [
+      0.8173286471001757,
+      0.8351050561896594
+     ],
+     "n": 1000,
+     "parts": {
+      "category": {
+       "mean": 0.9753333333333334,
+       "present_in": 1000
+      },
+      "filters": {
+       "mean": 0.8096806733271146,
+       "present_in": 867
+      },
+      "residual": {
+       "mean": 0.12337887756566908,
+       "present_in": 626
+      },
+      "other_roles": {
+       "mean": 0.8946654401154401,
+       "present_in": 1000
+      }
+     },
+     "weights": {
+      "category": 0.45,
+      "filters": 0.3,
+      "residual": 0.17,
+      "other_roles": 0.08
+     },
+     "beta": {
+      "filters": 0.5,
+      "residual": 2.0
+     }
+    },
     "per_attribute_filters": {
      "style": {
       "P": 0.9835164835164835,
@@ -1823,6 +2043,42 @@
       0.16973260811821303,
       0.21861710761383082
      ]
+    },
+    "weighted_score": {
+     "mean": 0.6944101062129615,
+     "ci95": [
+      0.6779644644537134,
+      0.7108557479722096
+     ],
+     "n": 1000,
+     "parts": {
+      "category": {
+       "mean": 0.7556666666666667,
+       "present_in": 1000
+      },
+      "filters": {
+       "mean": 0.7327624331283609,
+       "present_in": 893
+      },
+      "residual": {
+       "mean": 0.18944365622767537,
+       "present_in": 631
+      },
+      "other_roles": {
+       "mean": 0.7923906926406926,
+       "present_in": 1000
+      }
+     },
+     "weights": {
+      "category": 0.45,
+      "filters": 0.3,
+      "residual": 0.17,
+      "other_roles": 0.08
+     },
+     "beta": {
+      "filters": 0.5,
+      "residual": 2.0
+     }
     },
     "per_attribute_filters": {
      "style": {
@@ -2086,6 +2342,42 @@
       0.5040106759373376,
       0.565721441161615
      ]
+    },
+    "weighted_score": {
+     "mean": 0.9203826630956973,
+     "ci95": [
+      0.9133476121873783,
+      0.9274177140040163
+     ],
+     "n": 1000,
+     "parts": {
+      "category": {
+       "mean": 0.9918333333333333,
+       "present_in": 1000
+      },
+      "filters": {
+       "mean": 0.9144702825831877,
+       "present_in": 854
+      },
+      "residual": {
+       "mean": 0.5739804882260874,
+       "present_in": 638
+      },
+      "other_roles": {
+       "mean": 0.9545190115440115,
+       "present_in": 1000
+      }
+     },
+     "weights": {
+      "category": 0.45,
+      "filters": 0.3,
+      "residual": 0.17,
+      "other_roles": 0.08
+     },
+     "beta": {
+      "filters": 0.5,
+      "residual": 2.0
+     }
     },
     "per_attribute_filters": {
      "style": {
@@ -2628,5 +2920,245 @@
    "correct_only_run": 382,
    "p_value": 3.8543930044231025e-71
   }
- ]
+ ],
+ "paired_score_tests": [
+  {
+   "reference": "embedded@ollama:nimble",
+   "run": "router@ollama:nimble",
+   "metric": "score",
+   "mean_diff_reference_minus_run": 0.05541478804163467,
+   "p_value": 7.086153321025218e-17
+  },
+  {
+   "reference": "embedded@ollama:nimble",
+   "run": "embedded@ollama:tev1",
+   "metric": "score",
+   "mean_diff_reference_minus_run": 0.029566819295565323,
+   "p_value": 5.647125112442496e-10
+  },
+  {
+   "reference": "embedded@ollama:nimble",
+   "run": "embedded@ollama:tev1:0.8b",
+   "metric": "score",
+   "mean_diff_reference_minus_run": 0.27712249579789444,
+   "p_value": 2.7446066204042756e-115
+  },
+  {
+   "reference": "embedded@ollama:nimble",
+   "run": "embedded@ollaya:jeb:4b",
+   "metric": "score",
+   "mean_diff_reference_minus_run": 0.02694395449138733,
+   "p_value": 1.5874803893219124e-08
+  },
+  {
+   "reference": "embedded@ollama:nimble",
+   "run": "embedded@ollaya:winnow:e4b",
+   "metric": "score",
+   "mean_diff_reference_minus_run": 0.05335298505934009,
+   "p_value": 4.554170591552545e-17
+  },
+  {
+   "reference": "embedded@ollama:nimble",
+   "run": "embedded@decider:strands-decider-2b",
+   "metric": "score",
+   "mean_diff_reference_minus_run": 0.18515973049129822,
+   "p_value": 1.028255974424079e-71
+  },
+  {
+   "reference": "embedded@ollama:nimble",
+   "run": "embedded@jev:jev-latest",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.04081282639143956,
+   "p_value": 1.0668337619791877e-13
+  },
+  {
+   "reference": "router@ollama:nimble",
+   "run": "embedded@ollama:tev1",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.02584796874606934,
+   "p_value": 0.0007312292284038747
+  },
+  {
+   "reference": "router@ollama:nimble",
+   "run": "embedded@ollama:tev1:0.8b",
+   "metric": "score",
+   "mean_diff_reference_minus_run": 0.22170770775625975,
+   "p_value": 1.1345106253956399e-71
+  },
+  {
+   "reference": "router@ollama:nimble",
+   "run": "embedded@ollaya:jeb:4b",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.028470833550247335,
+   "p_value": 0.00013992191495340036
+  },
+  {
+   "reference": "router@ollama:nimble",
+   "run": "embedded@ollaya:winnow:e4b",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.00206180298229458,
+   "p_value": 0.7962681844899833
+  },
+  {
+   "reference": "router@ollama:nimble",
+   "run": "embedded@decider:strands-decider-2b",
+   "metric": "score",
+   "mean_diff_reference_minus_run": 0.12974494244966353,
+   "p_value": 7.279719109853309e-39
+  },
+  {
+   "reference": "router@ollama:nimble",
+   "run": "embedded@jev:jev-latest",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.09622761443307422,
+   "p_value": 1.7832647065439263e-32
+  },
+  {
+   "reference": "embedded@ollama:tev1",
+   "run": "embedded@ollama:tev1:0.8b",
+   "metric": "score",
+   "mean_diff_reference_minus_run": 0.2475556765023291,
+   "p_value": 3.3281024096979495e-104
+  },
+  {
+   "reference": "embedded@ollama:tev1",
+   "run": "embedded@ollaya:jeb:4b",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.0026228648041779932,
+   "p_value": 0.571048839916632
+  },
+  {
+   "reference": "embedded@ollama:tev1",
+   "run": "embedded@ollaya:winnow:e4b",
+   "metric": "score",
+   "mean_diff_reference_minus_run": 0.02378616576377476,
+   "p_value": 1.9807054661706055e-05
+  },
+  {
+   "reference": "embedded@ollama:tev1",
+   "run": "embedded@decider:strands-decider-2b",
+   "metric": "score",
+   "mean_diff_reference_minus_run": 0.15559291119573287,
+   "p_value": 2.004881136365929e-55
+  },
+  {
+   "reference": "embedded@ollama:tev1",
+   "run": "embedded@jev:jev-latest",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.07037964568700489,
+   "p_value": 2.568584916851949e-39
+  },
+  {
+   "reference": "embedded@ollama:tev1:0.8b",
+   "run": "embedded@ollaya:jeb:4b",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.2501785413065071,
+   "p_value": 8.186994575363423e-104
+  },
+  {
+   "reference": "embedded@ollama:tev1:0.8b",
+   "run": "embedded@ollaya:winnow:e4b",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.22376951073855433,
+   "p_value": 5.832227253535258e-93
+  },
+  {
+   "reference": "embedded@ollama:tev1:0.8b",
+   "run": "embedded@decider:strands-decider-2b",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.09196276530659622,
+   "p_value": 4.2697832358636624e-19
+  },
+  {
+   "reference": "embedded@ollama:tev1:0.8b",
+   "run": "embedded@jev:jev-latest",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.317935322189334,
+   "p_value": 4.3794551625342474e-131
+  },
+  {
+   "reference": "embedded@ollaya:jeb:4b",
+   "run": "embedded@ollaya:winnow:e4b",
+   "metric": "score",
+   "mean_diff_reference_minus_run": 0.026409030567952754,
+   "p_value": 9.901001428270087e-06
+  },
+  {
+   "reference": "embedded@ollaya:jeb:4b",
+   "run": "embedded@decider:strands-decider-2b",
+   "metric": "score",
+   "mean_diff_reference_minus_run": 0.15821577599991088,
+   "p_value": 3.1159620701852195e-57
+  },
+  {
+   "reference": "embedded@ollaya:jeb:4b",
+   "run": "embedded@jev:jev-latest",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.06775678088282688,
+   "p_value": 5.785056016621276e-34
+  },
+  {
+   "reference": "embedded@ollaya:winnow:e4b",
+   "run": "embedded@decider:strands-decider-2b",
+   "metric": "score",
+   "mean_diff_reference_minus_run": 0.1318067454319581,
+   "p_value": 3.7114292596415204e-45
+  },
+  {
+   "reference": "embedded@ollaya:winnow:e4b",
+   "run": "embedded@jev:jev-latest",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.09416581145077964,
+   "p_value": 2.924082450233084e-69
+  },
+  {
+   "reference": "embedded@decider:strands-decider-2b",
+   "run": "embedded@jev:jev-latest",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.22597255688273776,
+   "p_value": 7.006875545575386e-92
+  }
+ ],
+ "score_rank_ranges": {
+  "embedded@ollama:nimble": {
+   "min": 2,
+   "max": 4,
+   "mode": 2
+  },
+  "router@ollama:nimble": {
+   "min": 3,
+   "max": 6,
+   "mode": 5
+  },
+  "embedded@ollama:tev1": {
+   "min": 3,
+   "max": 5,
+   "mode": 4
+  },
+  "embedded@ollama:tev1:0.8b": {
+   "min": 8,
+   "max": 8,
+   "mode": 8
+  },
+  "embedded@ollaya:jeb:4b": {
+   "min": 3,
+   "max": 5,
+   "mode": 3
+  },
+  "embedded@ollaya:winnow:e4b": {
+   "min": 2,
+   "max": 6,
+   "mode": 6
+  },
+  "embedded@decider:strands-decider-2b": {
+   "min": 7,
+   "max": 7,
+   "mode": 7
+  },
+  "embedded@jev:jev-latest": {
+   "min": 1,
+   "max": 1,
+   "mode": 1
+  }
+ }
 }

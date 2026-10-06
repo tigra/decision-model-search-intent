@@ -94,6 +94,7 @@ One assumption is that Jev's value comes in parallelization of question answerin
   - The real levers are fewer or shorter questions, or a server that puts the static questions before the query, so they could be cached across queries.
   - **AWS's Strands Decider 2B shows the other layout:** it encodes the state once and adds only each question's suffix, at **3.9 s per query**. But its accuracy is much lower (whole query 0.193).
   - **Jev answers the same 24-question request in 0.3 s, and its latency stays flat from 20 to 30 questions** (~0.33 s), while every local model gets slower with each question. That fits the assumption that Jev evaluates questions in parallel. So the slowness is in the local runtimes, not in the one-request design. How Jev works internally isn't published.
+- **A forgiving whole-query score tells the same story at the top:** Jev 0.920, nimble 0.880 (weighted partial credit for category, filters and words; see "A forgiving whole-query score"). The middle of the local ranking depends on the weights.
 - **The data are synthetic and cleaner than real queries,** so the accuracies are upper bounds.
 
 ## First 15 minutes
@@ -389,6 +390,40 @@ make dev BACKEND=jev && make tune BACKEND=jev && make eval BACKEND=jev
 
 *The `embedded` scheme halves nimble's category errors (83 vs 164). An explicit top-level question mostly fails by picking "no category" or the wrong group; with `embedded`, the remaining errors are mainly the wrong node within the right group.*
 
+### A forgiving whole-query score
+"Whole query exactly right" fails a query on one wrong word role. The **weighted query score** gives partial credit instead, so a near miss counts more than a useless parse. It's reported next to exact match, never instead of it. Defined in `src/sidm/score.py`.
+
+**Per query, four parts, each in [0, 1]:**
+
+| Part | Weight | Value | Why |
+|---|---|---|---|
+| Category | 0.45 | 1 if exact; else the shared path / the deeper path (gold `seating > sofas > chesterfield`, predicted `sofas` → 2/3; same group only → 1/3; another group → 0). "No category" is right only against "no category". | the most important part; the right branch at the wrong depth is a near miss |
+| Filters | 0.30 | **F0.5** over attribute=value pairs: precision weighted 4× recall | a wrong filter hides correct results, a missing one only adds some. 1 of 2 filters found → 0.83; both found plus one wrong extra → 0.71 |
+| Residual words | 0.17 | **F2** over the residual word positions: recall weighted 4× precision | missing a residual word ("cheap", "free shipping") loses intent; an extra one costs less |
+| Other word roles | 0.08 | accuracy over the words whose gold role is category or filter | the least important |
+
+- **Only the parts a query involves count.** A part is present when the gold or the prediction has it. The score is the weighted mean over the present parts: `Σ wₖ·vₖ / Σ wₖ`.
+  - So an absent part gives no free points: a query with only a category scores **1.0** if the category is right, and **0.15** if it's wrong (with its word roles right).
+  - A hallucinated filter or residual word still costs: it makes that part present, with value 0.
+- **Statistics:** the mean over the 1,000 queries with a 95% interval; between runs, a paired sign-flip test on the per-query scores, the counterpart of McNemar's test for a score.
+- **The weights are a judgment call,** so the ranking's dependence on them is reported: each run's rank over 300 random weight vectors that keep the order category ≥ filters ≥ residual words ≥ other word roles.
+
+![Weighted query score vs latency](docs/figures/score_vs_latency.svg)
+
+*The counterpart of "Accuracy vs latency". The same picture: Jev on top at 0.920, then nimble embedded (0.880) as the best local run. The gaps between the local models are much smaller than on exact match, because most of their parses are near misses rather than failures.*
+
+![Where the score comes from](docs/figures/score_breakdown.svg)
+
+*Points earned per part, adding up to the score. Category earns most of every run's points. winnow and Strands Decider lose most on residual words, tev1 0.8B on everything but category. The rank ranges on the right show the robust ends (Jev 1st, Strands Decider 7th, tev1 0.8B 8th in every weighting) and a weight-dependent middle: winnow ranks anywhere from 2nd to 6th.*
+
+![Score by difficulty](docs/figures/score_by_difficulty.svg)
+
+*The counterpart of "by query difficulty". With partial credit, more filters and longer queries cost far less than on exact match (nimble: 0.95 with no filter, 0.84 with three). Queries without a product type score 0 on exact match for every run, but get partial credit here (Jev 0.85, winnow 0.78, nimble 0.54).*
+
+![Pairwise score tests](docs/figures/score_tests_eval.svg)
+
+*Row run's mean score minus the column run's, with the paired test's p-value. Jev is significantly ahead of every run. Two pairs that differ significantly on exact match tie on the score: nimble router vs winnow (−0.002, p = 0.80) and tev1 4B vs jeb (−0.003, p = 0.57).*
+
 ### Dev: all runs (100 queries)
 Ranked by whole-query exact match. Latency is from clean runs.
 
@@ -453,7 +488,9 @@ McNemar's test checks whether **two runs scored on the same queries** really dif
   make mcnemar SPLIT=eval               # eval runs
   make mcnemar SPLIT=eval METRIC=full   # only whole-query exact match (METRIC=category for category)
   make mcnemar SPLIT=dev SIG=1          # only significant differences (p < 0.05)
+  make mcnemar SPLIT=eval METRIC=score  # the weighted query score's paired sign-flip tests
   ```
+- **The weighted query score** has its own all-pairs matrix in the tables and `paired_score_tests` in the JSON (see "A forgiving whole-query score").
 
 ## Reproducing the results
 ### What's shipped and what isn't

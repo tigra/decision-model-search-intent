@@ -199,13 +199,97 @@ def fig_eval_table():
                                   "tev1 4B's latency is inflated by CPU jobs that ran alongside it.")
 
 
+# ---------------------------------------------------------------- weighted query score: pairwise tests, breakdown
+def fig_score_tests():
+    result = json.loads(Path("results/results_eval.json").read_text())
+    runs = [r for r in FIG_RUNS if r in {x["run"] for x in result["runs"]}]
+    tests = {(t["reference"], t["run"]): t for t in result["paired_score_tests"]}
+    cmap = LinearSegmentedColormap.from_list("div", [RED_POLE, "#f4b3b2", NEUTRAL, "#a9c9f0", BLUE_POLE])
+    n = len(runs)
+    fig, ax = plt.subplots(figsize=(0.95 * n + 2.2, 0.75 * n + 0.6))
+    for i, a in enumerate(runs):
+        for j, b in enumerate(runs):
+            if i == j:
+                continue
+            t = tests.get((a, b)) or tests.get((b, a))
+            d = t["mean_diff_reference_minus_run"] * (1 if t["reference"] == a else -1)  # row minus column
+            sig = t["p_value"] < 0.05
+            share = max(-1.0, min(1.0, d / 0.15))  # color saturates at a 0.15 score difference
+            color = cmap(0.5 + 0.5 * share) if sig else NEUTRAL
+            ax.add_patch(plt.Rectangle((j + 0.03, i + 0.03), 0.94, 0.94, color=color, linewidth=0))
+            strong = sig and abs(share) > 0.55
+            ax.text(j + 0.5, i + 0.42, "%+.3f" % d, ha="center", va="center", fontsize=8,
+                    color="white" if strong else INK, fontweight="bold" if sig else "normal")
+            p = t["p_value"]
+            ax.text(j + 0.5, i + 0.72, "p<.001" if p < 1e-3 else "p=%.3f" % p, ha="center", va="center",
+                    fontsize=6.5, color="white" if strong else INK2)
+    ax.set_xlim(0, n)
+    ax.set_ylim(n, 0)
+    ax.set_xticks([k + 0.5 for k in range(n)])
+    ax.set_yticks([k + 0.5 for k in range(n)])
+    ax.set_xticklabels([name(r) for r in runs], rotation=35, ha="right")
+    ax.set_yticklabels([name(r) for r in runs])
+    ax.tick_params(length=0)
+    for sp in ax.spines.values():
+        sp.set_visible(False)
+    ax.set_title("Weighted query score, pairwise: row run's mean score minus the column run's (1,000 eval queries)")
+    save(fig, "score_tests_eval.svg", "Paired sign-flip test on the per-query scores. Blue: row run significantly "
+                                      "better; red: column run better (p < 0.05); grey: no significant difference.")
+
+
+def fig_score_breakdown():
+    """Where each run's score comes from: the points each part contributes (they add up to the score)."""
+    from sidm.score import PARTS, WEIGHTS
+    result = json.loads(Path("results/results_eval.json").read_text())
+    ranges = result.get("score_rank_ranges", {})
+    runs = [r for r in FIG_RUNS if r in {x["run"] for x in result["runs"]}]
+    labels = {"category": "category", "filters": "filters (F0.5)", "residual": "residual words (F2)",
+              "other_roles": "other word roles"}
+    shades = [BLUE_RAMP[6], BLUE_RAMP[4], BLUE_RAMP[3], BLUE_RAMP[2]]  # importance order: darkest = category
+    fig, ax = plt.subplots(figsize=(8.8, 0.42 * len(runs) + 1.6))
+    for i, run in enumerate(runs):
+        contrib = dict.fromkeys(PARTS, 0.0)
+        per_q = metrics(run)["per_query"].values()
+        for q in per_q:  # each part's share of the query's score: w_k * v_k / sum of present weights
+            parts = q["score_parts"]
+            den = sum(WEIGHTS[k] for k in PARTS if parts[k] is not None)
+            for k in PARTS:
+                if parts[k] is not None:
+                    contrib[k] += WEIGHTS[k] * parts[k] / den / len(per_q)
+        left = 0.0
+        for k, c in zip(PARTS, shades):
+            ax.barh(i, contrib[k], left=left, height=0.62, color=c, edgecolor="white", linewidth=1,
+                    label=labels[k] if i == 0 else None)
+            left += contrib[k]
+        ax.barh(i, 1 - left, left=left, height=0.62, color="white", edgecolor=AXIS, linewidth=0.8, hatch="////",
+                label="points lost" if i == 0 else None)
+        rr = ranges.get(run)
+        rank = ("rank %d" % rr["min"] if rr["min"] == rr["max"] else "rank %d–%d" % (rr["min"], rr["max"])) if rr else ""
+        ax.text(1.01, i, "%.3f · %s" % (left, rank) if rank else "%.3f" % left, va="center",
+                fontsize=8.5, color=INK2, transform=ax.get_yaxis_transform())
+    ax.set_yticks(range(len(runs)))
+    ax.set_yticklabels([name(r) for r in runs])
+    ax.invert_yaxis()
+    ax.tick_params(axis="y", length=0)
+    ax.set_xlim(0, 1)
+    ax.xaxis.grid(True)
+    ax.set_axisbelow(True)
+    ax.spines["left"].set_visible(False)
+    ax.set_xlabel("weighted query score: points earned per part (they add up to the score)")
+    ax.set_title("Where each run's weighted query score comes from (1,000 eval queries)", pad=24)
+    ax.legend(loc="lower left", bbox_to_anchor=(0, 1.0), ncol=5, fontsize=8, handlelength=1.4, borderaxespad=0.2)
+    save(fig, "score_breakdown.svg", "Right: score and its rank range over 300 random weight vectors that keep the "
+                                     "order category ≥ filters ≥ residual words ≥ other word roles.")
+
+
 # ---------------------------------------------------------------- 1. accuracy vs latency
-def fig_accuracy_latency():
+def _latency_scatter(value, ylabel, title, filename, note, ylim):
+    """Shared by accuracy_vs_latency and score_vs_latency: value(metrics) -> (value, ci_low, ci_high)."""
     fig, ax = plt.subplots(figsize=(7.2, 4.4))
     pts = []
     for run in FIG_RUNS:
         m = metrics(run)
-        acc, lo, hi = prop(m["full_query_exact_counts"])
+        acc, lo, hi = value(m)
         p50 = statistics.median(eval_latencies(run)[0])
         pts.append((p50, acc, run))
         ax.errorbar(p50, acc, yerr=[[acc - lo], [hi - acc]], fmt="none", ecolor=COLOR[run], elinewidth=1.4, capsize=0)
@@ -222,20 +306,34 @@ def fig_accuracy_latency():
     ax.get_xaxis().set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: "%g s" % v))
     ax.xaxis.set_minor_formatter(matplotlib.ticker.NullFormatter())
     ax.set_xlim(min(p[0] for p in pts) / 1.5, 26)
-    ax.set_ylim(0, math.ceil((max(p[1] for p in pts) + 0.06) * 10) / 10)
+    ax.set_ylim(*ylim([p[1] for p in pts]))
     ax.yaxis.grid(True)
     ax.set_axisbelow(True)
     ax.set_xlabel("p50 latency per query: M3 Max, or the hosted API (log scale)")
-    ax.set_ylabel("whole query exactly right")
-    ax.set_title("Accuracy vs latency, 1,000 eval queries")
+    ax.set_ylabel(ylabel)
+    ax.set_title(title)
     handles = [plt.Line2D([], [], marker=MARKER[b], linestyle="", color=MUTED, markersize=7, label=lbl)
                for b, lbl in (("ollama", "Ollama"), ("ollaya", "Ollaya"), ("decider", "Strands Decider server"),
                               ("jev", "TypeSafe API (hosted, incl. network)"))
                if any(split_run(r)[1] == b for r in EVAL_RUNS)]
     ax.legend(handles=handles, title="backend (marker)", loc="lower right", title_fontsize=8.5)
-    save(fig, "accuracy_vs_latency.svg",
-         "Vertical lines: 95% Wilson intervals of the accuracy. Grey line: Pareto frontier of the local runs (M3 Max). "
-         "Latency: p50 over the same 1,000 queries.")
+    save(fig, filename, note)
+
+
+def fig_accuracy_latency():
+    _latency_scatter(lambda m: prop(m["full_query_exact_counts"]), "whole query exactly right",
+                     "Accuracy vs latency, 1,000 eval queries", "accuracy_vs_latency.svg",
+                     "Vertical lines: 95% Wilson intervals of the accuracy. Grey line: Pareto frontier of the local runs "
+                     "(M3 Max). Latency: p50 over the same 1,000 queries.",
+                     lambda ys: (0, math.ceil((max(ys) + 0.06) * 10) / 10))
+
+
+def fig_score_latency():
+    _latency_scatter(lambda m: (m["weighted_score"]["mean"], *m["weighted_score"]["ci95"]), "weighted query score",
+                     "Weighted query score vs latency, 1,000 eval queries", "score_vs_latency.svg",
+                     "Vertical lines: 95% intervals of the mean score. Grey line: Pareto frontier of the local runs "
+                     "(M3 Max). Latency: p50 over the same 1,000 queries. Score: see sidm/score.py.",
+                     lambda ys: (math.floor((min(ys) - 0.05) * 10) / 10, 1.0))
 
 
 # ---------------------------------------------------------------- 2. accuracy by part
@@ -424,7 +522,8 @@ def _strata(gr):
     }
 
 
-def fig_difficulty():
+def _difficulty(key, vrange, title, filename, note):
+    """Shared by accuracy_by_difficulty (key 'full') and score_by_difficulty (key 'score')."""
     rows, g = gold()
     eval_ids = {r["id"] for r in E.load_rows(DATA, "eval")}
     order = {"filters": ["0", "1", "2", "3"], "category depth": ["none", "L1", "L2", "L3"],
@@ -438,16 +537,17 @@ def fig_difficulty():
         acc = defaultdict(lambda: [0, 0])
         for i, r in per_q.items():
             for f, v in _strata(g[int(i) if isinstance(i, str) else i]).items():
-                acc[(f, v)][0] += r["full"]
+                acc[(f, v)][0] += r[key]
                 acc[(f, v)][1] += 1
         grid.append([acc[c][0] / acc[c][1] if acc[c][1] else float("nan") for c in cols])
     cmap = LinearSegmentedColormap.from_list("seq", BLUE_RAMP)
     fig, ax = plt.subplots(figsize=(12, 4.4))
-    ax.imshow(grid, cmap=cmap, vmin=0, vmax=0.8, aspect="auto")
+    vmin, vmax, dark_from = vrange
+    ax.imshow(grid, cmap=cmap, vmin=vmin, vmax=vmax, aspect="auto")
     for i in range(len(runs)):
         for j in range(len(cols)):
             v = grid[i][j]
-            ax.text(j, i, "%.2f" % v, ha="center", va="center", fontsize=8, color="white" if v > 0.42 else INK)
+            ax.text(j, i, "%.2f" % v, ha="center", va="center", fontsize=8, color="white" if v > dark_from else INK)
     ax.set_xticks(range(len(cols)))
     ax.set_xticklabels(["%s\nn=%d" % (v, counts[(f, v)]) for f, v in cols], fontsize=8)
     ax.set_yticks(range(len(runs)))
@@ -462,10 +562,21 @@ def fig_difficulty():
         if x:
             ax.axvline(x - 0.5, color="white", linewidth=3)
         x += len(vals)
-    ax.set_title("Whole query exactly right, by query difficulty (1,000 eval queries)", pad=26)
-    save(fig, "accuracy_by_difficulty.svg", "Cells: share of the stratum's queries parsed exactly right; n: queries "
-                                            "per stratum. 'none' = queries without a product type (e.g. 'modern plastic "
-                                            "furniture'): every model tags the word 'furniture' as category, gold says residual.")
+    ax.set_title(title, pad=26)
+    save(fig, filename, note)
+
+
+def fig_difficulty():
+    _difficulty("full", (0, 0.8, 0.42), "Whole query exactly right, by query difficulty (1,000 eval queries)",
+                "accuracy_by_difficulty.svg", "Cells: share of the stratum's queries parsed exactly right; n: queries "
+                "per stratum. 'none' = queries without a product type (e.g. 'modern plastic "
+                "furniture'): every model tags the word 'furniture' as category, gold says residual.")
+
+
+def fig_score_difficulty():
+    _difficulty("score", (0.4, 1.0, 0.78), "Weighted query score, by query difficulty (1,000 eval queries)",
+                "score_by_difficulty.svg", "Cells: mean weighted query score of the stratum's queries; n: queries per "
+                "stratum. Compare with accuracy_by_difficulty.svg (whole query exactly right).")
 
 
 # ---------------------------------------------------------------- 7. latency vs questions
@@ -738,7 +849,8 @@ def fig_scheme_ablation():
 
 
 FIGURES = [fig_eval_table, fig_accuracy_latency, fig_accuracy_by_part, fig_mcnemar, fig_calibration, fig_difficulty,
-           fig_latency_questions, fig_latency_sweep, fig_tuning, fig_filter_attributes, fig_word_roles, fig_dataset, fig_scheme_ablation]
+           fig_latency_questions, fig_latency_sweep, fig_tuning, fig_filter_attributes, fig_word_roles, fig_dataset, fig_scheme_ablation,
+           fig_score_latency, fig_score_difficulty, fig_score_tests, fig_score_breakdown]
 
 
 @friendly_main

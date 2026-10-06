@@ -405,7 +405,7 @@ make dev BACKEND=jev && make tune BACKEND=jev && make eval BACKEND=jev
 - **Only the parts a query involves count.** A part is present when the gold or the prediction has it. The score is the weighted mean over the present parts: `Σ wₖ·vₖ / Σ wₖ`.
   - So an absent part gives no free points: a query with only a category scores **1.0** if the category is right, and **0.15** if it's wrong (with its word roles right).
   - A hallucinated filter or residual word still costs: it makes that part present, with value 0.
-- **Statistics:** the mean over the 1,000 queries with a 95% interval; between runs, a paired sign-flip test on the per-query scores, the counterpart of McNemar's test for a score.
+- **Statistics:** the mean over the 1,000 queries with a 95% interval; between runs, a paired sign-flip test on the per-query scores, the counterpart of McNemar's test for a score (all pairs in "How runs are compared").
 - **The weights are a judgment call,** so the ranking's dependence on them is reported: each run's rank over 300 random weight vectors that keep the order category ≥ filters ≥ residual words ≥ other word roles.
 
 ![Weighted query score vs latency](docs/figures/score_vs_latency.svg)
@@ -419,10 +419,6 @@ make dev BACKEND=jev && make tune BACKEND=jev && make eval BACKEND=jev
 ![Score by difficulty](docs/figures/score_by_difficulty.svg)
 
 *The counterpart of "by query difficulty". With partial credit, more filters and longer queries cost far less than on exact match (nimble: 0.95 with no filter, 0.84 with three). Queries without a product type score 0 on exact match for every run, but get partial credit here (Jev 0.85, winnow 0.78, nimble 0.54).*
-
-![Pairwise score tests](docs/figures/score_tests_eval.svg)
-
-*Row run's mean score minus the column run's, with the paired test's p-value. Jev is significantly ahead of every run. Two pairs that differ significantly on exact match tie on the score: nimble router vs winnow (−0.002, p = 0.80) and tev1 4B vs jeb (−0.003, p = 0.57).*
 
 ### Dev: all runs (100 queries)
 Ranked by whole-query exact match. Latency is from clean runs.
@@ -455,7 +451,7 @@ Ranked by whole-query exact match. Latency is from clean runs.
 
 *The encoders and small decoders answer every word-role question with the same role (one dark column). winnow and Strands Decider label most residual words as filters, which is why their residual F1 is low. Jev does so too, less often (28% of residual words on dev, vs 76% for winnow and 11% for nimble).*
 
-### How runs are compared: McNemar's test
+### Head-to-head model comparison: McNemar's test
 McNemar's test checks whether **two runs scored on the same queries** really differ in accuracy, or whether the difference could be chance.
 
 1. **Score each query right or wrong for both runs.**
@@ -478,6 +474,12 @@ McNemar's test checks whether **two runs scored on the same queries** really dif
 ![Pairwise McNemar tests on eval](docs/figures/mcnemar_eval.svg)
 
 *Each cell is "queries only the row run got right : only the column run got right" with its p-value. Jev's row is all blue on both metrics: it is significantly better than every other run. Among the local runs, nimble embedded's row is all blue on the whole query, and winnow's nearly all blue on category.*
+
+**The weighted query score** is compared with a paired sign-flip test on the per-query scores instead: McNemar needs right/wrong per query, the score is continuous. Under "no difference", each query's score difference is equally likely to have either sign; the p-value is the chance of a total difference at least as large as observed.
+
+![Pairwise score tests](docs/figures/score_tests_eval.svg)
+
+*Row run's mean score minus the column run's, with the paired test's p-value. Jev is significantly ahead of every run. Two pairs that differ significantly on exact match tie on the score: nimble router vs winnow (−0.002, p = 0.80) and tev1 4B vs jeb (−0.003, p = 0.57).*
 
 **Where to find the tests:**
 - The tables test every run against the first one, then show all-pairs matrices for category and whole-query exact match. Each cell is "only row right : only column right", with the p-value, and is bold when p < 0.05.

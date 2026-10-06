@@ -45,7 +45,7 @@ The main results:
 
 Two further measures: **latency** per query on local hardware, and paired significance tests between systems.
 
-## Solution idea: answer all questions with a one decision model request
+## Solution idea: answer all questions with one decision-model request
 Each query becomes **one Jev-shaped `/v1/systemone` request**. The query is the `state`, and every sub-decision is a named `choice` question about it:
 - **Category:** one question per top-level product group, e.g. "which kind of table, if any?". Each lists that group's L2/L3 types, plus "not this group" and "only the general word".
 - **Filters:** one question per attribute (color, material, legs, style, size, width, …), each with `not_specified` plus the attribute's values.
@@ -420,37 +420,6 @@ make dev BACKEND=jev && make tune BACKEND=jev && make eval BACKEND=jev
 
 *The counterpart of "by query difficulty". With partial credit, more filters and longer queries cost far less than on exact match (nimble: 0.95 with no filter, 0.84 with three). Queries without a product type score 0 on exact match for every run, but get partial credit here (Jev 0.85, winnow 0.78, nimble 0.54).*
 
-### Dev: all runs (100 queries)
-Ranked by whole-query exact match. Latency is from clean runs.
-
-| Model | Backend | Whole query | Category | p50 latency (M3 Max) |
-|---|---|---|---|---|
-| Jev (`jev-1.13.0`) | jev (hosted) | 0.57 | 0.97 | 0.3 s (hosted, incl. network) |
-| nimble (embedded) | ollama | 0.44 | 0.91 | 16.1 s |
-| nimble (embedded) | mlx | 0.43 | 0.92 | 17.4 s |
-| tev1 4B | ollama | 0.42 | 0.91 | 10.2 s |
-| jeb:4b | ollaya | 0.37 | 0.90 | 11.0 s |
-| nimble (router) | ollama | 0.35 | 0.85 | 15.4 s |
-| winnow:e4b | ollaya | 0.29 | 0.96 | 6.0 s |
-| decider:2b | ollaya (CPU) | 0.24 | 0.82 | 46.7 s |
-| Strands Decider 2B | decider (MLX) | 0.22 | 0.76 | 3.9 s |
-| decision:eos | ollaya (CPU) | 0.11 | 0.76 | 25.8 s |
-| kev:0.8b | ollaya (CPU) | 0.11 | 0.76 | 20.0 s |
-| tev1 0.8B | ollama | 0.10 | 0.75 | 2.2 s |
-| laya:en | ollaya (MLX encoder) | 0.10 | 0.76 | 1.1 s |
-| laya:typed-decisions | ollaya (CPU encoder) | 0.06 | 0.73 | 14.6 s |
-| von | ollaya (CPU encoder) | 0.06 | 0.55 | 13.0 s |
-| nli:modernbert-large | ollaya (encoder) | 0.04 | 0.54 | 5.7 s |
-
-- **Dev is the tuning set,** so these numbers are optimistic.
-- **The encoders and small decoders answer word-role questions almost uniformly** (word accuracy ≈ 0.33, residual F1 = 0), and they are weak on filters.
-- **Models scoring at least 0.24 on dev got the 1,000-query eval,** plus tev1 0.8B as the fastest local decoder, Strands Decider as a newly released model, and Jev as the hosted reference.
-
-
-![Word-role confusion on dev](docs/figures/word_role_confusion_dev.svg)
-
-*The encoders and small decoders answer every word-role question with the same role (one dark column). winnow and Strands Decider label most residual words as filters, which is why their residual F1 is low. Jev does so too, less often (28% of residual words on dev, vs 76% for winnow and 11% for nimble).*
-
 ### Head-to-head model comparison
 
 #### McNemar's test (exact match: whole query and category)
@@ -499,54 +468,36 @@ McNemar's test checks whether **two runs scored on the same queries** really dif
   ```
 - **The weighted query score** has its own all-pairs matrix in the tables and `paired_score_tests` in the JSON (see "A forgiving whole-query score").
 
-## Reproducing the results
-### What's shipped and what isn't
-- **In the repo:**
-  - the dataset (`data/eval_raw.jsonl`);
-  - every run's predictions with the models' raw answers (`results/<split>_<label>_<scheme>.jsonl`);
-  - the per-model decoding settings (`results/tuned_settings.json`);
-  - the tables and tests.
-- **Not in the repo:** models, servers and API keys. `make doctor` reports what this machine has and how to get the rest.
-- **The dataset is frozen.** Regenerating it with qwen3 (`make data`) isn't deterministic, and it would lose the hand-fixed rows. Use `make data` only to build a *new* dataset.
+### Dev: all runs (100 queries)
+Ranked by whole-query exact match. Latency is from clean runs.
 
-### How re-running works
-- **Runs resume.** `make dev` / `make eval` skip queries that already have stored predictions. With the shipped files complete, `make eval MODEL=tev1` only rebuilds that run's table and says "all rows already done".
-- **To re-run a run from scratch, add `OVERWRITE=1`.** It deletes that run's stored predictions for the split and queries the model again; the tables then use the new answers.
-  - With `LIMIT=N`, only N queries are re-run. The tables then cover just those N queries for that run until it's complete again.
-- **Decoding is re-applied on every table build,** so a re-run is decoded with the shipped tuned settings, unless you re-tune with `make tune`.
+| Model | Backend | Whole query | Category | p50 latency (M3 Max) |
+|---|---|---|---|---|
+| Jev (`jev-1.13.0`) | jev (hosted) | 0.57 | 0.97 | 0.3 s (hosted, incl. network) |
+| nimble (embedded) | ollama | 0.44 | 0.91 | 16.1 s |
+| nimble (embedded) | mlx | 0.43 | 0.92 | 17.4 s |
+| tev1 4B | ollama | 0.42 | 0.91 | 10.2 s |
+| jeb:4b | ollaya | 0.37 | 0.90 | 11.0 s |
+| nimble (router) | ollama | 0.35 | 0.85 | 15.4 s |
+| winnow:e4b | ollaya | 0.29 | 0.96 | 6.0 s |
+| decider:2b | ollaya (CPU) | 0.24 | 0.82 | 46.7 s |
+| Strands Decider 2B | decider (MLX) | 0.22 | 0.76 | 3.9 s |
+| decision:eos | ollaya (CPU) | 0.11 | 0.76 | 25.8 s |
+| kev:0.8b | ollaya (CPU) | 0.11 | 0.76 | 20.0 s |
+| tev1 0.8B | ollama | 0.10 | 0.75 | 2.2 s |
+| laya:en | ollaya (MLX encoder) | 0.10 | 0.76 | 1.1 s |
+| laya:typed-decisions | ollaya (CPU encoder) | 0.06 | 0.73 | 14.6 s |
+| von | ollaya (CPU encoder) | 0.06 | 0.55 | 13.0 s |
+| nli:modernbert-large | ollaya (encoder) | 0.04 | 0.54 | 5.7 s |
 
-### Steps
-1. **Pick runs this machine can serve.** `make doctor` lists them; pull or start what's missing.
-2. **Re-run a run:**
-   ```bash
-   make dev  BACKEND=ollama MODEL=tev1 OVERWRITE=1      # 100 dev queries
-   make tune BACKEND=ollama MODEL=tev1                  # optional: re-tune decoding on the new dev answers
-   make eval BACKEND=ollama MODEL=tev1 OVERWRITE=1      # 1,000 eval queries
-   make results                                         # rebuild the tables, mcnemar_*.txt and the per-run reports
-   ```
-   Then compare with the numbers above.
-   - Re-running tev1 0.8B's dev split this way reproduced its metrics exactly: category 0.750, whole query 0.100.
-3. **Recalculate the significance tests:** `make results` rewrites `results/mcnemar_*.txt`. `make mcnemar SPLIT=eval [METRIC=full|category] [SIG=1]` prints them, optionally filtered.
-4. **Add a new run:** `make dev` → `make tune` → `make eval` with the new `BACKEND`/`MODEL`, then add it to `EVAL_RUNS` / `DEV_RUNS` in `src/sidm/runs.py`, then `make results`.
+- **Dev is the tuning set,** so these numbers are optimistic.
+- **The encoders and small decoders answer word-role questions almost uniformly** (word accuracy ≈ 0.33, residual F1 = 0), and they are weak on filters.
+- **Models scoring at least 0.24 on dev got the 1,000-query eval,** plus tev1 0.8B as the fastest local decoder, Strands Decider as a newly released model, and Jev as the hosted reference.
 
-**Time and space per run**, from the measured p50 latency on an M3 Max with one model loaded; dev takes a tenth of eval:
 
-| Run | Model size | Eval time (1,000 queries) on M3 Max|
-|---|---|---|
-| `embedded@ollama:nimble`, `router@ollama:nimble` | 9.5 GB | ~4.3 h each |
-| `embedded@mlx:nimble` (dev only so far) | 10.5 GB after `make mlx-convert` (~40 GB peak) | ~4.8 h |
-| `embedded@ollama:tev1` | 4.5 GB | ~3 h |
-| `embedded@ollama:tev1:0.8b` | 0.8 GB | ~40 min |
-| `embedded@decider:strands-decider-2b` | 4.3 GB (downloaded on first `make decider-serve`) | ~1.1 h |
-| `embedded@ollaya:jeb:4b` | 4.5 GB | ~3 h |
-| `embedded@ollaya:winnow:e4b` | 8 GB | ~1.7 h |
-| Ollaya CPU models (dev only) | 0.8–3.6 GB | 20–47 s per query |
+![Word-role confusion on dev](docs/figures/word_role_confusion_dev.svg)
 
-**Caveats:**
-- **Latencies depend on the hardware.** Other Ollama or Ollaya versions, or other quantizations, can change answers slightly.
-- **Run one model on the GPU at a time** (`make status` shows what's loaded).
-- **Keep the Mac awake** during long runs.
-- **Jev needs `TYPESAFE_API_KEY` and is a paid API.** Start with `LIMIT=5`.
+*The encoders and small decoders answer every word-role question with the same role (one dark column). winnow and Strands Decider label most residual words as filters, which is why their residual F1 is low. Jev does so too, less often (28% of residual words on dev, vs 76% for winnow and 11% for nimble).*
 
 ## Latency analysis
 - **All models were timed end to end:** p50 latencies are in "Results". Two figures below show latency vs request size: as it varies naturally over the eval queries, and in a controlled sweep over the number of questions.
@@ -726,6 +677,55 @@ This is read from the log. The prompt format is confirmed by nimble's source.
   - Questions rendered *before* the state, so the static ~5k tokens become a reusable prefix.
   - Question suffixes evaluated as one batch.
 - **`OLLAMA_NUM_PARALLEL`** raises throughput across concurrent queries, not the latency of one query.
+
+## Reproducing the results
+### What's shipped and what isn't
+- **In the repo:**
+  - the dataset (`data/eval_raw.jsonl`);
+  - every run's predictions with the models' raw answers (`results/<split>_<label>_<scheme>.jsonl`);
+  - the per-model decoding settings (`results/tuned_settings.json`);
+  - the tables and tests.
+- **Not in the repo:** models, servers and API keys. `make doctor` reports what this machine has and how to get the rest.
+- **The dataset is frozen.** Regenerating it with qwen3 (`make data`) isn't deterministic, and it would lose the hand-fixed rows. Use `make data` only to build a *new* dataset.
+
+### How re-running works
+- **Runs resume.** `make dev` / `make eval` skip queries that already have stored predictions. With the shipped files complete, `make eval MODEL=tev1` only rebuilds that run's table and says "all rows already done".
+- **To re-run a run from scratch, add `OVERWRITE=1`.** It deletes that run's stored predictions for the split and queries the model again; the tables then use the new answers.
+  - With `LIMIT=N`, only N queries are re-run. The tables then cover just those N queries for that run until it's complete again.
+- **Decoding is re-applied on every table build,** so a re-run is decoded with the shipped tuned settings, unless you re-tune with `make tune`.
+
+### Steps
+1. **Pick runs this machine can serve.** `make doctor` lists them; pull or start what's missing.
+2. **Re-run a run:**
+   ```bash
+   make dev  BACKEND=ollama MODEL=tev1 OVERWRITE=1      # 100 dev queries
+   make tune BACKEND=ollama MODEL=tev1                  # optional: re-tune decoding on the new dev answers
+   make eval BACKEND=ollama MODEL=tev1 OVERWRITE=1      # 1,000 eval queries
+   make results                                         # rebuild the tables, mcnemar_*.txt and the per-run reports
+   ```
+   Then compare with the numbers above.
+   - Re-running tev1 0.8B's dev split this way reproduced its metrics exactly: category 0.750, whole query 0.100.
+3. **Recalculate the significance tests:** `make results` rewrites `results/mcnemar_*.txt`. `make mcnemar SPLIT=eval [METRIC=full|category] [SIG=1]` prints them, optionally filtered.
+4. **Add a new run:** `make dev` → `make tune` → `make eval` with the new `BACKEND`/`MODEL`, then add it to `EVAL_RUNS` / `DEV_RUNS` in `src/sidm/runs.py`, then `make results`.
+
+**Time and space per run**, from the measured p50 latency on an M3 Max with one model loaded; dev takes a tenth of eval:
+
+| Run | Model size | Eval time (1,000 queries) on M3 Max|
+|---|---|---|
+| `embedded@ollama:nimble`, `router@ollama:nimble` | 9.5 GB | ~4.3 h each |
+| `embedded@mlx:nimble` (dev only so far) | 10.5 GB after `make mlx-convert` (~40 GB peak) | ~4.8 h |
+| `embedded@ollama:tev1` | 4.5 GB | ~3 h |
+| `embedded@ollama:tev1:0.8b` | 0.8 GB | ~40 min |
+| `embedded@decider:strands-decider-2b` | 4.3 GB (downloaded on first `make decider-serve`) | ~1.1 h |
+| `embedded@ollaya:jeb:4b` | 4.5 GB | ~3 h |
+| `embedded@ollaya:winnow:e4b` | 8 GB | ~1.7 h |
+| Ollaya CPU models (dev only) | 0.8–3.6 GB | 20–47 s per query |
+
+**Caveats:**
+- **Latencies depend on the hardware.** Other Ollama or Ollaya versions, or other quantizations, can change answers slightly.
+- **Run one model on the GPU at a time** (`make status` shows what's loaded).
+- **Keep the Mac awake** during long runs.
+- **Jev needs `TYPESAFE_API_KEY` and is a paid API.** Start with `LIMIT=5`.
 
 ## Usage
 ### Makefile

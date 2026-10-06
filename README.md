@@ -17,7 +17,7 @@ words:     cheap/R grey/F oak/F coffee/C table/C with/F storage/F      (C catego
 ## TL;DR
 The main results: 
 * TypeSafe's hosted Jev is both the *most accurate* and *the fastest* (~0.3 s, including the network).
-* Jev's latency is really flat, unlike in local models
+* Jev's latency stays flat as questions are added (0.34 s for 1 question, 0.35 s for 29), while every local model gets slower with each question.
 * Among local models on the M3 Max, accuracy costs time: nimble reaches 0.42 at ~16 s, and the 4–7× faster models are much less accurate.
 
 ## Problem formulation
@@ -78,14 +78,14 @@ One assumption is that Jev's value comes in parallelization of question answerin
 ## Key findings
 - **Best overall: TypeSafe's hosted Jev (`jev-1.13.0`), and it's also the fastest.**
   - 1,000 eval queries: category exact 0.987, filters F1 0.921, word roles 0.854, **whole query exactly right 0.535**, at **0.3 s per query** including the network round trip.
-  - It's significantly better than every other run on both the whole query and category (McNemar p ≤ 0.0001). Its only weaker part is residual words (F1 0.695 vs nimble's 0.733).
+  - It's significantly better than every other run on both the whole query and category (McNemar p ≤ 0.0001). Its only weaker part is residual words (F1 0.695 vs nimble's 0.733): it labels 38% of residual words as filters.
   - Its decoding wasn't changed: tuning on dev kept nimble's settings.
 - **Best local: `nimble` (9B) on Ollama with the `embedded` category scheme.**
   - 1,000 eval queries: category exact 0.917, filters F1 0.912, word roles 0.841, **whole query exactly right 0.424**, at ~16 s per query on the M3 Max.
   - It's significantly better on the whole query than every other local run (McNemar p < 0.001), mainly thanks to filters and word roles.
 - **Embedding the group decision beats an explicit top-level question:** category 0.917 vs 0.836. The top-level question picked wrong groups confidently.
-- **Other models win on parts.**
-  - `winnow:e4b` (Ollaya) has the best category accuracy (0.966) and is fast (6 s), but barely finds residual words.
+- **Among local models, others win on parts.**
+  - `winnow:e4b` (Ollaya) has the best local category accuracy (0.966; Jev 0.987) and is fast (6 s), but barely finds residual words.
   - `tev1` 4B is also better at category (0.942) and ~30% faster (10.7 s in a clean benchmark), but weaker at filters and word roles.
 - **Encoders and small models fail the word-role questions:** their role probabilities are nearly uniform, so they give an effectively constant answer. They can't resolve "role of word N" against the numbered word list in the state.
 - **Latency is dominated by one prefill of the whole question set.** A query takes ~16 s with nimble.
@@ -233,16 +233,17 @@ The decoder lives in `src/sidm/parser.py`.
 | nimble, embedded | 0.318 | **0.424** | filters F1 0.830 → 0.912 |
 | nimble, router | 0.197 | **0.373** | category 0.626 → 0.836 (group-max instead of top-down), filters |
 | jeb:4b | 0.230 | **0.365** | filters F1 0.852 → 0.888 |
+| Jev | 0.452 | **0.535** | filters F1 0.892 → 0.921 (nimble's settings; tuning on dev kept them) |
 
 **Eval is never used for tuning.** Dev results are optimistic because dev is the tuning set.
 
 ![Calibration of raw probabilities](docs/figures/calibration_eval.svg)
 
-*Why thresholds are tuned per model: models are calibrated very differently. nimble's and tev1 4B's filter probabilities are close to honest (ECE ≤ 0.01). Strands Decider and tev1 0.8B are under-confident on filters (curve above the diagonal), so a high threshold would throw away correct filters. jeb and winnow are over-confident on word roles (curve below the diagonal).*
+*Why thresholds are tuned per model: models are calibrated very differently. nimble's and tev1 4B's filter probabilities are close to honest (ECE ≤ 0.01). Strands Decider and tev1 0.8B are under-confident on filters (curve above the diagonal), so a high threshold would throw away correct filters. jeb and winnow are over-confident on word roles (curve below the diagonal). Jev's filter probabilities are as honest as nimble's (ECE 0.00), and it's slightly over-confident on word roles (0.07).*
 
 ![Effect of tuning](docs/figures/tuning_effect.svg)
 
-*Left: tuning helps every run except winnow, most of all nimble router (+0.18, from group-max category decoding) and jeb (+0.13). Right: for nimble, the filter threshold trades recall for precision; F1 peaks near the chosen 0.95.*
+*Left: tuning helps every run except winnow, most of all nimble router (+0.18, from group-max category decoding) and jeb (+0.13); Jev gains +0.08 from nimble's settings. Right: for nimble, the filter threshold trades recall for precision; F1 peaks near the chosen 0.95.*
 
 ## Backends and models
 The same request can be served by five ablatable backends (`--backend`). A run is named `<scheme>@<backend>:<model>`, e.g. `embedded@ollaya:jeb:4b`.
@@ -347,24 +348,25 @@ make dev BACKEND=jev && make tune BACKEND=jev && make eval BACKEND=jev
 ### Eval: 1,000 queries (decoding tuned per model on dev)
 ![Eval results](docs/figures/eval_results.svg)
 
-*Exact numbers with counts and definitions: [`results/results_eval.md`](results/results_eval.md). Bold marks the best run in each row; darker cells are closer to the row's best (for latency, faster). Jev leads every row except residual words (tev1 4B). Among local runs, nimble embedded leads on filters, word roles and the whole query; winnow and tev1 4B on category; tev1 0.8B and Strands Decider on speed.*
+*Exact numbers with counts and definitions: [`results/results_eval.md`](results/results_eval.md). Bold marks the best run in each row; darker cells are closer to the row's best (for latency, faster). Jev leads every row except residual words, where tev1 4B and both nimble runs score higher. Among local runs, nimble embedded leads on filters, word roles and the whole query; winnow and tev1 4B on category; tev1 0.8B and Strands Decider on speed.*
 
 - **Low "whole query exactly right" scores are expected, for every model.** It's the strictest possible measure: one query counts only if the category node, the whole filter set and the role of every single word are all right.
   - **Errors compound across the parts.** nimble embedded gets the category right on 0.917 of the queries, the filter set on 0.770, and every residual word on 0.527. Jev gets 0.987, 0.800 and 0.651. Multiplied, that's 0.37 and 0.51, close to their whole-query scores of 0.424 and 0.535 (errors are somewhat correlated, so the real score is a bit higher than the product).
   - **The word roles are the bottleneck.** A 7-word query needs 7 roles right, and the boundary between filter, category and residual words follows the dataset's labeling convention (e.g. "furniture" is residual, "with" in "with storage" belongs to the filter). The models are used as they are, never trained on that convention.
   - **So compare runs with each other, and per part,** rather than reading whole-query accuracy as "how often the parse is usable". A search engine would act on the category and filters, which are right far more often.
 - **Latency** is the p50 over the same 1,000 queries, one request at a time. tev1 4B's eval ran alongside CPU jobs: at the same question count it is ~19% slower than in a 30-query benchmark with nothing else running (`make bench`: 10.7 s), so its 13.0 s is labeled inflated. jeb's and winnow's evals overlapped too, but match their benchmarks within 1%.
-- **tev1 0.8B is the fastest decoder (2.2 s) but far behind:** whole query 0.090, with near-uniform word roles and no residual words found.
+- **tev1 0.8B is the fastest local decoder (2.2 s) but far behind:** whole query 0.090, with near-uniform word roles and no residual words found.
 - **Strands Decider 2B is ~4× faster than nimble (3.9 s vs 15.6 s) but much less accurate** (whole query 0.193).
   - Its engine encodes the state once and adds only each question's suffix, so it avoids re-reading all question texts per query.
   - It's weaker on category (0.743; e.g. "coffee table" vs "desk") and on residual words.
   - Every model except tev1 0.8B beats it on the whole query (p ≤ 0.0002); it beats tev1 0.8B (141 vs 38 queries).
-- **Jev is best on the whole query and on category.** Against nimble embedded: 215 queries only Jev got right vs 104 only nimble got right (whole query), and 74 vs 4 (category); p < 0.0001.
+- **Jev is best on the whole query and on category.** Against nimble embedded: 215 queries only Jev got right vs 104 only nimble got right (whole query), and 74 vs 4 (category); p < 0.0001. Against winnow, the best local model on category: 25 vs 4 (p = 0.0001).
+- **Jev's weak part is residual words** (F1 0.695, below tev1 4B's 0.744 and nimble's 0.733): it labels 38% of the residual words as filters, against 14% for nimble.
 - **Jev's latency isn't comparable to the local runs:** it's a hosted API on unknown hardware, measured from this Mac including the network round trip.
 - **nimble with the `embedded` scheme is the best local run on the whole query.** Every other local run is significantly worse (McNemar p < 0.001).
 - **On category, winnow:e4b and tev1 4B are significantly better than nimble** (p < 0.0001 and p = 0.002). jeb:4b ties nimble on category (p = 1.0).
 - **jeb:4b beats tev1 4B on the whole query** (116 vs 87 queries, p = 0.049), but tev1 is better at category.
-- **A local hybrid could combine the strengths:** category from winnow or tev1, filters and word roles from nimble. Not tried yet.
+- **A local hybrid could combine the strengths:** category from winnow or tev1, filters and word roles from nimble. Not tried yet; neither is Jev combined with a local model's residual words.
 
 
 ![Accuracy vs latency](docs/figures/accuracy_vs_latency.svg)
@@ -373,15 +375,15 @@ make dev BACKEND=jev && make tune BACKEND=jev && make eval BACKEND=jev
 
 ![Accuracy by part](docs/figures/accuracy_by_part.svg)
 
-*Jev leads on every part except residual words. Among local models none wins every part: winnow and tev1 4B lead on category, nimble on filters, word roles and the whole query. Residual words separate the models most: from 0 (tev1 0.8B) to 0.74 (tev1 4B). The bottom panel adds each run's p50 latency on its own log axis.*
+*Jev leads on every part except residual words, where tev1 4B and nimble are ahead. Among local models none wins every part: winnow and tev1 4B lead on category, nimble on filters, word roles and the whole query. Residual words separate the models most: from 0 (tev1 0.8B) to 0.74 (tev1 4B). The bottom panel adds each run's p50 latency on its own log axis.*
 
 ![Accuracy by difficulty](docs/figures/accuracy_by_difficulty.svg)
 
-*The whole query gets much harder with more filters (nimble: 0.73 with none, 0.19 with three) and more words (0.82 for 1–3 words, 0.18 for 7+). Typos cost ~0.1. Queries that name only an L1 group are harder than specific ones. No run gets a query without a product type right: models tag the word "furniture" as category, while the gold labels make it residual (a labeling convention worth revisiting, see `backlog.md`).*
+*The whole query gets much harder with more filters (nimble: 0.73 with none, 0.19 with three) and more words (0.82 for 1–3 words, 0.18 for 7+). Jev degrades much less (0.68 → 0.41 with filters, 0.82 → 0.31 with words); that's where its lead comes from. Typos cost the local models ~0.1, and Jev 0.21 (0.56 → 0.35). Queries that name only an L1 group are harder than specific ones. No run gets a query without a product type right: models tag the word "furniture" as category, while the gold labels make it residual (a labeling convention worth revisiting, see `backlog.md`).*
 
 ![Filter F1 per attribute](docs/figures/filter_f1_by_attribute.svg)
 
-*Width (inches mapped to a bucket) is nimble's weakest attribute (0.43); jeb and winnow do much better on it (0.79, 0.78). Room is weak for winnow and Strands Decider. A hybrid could take each attribute from the model best at it.*
+*Width (inches mapped to a bucket) is nimble's weakest attribute (0.43); Jev handles it best (0.90), and among local models jeb and winnow do much better than nimble (0.79, 0.78). Room is weak for winnow and Strands Decider. A hybrid could take each attribute from the model best at it.*
 
 ![Category errors by scheme](docs/figures/category_scheme_errors.svg)
 
@@ -411,12 +413,12 @@ Ranked by whole-query exact match. Latency is from clean runs.
 
 - **Dev is the tuning set,** so these numbers are optimistic.
 - **The encoders and small decoders answer word-role questions almost uniformly** (word accuracy ≈ 0.33, residual F1 = 0), and they are weak on filters.
-- **Models scoring at least 0.24 on dev got the 1,000-query eval,** plus tev1 0.8B as the fastest decoder, Strands Decider as a newly released model, and Jev as the hosted reference.
+- **Models scoring at least 0.24 on dev got the 1,000-query eval,** plus tev1 0.8B as the fastest local decoder, Strands Decider as a newly released model, and Jev as the hosted reference.
 
 
 ![Word-role confusion on dev](docs/figures/word_role_confusion_dev.svg)
 
-*The encoders and small decoders answer every word-role question with the same role (one dark column). winnow and Strands Decider label most residual words as filters, which is why their residual F1 is low.*
+*The encoders and small decoders answer every word-role question with the same role (one dark column). winnow and Strands Decider label most residual words as filters, which is why their residual F1 is low. Jev does so too, less often (28% of residual words on dev, vs 76% for winnow and 11% for nimble).*
 
 ### How runs are compared: McNemar's test
 McNemar's test checks whether **two runs scored on the same queries** really differ in accuracy, or whether the difference could be chance.

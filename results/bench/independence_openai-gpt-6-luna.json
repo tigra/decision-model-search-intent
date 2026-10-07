@@ -1,0 +1,3000 @@
+{
+ "backend": "openai",
+ "model": "gpt-6-luna",
+ "query": "grey mid century modern sectional with oak legs cheap free shipping",
+ "targets": [
+  "filter_material",
+  "filter_feature",
+  "cat_seating"
+ ],
+ "summary": {
+  "filter_material": {
+   "full_answer": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.85,
+    "probabilities": {
+     "not_specified": 0.86,
+     "leather": 0.01,
+     "faux_leather": 0.01,
+     "velvet": 0.0,
+     "linen": 0.01,
+     "boucle": 0.0,
+     "fabric": 0.03,
+     "microfiber": 0.01,
+     "solid_wood": 0.01,
+     "oak": 0.05,
+     "walnut": 0.01,
+     "pine": 0.0,
+     "acacia": 0.0,
+     "mango_wood": 0.0,
+     "bamboo": 0.0,
+     "metal": 0.0,
+     "glass": 0.0,
+     "marble": 0.0,
+     "rattan": 0.0,
+     "plastic": 0.0,
+     "engineered_wood": 0.0
+    }
+   },
+   "vs_full": {
+    "full_again": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    },
+    "reversed": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    },
+    "reworded_filter_color": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    },
+    "plus_10_extra": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    },
+    "alone_filter_material": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    },
+    "with_5_filter_material": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    }
+   }
+  },
+  "filter_feature": {
+   "full_answer": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.85,
+    "probabilities": {
+     "not_specified": 0.86,
+     "with_storage": 0.03,
+     "with_drawers": 0.01,
+     "reclining": 0.01,
+     "swivel": 0.01,
+     "foldable": 0.01,
+     "extendable": 0.0,
+     "adjustable_height": 0.0,
+     "stackable": 0.0,
+     "usb_charging": 0.0,
+     "glass_doors": 0.01,
+     "tufted": 0.04,
+     "cooling": 0.01,
+     "wheels": 0.01
+    }
+   },
+   "vs_full": {
+    "full_again": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    },
+    "reversed": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    },
+    "reworded_filter_color": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    },
+    "plus_10_extra": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    },
+    "alone_filter_feature": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    },
+    "with_5_filter_feature": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    }
+   }
+  },
+  "cat_seating": {
+   "full_answer": {
+    "type": "choice",
+    "choice": "sectional_sofa",
+    "confidence": 0.96,
+    "probabilities": {
+     "other_product": 0.01,
+     "unspecified": 0.01,
+     "sofas": 0.01,
+     "sectional_sofa": 0.96,
+     "loveseat": 0.01,
+     "sleeper_sofa": 0.0,
+     "chesterfield": 0.0,
+     "futon": 0.0,
+     "chairs": 0.0,
+     "accent_chair": 0.0,
+     "dining_chair": 0.0,
+     "office_chair": 0.0,
+     "gaming_chair": 0.0,
+     "rocking_chair": 0.0,
+     "lounge_chair": 0.0,
+     "stools": 0.0,
+     "bar_stool": 0.0,
+     "counter_stool": 0.0,
+     "step_stool": 0.0,
+     "benches": 0.0,
+     "ottomans": 0.0,
+     "recliners": 0.0,
+     "bean_bags": 0.0,
+     "chaise_lounges": 0.0
+    }
+   },
+   "vs_full": {
+    "full_again": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    },
+    "reversed": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    },
+    "reworded_filter_color": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    },
+    "plus_10_extra": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    },
+    "alone_cat_seating": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    },
+    "with_5_cat_seating": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    }
+   }
+  }
+ },
+ "answers": {
+  "full": {
+   "cat_seating": {
+    "type": "choice",
+    "choice": "sectional_sofa",
+    "confidence": 0.96,
+    "probabilities": {
+     "other_product": 0.01,
+     "unspecified": 0.01,
+     "sofas": 0.01,
+     "sectional_sofa": 0.96,
+     "loveseat": 0.01,
+     "sleeper_sofa": 0.0,
+     "chesterfield": 0.0,
+     "futon": 0.0,
+     "chairs": 0.0,
+     "accent_chair": 0.0,
+     "dining_chair": 0.0,
+     "office_chair": 0.0,
+     "gaming_chair": 0.0,
+     "rocking_chair": 0.0,
+     "lounge_chair": 0.0,
+     "stools": 0.0,
+     "bar_stool": 0.0,
+     "counter_stool": 0.0,
+     "step_stool": 0.0,
+     "benches": 0.0,
+     "ottomans": 0.0,
+     "recliners": 0.0,
+     "bean_bags": 0.0,
+     "chaise_lounges": 0.0
+    }
+   },
+   "cat_tables": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 1.0,
+    "probabilities": {
+     "other_product": 1.0,
+     "unspecified": 0.0,
+     "coffee_tables": 0.0,
+     "lift_top_coffee_table": 0.0,
+     "nesting_coffee_table": 0.0,
+     "dining_tables": 0.0,
+     "drop_leaf_table": 0.0,
+     "pub_table": 0.0,
+     "trestle_table": 0.0,
+     "side_tables": 0.0,
+     "console_tables": 0.0,
+     "vanity_tables": 0.0,
+     "kitchen_islands": 0.0
+    }
+   },
+   "cat_beds": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.99,
+    "probabilities": {
+     "other_product": 0.99,
+     "unspecified": 0.01,
+     "bed_frames": 0.0,
+     "platform_bed": 0.0,
+     "canopy_bed": 0.0,
+     "sleigh_bed": 0.0,
+     "upholstered_bed": 0.0,
+     "kids_beds": 0.0,
+     "bunk_bed": 0.0,
+     "loft_bed": 0.0,
+     "trundle_bed": 0.0,
+     "daybeds": 0.0,
+     "murphy_beds": 0.0,
+     "headboards": 0.0,
+     "cribs": 0.0
+    }
+   },
+   "cat_mattresses": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 1.0,
+    "probabilities": {
+     "other_product": 1.0,
+     "unspecified": 0.0,
+     "mattress": 0.0,
+     "memory_foam_mattress": 0.0,
+     "hybrid_mattress": 0.0,
+     "innerspring_mattress": 0.0,
+     "latex_mattress": 0.0,
+     "box_springs": 0.0,
+     "adjustable_bases": 0.0,
+     "mattress_toppers": 0.0
+    }
+   },
+   "cat_storage": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 1.0,
+    "probabilities": {
+     "other_product": 1.0,
+     "unspecified": 0.0,
+     "dressers": 0.0,
+     "nightstands": 0.0,
+     "bookcases": 0.0,
+     "ladder_shelf": 0.0,
+     "cube_organizer": 0.0,
+     "wall_shelf": 0.0,
+     "cabinets": 0.0,
+     "accent_cabinet": 0.0,
+     "curio_cabinet": 0.0,
+     "pantry_cabinet": 0.0,
+     "wardrobes": 0.0,
+     "tv_stands": 0.0,
+     "sideboards": 0.0,
+     "shoe_storage": 0.0
+    }
+   },
+   "cat_desks": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 1.0,
+    "probabilities": {
+     "other_product": 1.0,
+     "unspecified": 0.0,
+     "desk": 0.0,
+     "standing_desk": 0.0,
+     "l_shaped_desk": 0.0,
+     "writing_desk": 0.0,
+     "computer_desk": 0.0,
+     "gaming_desk": 0.0,
+     "filing_cabinets": 0.0,
+     "desk_hutches": 0.0,
+     "drafting_tables": 0.0
+    }
+   },
+   "filter_color": {
+    "type": "choice",
+    "choice": "grey",
+    "confidence": 1.0,
+    "probabilities": {
+     "not_specified": 0.0,
+     "black": 0.0,
+     "white": 0.0,
+     "grey": 1.0,
+     "beige": 0.0,
+     "brown": 0.0,
+     "blue": 0.0,
+     "navy": 0.0,
+     "green": 0.0,
+     "emerald": 0.0,
+     "red": 0.0,
+     "pink": 0.0,
+     "yellow": 0.0,
+     "orange": 0.0,
+     "cream": 0.0,
+     "charcoal": 0.0,
+     "teal": 0.0,
+     "purple": 0.0
+    }
+   },
+   "filter_material": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.85,
+    "probabilities": {
+     "not_specified": 0.86,
+     "leather": 0.01,
+     "faux_leather": 0.01,
+     "velvet": 0.0,
+     "linen": 0.01,
+     "boucle": 0.0,
+     "fabric": 0.03,
+     "microfiber": 0.01,
+     "solid_wood": 0.01,
+     "oak": 0.05,
+     "walnut": 0.01,
+     "pine": 0.0,
+     "acacia": 0.0,
+     "mango_wood": 0.0,
+     "bamboo": 0.0,
+     "metal": 0.0,
+     "glass": 0.0,
+     "marble": 0.0,
+     "rattan": 0.0,
+     "plastic": 0.0,
+     "engineered_wood": 0.0
+    }
+   },
+   "filter_leg_material": {
+    "type": "choice",
+    "choice": "oak",
+    "confidence": 0.99,
+    "probabilities": {
+     "not_specified": 0.01,
+     "wood": 0.0,
+     "oak": 0.99,
+     "walnut": 0.0,
+     "metal": 0.0,
+     "chrome": 0.0,
+     "acrylic": 0.0,
+     "hairpin": 0.0
+    }
+   },
+   "filter_leg_color": {
+    "type": "choice",
+    "choice": "natural",
+    "confidence": 0.97,
+    "probabilities": {
+     "not_specified": 0.02,
+     "black": 0.0,
+     "white": 0.0,
+     "gold": 0.0,
+     "brass": 0.01,
+     "silver": 0.0,
+     "natural": 0.97,
+     "dark_brown": 0.0
+    }
+   },
+   "filter_style": {
+    "type": "choice",
+    "choice": "mid_century",
+    "confidence": 0.98,
+    "probabilities": {
+     "not_specified": 0.0,
+     "modern": 0.02,
+     "contemporary": 0.0,
+     "mid_century": 0.98,
+     "farmhouse": 0.0,
+     "industrial": 0.0,
+     "scandinavian": 0.0,
+     "traditional": 0.0,
+     "rustic": 0.0,
+     "bohemian": 0.0,
+     "minimalist": 0.0,
+     "glam": 0.0,
+     "coastal": 0.0,
+     "japandi": 0.0,
+     "vintage": 0.0,
+     "art_deco": 0.0
+    }
+   },
+   "filter_shape": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.99,
+    "probabilities": {
+     "not_specified": 0.99,
+     "round": 0.0,
+     "square": 0.0,
+     "rectangular": 0.0,
+     "oval": 0.0,
+     "curved": 0.01,
+     "hexagonal": 0.0
+    }
+   },
+   "filter_bed_size": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 1.0,
+    "probabilities": {
+     "not_specified": 1.0,
+     "twin": 0.0,
+     "twin_xl": 0.0,
+     "full": 0.0,
+     "queen": 0.0,
+     "king": 0.0,
+     "california_king": 0.0
+    }
+   },
+   "filter_width": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 1.0,
+    "probabilities": {
+     "not_specified": 1.0,
+     "under_30in": 0.0,
+     "30_to_48in": 0.0,
+     "48_to_72in": 0.0,
+     "72_to_90in": 0.0,
+     "over_90in": 0.0
+    }
+   },
+   "filter_seat_count": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 1.0,
+    "probabilities": {
+     "not_specified": 1.0,
+     "seats_2": 0.0,
+     "seats_3": 0.0,
+     "seats_4": 0.0,
+     "seats_6": 0.0,
+     "seats_8": 0.0
+    }
+   },
+   "filter_firmness": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 1.0,
+    "probabilities": {
+     "not_specified": 1.0,
+     "soft": 0.0,
+     "medium": 0.0,
+     "firm": 0.0,
+     "extra_firm": 0.0
+    }
+   },
+   "filter_feature": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.85,
+    "probabilities": {
+     "not_specified": 0.86,
+     "with_storage": 0.03,
+     "with_drawers": 0.01,
+     "reclining": 0.01,
+     "swivel": 0.01,
+     "foldable": 0.01,
+     "extendable": 0.0,
+     "adjustable_height": 0.0,
+     "stackable": 0.0,
+     "usb_charging": 0.0,
+     "glass_doors": 0.01,
+     "tufted": 0.04,
+     "cooling": 0.01,
+     "wheels": 0.01
+    }
+   },
+   "filter_room": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.99,
+    "probabilities": {
+     "not_specified": 0.99,
+     "outdoor": 0.0,
+     "kids_room": 0.0,
+     "office": 0.0,
+     "bedroom": 0.0,
+     "living_room": 0.01,
+     "dining_room": 0.0,
+     "entryway": 0.0,
+     "bathroom": 0.0
+    }
+   },
+   "word_1": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 1.0,
+     "residual": 0.0
+    }
+   },
+   "word_2": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.99,
+    "probabilities": {
+     "category": 0.01,
+     "filter": 0.99,
+     "residual": 0.0
+    }
+   },
+   "word_3": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 1.0,
+     "residual": 0.0
+    }
+   },
+   "word_4": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 1.0,
+     "residual": 0.0
+    }
+   },
+   "word_5": {
+    "type": "choice",
+    "choice": "category",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 1.0,
+     "filter": 0.0,
+     "residual": 0.0
+    }
+   },
+   "word_6": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.99,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 0.99,
+     "residual": 0.01
+    }
+   },
+   "word_7": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 1.0,
+     "residual": 0.0
+    }
+   },
+   "word_8": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 1.0,
+     "residual": 0.0
+    }
+   },
+   "word_9": {
+    "type": "choice",
+    "choice": "residual",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 0.0,
+     "residual": 1.0
+    }
+   },
+   "word_10": {
+    "type": "choice",
+    "choice": "residual",
+    "confidence": 0.99,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 0.01,
+     "residual": 0.99
+    }
+   },
+   "word_11": {
+    "type": "choice",
+    "choice": "residual",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 0.0,
+     "residual": 1.0
+    }
+   }
+  },
+  "full_again": {
+   "cat_seating": {
+    "type": "choice",
+    "choice": "sectional_sofa",
+    "confidence": 0.96,
+    "probabilities": {
+     "other_product": 0.01,
+     "unspecified": 0.01,
+     "sofas": 0.01,
+     "sectional_sofa": 0.96,
+     "loveseat": 0.01,
+     "sleeper_sofa": 0.0,
+     "chesterfield": 0.0,
+     "futon": 0.0,
+     "chairs": 0.0,
+     "accent_chair": 0.0,
+     "dining_chair": 0.0,
+     "office_chair": 0.0,
+     "gaming_chair": 0.0,
+     "rocking_chair": 0.0,
+     "lounge_chair": 0.0,
+     "stools": 0.0,
+     "bar_stool": 0.0,
+     "counter_stool": 0.0,
+     "step_stool": 0.0,
+     "benches": 0.0,
+     "ottomans": 0.0,
+     "recliners": 0.0,
+     "bean_bags": 0.0,
+     "chaise_lounges": 0.0
+    }
+   },
+   "cat_tables": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 1.0,
+    "probabilities": {
+     "other_product": 1.0,
+     "unspecified": 0.0,
+     "coffee_tables": 0.0,
+     "lift_top_coffee_table": 0.0,
+     "nesting_coffee_table": 0.0,
+     "dining_tables": 0.0,
+     "drop_leaf_table": 0.0,
+     "pub_table": 0.0,
+     "trestle_table": 0.0,
+     "side_tables": 0.0,
+     "console_tables": 0.0,
+     "vanity_tables": 0.0,
+     "kitchen_islands": 0.0
+    }
+   },
+   "cat_beds": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.99,
+    "probabilities": {
+     "other_product": 0.99,
+     "unspecified": 0.01,
+     "bed_frames": 0.0,
+     "platform_bed": 0.0,
+     "canopy_bed": 0.0,
+     "sleigh_bed": 0.0,
+     "upholstered_bed": 0.0,
+     "kids_beds": 0.0,
+     "bunk_bed": 0.0,
+     "loft_bed": 0.0,
+     "trundle_bed": 0.0,
+     "daybeds": 0.0,
+     "murphy_beds": 0.0,
+     "headboards": 0.0,
+     "cribs": 0.0
+    }
+   },
+   "cat_mattresses": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 1.0,
+    "probabilities": {
+     "other_product": 1.0,
+     "unspecified": 0.0,
+     "mattress": 0.0,
+     "memory_foam_mattress": 0.0,
+     "hybrid_mattress": 0.0,
+     "innerspring_mattress": 0.0,
+     "latex_mattress": 0.0,
+     "box_springs": 0.0,
+     "adjustable_bases": 0.0,
+     "mattress_toppers": 0.0
+    }
+   },
+   "cat_storage": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 1.0,
+    "probabilities": {
+     "other_product": 1.0,
+     "unspecified": 0.0,
+     "dressers": 0.0,
+     "nightstands": 0.0,
+     "bookcases": 0.0,
+     "ladder_shelf": 0.0,
+     "cube_organizer": 0.0,
+     "wall_shelf": 0.0,
+     "cabinets": 0.0,
+     "accent_cabinet": 0.0,
+     "curio_cabinet": 0.0,
+     "pantry_cabinet": 0.0,
+     "wardrobes": 0.0,
+     "tv_stands": 0.0,
+     "sideboards": 0.0,
+     "shoe_storage": 0.0
+    }
+   },
+   "cat_desks": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 1.0,
+    "probabilities": {
+     "other_product": 1.0,
+     "unspecified": 0.0,
+     "desk": 0.0,
+     "standing_desk": 0.0,
+     "l_shaped_desk": 0.0,
+     "writing_desk": 0.0,
+     "computer_desk": 0.0,
+     "gaming_desk": 0.0,
+     "filing_cabinets": 0.0,
+     "desk_hutches": 0.0,
+     "drafting_tables": 0.0
+    }
+   },
+   "filter_color": {
+    "type": "choice",
+    "choice": "grey",
+    "confidence": 1.0,
+    "probabilities": {
+     "not_specified": 0.0,
+     "black": 0.0,
+     "white": 0.0,
+     "grey": 1.0,
+     "beige": 0.0,
+     "brown": 0.0,
+     "blue": 0.0,
+     "navy": 0.0,
+     "green": 0.0,
+     "emerald": 0.0,
+     "red": 0.0,
+     "pink": 0.0,
+     "yellow": 0.0,
+     "orange": 0.0,
+     "cream": 0.0,
+     "charcoal": 0.0,
+     "teal": 0.0,
+     "purple": 0.0
+    }
+   },
+   "filter_material": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.85,
+    "probabilities": {
+     "not_specified": 0.86,
+     "leather": 0.01,
+     "faux_leather": 0.01,
+     "velvet": 0.0,
+     "linen": 0.01,
+     "boucle": 0.0,
+     "fabric": 0.03,
+     "microfiber": 0.01,
+     "solid_wood": 0.01,
+     "oak": 0.05,
+     "walnut": 0.01,
+     "pine": 0.0,
+     "acacia": 0.0,
+     "mango_wood": 0.0,
+     "bamboo": 0.0,
+     "metal": 0.0,
+     "glass": 0.0,
+     "marble": 0.0,
+     "rattan": 0.0,
+     "plastic": 0.0,
+     "engineered_wood": 0.0
+    }
+   },
+   "filter_leg_material": {
+    "type": "choice",
+    "choice": "oak",
+    "confidence": 0.99,
+    "probabilities": {
+     "not_specified": 0.01,
+     "wood": 0.0,
+     "oak": 0.99,
+     "walnut": 0.0,
+     "metal": 0.0,
+     "chrome": 0.0,
+     "acrylic": 0.0,
+     "hairpin": 0.0
+    }
+   },
+   "filter_leg_color": {
+    "type": "choice",
+    "choice": "natural",
+    "confidence": 0.97,
+    "probabilities": {
+     "not_specified": 0.02,
+     "black": 0.0,
+     "white": 0.0,
+     "gold": 0.0,
+     "brass": 0.01,
+     "silver": 0.0,
+     "natural": 0.97,
+     "dark_brown": 0.0
+    }
+   },
+   "filter_style": {
+    "type": "choice",
+    "choice": "mid_century",
+    "confidence": 0.98,
+    "probabilities": {
+     "not_specified": 0.0,
+     "modern": 0.02,
+     "contemporary": 0.0,
+     "mid_century": 0.98,
+     "farmhouse": 0.0,
+     "industrial": 0.0,
+     "scandinavian": 0.0,
+     "traditional": 0.0,
+     "rustic": 0.0,
+     "bohemian": 0.0,
+     "minimalist": 0.0,
+     "glam": 0.0,
+     "coastal": 0.0,
+     "japandi": 0.0,
+     "vintage": 0.0,
+     "art_deco": 0.0
+    }
+   },
+   "filter_shape": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.99,
+    "probabilities": {
+     "not_specified": 0.99,
+     "round": 0.0,
+     "square": 0.0,
+     "rectangular": 0.0,
+     "oval": 0.0,
+     "curved": 0.01,
+     "hexagonal": 0.0
+    }
+   },
+   "filter_bed_size": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 1.0,
+    "probabilities": {
+     "not_specified": 1.0,
+     "twin": 0.0,
+     "twin_xl": 0.0,
+     "full": 0.0,
+     "queen": 0.0,
+     "king": 0.0,
+     "california_king": 0.0
+    }
+   },
+   "filter_width": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 1.0,
+    "probabilities": {
+     "not_specified": 1.0,
+     "under_30in": 0.0,
+     "30_to_48in": 0.0,
+     "48_to_72in": 0.0,
+     "72_to_90in": 0.0,
+     "over_90in": 0.0
+    }
+   },
+   "filter_seat_count": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 1.0,
+    "probabilities": {
+     "not_specified": 1.0,
+     "seats_2": 0.0,
+     "seats_3": 0.0,
+     "seats_4": 0.0,
+     "seats_6": 0.0,
+     "seats_8": 0.0
+    }
+   },
+   "filter_firmness": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 1.0,
+    "probabilities": {
+     "not_specified": 1.0,
+     "soft": 0.0,
+     "medium": 0.0,
+     "firm": 0.0,
+     "extra_firm": 0.0
+    }
+   },
+   "filter_feature": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.85,
+    "probabilities": {
+     "not_specified": 0.86,
+     "with_storage": 0.03,
+     "with_drawers": 0.01,
+     "reclining": 0.01,
+     "swivel": 0.01,
+     "foldable": 0.01,
+     "extendable": 0.0,
+     "adjustable_height": 0.0,
+     "stackable": 0.0,
+     "usb_charging": 0.0,
+     "glass_doors": 0.01,
+     "tufted": 0.04,
+     "cooling": 0.01,
+     "wheels": 0.01
+    }
+   },
+   "filter_room": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.99,
+    "probabilities": {
+     "not_specified": 0.99,
+     "outdoor": 0.0,
+     "kids_room": 0.0,
+     "office": 0.0,
+     "bedroom": 0.0,
+     "living_room": 0.01,
+     "dining_room": 0.0,
+     "entryway": 0.0,
+     "bathroom": 0.0
+    }
+   },
+   "word_1": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 1.0,
+     "residual": 0.0
+    }
+   },
+   "word_2": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.99,
+    "probabilities": {
+     "category": 0.01,
+     "filter": 0.99,
+     "residual": 0.0
+    }
+   },
+   "word_3": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 1.0,
+     "residual": 0.0
+    }
+   },
+   "word_4": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 1.0,
+     "residual": 0.0
+    }
+   },
+   "word_5": {
+    "type": "choice",
+    "choice": "category",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 1.0,
+     "filter": 0.0,
+     "residual": 0.0
+    }
+   },
+   "word_6": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.99,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 0.99,
+     "residual": 0.01
+    }
+   },
+   "word_7": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 1.0,
+     "residual": 0.0
+    }
+   },
+   "word_8": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 1.0,
+     "residual": 0.0
+    }
+   },
+   "word_9": {
+    "type": "choice",
+    "choice": "residual",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 0.0,
+     "residual": 1.0
+    }
+   },
+   "word_10": {
+    "type": "choice",
+    "choice": "residual",
+    "confidence": 0.99,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 0.01,
+     "residual": 0.99
+    }
+   },
+   "word_11": {
+    "type": "choice",
+    "choice": "residual",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 0.0,
+     "residual": 1.0
+    }
+   }
+  },
+  "reversed": {
+   "word_11": {
+    "type": "choice",
+    "choice": "residual",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 0.0,
+     "residual": 1.0
+    }
+   },
+   "word_10": {
+    "type": "choice",
+    "choice": "residual",
+    "confidence": 0.99,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 0.01,
+     "residual": 0.99
+    }
+   },
+   "word_9": {
+    "type": "choice",
+    "choice": "residual",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 0.0,
+     "residual": 1.0
+    }
+   },
+   "word_8": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 1.0,
+     "residual": 0.0
+    }
+   },
+   "word_7": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 1.0,
+     "residual": 0.0
+    }
+   },
+   "word_6": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.99,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 0.99,
+     "residual": 0.01
+    }
+   },
+   "word_5": {
+    "type": "choice",
+    "choice": "category",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 1.0,
+     "filter": 0.0,
+     "residual": 0.0
+    }
+   },
+   "word_4": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 1.0,
+     "residual": 0.0
+    }
+   },
+   "word_3": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 1.0,
+     "residual": 0.0
+    }
+   },
+   "word_2": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.99,
+    "probabilities": {
+     "category": 0.01,
+     "filter": 0.99,
+     "residual": 0.0
+    }
+   },
+   "word_1": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 1.0,
+     "residual": 0.0
+    }
+   },
+   "filter_room": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.99,
+    "probabilities": {
+     "not_specified": 0.99,
+     "outdoor": 0.0,
+     "kids_room": 0.0,
+     "office": 0.0,
+     "bedroom": 0.0,
+     "living_room": 0.01,
+     "dining_room": 0.0,
+     "entryway": 0.0,
+     "bathroom": 0.0
+    }
+   },
+   "filter_feature": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.85,
+    "probabilities": {
+     "not_specified": 0.86,
+     "with_storage": 0.03,
+     "with_drawers": 0.01,
+     "reclining": 0.01,
+     "swivel": 0.01,
+     "foldable": 0.01,
+     "extendable": 0.0,
+     "adjustable_height": 0.0,
+     "stackable": 0.0,
+     "usb_charging": 0.0,
+     "glass_doors": 0.01,
+     "tufted": 0.04,
+     "cooling": 0.01,
+     "wheels": 0.01
+    }
+   },
+   "filter_firmness": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 1.0,
+    "probabilities": {
+     "not_specified": 1.0,
+     "soft": 0.0,
+     "medium": 0.0,
+     "firm": 0.0,
+     "extra_firm": 0.0
+    }
+   },
+   "filter_seat_count": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 1.0,
+    "probabilities": {
+     "not_specified": 1.0,
+     "seats_2": 0.0,
+     "seats_3": 0.0,
+     "seats_4": 0.0,
+     "seats_6": 0.0,
+     "seats_8": 0.0
+    }
+   },
+   "filter_width": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 1.0,
+    "probabilities": {
+     "not_specified": 1.0,
+     "under_30in": 0.0,
+     "30_to_48in": 0.0,
+     "48_to_72in": 0.0,
+     "72_to_90in": 0.0,
+     "over_90in": 0.0
+    }
+   },
+   "filter_bed_size": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 1.0,
+    "probabilities": {
+     "not_specified": 1.0,
+     "twin": 0.0,
+     "twin_xl": 0.0,
+     "full": 0.0,
+     "queen": 0.0,
+     "king": 0.0,
+     "california_king": 0.0
+    }
+   },
+   "filter_shape": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.99,
+    "probabilities": {
+     "not_specified": 0.99,
+     "round": 0.0,
+     "square": 0.0,
+     "rectangular": 0.0,
+     "oval": 0.0,
+     "curved": 0.01,
+     "hexagonal": 0.0
+    }
+   },
+   "filter_style": {
+    "type": "choice",
+    "choice": "mid_century",
+    "confidence": 0.98,
+    "probabilities": {
+     "not_specified": 0.0,
+     "modern": 0.02,
+     "contemporary": 0.0,
+     "mid_century": 0.98,
+     "farmhouse": 0.0,
+     "industrial": 0.0,
+     "scandinavian": 0.0,
+     "traditional": 0.0,
+     "rustic": 0.0,
+     "bohemian": 0.0,
+     "minimalist": 0.0,
+     "glam": 0.0,
+     "coastal": 0.0,
+     "japandi": 0.0,
+     "vintage": 0.0,
+     "art_deco": 0.0
+    }
+   },
+   "filter_leg_color": {
+    "type": "choice",
+    "choice": "natural",
+    "confidence": 0.97,
+    "probabilities": {
+     "not_specified": 0.02,
+     "black": 0.0,
+     "white": 0.0,
+     "gold": 0.0,
+     "brass": 0.01,
+     "silver": 0.0,
+     "natural": 0.97,
+     "dark_brown": 0.0
+    }
+   },
+   "filter_leg_material": {
+    "type": "choice",
+    "choice": "oak",
+    "confidence": 0.99,
+    "probabilities": {
+     "not_specified": 0.01,
+     "wood": 0.0,
+     "oak": 0.99,
+     "walnut": 0.0,
+     "metal": 0.0,
+     "chrome": 0.0,
+     "acrylic": 0.0,
+     "hairpin": 0.0
+    }
+   },
+   "filter_material": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.85,
+    "probabilities": {
+     "not_specified": 0.86,
+     "leather": 0.01,
+     "faux_leather": 0.01,
+     "velvet": 0.0,
+     "linen": 0.01,
+     "boucle": 0.0,
+     "fabric": 0.03,
+     "microfiber": 0.01,
+     "solid_wood": 0.01,
+     "oak": 0.05,
+     "walnut": 0.01,
+     "pine": 0.0,
+     "acacia": 0.0,
+     "mango_wood": 0.0,
+     "bamboo": 0.0,
+     "metal": 0.0,
+     "glass": 0.0,
+     "marble": 0.0,
+     "rattan": 0.0,
+     "plastic": 0.0,
+     "engineered_wood": 0.0
+    }
+   },
+   "filter_color": {
+    "type": "choice",
+    "choice": "grey",
+    "confidence": 1.0,
+    "probabilities": {
+     "not_specified": 0.0,
+     "black": 0.0,
+     "white": 0.0,
+     "grey": 1.0,
+     "beige": 0.0,
+     "brown": 0.0,
+     "blue": 0.0,
+     "navy": 0.0,
+     "green": 0.0,
+     "emerald": 0.0,
+     "red": 0.0,
+     "pink": 0.0,
+     "yellow": 0.0,
+     "orange": 0.0,
+     "cream": 0.0,
+     "charcoal": 0.0,
+     "teal": 0.0,
+     "purple": 0.0
+    }
+   },
+   "cat_desks": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 1.0,
+    "probabilities": {
+     "other_product": 1.0,
+     "unspecified": 0.0,
+     "desk": 0.0,
+     "standing_desk": 0.0,
+     "l_shaped_desk": 0.0,
+     "writing_desk": 0.0,
+     "computer_desk": 0.0,
+     "gaming_desk": 0.0,
+     "filing_cabinets": 0.0,
+     "desk_hutches": 0.0,
+     "drafting_tables": 0.0
+    }
+   },
+   "cat_storage": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 1.0,
+    "probabilities": {
+     "other_product": 1.0,
+     "unspecified": 0.0,
+     "dressers": 0.0,
+     "nightstands": 0.0,
+     "bookcases": 0.0,
+     "ladder_shelf": 0.0,
+     "cube_organizer": 0.0,
+     "wall_shelf": 0.0,
+     "cabinets": 0.0,
+     "accent_cabinet": 0.0,
+     "curio_cabinet": 0.0,
+     "pantry_cabinet": 0.0,
+     "wardrobes": 0.0,
+     "tv_stands": 0.0,
+     "sideboards": 0.0,
+     "shoe_storage": 0.0
+    }
+   },
+   "cat_mattresses": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 1.0,
+    "probabilities": {
+     "other_product": 1.0,
+     "unspecified": 0.0,
+     "mattress": 0.0,
+     "memory_foam_mattress": 0.0,
+     "hybrid_mattress": 0.0,
+     "innerspring_mattress": 0.0,
+     "latex_mattress": 0.0,
+     "box_springs": 0.0,
+     "adjustable_bases": 0.0,
+     "mattress_toppers": 0.0
+    }
+   },
+   "cat_beds": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.99,
+    "probabilities": {
+     "other_product": 0.99,
+     "unspecified": 0.01,
+     "bed_frames": 0.0,
+     "platform_bed": 0.0,
+     "canopy_bed": 0.0,
+     "sleigh_bed": 0.0,
+     "upholstered_bed": 0.0,
+     "kids_beds": 0.0,
+     "bunk_bed": 0.0,
+     "loft_bed": 0.0,
+     "trundle_bed": 0.0,
+     "daybeds": 0.0,
+     "murphy_beds": 0.0,
+     "headboards": 0.0,
+     "cribs": 0.0
+    }
+   },
+   "cat_tables": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 1.0,
+    "probabilities": {
+     "other_product": 1.0,
+     "unspecified": 0.0,
+     "coffee_tables": 0.0,
+     "lift_top_coffee_table": 0.0,
+     "nesting_coffee_table": 0.0,
+     "dining_tables": 0.0,
+     "drop_leaf_table": 0.0,
+     "pub_table": 0.0,
+     "trestle_table": 0.0,
+     "side_tables": 0.0,
+     "console_tables": 0.0,
+     "vanity_tables": 0.0,
+     "kitchen_islands": 0.0
+    }
+   },
+   "cat_seating": {
+    "type": "choice",
+    "choice": "sectional_sofa",
+    "confidence": 0.96,
+    "probabilities": {
+     "other_product": 0.01,
+     "unspecified": 0.01,
+     "sofas": 0.01,
+     "sectional_sofa": 0.96,
+     "loveseat": 0.01,
+     "sleeper_sofa": 0.0,
+     "chesterfield": 0.0,
+     "futon": 0.0,
+     "chairs": 0.0,
+     "accent_chair": 0.0,
+     "dining_chair": 0.0,
+     "office_chair": 0.0,
+     "gaming_chair": 0.0,
+     "rocking_chair": 0.0,
+     "lounge_chair": 0.0,
+     "stools": 0.0,
+     "bar_stool": 0.0,
+     "counter_stool": 0.0,
+     "step_stool": 0.0,
+     "benches": 0.0,
+     "ottomans": 0.0,
+     "recliners": 0.0,
+     "bean_bags": 0.0,
+     "chaise_lounges": 0.0
+    }
+   }
+  },
+  "reworded_filter_color": {
+   "cat_seating": {
+    "type": "choice",
+    "choice": "sectional_sofa",
+    "confidence": 0.96,
+    "probabilities": {
+     "other_product": 0.01,
+     "unspecified": 0.01,
+     "sofas": 0.01,
+     "sectional_sofa": 0.96,
+     "loveseat": 0.01,
+     "sleeper_sofa": 0.0,
+     "chesterfield": 0.0,
+     "futon": 0.0,
+     "chairs": 0.0,
+     "accent_chair": 0.0,
+     "dining_chair": 0.0,
+     "office_chair": 0.0,
+     "gaming_chair": 0.0,
+     "rocking_chair": 0.0,
+     "lounge_chair": 0.0,
+     "stools": 0.0,
+     "bar_stool": 0.0,
+     "counter_stool": 0.0,
+     "step_stool": 0.0,
+     "benches": 0.0,
+     "ottomans": 0.0,
+     "recliners": 0.0,
+     "bean_bags": 0.0,
+     "chaise_lounges": 0.0
+    }
+   },
+   "cat_tables": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 1.0,
+    "probabilities": {
+     "other_product": 1.0,
+     "unspecified": 0.0,
+     "coffee_tables": 0.0,
+     "lift_top_coffee_table": 0.0,
+     "nesting_coffee_table": 0.0,
+     "dining_tables": 0.0,
+     "drop_leaf_table": 0.0,
+     "pub_table": 0.0,
+     "trestle_table": 0.0,
+     "side_tables": 0.0,
+     "console_tables": 0.0,
+     "vanity_tables": 0.0,
+     "kitchen_islands": 0.0
+    }
+   },
+   "cat_beds": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.99,
+    "probabilities": {
+     "other_product": 0.99,
+     "unspecified": 0.01,
+     "bed_frames": 0.0,
+     "platform_bed": 0.0,
+     "canopy_bed": 0.0,
+     "sleigh_bed": 0.0,
+     "upholstered_bed": 0.0,
+     "kids_beds": 0.0,
+     "bunk_bed": 0.0,
+     "loft_bed": 0.0,
+     "trundle_bed": 0.0,
+     "daybeds": 0.0,
+     "murphy_beds": 0.0,
+     "headboards": 0.0,
+     "cribs": 0.0
+    }
+   },
+   "cat_mattresses": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 1.0,
+    "probabilities": {
+     "other_product": 1.0,
+     "unspecified": 0.0,
+     "mattress": 0.0,
+     "memory_foam_mattress": 0.0,
+     "hybrid_mattress": 0.0,
+     "innerspring_mattress": 0.0,
+     "latex_mattress": 0.0,
+     "box_springs": 0.0,
+     "adjustable_bases": 0.0,
+     "mattress_toppers": 0.0
+    }
+   },
+   "cat_storage": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 1.0,
+    "probabilities": {
+     "other_product": 1.0,
+     "unspecified": 0.0,
+     "dressers": 0.0,
+     "nightstands": 0.0,
+     "bookcases": 0.0,
+     "ladder_shelf": 0.0,
+     "cube_organizer": 0.0,
+     "wall_shelf": 0.0,
+     "cabinets": 0.0,
+     "accent_cabinet": 0.0,
+     "curio_cabinet": 0.0,
+     "pantry_cabinet": 0.0,
+     "wardrobes": 0.0,
+     "tv_stands": 0.0,
+     "sideboards": 0.0,
+     "shoe_storage": 0.0
+    }
+   },
+   "cat_desks": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 1.0,
+    "probabilities": {
+     "other_product": 1.0,
+     "unspecified": 0.0,
+     "desk": 0.0,
+     "standing_desk": 0.0,
+     "l_shaped_desk": 0.0,
+     "writing_desk": 0.0,
+     "computer_desk": 0.0,
+     "gaming_desk": 0.0,
+     "filing_cabinets": 0.0,
+     "desk_hutches": 0.0,
+     "drafting_tables": 0.0
+    }
+   },
+   "filter_color": {
+    "type": "choice",
+    "choice": "grey",
+    "confidence": 1.0,
+    "probabilities": {
+     "not_specified": 0.0,
+     "black": 0.0,
+     "white": 0.0,
+     "grey": 1.0,
+     "beige": 0.0,
+     "brown": 0.0,
+     "blue": 0.0,
+     "navy": 0.0,
+     "green": 0.0,
+     "emerald": 0.0,
+     "red": 0.0,
+     "pink": 0.0,
+     "yellow": 0.0,
+     "orange": 0.0,
+     "cream": 0.0,
+     "charcoal": 0.0,
+     "teal": 0.0,
+     "purple": 0.0
+    }
+   },
+   "filter_material": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.85,
+    "probabilities": {
+     "not_specified": 0.86,
+     "leather": 0.01,
+     "faux_leather": 0.01,
+     "velvet": 0.0,
+     "linen": 0.01,
+     "boucle": 0.0,
+     "fabric": 0.03,
+     "microfiber": 0.01,
+     "solid_wood": 0.01,
+     "oak": 0.05,
+     "walnut": 0.01,
+     "pine": 0.0,
+     "acacia": 0.0,
+     "mango_wood": 0.0,
+     "bamboo": 0.0,
+     "metal": 0.0,
+     "glass": 0.0,
+     "marble": 0.0,
+     "rattan": 0.0,
+     "plastic": 0.0,
+     "engineered_wood": 0.0
+    }
+   },
+   "filter_leg_material": {
+    "type": "choice",
+    "choice": "oak",
+    "confidence": 0.99,
+    "probabilities": {
+     "not_specified": 0.01,
+     "wood": 0.0,
+     "oak": 0.99,
+     "walnut": 0.0,
+     "metal": 0.0,
+     "chrome": 0.0,
+     "acrylic": 0.0,
+     "hairpin": 0.0
+    }
+   },
+   "filter_leg_color": {
+    "type": "choice",
+    "choice": "natural",
+    "confidence": 0.97,
+    "probabilities": {
+     "not_specified": 0.02,
+     "black": 0.0,
+     "white": 0.0,
+     "gold": 0.0,
+     "brass": 0.01,
+     "silver": 0.0,
+     "natural": 0.97,
+     "dark_brown": 0.0
+    }
+   },
+   "filter_style": {
+    "type": "choice",
+    "choice": "mid_century",
+    "confidence": 0.98,
+    "probabilities": {
+     "not_specified": 0.0,
+     "modern": 0.02,
+     "contemporary": 0.0,
+     "mid_century": 0.98,
+     "farmhouse": 0.0,
+     "industrial": 0.0,
+     "scandinavian": 0.0,
+     "traditional": 0.0,
+     "rustic": 0.0,
+     "bohemian": 0.0,
+     "minimalist": 0.0,
+     "glam": 0.0,
+     "coastal": 0.0,
+     "japandi": 0.0,
+     "vintage": 0.0,
+     "art_deco": 0.0
+    }
+   },
+   "filter_shape": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.99,
+    "probabilities": {
+     "not_specified": 0.99,
+     "round": 0.0,
+     "square": 0.0,
+     "rectangular": 0.0,
+     "oval": 0.0,
+     "curved": 0.01,
+     "hexagonal": 0.0
+    }
+   },
+   "filter_bed_size": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 1.0,
+    "probabilities": {
+     "not_specified": 1.0,
+     "twin": 0.0,
+     "twin_xl": 0.0,
+     "full": 0.0,
+     "queen": 0.0,
+     "king": 0.0,
+     "california_king": 0.0
+    }
+   },
+   "filter_width": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 1.0,
+    "probabilities": {
+     "not_specified": 1.0,
+     "under_30in": 0.0,
+     "30_to_48in": 0.0,
+     "48_to_72in": 0.0,
+     "72_to_90in": 0.0,
+     "over_90in": 0.0
+    }
+   },
+   "filter_seat_count": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 1.0,
+    "probabilities": {
+     "not_specified": 1.0,
+     "seats_2": 0.0,
+     "seats_3": 0.0,
+     "seats_4": 0.0,
+     "seats_6": 0.0,
+     "seats_8": 0.0
+    }
+   },
+   "filter_firmness": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 1.0,
+    "probabilities": {
+     "not_specified": 1.0,
+     "soft": 0.0,
+     "medium": 0.0,
+     "firm": 0.0,
+     "extra_firm": 0.0
+    }
+   },
+   "filter_feature": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.85,
+    "probabilities": {
+     "not_specified": 0.86,
+     "with_storage": 0.03,
+     "with_drawers": 0.01,
+     "reclining": 0.01,
+     "swivel": 0.01,
+     "foldable": 0.01,
+     "extendable": 0.0,
+     "adjustable_height": 0.0,
+     "stackable": 0.0,
+     "usb_charging": 0.0,
+     "glass_doors": 0.01,
+     "tufted": 0.04,
+     "cooling": 0.01,
+     "wheels": 0.01
+    }
+   },
+   "filter_room": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.99,
+    "probabilities": {
+     "not_specified": 0.99,
+     "outdoor": 0.0,
+     "kids_room": 0.0,
+     "office": 0.0,
+     "bedroom": 0.0,
+     "living_room": 0.01,
+     "dining_room": 0.0,
+     "entryway": 0.0,
+     "bathroom": 0.0
+    }
+   },
+   "word_1": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 1.0,
+     "residual": 0.0
+    }
+   },
+   "word_2": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.99,
+    "probabilities": {
+     "category": 0.01,
+     "filter": 0.99,
+     "residual": 0.0
+    }
+   },
+   "word_3": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 1.0,
+     "residual": 0.0
+    }
+   },
+   "word_4": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 1.0,
+     "residual": 0.0
+    }
+   },
+   "word_5": {
+    "type": "choice",
+    "choice": "category",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 1.0,
+     "filter": 0.0,
+     "residual": 0.0
+    }
+   },
+   "word_6": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.99,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 0.99,
+     "residual": 0.01
+    }
+   },
+   "word_7": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 1.0,
+     "residual": 0.0
+    }
+   },
+   "word_8": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 1.0,
+     "residual": 0.0
+    }
+   },
+   "word_9": {
+    "type": "choice",
+    "choice": "residual",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 0.0,
+     "residual": 1.0
+    }
+   },
+   "word_10": {
+    "type": "choice",
+    "choice": "residual",
+    "confidence": 0.99,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 0.01,
+     "residual": 0.99
+    }
+   },
+   "word_11": {
+    "type": "choice",
+    "choice": "residual",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 0.0,
+     "residual": 1.0
+    }
+   }
+  },
+  "plus_10_extra": {
+   "cat_seating": {
+    "type": "choice",
+    "choice": "sectional_sofa",
+    "confidence": 0.96,
+    "probabilities": {
+     "other_product": 0.01,
+     "unspecified": 0.01,
+     "sofas": 0.01,
+     "sectional_sofa": 0.96,
+     "loveseat": 0.01,
+     "sleeper_sofa": 0.0,
+     "chesterfield": 0.0,
+     "futon": 0.0,
+     "chairs": 0.0,
+     "accent_chair": 0.0,
+     "dining_chair": 0.0,
+     "office_chair": 0.0,
+     "gaming_chair": 0.0,
+     "rocking_chair": 0.0,
+     "lounge_chair": 0.0,
+     "stools": 0.0,
+     "bar_stool": 0.0,
+     "counter_stool": 0.0,
+     "step_stool": 0.0,
+     "benches": 0.0,
+     "ottomans": 0.0,
+     "recliners": 0.0,
+     "bean_bags": 0.0,
+     "chaise_lounges": 0.0
+    }
+   },
+   "cat_tables": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 1.0,
+    "probabilities": {
+     "other_product": 1.0,
+     "unspecified": 0.0,
+     "coffee_tables": 0.0,
+     "lift_top_coffee_table": 0.0,
+     "nesting_coffee_table": 0.0,
+     "dining_tables": 0.0,
+     "drop_leaf_table": 0.0,
+     "pub_table": 0.0,
+     "trestle_table": 0.0,
+     "side_tables": 0.0,
+     "console_tables": 0.0,
+     "vanity_tables": 0.0,
+     "kitchen_islands": 0.0
+    }
+   },
+   "cat_beds": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.99,
+    "probabilities": {
+     "other_product": 0.99,
+     "unspecified": 0.01,
+     "bed_frames": 0.0,
+     "platform_bed": 0.0,
+     "canopy_bed": 0.0,
+     "sleigh_bed": 0.0,
+     "upholstered_bed": 0.0,
+     "kids_beds": 0.0,
+     "bunk_bed": 0.0,
+     "loft_bed": 0.0,
+     "trundle_bed": 0.0,
+     "daybeds": 0.0,
+     "murphy_beds": 0.0,
+     "headboards": 0.0,
+     "cribs": 0.0
+    }
+   },
+   "cat_mattresses": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 1.0,
+    "probabilities": {
+     "other_product": 1.0,
+     "unspecified": 0.0,
+     "mattress": 0.0,
+     "memory_foam_mattress": 0.0,
+     "hybrid_mattress": 0.0,
+     "innerspring_mattress": 0.0,
+     "latex_mattress": 0.0,
+     "box_springs": 0.0,
+     "adjustable_bases": 0.0,
+     "mattress_toppers": 0.0
+    }
+   },
+   "cat_storage": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 1.0,
+    "probabilities": {
+     "other_product": 1.0,
+     "unspecified": 0.0,
+     "dressers": 0.0,
+     "nightstands": 0.0,
+     "bookcases": 0.0,
+     "ladder_shelf": 0.0,
+     "cube_organizer": 0.0,
+     "wall_shelf": 0.0,
+     "cabinets": 0.0,
+     "accent_cabinet": 0.0,
+     "curio_cabinet": 0.0,
+     "pantry_cabinet": 0.0,
+     "wardrobes": 0.0,
+     "tv_stands": 0.0,
+     "sideboards": 0.0,
+     "shoe_storage": 0.0
+    }
+   },
+   "cat_desks": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 1.0,
+    "probabilities": {
+     "other_product": 1.0,
+     "unspecified": 0.0,
+     "desk": 0.0,
+     "standing_desk": 0.0,
+     "l_shaped_desk": 0.0,
+     "writing_desk": 0.0,
+     "computer_desk": 0.0,
+     "gaming_desk": 0.0,
+     "filing_cabinets": 0.0,
+     "desk_hutches": 0.0,
+     "drafting_tables": 0.0
+    }
+   },
+   "filter_color": {
+    "type": "choice",
+    "choice": "grey",
+    "confidence": 1.0,
+    "probabilities": {
+     "not_specified": 0.0,
+     "black": 0.0,
+     "white": 0.0,
+     "grey": 1.0,
+     "beige": 0.0,
+     "brown": 0.0,
+     "blue": 0.0,
+     "navy": 0.0,
+     "green": 0.0,
+     "emerald": 0.0,
+     "red": 0.0,
+     "pink": 0.0,
+     "yellow": 0.0,
+     "orange": 0.0,
+     "cream": 0.0,
+     "charcoal": 0.0,
+     "teal": 0.0,
+     "purple": 0.0
+    }
+   },
+   "filter_material": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.85,
+    "probabilities": {
+     "not_specified": 0.86,
+     "leather": 0.01,
+     "faux_leather": 0.01,
+     "velvet": 0.0,
+     "linen": 0.01,
+     "boucle": 0.0,
+     "fabric": 0.03,
+     "microfiber": 0.01,
+     "solid_wood": 0.01,
+     "oak": 0.05,
+     "walnut": 0.01,
+     "pine": 0.0,
+     "acacia": 0.0,
+     "mango_wood": 0.0,
+     "bamboo": 0.0,
+     "metal": 0.0,
+     "glass": 0.0,
+     "marble": 0.0,
+     "rattan": 0.0,
+     "plastic": 0.0,
+     "engineered_wood": 0.0
+    }
+   },
+   "filter_leg_material": {
+    "type": "choice",
+    "choice": "oak",
+    "confidence": 0.99,
+    "probabilities": {
+     "not_specified": 0.01,
+     "wood": 0.0,
+     "oak": 0.99,
+     "walnut": 0.0,
+     "metal": 0.0,
+     "chrome": 0.0,
+     "acrylic": 0.0,
+     "hairpin": 0.0
+    }
+   },
+   "filter_leg_color": {
+    "type": "choice",
+    "choice": "natural",
+    "confidence": 0.97,
+    "probabilities": {
+     "not_specified": 0.02,
+     "black": 0.0,
+     "white": 0.0,
+     "gold": 0.0,
+     "brass": 0.01,
+     "silver": 0.0,
+     "natural": 0.97,
+     "dark_brown": 0.0
+    }
+   },
+   "filter_style": {
+    "type": "choice",
+    "choice": "mid_century",
+    "confidence": 0.98,
+    "probabilities": {
+     "not_specified": 0.0,
+     "modern": 0.02,
+     "contemporary": 0.0,
+     "mid_century": 0.98,
+     "farmhouse": 0.0,
+     "industrial": 0.0,
+     "scandinavian": 0.0,
+     "traditional": 0.0,
+     "rustic": 0.0,
+     "bohemian": 0.0,
+     "minimalist": 0.0,
+     "glam": 0.0,
+     "coastal": 0.0,
+     "japandi": 0.0,
+     "vintage": 0.0,
+     "art_deco": 0.0
+    }
+   },
+   "filter_shape": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.99,
+    "probabilities": {
+     "not_specified": 0.99,
+     "round": 0.0,
+     "square": 0.0,
+     "rectangular": 0.0,
+     "oval": 0.0,
+     "curved": 0.01,
+     "hexagonal": 0.0
+    }
+   },
+   "filter_bed_size": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 1.0,
+    "probabilities": {
+     "not_specified": 1.0,
+     "twin": 0.0,
+     "twin_xl": 0.0,
+     "full": 0.0,
+     "queen": 0.0,
+     "king": 0.0,
+     "california_king": 0.0
+    }
+   },
+   "filter_width": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 1.0,
+    "probabilities": {
+     "not_specified": 1.0,
+     "under_30in": 0.0,
+     "30_to_48in": 0.0,
+     "48_to_72in": 0.0,
+     "72_to_90in": 0.0,
+     "over_90in": 0.0
+    }
+   },
+   "filter_seat_count": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 1.0,
+    "probabilities": {
+     "not_specified": 1.0,
+     "seats_2": 0.0,
+     "seats_3": 0.0,
+     "seats_4": 0.0,
+     "seats_6": 0.0,
+     "seats_8": 0.0
+    }
+   },
+   "filter_firmness": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 1.0,
+    "probabilities": {
+     "not_specified": 1.0,
+     "soft": 0.0,
+     "medium": 0.0,
+     "firm": 0.0,
+     "extra_firm": 0.0
+    }
+   },
+   "filter_feature": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.85,
+    "probabilities": {
+     "not_specified": 0.86,
+     "with_storage": 0.03,
+     "with_drawers": 0.01,
+     "reclining": 0.01,
+     "swivel": 0.01,
+     "foldable": 0.01,
+     "extendable": 0.0,
+     "adjustable_height": 0.0,
+     "stackable": 0.0,
+     "usb_charging": 0.0,
+     "glass_doors": 0.01,
+     "tufted": 0.04,
+     "cooling": 0.01,
+     "wheels": 0.01
+    }
+   },
+   "filter_room": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.99,
+    "probabilities": {
+     "not_specified": 0.99,
+     "outdoor": 0.0,
+     "kids_room": 0.0,
+     "office": 0.0,
+     "bedroom": 0.0,
+     "living_room": 0.01,
+     "dining_room": 0.0,
+     "entryway": 0.0,
+     "bathroom": 0.0
+    }
+   },
+   "word_1": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 1.0,
+     "residual": 0.0
+    }
+   },
+   "word_2": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.99,
+    "probabilities": {
+     "category": 0.01,
+     "filter": 0.99,
+     "residual": 0.0
+    }
+   },
+   "word_3": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 1.0,
+     "residual": 0.0
+    }
+   },
+   "word_4": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 1.0,
+     "residual": 0.0
+    }
+   },
+   "word_5": {
+    "type": "choice",
+    "choice": "category",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 1.0,
+     "filter": 0.0,
+     "residual": 0.0
+    }
+   },
+   "word_6": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.99,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 0.99,
+     "residual": 0.01
+    }
+   },
+   "word_7": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 1.0,
+     "residual": 0.0
+    }
+   },
+   "word_8": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 1.0,
+     "residual": 0.0
+    }
+   },
+   "word_9": {
+    "type": "choice",
+    "choice": "residual",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 0.0,
+     "residual": 1.0
+    }
+   },
+   "word_10": {
+    "type": "choice",
+    "choice": "residual",
+    "confidence": 0.99,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 0.01,
+     "residual": 0.99
+    }
+   },
+   "word_11": {
+    "type": "choice",
+    "choice": "residual",
+    "confidence": 1.0,
+    "probabilities": {
+     "category": 0.0,
+     "filter": 0.0,
+     "residual": 1.0
+    }
+   },
+   "extra_0": {
+    "type": "choice",
+    "choice": "yes",
+    "confidence": 1.0,
+    "probabilities": {
+     "yes": 1.0,
+     "no": 0.0
+    }
+   },
+   "extra_1": {
+    "type": "choice",
+    "choice": "yes",
+    "confidence": 0.96,
+    "probabilities": {
+     "yes": 0.98,
+     "no": 0.02
+    }
+   },
+   "extra_2": {
+    "type": "choice",
+    "choice": "no",
+    "confidence": 1.0,
+    "probabilities": {
+     "yes": 0.0,
+     "no": 1.0
+    }
+   },
+   "extra_3": {
+    "type": "choice",
+    "choice": "no",
+    "confidence": 1.0,
+    "probabilities": {
+     "yes": 0.0,
+     "no": 1.0
+    }
+   },
+   "extra_4": {
+    "type": "choice",
+    "choice": "yes",
+    "confidence": 0.98,
+    "probabilities": {
+     "yes": 0.99,
+     "no": 0.01
+    }
+   },
+   "extra_5": {
+    "type": "choice",
+    "choice": "yes",
+    "confidence": 1.0,
+    "probabilities": {
+     "yes": 1.0,
+     "no": 0.0
+    }
+   },
+   "extra_6": {
+    "type": "choice",
+    "choice": "yes",
+    "confidence": 0.92,
+    "probabilities": {
+     "yes": 0.96,
+     "no": 0.04
+    }
+   },
+   "extra_7": {
+    "type": "choice",
+    "choice": "no",
+    "confidence": 1.0,
+    "probabilities": {
+     "yes": 0.0,
+     "no": 1.0
+    }
+   },
+   "extra_8": {
+    "type": "choice",
+    "choice": "yes",
+    "confidence": 1.0,
+    "probabilities": {
+     "yes": 1.0,
+     "no": 0.0
+    }
+   },
+   "extra_9": {
+    "type": "choice",
+    "choice": "no",
+    "confidence": 0.86,
+    "probabilities": {
+     "yes": 0.07,
+     "no": 0.93
+    }
+   }
+  },
+  "alone_filter_material": {
+   "filter_material": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.85,
+    "probabilities": {
+     "not_specified": 0.86,
+     "leather": 0.01,
+     "faux_leather": 0.01,
+     "velvet": 0.0,
+     "linen": 0.01,
+     "boucle": 0.0,
+     "fabric": 0.03,
+     "microfiber": 0.01,
+     "solid_wood": 0.01,
+     "oak": 0.05,
+     "walnut": 0.01,
+     "pine": 0.0,
+     "acacia": 0.0,
+     "mango_wood": 0.0,
+     "bamboo": 0.0,
+     "metal": 0.0,
+     "glass": 0.0,
+     "marble": 0.0,
+     "rattan": 0.0,
+     "plastic": 0.0,
+     "engineered_wood": 0.0
+    }
+   }
+  },
+  "with_5_filter_material": {
+   "filter_material": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.85,
+    "probabilities": {
+     "not_specified": 0.86,
+     "leather": 0.01,
+     "faux_leather": 0.01,
+     "velvet": 0.0,
+     "linen": 0.01,
+     "boucle": 0.0,
+     "fabric": 0.03,
+     "microfiber": 0.01,
+     "solid_wood": 0.01,
+     "oak": 0.05,
+     "walnut": 0.01,
+     "pine": 0.0,
+     "acacia": 0.0,
+     "mango_wood": 0.0,
+     "bamboo": 0.0,
+     "metal": 0.0,
+     "glass": 0.0,
+     "marble": 0.0,
+     "rattan": 0.0,
+     "plastic": 0.0,
+     "engineered_wood": 0.0
+    }
+   },
+   "cat_tables": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 1.0,
+    "probabilities": {
+     "other_product": 1.0,
+     "unspecified": 0.0,
+     "coffee_tables": 0.0,
+     "lift_top_coffee_table": 0.0,
+     "nesting_coffee_table": 0.0,
+     "dining_tables": 0.0,
+     "drop_leaf_table": 0.0,
+     "pub_table": 0.0,
+     "trestle_table": 0.0,
+     "side_tables": 0.0,
+     "console_tables": 0.0,
+     "vanity_tables": 0.0,
+     "kitchen_islands": 0.0
+    }
+   },
+   "cat_beds": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.99,
+    "probabilities": {
+     "other_product": 0.99,
+     "unspecified": 0.01,
+     "bed_frames": 0.0,
+     "platform_bed": 0.0,
+     "canopy_bed": 0.0,
+     "sleigh_bed": 0.0,
+     "upholstered_bed": 0.0,
+     "kids_beds": 0.0,
+     "bunk_bed": 0.0,
+     "loft_bed": 0.0,
+     "trundle_bed": 0.0,
+     "daybeds": 0.0,
+     "murphy_beds": 0.0,
+     "headboards": 0.0,
+     "cribs": 0.0
+    }
+   },
+   "cat_mattresses": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 1.0,
+    "probabilities": {
+     "other_product": 1.0,
+     "unspecified": 0.0,
+     "mattress": 0.0,
+     "memory_foam_mattress": 0.0,
+     "hybrid_mattress": 0.0,
+     "innerspring_mattress": 0.0,
+     "latex_mattress": 0.0,
+     "box_springs": 0.0,
+     "adjustable_bases": 0.0,
+     "mattress_toppers": 0.0
+    }
+   },
+   "cat_storage": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 1.0,
+    "probabilities": {
+     "other_product": 1.0,
+     "unspecified": 0.0,
+     "dressers": 0.0,
+     "nightstands": 0.0,
+     "bookcases": 0.0,
+     "ladder_shelf": 0.0,
+     "cube_organizer": 0.0,
+     "wall_shelf": 0.0,
+     "cabinets": 0.0,
+     "accent_cabinet": 0.0,
+     "curio_cabinet": 0.0,
+     "pantry_cabinet": 0.0,
+     "wardrobes": 0.0,
+     "tv_stands": 0.0,
+     "sideboards": 0.0,
+     "shoe_storage": 0.0
+    }
+   },
+   "cat_desks": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 1.0,
+    "probabilities": {
+     "other_product": 1.0,
+     "unspecified": 0.0,
+     "desk": 0.0,
+     "standing_desk": 0.0,
+     "l_shaped_desk": 0.0,
+     "writing_desk": 0.0,
+     "computer_desk": 0.0,
+     "gaming_desk": 0.0,
+     "filing_cabinets": 0.0,
+     "desk_hutches": 0.0,
+     "drafting_tables": 0.0
+    }
+   }
+  },
+  "alone_filter_feature": {
+   "filter_feature": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.85,
+    "probabilities": {
+     "not_specified": 0.86,
+     "with_storage": 0.03,
+     "with_drawers": 0.01,
+     "reclining": 0.01,
+     "swivel": 0.01,
+     "foldable": 0.01,
+     "extendable": 0.0,
+     "adjustable_height": 0.0,
+     "stackable": 0.0,
+     "usb_charging": 0.0,
+     "glass_doors": 0.01,
+     "tufted": 0.04,
+     "cooling": 0.01,
+     "wheels": 0.01
+    }
+   }
+  },
+  "with_5_filter_feature": {
+   "filter_feature": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.85,
+    "probabilities": {
+     "not_specified": 0.86,
+     "with_storage": 0.03,
+     "with_drawers": 0.01,
+     "reclining": 0.01,
+     "swivel": 0.01,
+     "foldable": 0.01,
+     "extendable": 0.0,
+     "adjustable_height": 0.0,
+     "stackable": 0.0,
+     "usb_charging": 0.0,
+     "glass_doors": 0.01,
+     "tufted": 0.04,
+     "cooling": 0.01,
+     "wheels": 0.01
+    }
+   },
+   "cat_tables": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 1.0,
+    "probabilities": {
+     "other_product": 1.0,
+     "unspecified": 0.0,
+     "coffee_tables": 0.0,
+     "lift_top_coffee_table": 0.0,
+     "nesting_coffee_table": 0.0,
+     "dining_tables": 0.0,
+     "drop_leaf_table": 0.0,
+     "pub_table": 0.0,
+     "trestle_table": 0.0,
+     "side_tables": 0.0,
+     "console_tables": 0.0,
+     "vanity_tables": 0.0,
+     "kitchen_islands": 0.0
+    }
+   },
+   "cat_beds": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.99,
+    "probabilities": {
+     "other_product": 0.99,
+     "unspecified": 0.01,
+     "bed_frames": 0.0,
+     "platform_bed": 0.0,
+     "canopy_bed": 0.0,
+     "sleigh_bed": 0.0,
+     "upholstered_bed": 0.0,
+     "kids_beds": 0.0,
+     "bunk_bed": 0.0,
+     "loft_bed": 0.0,
+     "trundle_bed": 0.0,
+     "daybeds": 0.0,
+     "murphy_beds": 0.0,
+     "headboards": 0.0,
+     "cribs": 0.0
+    }
+   },
+   "cat_mattresses": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 1.0,
+    "probabilities": {
+     "other_product": 1.0,
+     "unspecified": 0.0,
+     "mattress": 0.0,
+     "memory_foam_mattress": 0.0,
+     "hybrid_mattress": 0.0,
+     "innerspring_mattress": 0.0,
+     "latex_mattress": 0.0,
+     "box_springs": 0.0,
+     "adjustable_bases": 0.0,
+     "mattress_toppers": 0.0
+    }
+   },
+   "cat_storage": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 1.0,
+    "probabilities": {
+     "other_product": 1.0,
+     "unspecified": 0.0,
+     "dressers": 0.0,
+     "nightstands": 0.0,
+     "bookcases": 0.0,
+     "ladder_shelf": 0.0,
+     "cube_organizer": 0.0,
+     "wall_shelf": 0.0,
+     "cabinets": 0.0,
+     "accent_cabinet": 0.0,
+     "curio_cabinet": 0.0,
+     "pantry_cabinet": 0.0,
+     "wardrobes": 0.0,
+     "tv_stands": 0.0,
+     "sideboards": 0.0,
+     "shoe_storage": 0.0
+    }
+   },
+   "cat_desks": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 1.0,
+    "probabilities": {
+     "other_product": 1.0,
+     "unspecified": 0.0,
+     "desk": 0.0,
+     "standing_desk": 0.0,
+     "l_shaped_desk": 0.0,
+     "writing_desk": 0.0,
+     "computer_desk": 0.0,
+     "gaming_desk": 0.0,
+     "filing_cabinets": 0.0,
+     "desk_hutches": 0.0,
+     "drafting_tables": 0.0
+    }
+   }
+  },
+  "alone_cat_seating": {
+   "cat_seating": {
+    "type": "choice",
+    "choice": "sectional_sofa",
+    "confidence": 0.96,
+    "probabilities": {
+     "other_product": 0.01,
+     "unspecified": 0.01,
+     "sofas": 0.01,
+     "sectional_sofa": 0.96,
+     "loveseat": 0.01,
+     "sleeper_sofa": 0.0,
+     "chesterfield": 0.0,
+     "futon": 0.0,
+     "chairs": 0.0,
+     "accent_chair": 0.0,
+     "dining_chair": 0.0,
+     "office_chair": 0.0,
+     "gaming_chair": 0.0,
+     "rocking_chair": 0.0,
+     "lounge_chair": 0.0,
+     "stools": 0.0,
+     "bar_stool": 0.0,
+     "counter_stool": 0.0,
+     "step_stool": 0.0,
+     "benches": 0.0,
+     "ottomans": 0.0,
+     "recliners": 0.0,
+     "bean_bags": 0.0,
+     "chaise_lounges": 0.0
+    }
+   }
+  },
+  "with_5_cat_seating": {
+   "cat_seating": {
+    "type": "choice",
+    "choice": "sectional_sofa",
+    "confidence": 0.96,
+    "probabilities": {
+     "other_product": 0.01,
+     "unspecified": 0.01,
+     "sofas": 0.01,
+     "sectional_sofa": 0.96,
+     "loveseat": 0.01,
+     "sleeper_sofa": 0.0,
+     "chesterfield": 0.0,
+     "futon": 0.0,
+     "chairs": 0.0,
+     "accent_chair": 0.0,
+     "dining_chair": 0.0,
+     "office_chair": 0.0,
+     "gaming_chair": 0.0,
+     "rocking_chair": 0.0,
+     "lounge_chair": 0.0,
+     "stools": 0.0,
+     "bar_stool": 0.0,
+     "counter_stool": 0.0,
+     "step_stool": 0.0,
+     "benches": 0.0,
+     "ottomans": 0.0,
+     "recliners": 0.0,
+     "bean_bags": 0.0,
+     "chaise_lounges": 0.0
+    }
+   },
+   "cat_tables": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 1.0,
+    "probabilities": {
+     "other_product": 1.0,
+     "unspecified": 0.0,
+     "coffee_tables": 0.0,
+     "lift_top_coffee_table": 0.0,
+     "nesting_coffee_table": 0.0,
+     "dining_tables": 0.0,
+     "drop_leaf_table": 0.0,
+     "pub_table": 0.0,
+     "trestle_table": 0.0,
+     "side_tables": 0.0,
+     "console_tables": 0.0,
+     "vanity_tables": 0.0,
+     "kitchen_islands": 0.0
+    }
+   },
+   "cat_beds": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.99,
+    "probabilities": {
+     "other_product": 0.99,
+     "unspecified": 0.01,
+     "bed_frames": 0.0,
+     "platform_bed": 0.0,
+     "canopy_bed": 0.0,
+     "sleigh_bed": 0.0,
+     "upholstered_bed": 0.0,
+     "kids_beds": 0.0,
+     "bunk_bed": 0.0,
+     "loft_bed": 0.0,
+     "trundle_bed": 0.0,
+     "daybeds": 0.0,
+     "murphy_beds": 0.0,
+     "headboards": 0.0,
+     "cribs": 0.0
+    }
+   },
+   "cat_mattresses": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 1.0,
+    "probabilities": {
+     "other_product": 1.0,
+     "unspecified": 0.0,
+     "mattress": 0.0,
+     "memory_foam_mattress": 0.0,
+     "hybrid_mattress": 0.0,
+     "innerspring_mattress": 0.0,
+     "latex_mattress": 0.0,
+     "box_springs": 0.0,
+     "adjustable_bases": 0.0,
+     "mattress_toppers": 0.0
+    }
+   },
+   "cat_storage": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 1.0,
+    "probabilities": {
+     "other_product": 1.0,
+     "unspecified": 0.0,
+     "dressers": 0.0,
+     "nightstands": 0.0,
+     "bookcases": 0.0,
+     "ladder_shelf": 0.0,
+     "cube_organizer": 0.0,
+     "wall_shelf": 0.0,
+     "cabinets": 0.0,
+     "accent_cabinet": 0.0,
+     "curio_cabinet": 0.0,
+     "pantry_cabinet": 0.0,
+     "wardrobes": 0.0,
+     "tv_stands": 0.0,
+     "sideboards": 0.0,
+     "shoe_storage": 0.0
+    }
+   },
+   "cat_desks": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 1.0,
+    "probabilities": {
+     "other_product": 1.0,
+     "unspecified": 0.0,
+     "desk": 0.0,
+     "standing_desk": 0.0,
+     "l_shaped_desk": 0.0,
+     "writing_desk": 0.0,
+     "computer_desk": 0.0,
+     "gaming_desk": 0.0,
+     "filing_cabinets": 0.0,
+     "desk_hutches": 0.0,
+     "drafting_tables": 0.0
+    }
+   }
+  }
+ }
+}

@@ -48,15 +48,17 @@ NAMES = {
     "embedded@openai:gpt-6-luna": "OpenAI (hosted)",
 }
 # Fixed per run, never by rank (validated palette slots on white). nimble router, an ablation of nimble, is the dark
-# neutral; its old slot (orange) went to OpenAI. Runs not listed (e.g. MLX nimble in the sweep) are dark neutral too.
+# neutral. Jev (red) and OpenAI (violet) are the pair compared most, so they get two slots that separate well
+# (red/orange fail the normal-vision floor, ΔE 7); red, violet and nimble's blue pass all-pairs. Strands Decider takes
+# the orange. Runs not listed (e.g. MLX nimble in the sweep) are dark neutral too.
 COLOR = {
     "embedded@ollama:nimble": PALETTE[0],
-    "embedded@openai:gpt-6-luna": PALETTE[1],
+    "embedded@openai:gpt-6-luna": PALETTE[6],
     "embedded@ollama:tev1": PALETTE[2],
     "embedded@ollama:tev1:0.8b": PALETTE[3],
     "embedded@ollaya:jeb:4b": PALETTE[4],
     "embedded@ollaya:winnow:e4b": PALETTE[5],
-    "embedded@decider:strands-decider-2b": PALETTE[6],
+    "embedded@decider:strands-decider-2b": PALETTE[1],
     "embedded@jev:jev-latest": PALETTE[7],
     "router@ollama:nimble": INK2,
 }
@@ -685,6 +687,88 @@ def fig_latency_sweep():
                                    "Dots: single requests; lines: median." % QUERY)
 
 
+# ---------------------------------------------------------------- hosted APIs: latency up close
+HOSTED_RUNS = [r for r in FIG_RUNS if BACKENDS[split_run(r)[1]].remote]
+
+
+def median_ci(values, z=1.96):
+    """Median with a distribution-free 95% interval from order statistics (binomial ranks around n/2)."""
+    xs = sorted(values)
+    n = len(xs)
+    half = z * math.sqrt(n) / 2
+    lo = max(0, int(math.floor(n / 2 - half)))
+    hi = min(n - 1, int(math.ceil(n / 2 + half)) - 1)
+    return statistics.median(xs), xs[lo], xs[hi]
+
+
+def _hosted_axes(ax, ylabel):
+    ax.yaxis.grid(True)
+    ax.set_axisbelow(True)
+    ax.get_yaxis().set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: "%g s" % v))
+    ax.set_ylabel(ylabel)
+    ax.legend(loc="upper left", fontsize=8.5)
+
+
+def fig_hosted_latency_eval():
+    fig, ax = plt.subplots(figsize=(7.6, 4.2))
+    top = 0
+    for k, run in enumerate(HOSTED_RUNS):
+        lat, nq = eval_latencies(run)
+        by = defaultdict(list)
+        for l, q in zip(lat, nq):
+            by[q].append(l)
+        xs = sorted(q for q in by if len(by[q]) >= 10)
+        stats = [median_ci(by[q]) for q in xs]
+        off = (k - (len(HOSTED_RUNS) - 1) / 2) * 0.12  # keep the two runs' dots apart
+        ax.scatter([q + off for q in nq], lat, s=6, color=COLOR[run], alpha=0.2, linewidth=0, rasterized=True)
+        ax.fill_between(xs, [s_[1] for s_ in stats], [s_[2] for s_ in stats], color=COLOR[run], alpha=0.18,
+                        linewidth=0)
+        ax.plot(xs, [s_[0] for s_ in stats], color=COLOR[run], marker=MARKER[split_run(run)[1]], markersize=5,
+                markeredgecolor="white", markeredgewidth=1, label="%s: p50 %.2f s" % (name(run), statistics.median(lat)))
+        top = max(top, sorted(lat)[int(0.99 * len(lat))])
+    ax.set_ylim(0, top * 1.1)
+    ax.set_xlabel("questions in the request (18 fixed + 1 per query word)")
+    ax.set_title("Hosted APIs: latency vs request size, 1,000 eval queries")
+    _hosted_axes(ax, "latency per query (network included)")
+    save(fig, "hosted_latency_eval.svg", "Lines: median per question count (counts with ≥ 10 queries); bands: its "
+                                         "95% interval (distribution-free, order statistics). Dots: single queries; "
+                                         "the slowest 1% are above the plot.")
+
+
+def fig_hosted_latency_sweep():
+    from sidm.bench import sweep_path
+    fig, ax = plt.subplots(figsize=(7.6, 4.2))
+    top = 0
+    for run in HOSTED_RUNS:
+        _, backend, model = split_run(run)
+        path = sweep_path(backend, model)
+        if not path.exists():
+            continue
+        rows = [json.loads(l) for l in path.read_text().splitlines() if l.strip()]
+        by = defaultdict(list)
+        for r in rows:
+            by[r["n_questions"]].append(r["latency_s"])
+        xs = sorted(by)
+        ax.scatter([r["n_questions"] for r in rows], [r["latency_s"] for r in rows], s=10, color=COLOR[run],
+                   alpha=0.35, linewidth=0)
+        ax.plot(xs, [statistics.median(by[n]) for n in xs], color=COLOR[run], marker=MARKER[backend], markersize=4,
+                markeredgecolor="white", markeredgewidth=0.8, label=name(run))
+        top = max(top, sorted(r["latency_s"] for r in rows)[int(0.97 * len(rows))])
+    for k, (lo, hi) in enumerate(((1, 6), (7, 18), (19, 29))):
+        if k % 2 == 0:
+            ax.axvspan(lo - 0.5, hi + 0.5, color=BAND, linewidth=0, zorder=0)
+    for lo, hi, lbl in ((1, 6, "category questions"), (7, 18, "filter questions"), (19, 29, "word questions")):
+        ax.text((lo + hi) / 2, 1.01, lbl, transform=ax.get_xaxis_transform(), ha="center", va="bottom", fontsize=8,
+                color=INK2)
+    ax.set_xlim(0.5, 29.5)
+    ax.set_ylim(0, top * 1.15)
+    ax.set_xlabel("questions sent: the first N of the full 29-question request")
+    ax.set_title("Hosted APIs: latency vs number of questions, controlled sweep", pad=20)
+    _hosted_axes(ax, "latency per request (network included)")
+    save(fig, "hosted_latency_sweep.svg", "3 requests per N in shuffled order, each with a new first word. Lines: "
+                                          "median. The slowest 3% of requests are above the plot.")
+
+
 # ---------------------------------------------------------------- 8. tuning effect
 def fig_tuning():
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4.4), gridspec_kw={"width_ratios": [1.15, 1]})
@@ -879,7 +963,8 @@ def fig_scheme_ablation():
 
 FIGURES = [fig_eval_table, fig_accuracy_latency, fig_accuracy_by_part, fig_mcnemar, fig_calibration, fig_difficulty,
            fig_latency_questions, fig_latency_sweep, fig_tuning, fig_filter_attributes, fig_word_roles, fig_dataset, fig_scheme_ablation,
-           fig_score_latency, fig_score_difficulty, fig_score_tests, fig_score_breakdown]
+           fig_score_latency, fig_score_difficulty, fig_score_tests, fig_score_breakdown,
+           fig_hosted_latency_eval, fig_hosted_latency_sweep]
 
 
 @friendly_main

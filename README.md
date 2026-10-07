@@ -554,6 +554,27 @@ What one more question costs, by question type (least-squares slope of the media
 - **For latency, cut questions with long option lists first.** For nimble on Ollama, one category question costs about as much as three word questions.
 - **Prefill reuse must be ruled out when measuring this.** Ollama's llama.cpp runner keeps up to ~8 GB of earlier prompts in RAM (`cache state: N prompts` in `server.log`) and resumes from the best-matching one, not just the previous one. A first sweep that reused 11 first words in rotation let requests skip up to ~70% of their prefill. The sweep therefore gives every request a never-repeated first word.
 
+### Hosted APIs up close (Jev, OpenAI)
+The figures above squeeze the two hosted APIs onto the bottom line, so here they are on their own scale. All latencies are measured from this Mac and include the network round trip.
+
+![Hosted APIs: latency vs request size on eval](docs/figures/hosted_latency_eval.svg)
+
+*Over the 1,000 eval queries, neither API gets slower with longer queries (more word questions): Jev stays at 0.33–0.35 s from 20 to 30 questions, OpenAI at 0.40–0.48 s. The bands are the 95% intervals of each median; the two APIs' bands are apart at every question count except 29, where only a few queries remain. Jev is consistently ~0.1 s faster.*
+
+![Hosted APIs: latency vs number of questions, controlled sweep](docs/figures/hosted_latency_sweep.svg)
+
+*The controlled sweep (one request, its first N questions): Jev is flat from 1 to 29 questions. OpenAI is faster than Jev up to 9 questions (0.23–0.28 s), then steps up to Jev's level or a bit above from 10 questions on (0.36–0.46 s), in all three repeats. Whether the step comes from processing up to 9 questions per pass or from an input-size threshold (about 3k tokens there) can't be told from this sweep, since both grow together.*
+
+**Are the questions answered independently of each other?** (`make independence BACKEND=…`, `src/sidm/independence.py`; results in `results/bench/independence_<model>.json`.) Same state in every request. The three least confident questions of the full 29-question request are asked again: alone, with 5 other questions, in the full request with the order reversed, with one other question reworded, and with 10 unrelated extra questions. If each question is evaluated on its own (shared state, one branch per question), its probabilities can't change between these variants; if all questions share one context, as in nimble's layout, they can.
+
+| | Same request again | Variants (alone, +5, reversed, reworded, +10 extra) |
+|---|---|---|
+| **OpenAI** | identical | **identical**, all 3 questions in every variant |
+| **Jev** | shifts up to 0.11 | shifts 0.01–0.09, the same size as repeating the request |
+
+- **OpenAI is deterministic, and its answers don't depend on the other questions.** Together with its near-flat latency, that fits a design that evaluates each question separately, sharing the state. Caveat: probabilities come with two decimals, so an influence under 0.005 would be invisible.
+- **Jev isn't deterministic,** so this test can't decide for it: any effect of the other questions is hidden in its run-to-run noise. Deciding would need several repeats per variant. The non-determinism also means a re-run of the Jev eval could flip some borderline queries.
+
 ### Where the time goes: analyzing Ollama's server log (nimble)
 Below is one nimble request from `~/.ollama/logs/server.log`: an embedded eval query (id 264, "storage furniture with glass doors chrome legs", 25 questions, 16.83 s wall time). Lines are trimmed, and `…` marks omitted lines.
 The request ran as **26 server tasks: one prefill task plus one task per question**.

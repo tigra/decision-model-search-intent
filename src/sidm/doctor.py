@@ -110,9 +110,16 @@ def main():
           None if key else "put TYPESAFE_API_KEY=<key> in %s (cp .env.example .env), or export it   "
                            "(only needed for jev runs; paid API)" % ENV_FILE.name)
 
+    print("\nOpenAI Decisions API (backend `openai`, %s)" % BACKENDS["openai"].url)
+    okey = os.environ.get("OPENAI_API_KEY")
+    state["openai"] = bool(okey)
+    osource = "from .env" if "OPENAI_API_KEY" in ENV_LOADED else "from the environment"
+    _line(OK if okey else BAD, "OPENAI_API_KEY %s" % ("set (%s)" % osource if okey else "not set"),
+          None if okey else "put OPENAI_API_KEY=<key> in .env   (only needed for openai runs; paid API, needs credits)")
+
     print("\nRuns of the study (src/sidm/runs.py): can they be re-run here?")
     runnable = 0
-    runs = list(dict.fromkeys(DEV_RUNS + EVAL_RUNS + ["embedded@jev:jev-latest"]))
+    runs = list(dict.fromkeys(DEV_RUNS + EVAL_RUNS + ["embedded@jev:jev-latest", "embedded@openai:gpt-6-luna"]))
     width = max(map(len, runs))
     for run in runs:
         scheme, backend, model = split_run(run)
@@ -132,6 +139,8 @@ def main():
             avail, fix = state["decider"], None if state["decider"] else "make decider-serve"
         elif backend == "jev":
             avail, fix = state["jev"], None if state["jev"] else "put TYPESAFE_API_KEY=<key> in .env"
+        elif backend == "openai":
+            avail, fix = state["openai"], None if state["openai"] else "put OPENAI_API_KEY=<key> in .env"
         runnable += avail
         _line(OK if avail else BAD, "%-*s  %s" % (width, run, stored), fix)
     print("\n%d of %d runs can be re-run on this machine right now (one model on the GPU at a time)." % (runnable, len(runs)))

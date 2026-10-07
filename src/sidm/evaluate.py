@@ -238,7 +238,7 @@ def latency_stats(preds):
     }
 
 
-KEEP = ("scheme", "backend", "model", "served_model", "latency_s", "n_requests", "n_questions", "n_word_questions", "usage", "raw_answers", "server_metrics")
+KEEP = ("scheme", "backend", "model", "served_model", "latency_s", "n_requests", "n_questions", "n_word_questions", "usage", "raw_answers", "server_metrics", "refusals")
 
 
 def pred_path(split, model, scheme, backend="ollama"):

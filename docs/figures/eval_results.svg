@@ -570,7 +570,7 @@ L 366.470859 29.68143
 L 366.470859 38.525893 
 L 353.078859 38.525893 
 z
-" style="fill: #eb6834"/>
+" style="fill: #52514e"/>
    </g>
    <g id="patch_70">
     <path d="M 464.678859 29.68143 
@@ -1033,7 +1033,7 @@ L 1013.750859 327.981051
    </g>
   </g>
   <g id="text_130">
-   <text style="fill: #898781; font: 7.5px 'Helvetica', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Avant Garde', sans-serif; text-anchor: start" x="10.8" y="378.029719" transform="rotate(-0 10.8 378.029719)">Bold: best run in the row. Shade: position between the row's worst (light) and best (dark) run; for latency, faster is darker. Small text: 95% Wilson interval. Jev's latency is a hosted API, network included.</text>
+   <text style="fill: #898781; font: 7.5px 'Helvetica', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Avant Garde', sans-serif; text-anchor: start" x="10.8" y="378.029719" transform="rotate(-0 10.8 378.029719)">Bold: best run in the row. Shade: position between the row's worst (light) and best (dark) run; for latency, faster is darker. Small text: 95% Wilson interval. Hosted APIs' latency includes the network.</text>
   </g>
  </g>
  <defs>

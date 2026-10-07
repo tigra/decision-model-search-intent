@@ -198,7 +198,7 @@ L 544.930558 35.105187
 L 544.930558 50.767123 
 L 141.044844 50.767123 
 z
-" clip-path="url(#p6e48426a89)" style="fill: #eb6834"/>
+" clip-path="url(#p6e48426a89)" style="fill: #52514e"/>
    </g>
    <g id="patch_4">
     <path d="M 141.044844 81.169704 
@@ -206,7 +206,7 @@ L 287.380247 81.169704
 L 287.380247 96.831639 
 L 141.044844 96.831639 
 z
-" clip-path="url(#p6e48426a89)" style="fill: #eb6834"/>
+" clip-path="url(#p6e48426a89)" style="fill: #52514e"/>
    </g>
    <g id="patch_5">
     <path d="M 141.044844 127.23422 
@@ -214,7 +214,7 @@ L 480.54298 127.23422
 L 480.54298 142.896155 
 L 141.044844 142.896155 
 z
-" clip-path="url(#p6e48426a89)" style="fill: #eb6834"/>
+" clip-path="url(#p6e48426a89)" style="fill: #52514e"/>
    </g>
    <g id="patch_6">
     <path d="M 141.044844 173.298736 
@@ -222,7 +222,7 @@ L 211.285838 173.298736
 L 211.285838 188.960671 
 L 141.044844 188.960671 
 z
-" clip-path="url(#p6e48426a89)" style="fill: #eb6834"/>
+" clip-path="url(#p6e48426a89)" style="fill: #52514e"/>
    </g>
    <g id="patch_7">
     <path d="M 141.044844 52.609704 
@@ -295,7 +295,7 @@ L 438.715234 193.429906
 L 438.715234 187.479906 
 L 421.715234 187.479906 
 z
-" style="fill: #eb6834"/>
+" style="fill: #52514e"/>
     </g>
     <g id="text_23">
      <text style="fill: #0b0b0b; font: 8.5px 'Helvetica', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Avant Garde', sans-serif; text-anchor: start" x="445.515234" y="193.429906" transform="rotate(-0 445.515234 193.429906)">nimble (router): 164 errors</text>

@@ -320,7 +320,7 @@ L 402.451945 80.172658
    <g id="LineCollection_3">
     <path d="M 404.013538 119.186317 
 L 404.013538 105.106777 
-" clip-path="url(#p7a59d0e3da)" style="fill: none; stroke: #eb6834; stroke-width: 1.4"/>
+" clip-path="url(#p7a59d0e3da)" style="fill: none; stroke: #52514e; stroke-width: 1.4"/>
    </g>
    <g id="LineCollection_4">
     <path d="M 364.460986 104.114921 
@@ -404,7 +404,7 @@ z
    </g>
    <g id="PathCollection_3">
     <defs>
-     <path id="m7d541d04cf" d="M 0 4.1833 
+     <path id="md1af165ce3" d="M 0 4.1833 
 C 1.109424 4.1833 2.173559 3.742521 2.95804 2.95804 
 C 3.742521 2.173559 4.1833 1.109424 4.1833 0 
 C 4.1833 -1.109424 3.742521 -2.173559 2.95804 -2.95804 
@@ -417,7 +417,7 @@ z
 " style="stroke: #ffffff; stroke-width: 2"/>
     </defs>
     <g clip-path="url(#p7a59d0e3da)">
-     <use xlink:href="#m7d541d04cf" x="404.013538" y="112.146547" style="fill: #eb6834; stroke: #ffffff; stroke-width: 2"/>
+     <use xlink:href="#md1af165ce3" x="404.013538" y="112.146547" style="fill: #52514e; stroke: #ffffff; stroke-width: 2"/>
     </g>
    </g>
    <g id="text_18">

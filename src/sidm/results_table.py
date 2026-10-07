@@ -39,6 +39,8 @@ BACKEND_INFO = {
     "decider": "AWS Strands Labs' Strands Decider 2B (`StrandsAgents/strands-decider-2B-hobson-v19`, MLX) via its own "
                "`/v1/systemone` server; the state is encoded once and only each question's suffix is added, batched",
     "jev": "TypeSafe's hosted Jev API (`https://api.typesafe.ai`); latency includes the network round trip",
+    "openai": "OpenAI's hosted Decisions API (`POST /v1/decisions`, gpt-6-luna); the state is sent as JSON text; "
+              "latency includes the network round trip",
 }
 
 

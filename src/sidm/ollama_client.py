@@ -6,6 +6,8 @@
   ollaya: Ollaya's local server (encoder classifiers and decoders; scripts/ollaya_serve.sh)
   decider: AWS Strands Labs' Strands Decider server (decider_backend/serve.sh)
   jev:    TypeSafe's hosted Jev API (needs TYPESAFE_API_KEY)
+  openai: OpenAI's hosted Decisions API, POST /v1/decisions (needs OPENAI_API_KEY); a different request and
+          response shape, converted to and from the /v1/systemone one here (to_decisions / from_decisions)
 """
 import json
 import os
@@ -80,8 +82,9 @@ def friendly_main(main):
 
 
 class Backend:
-    def __init__(self, url, default_model, api_key_env=None, remote=False):
+    def __init__(self, url, default_model, api_key_env=None, remote=False, api="systemone"):
         self.url, self.default_model, self.api_key_env, self.remote = url, default_model, api_key_env, remote
+        self.api = api  # "systemone" (Jev / TypeSafe contract) or "decisions" (OpenAI)
 
     def headers(self):
         h = {"Content-Type": "application/json"}
@@ -104,6 +107,9 @@ BACKENDS = {
     "jev": Backend(os.environ.get("TYPESAFE_BASE_URL", "https://api.typesafe.ai"),
                    os.environ.get("TYPESAFE_DEFAULT_MODEL", "jev-latest"), api_key_env="TYPESAFE_API_KEY",
                    remote=True),
+    # OpenAI's Decisions API serves gpt-6-luna only (public beta since 2026-10-06)
+    "openai": Backend(os.environ.get("OPENAI_BASE_URL", "https://api.openai.com"), "gpt-6-luna",
+                      api_key_env="OPENAI_API_KEY", remote=True, api="decisions"),
 }
 DEFAULT_MODELS = {name: b.default_model for name, b in BACKENDS.items()}
 
@@ -145,6 +151,7 @@ START_FIX = {
     "ollaya": "make ollaya-serve",
     "decider": "make decider-serve   (first time: make decider-setup)",
     "jev": "check the network connection and TYPESAFE_BASE_URL",
+    "openai": "check the network connection and OPENAI_BASE_URL",
 }
 PULL_FIX = {
     "ollama": "make ollama-pull MODEL=%s",
@@ -152,6 +159,7 @@ PULL_FIX = {
     "mlx": "make mlx-convert   (the MLX server serves one converted nimble model)",
     "decider": "make decider-serve   (it serves one checkpoint; weights download on first start)",
     "jev": "check the model name (e.g. jev-latest, jev-1.13.0)",
+    "openai": "the Decisions API serves gpt-6-luna only",
 }
 
 
@@ -171,21 +179,56 @@ def _friendly(e, backend, model):
     return None
 
 
+def to_decisions(model, state, questions):
+    """/v1/systemone request -> OpenAI /v1/decisions request. The state goes in as the same JSON, as text."""
+    return {"model": model, "input": json.dumps(state, ensure_ascii=False), "questions": [
+        {"type": q["type"], "name": name, "instructions": q["instructions"],
+         "choices": [dict({"value": v}, **({"description": d} if d else {})) for v, d in q["criteria"].items()]}
+        for name, q in questions.items()]}
+
+
+def from_decisions(resp, questions):
+    """OpenAI /v1/decisions response -> /v1/systemone shape ({name: {choice, probabilities: {value: p}, confidence}}).
+    A refused question gets its first option (other_product / not_specified) with confidence 0 and `refused`;
+    a refused word question is left out, so decoding labels the word residual."""
+    answers, refused = {}, 0
+    for a in resp.get("answers", []):
+        name = a["name"]
+        if a.get("type") == "choice":
+            answers[name] = {"type": "choice", "choice": a["choice"], "confidence": a.get("confidence"),
+                             "probabilities": {p["value"]: p["probability"] for p in a["probabilities"]}}
+        else:  # "refusal"
+            refused += 1
+            if not name.startswith("word_"):
+                first = next(iter(questions[name]["criteria"]))
+                answers[name] = {"type": "choice", "choice": first, "confidence": 0.0, "refused": True,
+                                 "probabilities": {v: float(v == first) for v in questions[name]["criteria"]}}
+    out = {"model": resp.get("model"), "answers": answers, "usage": resp.get("usage"), "refusals": refused}
+    return out
+
+
 def system_one(model, state, questions, keep_alive="30m", backend="ollama", max_retries=5):
     """Returns (response_json, wall_latency_seconds of the successful attempt).
 
     Remote backends are retried with exponential backoff on rate limits and server errors.
     """
     b = BACKENDS[backend]
-    payload = {"model": model, "state": state, "questions": questions}
+    if b.api == "decisions":
+        path, payload = "/v1/decisions", to_decisions(model, state, questions)
+    else:
+        path, payload = "/v1/systemone", {"model": model, "state": state, "questions": questions}
     if backend == "ollama":
         payload["keep_alive"] = keep_alive  # Ollama-specific; not part of the TypeSafe contract
     for attempt in range(max_retries + 1):
         t0 = time.perf_counter()
         try:
-            resp = _post("/v1/systemone", payload, host=b.url, headers=b.headers())
-            return resp, time.perf_counter() - t0
+            resp = _post(path, payload, host=b.url, headers=b.headers())
+            latency = time.perf_counter() - t0
+            return (from_decisions(resp, questions) if b.api == "decisions" else resp), latency
         except urllib.error.HTTPError as e:
+            if "insufficient_quota" in str(e.reason) or "credit_balance_exhausted" in str(e.reason):
+                raise SidmError("%s: the account has no credits left" % backend,
+                                "add credits (OpenAI: https://platform.openai.com/settings/organization/billing/)") from None
             if not b.remote or e.code not in RETRY_CODES or attempt == max_retries:
                 friendly = _friendly(e, backend, model)
                 if friendly:
@@ -228,7 +271,7 @@ def system_one_split(model, state, questions, backend="ollama", learned=True, st
     names = list(questions)
     k = start or (_LEARNED_CHUNKS.get((backend, model), 1) if learned else 1)
     while True:
-        answers, usage, latency, models = {}, {"input_tokens": 0, "output_tokens": 0}, 0.0, set()
+        answers, usage, latency, models, refusals = {}, {"input_tokens": 0, "output_tokens": 0}, 0.0, set(), 0
         parts = _chunks(names, k)
         try:
             for part in parts:
@@ -238,6 +281,7 @@ def system_one_split(model, state, questions, backend="ollama", learned=True, st
                     usage[key] += (resp.get("usage") or {}).get(key, 0)
                 latency += lat
                 models.add(resp.get("model"))
+                refusals += resp.get("refusals", 0)
         except urllib.error.HTTPError as e:
             m = _TOO_LONG.search(str(e.reason)) if e.code == 400 else None
             if not m or k >= len(names):
@@ -248,6 +292,8 @@ def system_one_split(model, state, questions, backend="ollama", learned=True, st
             _LEARNED_CHUNKS[(backend, model)] = k
             continue
         merged = {"model": "/".join(sorted(m for m in models if m)), "answers": answers, "usage": usage}
+        if BACKENDS[backend].api == "decisions":
+            merged["refusals"] = refusals
         if len(parts) == 1 and "metrics" in resp:  # server-side timings (mlx backend) are per request
             merged["metrics"] = resp["metrics"]
         resp = merged

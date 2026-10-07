@@ -45,19 +45,33 @@ NAMES = {
     "embedded@decider:strands-decider-2b": "Strands Decider 2B",
     "embedded@mlx:nimble": "nimble (MLX)",
     "embedded@jev:jev-latest": "Jev (hosted)",
+    "embedded@openai:gpt-6-luna": "OpenAI Decisions (hosted)",
 }
-COLOR = {run: PALETTE[i] for i, run in enumerate(EVAL_RUNS)}  # fixed per run (registry order), never by rank
+# Fixed per run, never by rank (validated palette slots on white). nimble router, an ablation of nimble, is the dark
+# neutral; its old slot (orange) went to OpenAI. Runs not listed (e.g. MLX nimble in the sweep) are dark neutral too.
+COLOR = {
+    "embedded@ollama:nimble": PALETTE[0],
+    "embedded@openai:gpt-6-luna": PALETTE[1],
+    "embedded@ollama:tev1": PALETTE[2],
+    "embedded@ollama:tev1:0.8b": PALETTE[3],
+    "embedded@ollaya:jeb:4b": PALETTE[4],
+    "embedded@ollaya:winnow:e4b": PALETTE[5],
+    "embedded@decider:strands-decider-2b": PALETTE[6],
+    "embedded@jev:jev-latest": PALETTE[7],
+    "router@ollama:nimble": INK2,
+}
+COLOR = defaultdict(lambda: INK2, COLOR)
 
 
 def _best_first(runs):
-    """Display order for figures: the hosted reference (Jev) first, next to the best local run (nimble embedded),
+    """Display order for figures: hosted APIs first (Jev, OpenAI), next to the best local run (nimble embedded),
     then the registry order. Colors don't depend on it."""
-    return sorted(runs, key=lambda r: (split_run(r)[1] != "jev", runs.index(r)))
+    return sorted(runs, key=lambda r: (not BACKENDS[split_run(r)[1]].remote, runs.index(r)))
 
 
 FIG_RUNS = _best_first(EVAL_RUNS)
 FIG_DEV_RUNS = _best_first(DEV_RUNS)
-MARKER = {"ollama": "o", "ollaya": "s", "decider": "D", "mlx": "^", "jev": "P"}
+MARKER = {"ollama": "o", "ollaya": "s", "decider": "D", "mlx": "^", "jev": "P", "openai": "X"}
 
 # Latency comes from the 1,000-query eval runs, all measured with nothing else running (tev1 4B's first eval
 # overlapped CPU jobs and was re-run on 2026-10-07: identical answers, 9.9 s instead of 13.0 s). A run whose
@@ -196,7 +210,7 @@ def fig_eval_table():
     ax.set_title("Eval results, 1,000 queries (decoding tuned per model on dev)", pad=6)
     save(fig, "eval_results.svg", "Bold: best run in the row. Shade: position between the row's worst (light) and "
                                   "best (dark) run; for latency, faster is darker. Small text: 95% Wilson interval. "
-                                  "Jev's latency is a hosted API, network included.")
+                                  "Hosted APIs' latency includes the network.")
 
 
 # ---------------------------------------------------------------- weighted query score: pairwise tests, breakdown
@@ -314,7 +328,8 @@ def _latency_scatter(value, ylabel, title, filename, note, ylim):
     ax.set_title(title)
     handles = [plt.Line2D([], [], marker=MARKER[b], linestyle="", color=MUTED, markersize=7, label=lbl)
                for b, lbl in (("ollama", "Ollama"), ("ollaya", "Ollaya"), ("decider", "Strands Decider server"),
-                              ("jev", "TypeSafe API (hosted, incl. network)"))
+                              ("jev", "TypeSafe API (hosted, incl. network)"),
+                              ("openai", "OpenAI API (hosted, incl. network)"))
                if any(split_run(r)[1] == b for r in EVAL_RUNS)]
     ax.legend(handles=handles, title="backend (marker)", loc="lower right", title_fontsize=8.5)
     save(fig, filename, note)
@@ -395,7 +410,7 @@ def fig_accuracy_by_part():
     lat_ax.spines["left"].set_visible(False)
     save(fig, "accuracy_by_part.svg", "Lines: 95% intervals (Wilson for proportions, normal for the mean score; F1 "
                                        "has none). Weighted query score: see sidm/score.py. Decoding tuned "
-                                       "per model on dev.\nLatency: log scale, own axis; Jev is a hosted API incl. network.")
+                                       "per model on dev.\nLatency: log scale, own axis; hosted APIs (Jev, OpenAI) include the network.")
 
 
 # ---------------------------------------------------------------- 4. McNemar heatmaps
@@ -650,7 +665,7 @@ def fig_latency_sweep():
     ax.set_xlim(0.5, 29.5)
     ax.set_xlabel("questions sent: the first N of the full 29-question request")
     ax.set_ylabel("latency per request")
-    ax.set_title("Latency vs number of questions, controlled sweep, M3 Max (Jev: hosted API)", pad=20)
+    ax.set_title("Latency vs number of questions, controlled sweep, M3 Max (Jev, OpenAI: hosted APIs)", pad=20)
     ax.legend(loc="upper left", bbox_to_anchor=(1.01, 1), fontsize=8.5)
     save(fig, "latency_sweep.svg", 'One request ("%s") sent with its first N questions, 3 times per N in shuffled '
                                    "order.\nEvery request starts with a new first word, so no prefill is reused. "

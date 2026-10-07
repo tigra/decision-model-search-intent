@@ -139,6 +139,10 @@ The original plan follows.
 - Prompt-length sensitivity: the training limit is 2,048 tokens, but batched scoring makes many-question requests cheap.
 
 ## More backends and models for the ablation
+- **Native Laya backend (`laya-serve`, github.com/NandhaKishorM/laya, Apache-2.0).** Its server speaks `/v1/systemone`, so it fits like the `decider` backend: a separate uv project (`laya[serve]`, Python ≥ 3.10, PyTorch MPS), `make laya-serve`, a run label. Checkpoints: `laya` (ModernBERT-large 421M, 512 ctx), `multilingual` (mmBERT-base 322M, 1024 ctx), `typed-decisions` (421M, 1024 ctx).
+  - **How it encodes** (from `laya/agent.py` `_encode_state` and `laya/common.py` `build_sequence`): the state is tokenized once; each question gets its own sequence, a head with its instructions and options (≤ `head_max_len`: 192 on `laya`, 256 on the others) plus as much of the state as fits in `max_len`; all questions run as rows of one batched forward pass. The 100-option cap is per question. So our requests fit without splitting; only the 24-option category questions get their option descriptions cut (~7 tokens per option at 192).
+  - **Why it might matter:** checks whether Ollaya serves the Laya weights faithfully (Ollaya's `laya:en` and `laya:typed-decisions` failed the word roles on dev), lets us set `max_len` / `head_max_len` (e.g. a larger head so category descriptions survive), and the reported latency (~35 ms per pass on a T4) could make it the fastest local option.
+  - **Expected:** same weights as Ollaya's, so probably the same accuracy; low priority unless Ollaya's port turns out to differ.
 **Status:** both are implemented and being evaluated: tev1 via Ollama with automatic request splitting, and Ollaya as `--backend ollaya`. Results are in `results/results_dev.md` / `results/results_eval.md`.
 
 **1. tev1 via Ollama** (Together AI, Qwen3.5 fine-tunes; [repo](https://github.com/togethercomputer/tev1), [HF](https://huggingface.co/togethercomputer/Tev1-4B-experimental)). No code change needed.

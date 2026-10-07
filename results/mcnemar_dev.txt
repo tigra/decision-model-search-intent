@@ -1,4 +1,4 @@
-dev split, 100 queries; 272 tests
+dev split, 100 queries; 306 tests
 category embedded@ollama:nimble               vs router@ollama:nimble                    9:3    p=0.1460   no significant difference
 full     embedded@ollama:nimble               vs router@ollama:nimble                   10:1    p=0.0117   embedded@ollama:nimble better
 category embedded@ollama:nimble               vs embedded@mlx:nimble                     1:2    p=1.0000   no significant difference
@@ -21,6 +21,8 @@ category embedded@ollama:nimble               vs embedded@ollaya:laya:en        
 full     embedded@ollama:nimble               vs embedded@ollaya:laya:en                36:2    p=<0.0001  embedded@ollama:nimble better
 category embedded@ollama:nimble               vs embedded@ollaya:laya:typed-decisions   20:2    p=0.0001   embedded@ollama:nimble better
 full     embedded@ollama:nimble               vs embedded@ollaya:laya:typed-decisions   38:0    p=<0.0001  embedded@ollama:nimble better
+category embedded@ollama:nimble               vs embedded@ollaya:laya:multilingual      12:1    p=0.0034   embedded@ollama:nimble better
+full     embedded@ollama:nimble               vs embedded@ollaya:laya:multilingual      39:3    p=<0.0001  embedded@ollama:nimble better
 category embedded@ollama:nimble               vs embedded@ollaya:von                    39:3    p=<0.0001  embedded@ollama:nimble better
 full     embedded@ollama:nimble               vs embedded@ollaya:von                    39:1    p=<0.0001  embedded@ollama:nimble better
 category embedded@ollama:nimble               vs embedded@ollaya:nli:modernbert-large   39:2    p=<0.0001  embedded@ollama:nimble better
@@ -51,6 +53,8 @@ category router@ollama:nimble                 vs embedded@ollaya:laya:en        
 full     router@ollama:nimble                 vs embedded@ollaya:laya:en                29:4    p=<0.0001  router@ollama:nimble better
 category router@ollama:nimble                 vs embedded@ollaya:laya:typed-decisions   19:7    p=0.0290   router@ollama:nimble better
 full     router@ollama:nimble                 vs embedded@ollaya:laya:typed-decisions   32:3    p=<0.0001  router@ollama:nimble better
+category router@ollama:nimble                 vs embedded@ollaya:laya:multilingual      14:9    p=0.4049   no significant difference
+full     router@ollama:nimble                 vs embedded@ollaya:laya:multilingual      32:5    p=<0.0001  router@ollama:nimble better
 category router@ollama:nimble                 vs embedded@ollaya:von                    38:8    p=<0.0001  router@ollama:nimble better
 full     router@ollama:nimble                 vs embedded@ollaya:von                    31:2    p=<0.0001  router@ollama:nimble better
 category router@ollama:nimble                 vs embedded@ollaya:nli:modernbert-large   38:7    p=<0.0001  router@ollama:nimble better
@@ -79,6 +83,8 @@ category embedded@mlx:nimble                  vs embedded@ollaya:laya:en        
 full     embedded@mlx:nimble                  vs embedded@ollaya:laya:en                36:3    p=<0.0001  embedded@mlx:nimble better
 category embedded@mlx:nimble                  vs embedded@ollaya:laya:typed-decisions   19:0    p=<0.0001  embedded@mlx:nimble better
 full     embedded@mlx:nimble                  vs embedded@ollaya:laya:typed-decisions   38:1    p=<0.0001  embedded@mlx:nimble better
+category embedded@mlx:nimble                  vs embedded@ollaya:laya:multilingual      12:0    p=0.0005   embedded@mlx:nimble better
+full     embedded@mlx:nimble                  vs embedded@ollaya:laya:multilingual      38:3    p=<0.0001  embedded@mlx:nimble better
 category embedded@mlx:nimble                  vs embedded@ollaya:von                    39:2    p=<0.0001  embedded@mlx:nimble better
 full     embedded@mlx:nimble                  vs embedded@ollaya:von                    39:2    p=<0.0001  embedded@mlx:nimble better
 category embedded@mlx:nimble                  vs embedded@ollaya:nli:modernbert-large   38:0    p=<0.0001  embedded@mlx:nimble better
@@ -105,6 +111,8 @@ category embedded@ollama:tev1                 vs embedded@ollaya:laya:en        
 full     embedded@ollama:tev1                 vs embedded@ollaya:laya:en                34:2    p=<0.0001  embedded@ollama:tev1 better
 category embedded@ollama:tev1                 vs embedded@ollaya:laya:typed-decisions   19:1    p=<0.0001  embedded@ollama:tev1 better
 full     embedded@ollama:tev1                 vs embedded@ollaya:laya:typed-decisions   37:1    p=<0.0001  embedded@ollama:tev1 better
+category embedded@ollama:tev1                 vs embedded@ollaya:laya:multilingual      11:0    p=0.0010   embedded@ollama:tev1 better
+full     embedded@ollama:tev1                 vs embedded@ollaya:laya:multilingual      36:2    p=<0.0001  embedded@ollama:tev1 better
 category embedded@ollama:tev1                 vs embedded@ollaya:von                    37:1    p=<0.0001  embedded@ollama:tev1 better
 full     embedded@ollama:tev1                 vs embedded@ollaya:von                    37:1    p=<0.0001  embedded@ollama:tev1 better
 category embedded@ollama:tev1                 vs embedded@ollaya:nli:modernbert-large   38:1    p=<0.0001  embedded@ollama:tev1 better
@@ -129,6 +137,8 @@ category embedded@ollama:tev1:0.8b            vs embedded@ollaya:laya:en        
 full     embedded@ollama:tev1:0.8b            vs embedded@ollaya:laya:en                 6:6    p=1.0000   no significant difference
 category embedded@ollama:tev1:0.8b            vs embedded@ollaya:laya:typed-decisions   16:14   p=0.8555   no significant difference
 full     embedded@ollama:tev1:0.8b            vs embedded@ollaya:laya:typed-decisions    8:4    p=0.3877   no significant difference
+category embedded@ollama:tev1:0.8b            vs embedded@ollaya:laya:multilingual      10:15   p=0.4244   no significant difference
+full     embedded@ollama:tev1:0.8b            vs embedded@ollaya:laya:multilingual       7:5    p=0.7744   no significant difference
 category embedded@ollama:tev1:0.8b            vs embedded@ollaya:von                    26:6    p=0.0005   embedded@ollama:tev1:0.8b better
 full     embedded@ollama:tev1:0.8b            vs embedded@ollaya:von                     9:5    p=0.4240   no significant difference
 category embedded@ollama:tev1:0.8b            vs embedded@ollaya:nli:modernbert-large   31:10   p=0.0015   embedded@ollama:tev1:0.8b better
@@ -151,6 +161,8 @@ category embedded@ollaya:jeb:4b               vs embedded@ollaya:laya:en        
 full     embedded@ollaya:jeb:4b               vs embedded@ollaya:laya:en                30:3    p=<0.0001  embedded@ollaya:jeb:4b better
 category embedded@ollaya:jeb:4b               vs embedded@ollaya:laya:typed-decisions   19:2    p=0.0002   embedded@ollaya:jeb:4b better
 full     embedded@ollaya:jeb:4b               vs embedded@ollaya:laya:typed-decisions   32:1    p=<0.0001  embedded@ollaya:jeb:4b better
+category embedded@ollaya:jeb:4b               vs embedded@ollaya:laya:multilingual      12:2    p=0.0129   embedded@ollaya:jeb:4b better
+full     embedded@ollaya:jeb:4b               vs embedded@ollaya:laya:multilingual      31:2    p=<0.0001  embedded@ollaya:jeb:4b better
 category embedded@ollaya:jeb:4b               vs embedded@ollaya:von                    37:2    p=<0.0001  embedded@ollaya:jeb:4b better
 full     embedded@ollaya:jeb:4b               vs embedded@ollaya:von                    33:2    p=<0.0001  embedded@ollaya:jeb:4b better
 category embedded@ollaya:jeb:4b               vs embedded@ollaya:nli:modernbert-large   38:2    p=<0.0001  embedded@ollaya:jeb:4b better
@@ -171,6 +183,8 @@ category embedded@ollaya:winnow:e4b           vs embedded@ollaya:laya:en        
 full     embedded@ollaya:winnow:e4b           vs embedded@ollaya:laya:en                20:1    p=<0.0001  embedded@ollaya:winnow:e4b better
 category embedded@ollaya:winnow:e4b           vs embedded@ollaya:laya:typed-decisions   24:1    p=<0.0001  embedded@ollaya:winnow:e4b better
 full     embedded@ollaya:winnow:e4b           vs embedded@ollaya:laya:typed-decisions   23:0    p=<0.0001  embedded@ollaya:winnow:e4b better
+category embedded@ollaya:winnow:e4b           vs embedded@ollaya:laya:multilingual      17:1    p=0.0001   embedded@ollaya:winnow:e4b better
+full     embedded@ollaya:winnow:e4b           vs embedded@ollaya:laya:multilingual      21:0    p=<0.0001  embedded@ollaya:winnow:e4b better
 category embedded@ollaya:winnow:e4b           vs embedded@ollaya:von                    42:1    p=<0.0001  embedded@ollaya:winnow:e4b better
 full     embedded@ollaya:winnow:e4b           vs embedded@ollaya:von                    23:0    p=<0.0001  embedded@ollaya:winnow:e4b better
 category embedded@ollaya:winnow:e4b           vs embedded@ollaya:nli:modernbert-large   43:1    p=<0.0001  embedded@ollaya:winnow:e4b better
@@ -189,6 +203,8 @@ category embedded@ollaya:decider:2b           vs embedded@ollaya:laya:en        
 full     embedded@ollaya:decider:2b           vs embedded@ollaya:laya:en                16:2    p=0.0013   embedded@ollaya:decider:2b better
 category embedded@ollaya:decider:2b           vs embedded@ollaya:laya:typed-decisions   13:4    p=0.0490   embedded@ollaya:decider:2b better
 full     embedded@ollaya:decider:2b           vs embedded@ollaya:laya:typed-decisions   19:1    p=<0.0001  embedded@ollaya:decider:2b better
+category embedded@ollaya:decider:2b           vs embedded@ollaya:laya:multilingual       7:5    p=0.7744   no significant difference
+full     embedded@ollaya:decider:2b           vs embedded@ollaya:laya:multilingual      18:2    p=0.0004   embedded@ollaya:decider:2b better
 category embedded@ollaya:decider:2b           vs embedded@ollaya:von                    33:6    p=<0.0001  embedded@ollaya:decider:2b better
 full     embedded@ollaya:decider:2b           vs embedded@ollaya:von                    19:1    p=<0.0001  embedded@ollaya:decider:2b better
 category embedded@ollaya:decider:2b           vs embedded@ollaya:nli:modernbert-large   31:3    p=<0.0001  embedded@ollaya:decider:2b better
@@ -205,6 +221,8 @@ category embedded@ollaya:decision:eos         vs embedded@ollaya:laya:en        
 full     embedded@ollaya:decision:eos         vs embedded@ollaya:laya:en                 5:4    p=1.0000   no significant difference
 category embedded@ollaya:decision:eos         vs embedded@ollaya:laya:typed-decisions   14:11   p=0.6900   no significant difference
 full     embedded@ollaya:decision:eos         vs embedded@ollaya:laya:typed-decisions    8:3    p=0.2266   no significant difference
+category embedded@ollaya:decision:eos         vs embedded@ollaya:laya:multilingual       8:12   p=0.5034   no significant difference
+full     embedded@ollaya:decision:eos         vs embedded@ollaya:laya:multilingual       7:4    p=0.5488   no significant difference
 category embedded@ollaya:decision:eos         vs embedded@ollaya:von                    29:8    p=0.0008   embedded@ollaya:decision:eos better
 full     embedded@ollaya:decision:eos         vs embedded@ollaya:von                     9:4    p=0.2668   no significant difference
 category embedded@ollaya:decision:eos         vs embedded@ollaya:nli:modernbert-large   32:10   p=0.0009   embedded@ollaya:decision:eos better
@@ -219,6 +237,8 @@ category embedded@ollaya:kev:0.8b             vs embedded@ollaya:laya:en        
 full     embedded@ollaya:kev:0.8b             vs embedded@ollaya:laya:en                 7:6    p=1.0000   no significant difference
 category embedded@ollaya:kev:0.8b             vs embedded@ollaya:laya:typed-decisions   17:14   p=0.7201   no significant difference
 full     embedded@ollaya:kev:0.8b             vs embedded@ollaya:laya:typed-decisions    9:4    p=0.2668   no significant difference
+category embedded@ollaya:kev:0.8b             vs embedded@ollaya:laya:multilingual      14:18   p=0.5966   no significant difference
+full     embedded@ollaya:kev:0.8b             vs embedded@ollaya:laya:multilingual       7:4    p=0.5488   no significant difference
 category embedded@ollaya:kev:0.8b             vs embedded@ollaya:von                    31:10   p=0.0015   embedded@ollaya:kev:0.8b better
 full     embedded@ollaya:kev:0.8b             vs embedded@ollaya:von                     8:3    p=0.2266   no significant difference
 category embedded@ollaya:kev:0.8b             vs embedded@ollaya:nli:modernbert-large   31:9    p=0.0007   embedded@ollaya:kev:0.8b better
@@ -231,6 +251,8 @@ category embedded@ollaya:kev:0.8b             vs embedded@openai:gpt-6-luna     
 full     embedded@ollaya:kev:0.8b             vs embedded@openai:gpt-6-luna              0:48   p=<0.0001  embedded@openai:gpt-6-luna better
 category embedded@ollaya:laya:en              vs embedded@ollaya:laya:typed-decisions   10:7    p=0.6291   no significant difference
 full     embedded@ollaya:laya:en              vs embedded@ollaya:laya:typed-decisions    6:2    p=0.2891   no significant difference
+category embedded@ollaya:laya:en              vs embedded@ollaya:laya:multilingual       5:9    p=0.4240   no significant difference
+full     embedded@ollaya:laya:en              vs embedded@ollaya:laya:multilingual       6:4    p=0.7539   no significant difference
 category embedded@ollaya:laya:en              vs embedded@ollaya:von                    29:8    p=0.0008   embedded@ollaya:laya:en better
 full     embedded@ollaya:laya:en              vs embedded@ollaya:von                     6:2    p=0.2891   no significant difference
 category embedded@ollaya:laya:en              vs embedded@ollaya:nli:modernbert-large   28:6    p=0.0002   embedded@ollaya:laya:en better
@@ -241,6 +263,8 @@ category embedded@ollaya:laya:en              vs embedded@jev:jev-latest        
 full     embedded@ollaya:laya:en              vs embedded@jev:jev-latest                 2:49   p=<0.0001  embedded@jev:jev-latest better
 category embedded@ollaya:laya:en              vs embedded@openai:gpt-6-luna              0:23   p=<0.0001  embedded@openai:gpt-6-luna better
 full     embedded@ollaya:laya:en              vs embedded@openai:gpt-6-luna              0:49   p=<0.0001  embedded@openai:gpt-6-luna better
+category embedded@ollaya:laya:typed-decisions vs embedded@ollaya:laya:multilingual       5:12   p=0.1435   no significant difference
+full     embedded@ollaya:laya:typed-decisions vs embedded@ollaya:laya:multilingual       6:8    p=0.7905   no significant difference
 category embedded@ollaya:laya:typed-decisions vs embedded@ollaya:von                    32:14   p=0.0114   embedded@ollaya:laya:typed-decisions better
 full     embedded@ollaya:laya:typed-decisions vs embedded@ollaya:von                     2:2    p=1.0000   no significant difference
 category embedded@ollaya:laya:typed-decisions vs embedded@ollaya:nli:modernbert-large   30:11   p=0.0043   embedded@ollaya:laya:typed-decisions better
@@ -251,6 +275,16 @@ category embedded@ollaya:laya:typed-decisions vs embedded@jev:jev-latest        
 full     embedded@ollaya:laya:typed-decisions vs embedded@jev:jev-latest                 0:51   p=<0.0001  embedded@jev:jev-latest better
 category embedded@ollaya:laya:typed-decisions vs embedded@openai:gpt-6-luna              0:26   p=<0.0001  embedded@openai:gpt-6-luna better
 full     embedded@ollaya:laya:typed-decisions vs embedded@openai:gpt-6-luna              0:53   p=<0.0001  embedded@openai:gpt-6-luna better
+category embedded@ollaya:laya:multilingual    vs embedded@ollaya:von                    31:6    p=<0.0001  embedded@ollaya:laya:multilingual better
+full     embedded@ollaya:laya:multilingual    vs embedded@ollaya:von                     7:5    p=0.7744   no significant difference
+category embedded@ollaya:laya:multilingual    vs embedded@ollaya:nli:modernbert-large   30:4    p=<0.0001  embedded@ollaya:laya:multilingual better
+full     embedded@ollaya:laya:multilingual    vs embedded@ollaya:nli:modernbert-large    5:1    p=0.2188   no significant difference
+category embedded@ollaya:laya:multilingual    vs embedded@decider:strands-decider-2b     8:4    p=0.3877   no significant difference
+full     embedded@ollaya:laya:multilingual    vs embedded@decider:strands-decider-2b     5:19   p=0.0066   embedded@decider:strands-decider-2b better
+category embedded@ollaya:laya:multilingual    vs embedded@jev:jev-latest                 0:17   p=<0.0001  embedded@jev:jev-latest better
+full     embedded@ollaya:laya:multilingual    vs embedded@jev:jev-latest                 1:50   p=<0.0001  embedded@jev:jev-latest better
+category embedded@ollaya:laya:multilingual    vs embedded@openai:gpt-6-luna              0:19   p=<0.0001  embedded@openai:gpt-6-luna better
+full     embedded@ollaya:laya:multilingual    vs embedded@openai:gpt-6-luna              0:51   p=<0.0001  embedded@openai:gpt-6-luna better
 category embedded@ollaya:von                  vs embedded@ollaya:nli:modernbert-large   17:16   p=1.0000   no significant difference
 full     embedded@ollaya:von                  vs embedded@ollaya:nli:modernbert-large    4:2    p=0.6875   no significant difference
 category embedded@ollaya:von                  vs embedded@decider:strands-decider-2b     9:30   p=0.0011   embedded@decider:strands-decider-2b better

@@ -105,7 +105,7 @@ One assumption is that Jev's value comes in parallelization of question answerin
 4. **Read the shipped results.** No commands are needed:
    - [`results/results_eval.md`](results/results_eval.md): all metrics on 1,000 eval queries, with counts and confidence intervals;
    - [`results/mcnemar_eval.txt`](results/mcnemar_eval.txt): which runs are significantly better than which;
-   - the dev counterparts, `results_dev.md` and `mcnemar_dev.txt`, for all 15 runs;
+   - the dev counterparts, `results_dev.md` and `mcnemar_dev.txt`, for all 18 runs;
    - per-run error analysis in `results/report_eval_<run>.md` (per-attribute scores, confusions, worst queries).
 5. **Try the parser:** `make ollama-pull MODEL=nimble` (9.5 GB, needs Ollama ≥ 0.35), then `make parse Q="blue velvet sofa for my mom"`.
 
@@ -274,6 +274,7 @@ The same request can be served by five ablatable backends (`--backend`). A run i
 | `kev:0.8b` | ollaya | Qwen3.5-0.8B LoRA with a pointer head, ONNX on the CPU | dev |
 | `laya:en` | ollaya | ModernBERT-large encoder (421M), MLX | dev |
 | `laya:typed-decisions` | ollaya | ModernBERT-large fine-tune, ONNX on the CPU | dev |
+| `laya:multilingual` | ollaya | mmBERT-base encoder (322M), ONNX via onnxruntime | dev |
 | `von` | ollaya | ModernBERT-large encoder (395M), ONNX on the CPU | dev |
 | `nli:modernbert-large` | ollaya | NLI cross-encoder, one pair per option | dev |
 | `strands-decider-2b` (AWS Strands Labs) | decider | Qwen3.5-2B-Base, LoRA + pointer head, MLX (`StrandsAgents/strands-decider-2B-hobson-v19`) | dev + eval |
@@ -504,6 +505,7 @@ Ranked by whole-query exact match. Latency is from clean runs.
 | kev:0.8b | ollaya (CPU) | 0.11 | 0.76 | 20.0 s |
 | tev1 0.8B | ollama | 0.10 | 0.75 | 2.2 s |
 | laya:en | ollaya (MLX encoder) | 0.10 | 0.76 | 1.1 s |
+| laya:multilingual | ollaya (CPU encoder, ONNX) | 0.08 | 0.80 | 0.6 s |
 | laya:typed-decisions | ollaya (CPU encoder) | 0.06 | 0.73 | 14.6 s |
 | von | ollaya (CPU encoder) | 0.06 | 0.55 | 13.0 s |
 | nli:modernbert-large | ollaya (encoder) | 0.04 | 0.54 | 5.7 s |

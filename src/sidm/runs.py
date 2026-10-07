@@ -38,6 +38,7 @@ DEV_RUNS = [
     "embedded@ollaya:kev:0.8b",
     "embedded@ollaya:laya:en",
     "embedded@ollaya:laya:typed-decisions",
+    "embedded@ollaya:laya:multilingual",
     "embedded@ollaya:von",
     "embedded@ollaya:nli:modernbert-large",
     "embedded@decider:strands-decider-2b",

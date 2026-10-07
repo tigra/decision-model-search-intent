@@ -45,7 +45,7 @@ NAMES = {
     "embedded@decider:strands-decider-2b": "Strands Decider 2B",
     "embedded@mlx:nimble": "nimble (MLX)",
     "embedded@jev:jev-latest": "Jev (hosted)",
-    "embedded@openai:gpt-6-luna": "OpenAI Decisions (hosted)",
+    "embedded@openai:gpt-6-luna": "OpenAI (hosted)",
 }
 # Fixed per run, never by rank (validated palette slots on white). nimble router, an ablation of nimble, is the dark
 # neutral; its old slot (orange) went to OpenAI. Runs not listed (e.g. MLX nimble in the sweep) are dark neutral too.
@@ -309,7 +309,18 @@ def _latency_scatter(value, ylabel, title, filename, note, ylim):
         ax.errorbar(p50, acc, yerr=[[acc - lo], [hi - acc]], fmt="none", ecolor=COLOR[run], elinewidth=1.4, capsize=0)
         ax.scatter(p50, acc, s=70, color=COLOR[run], marker=MARKER[split_run(run)[1]], edgecolor="white",
                    linewidth=2, zorder=3, label=name(run))
-        ax.annotate(name(run) + (" (latency %s)" % INFLATED[run] if run in INFLATED else ""), (p50, acc), xytext=(8, 4), textcoords="offset points", fontsize=8.5, color=INK2)
+        pts[-1] = pts[-1] + (name(run) + (" (latency %s)" % INFLATED[run] if run in INFLATED else ""),)
+    # direct labels; a label that would sit on top of an earlier one (close in log-x and y) goes below its point
+    lo_y, hi_y = ylim([p[1] for p in pts])
+    placed = []
+    for x, y, run, label in sorted(pts, key=lambda p: p[0]):
+        clash = any(abs(math.log10(x) - math.log10(px)) < 0.25 and abs(y - py) < 0.045 * (hi_y - lo_y)
+                    for px, py in placed)
+        ax.annotate(label, (x, y), xytext=(8, -12 if clash else 4), textcoords="offset points", fontsize=8.5,
+                    color=INK2)
+        if not clash:
+            placed.append((x, y))
+    pts = [p[:3] for p in pts]
     # Pareto frontier of the local runs (a hosted API's latency is another machine plus the network): no other
     # local run is both faster and more accurate
     local = [p for p in pts if not BACKENDS[split_run(p[2])[1]].remote]
@@ -331,7 +342,8 @@ def _latency_scatter(value, ylabel, title, filename, note, ylim):
                               ("jev", "TypeSafe API (hosted, incl. network)"),
                               ("openai", "OpenAI API (hosted, incl. network)"))
                if any(split_run(r)[1] == b for r in EVAL_RUNS)]
-    ax.legend(handles=handles, title="backend (marker)", loc="lower right", title_fontsize=8.5)
+    ax.legend(handles=handles, title="backend (marker)", loc="center left", bbox_to_anchor=(0.01, 0.42),
+              title_fontsize=8.5)
     save(fig, filename, note)
 
 
@@ -493,7 +505,8 @@ def _reliability(P, kind):
 
 def fig_calibration():
     runs = FIG_RUNS
-    ncol = 4 if len(runs) <= 7 else 3
+    cells = len(runs) + 1  # + the legend
+    ncol = min((3, 4, 5), key=lambda c: (math.ceil(cells / c) * c - cells, -c))  # fewest empty cells
     nrow = math.ceil((len(runs) + 1) / ncol)  # +1 cell for the legend
     fig, axes = plt.subplots(nrow, ncol, figsize=(2.9 * ncol, 3.1 * nrow), sharex=True, sharey=True)
     axes = axes.ravel()

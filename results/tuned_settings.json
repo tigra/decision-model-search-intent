@@ -141,5 +141,16 @@
    "filter": 1.0,
    "residual": 1.0
   }
+ },
+ "openai:gpt-6-luna": {
+  "filter_min_prob": 0.8,
+  "none_thr": {
+   "embedded": 0.7
+  },
+  "word_weights": {
+   "category": 8.0,
+   "filter": 1.0,
+   "residual": 1.0
+  }
  }
 }

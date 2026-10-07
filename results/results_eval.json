@@ -2469,6 +2469,306 @@
      "truncated_queries": 0
     }
    }
+  },
+  {
+   "run": "embedded@openai:gpt-6-luna",
+   "scheme": "embedded",
+   "backend": "openai",
+   "model": "gpt-6-luna",
+   "served_models": [
+    "gpt-6-luna"
+   ],
+   "backend_info": "OpenAI's hosted Decisions API (`POST /v1/decisions`, gpt-6-luna); the state is sent as JSON text; latency includes the network round trip",
+   "decoding": {
+    "none_thr": 0.7,
+    "filter_min_prob": 0.8,
+    "word_weights": {
+     "category": 8.0,
+     "filter": 1.0,
+     "residual": 1.0
+    }
+   },
+   "metrics": {
+    "category_exact": {
+     "value": 0.987,
+     "correct": 987,
+     "counted": 1000,
+     "ci95": [
+      0.9778853478989854,
+      0.9923872528778702
+     ]
+    },
+    "category_level": {
+     "L1": {
+      "value": 0.9978991596638656,
+      "correct": 950,
+      "counted": 952,
+      "ci95": [
+       0.9923724335490788,
+       0.9994236966883999
+      ]
+     },
+     "L2": {
+      "value": 1.0,
+      "correct": 866,
+      "counted": 866,
+      "ci95": [
+       0.995583563720107,
+       0.9999999999999999
+      ]
+     },
+     "L3": {
+      "value": 0.9918367346938776,
+      "correct": 486,
+      "counted": 490,
+      "ci95": [
+       0.9792003919836627,
+       0.9968210691488137
+      ]
+     }
+    },
+    "no_category": {
+     "precision": {
+      "value": 0.96,
+      "correct": 48,
+      "counted": 50,
+      "ci95": [
+       0.8653966212204534,
+       0.9889613473391734
+      ]
+     },
+     "recall": {
+      "value": 1.0,
+      "correct": 48,
+      "counted": 48,
+      "ci95": [
+       0.9258973488472576,
+       0.9999999999999999
+      ]
+     },
+     "f1": 0.9795918367346939,
+     "counts": {
+      "tp": 48,
+      "fp": 2,
+      "fn": 0
+     }
+    },
+    "filters_micro": {
+     "precision": {
+      "value": 0.9286733238231099,
+      "correct": 1302,
+      "counted": 1402,
+      "ci95": [
+       0.9139972210462038,
+       0.9410066428314904
+      ]
+     },
+     "recall": {
+      "value": 0.8565789473684211,
+      "correct": 1302,
+      "counted": 1520,
+      "ci95": [
+       0.8380585424350885,
+       0.8733014834363669
+      ]
+     },
+     "f1": 0.8911704312114991,
+     "counts": {
+      "tp": 1302,
+      "fp": 100,
+      "fn": 218
+     }
+    },
+    "filter_set_exact": {
+     "value": 0.726,
+     "correct": 726,
+     "counted": 1000,
+     "ci95": [
+      0.6975305924825856,
+      0.7527396493563658
+     ]
+    },
+    "word_role_accuracy": {
+     "value": 0.8841463414634146,
+     "correct": 4930,
+     "counted": 5576,
+     "ci95": [
+      0.875479967856375,
+      0.892283762210801
+     ]
+    },
+    "word_role_confusion": {
+     "category->category": 1697,
+     "category->filter": 48,
+     "category->residual": 9,
+     "filter->category": 51,
+     "filter->filter": 2420,
+     "filter->residual": 7,
+     "residual->category": 60,
+     "residual->filter": 471,
+     "residual->residual": 813
+    },
+    "residual_words": {
+     "precision": {
+      "value": 0.9806996381182147,
+      "correct": 813,
+      "counted": 829,
+      "ci95": [
+       0.9688790190937429,
+       0.9880856666280078
+      ]
+     },
+     "recall": {
+      "value": 0.6049107142857143,
+      "correct": 813,
+      "counted": 1344,
+      "ci95": [
+       0.5785106233557955,
+       0.6307127750019936
+      ]
+     },
+     "f1": 0.748274275195582,
+     "counts": {
+      "tp": 813,
+      "fp": 16,
+      "fn": 531
+     }
+    },
+    "whole_query_exact": {
+     "value": 0.512,
+     "correct": 512,
+     "counted": 1000,
+     "ci95": [
+      0.4810319866973494,
+      0.5428761677365771
+     ]
+    },
+    "weighted_score": {
+     "mean": 0.9190790890833586,
+     "ci95": [
+      0.9119517614621258,
+      0.9262064167045914
+     ],
+     "n": 1000,
+     "parts": {
+      "category": {
+       "mean": 0.9931666666666666,
+       "present_in": 1000
+      },
+      "filters": {
+       "mean": 0.8710444335136908,
+       "present_in": 856
+      },
+      "residual": {
+       "mean": 0.6499948011247129,
+       "present_in": 633
+      },
+      "other_roles": {
+       "mean": 0.9720313492063493,
+       "present_in": 1000
+      }
+     },
+     "weights": {
+      "category": 0.45,
+      "filters": 0.3,
+      "residual": 0.17,
+      "other_roles": 0.08
+     },
+     "beta": {
+      "filters": 0.5,
+      "residual": 2.0
+     }
+    },
+    "per_attribute_filters": {
+     "style": {
+      "P": 1.0,
+      "R": 0.989010989010989,
+      "F1": 0.994475138121547,
+      "support": 182
+     },
+     "leg_material": {
+      "P": 0.9344262295081968,
+      "R": 0.8636363636363636,
+      "F1": 0.8976377952755905,
+      "support": 132
+     },
+     "feature": {
+      "P": 0.9807692307692307,
+      "R": 0.9272727272727272,
+      "F1": 0.9532710280373831,
+      "support": 220
+     },
+     "material": {
+      "P": 1.0,
+      "R": 0.5405405405405406,
+      "F1": 0.7017543859649124,
+      "support": 185
+     },
+     "room": {
+      "P": 0.8552631578947368,
+      "R": 0.8843537414965986,
+      "F1": 0.8695652173913044,
+      "support": 147
+     },
+     "leg_color": {
+      "P": 0.7834394904458599,
+      "R": 0.8661971830985915,
+      "F1": 0.8227424749163879,
+      "support": 142
+     },
+     "width": {
+      "P": 0.9803921568627451,
+      "R": 0.6024096385542169,
+      "F1": 0.746268656716418,
+      "support": 83
+     },
+     "color": {
+      "P": 0.8766519823788547,
+      "R": 0.943127962085308,
+      "F1": 0.908675799086758,
+      "support": 211
+     },
+     "shape": {
+      "P": 1.0,
+      "R": 0.8484848484848485,
+      "F1": 0.9180327868852458,
+      "support": 66
+     },
+     "seat_count": {
+      "P": 0.7857142857142857,
+      "R": 0.8461538461538461,
+      "F1": 0.8148148148148148,
+      "support": 13
+     },
+     "bed_size": {
+      "P": 1.0,
+      "R": 0.9805825242718447,
+      "F1": 0.9901960784313726,
+      "support": 103
+     },
+     "firmness": {
+      "P": 1.0,
+      "R": 0.9444444444444444,
+      "F1": 0.9714285714285714,
+      "support": 36
+     }
+    },
+    "latency": {
+     "n": 1000,
+     "mean_s": 0.4679310557839996,
+     "p50_s": 0.43867087499998547,
+     "p90_s": 0.6106838371999989,
+     "p95_s": 0.815704027399988,
+     "p99_s": 1.1568537884999996,
+     "min_s": 0.2636321670000257,
+     "max_s": 2.530435417000035,
+     "queries_per_s": 2.137066962406546,
+     "mean_questions": 23.576,
+     "ms_per_question": 19.847771283678302,
+     "mean_input_tokens": 5226.988,
+     "truncated_queries": 0
+    }
+   }
   }
  ],
  "paired_mcnemar": [
@@ -2585,6 +2885,22 @@
    "p_value": 4.941478429183902e-10
   },
   {
+   "reference": "embedded@ollama:nimble",
+   "run": "embedded@openai:gpt-6-luna",
+   "metric": "category",
+   "correct_only_reference": 2,
+   "correct_only_run": 72,
+   "p_value": 2.939204326972422e-19
+  },
+  {
+   "reference": "embedded@ollama:nimble",
+   "run": "embedded@openai:gpt-6-luna",
+   "metric": "full",
+   "correct_only_reference": 126,
+   "correct_only_run": 214,
+   "p_value": 2.1013270063682756e-06
+  },
+  {
    "reference": "router@ollama:nimble",
    "run": "embedded@ollama:tev1",
    "metric": "category",
@@ -2681,6 +2997,22 @@
    "p_value": 8.688112624011702e-19
   },
   {
+   "reference": "router@ollama:nimble",
+   "run": "embedded@openai:gpt-6-luna",
+   "metric": "category",
+   "correct_only_reference": 1,
+   "correct_only_run": 152,
+   "p_value": 2.697499543825273e-44
+  },
+  {
+   "reference": "router@ollama:nimble",
+   "run": "embedded@openai:gpt-6-luna",
+   "metric": "full",
+   "correct_only_reference": 108,
+   "correct_only_run": 247,
+   "p_value": 1.169947823619494e-13
+  },
+  {
    "reference": "embedded@ollama:tev1",
    "run": "embedded@ollama:tev1:0.8b",
    "metric": "category",
@@ -2761,6 +3093,22 @@
    "p_value": 2.1624318202146215e-29
   },
   {
+   "reference": "embedded@ollama:tev1",
+   "run": "embedded@openai:gpt-6-luna",
+   "metric": "category",
+   "correct_only_reference": 2,
+   "correct_only_run": 47,
+   "p_value": 4.355626970209414e-12
+  },
+  {
+   "reference": "embedded@ollama:tev1",
+   "run": "embedded@openai:gpt-6-luna",
+   "metric": "full",
+   "correct_only_reference": 80,
+   "correct_only_run": 256,
+   "p_value": 1.3085649315679303e-22
+  },
+  {
    "reference": "embedded@ollama:tev1:0.8b",
    "run": "embedded@ollaya:jeb:4b",
    "metric": "category",
@@ -2825,6 +3173,22 @@
    "p_value": 1.5021915493469798e-127
   },
   {
+   "reference": "embedded@ollama:tev1:0.8b",
+   "run": "embedded@openai:gpt-6-luna",
+   "metric": "category",
+   "correct_only_reference": 3,
+   "correct_only_run": 263,
+   "p_value": 5.29146143778657e-74
+  },
+  {
+   "reference": "embedded@ollama:tev1:0.8b",
+   "run": "embedded@openai:gpt-6-luna",
+   "metric": "full",
+   "correct_only_reference": 8,
+   "correct_only_run": 430,
+   "p_value": 9.043958823935971e-116
+  },
+  {
    "reference": "embedded@ollaya:jeb:4b",
    "run": "embedded@ollaya:winnow:e4b",
    "metric": "category",
@@ -2873,6 +3237,22 @@
    "p_value": 8.98366181572315e-26
   },
   {
+   "reference": "embedded@ollaya:jeb:4b",
+   "run": "embedded@openai:gpt-6-luna",
+   "metric": "category",
+   "correct_only_reference": 3,
+   "correct_only_run": 72,
+   "p_value": 3.72567441849804e-18
+  },
+  {
+   "reference": "embedded@ollaya:jeb:4b",
+   "run": "embedded@openai:gpt-6-luna",
+   "metric": "full",
+   "correct_only_reference": 73,
+   "correct_only_run": 220,
+   "p_value": 2.7485512675441772e-18
+  },
+  {
    "reference": "embedded@ollaya:winnow:e4b",
    "run": "embedded@decider:strands-decider-2b",
    "metric": "category",
@@ -2905,6 +3285,22 @@
    "p_value": 5.4275348609446296e-70
   },
   {
+   "reference": "embedded@ollaya:winnow:e4b",
+   "run": "embedded@openai:gpt-6-luna",
+   "metric": "category",
+   "correct_only_reference": 3,
+   "correct_only_run": 24,
+   "p_value": 4.9233436584472656e-05
+  },
+  {
+   "reference": "embedded@ollaya:winnow:e4b",
+   "run": "embedded@openai:gpt-6-luna",
+   "metric": "full",
+   "correct_only_reference": 32,
+   "correct_only_run": 299,
+   "p_value": 1.781266008303898e-55
+  },
+  {
    "reference": "embedded@decider:strands-decider-2b",
    "run": "embedded@jev:jev-latest",
    "metric": "category",
@@ -2919,6 +3315,38 @@
    "correct_only_reference": 40,
    "correct_only_run": 382,
    "p_value": 3.8543930044231025e-71
+  },
+  {
+   "reference": "embedded@decider:strands-decider-2b",
+   "run": "embedded@openai:gpt-6-luna",
+   "metric": "category",
+   "correct_only_reference": 0,
+   "correct_only_run": 244,
+   "p_value": 7.074749280333369e-74
+  },
+  {
+   "reference": "embedded@decider:strands-decider-2b",
+   "run": "embedded@openai:gpt-6-luna",
+   "metric": "full",
+   "correct_only_reference": 33,
+   "correct_only_run": 352,
+   "p_value": 1.6419690711446899e-68
+  },
+  {
+   "reference": "embedded@jev:jev-latest",
+   "run": "embedded@openai:gpt-6-luna",
+   "metric": "category",
+   "correct_only_reference": 6,
+   "correct_only_run": 6,
+   "p_value": 1.0
+  },
+  {
+   "reference": "embedded@jev:jev-latest",
+   "run": "embedded@openai:gpt-6-luna",
+   "metric": "full",
+   "correct_only_reference": 128,
+   "correct_only_run": 105,
+   "p_value": 0.14935248220520594
   }
  ],
  "paired_score_tests": [
@@ -2972,6 +3400,13 @@
    "p_value": 1.0668337619791877e-13
   },
   {
+   "reference": "embedded@ollama:nimble",
+   "run": "embedded@openai:gpt-6-luna",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.03950925237910042,
+   "p_value": 7.149845954164706e-13
+  },
+  {
    "reference": "router@ollama:nimble",
    "run": "embedded@ollama:tev1",
    "metric": "score",
@@ -3014,6 +3449,13 @@
    "p_value": 1.7832647065439263e-32
   },
   {
+   "reference": "router@ollama:nimble",
+   "run": "embedded@openai:gpt-6-luna",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.09492404042073509,
+   "p_value": 1.607295520214489e-32
+  },
+  {
    "reference": "embedded@ollama:tev1",
    "run": "embedded@ollama:tev1:0.8b",
    "metric": "score",
@@ -3049,6 +3491,13 @@
    "p_value": 2.568584916851949e-39
   },
   {
+   "reference": "embedded@ollama:tev1",
+   "run": "embedded@openai:gpt-6-luna",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.06907607167466574,
+   "p_value": 4.022843070616723e-36
+  },
+  {
    "reference": "embedded@ollama:tev1:0.8b",
    "run": "embedded@ollaya:jeb:4b",
    "metric": "score",
@@ -3077,6 +3526,13 @@
    "p_value": 4.3794551625342474e-131
   },
   {
+   "reference": "embedded@ollama:tev1:0.8b",
+   "run": "embedded@openai:gpt-6-luna",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.31663174817699485,
+   "p_value": 2.2025978323109924e-130
+  },
+  {
    "reference": "embedded@ollaya:jeb:4b",
    "run": "embedded@ollaya:winnow:e4b",
    "metric": "score",
@@ -3098,6 +3554,13 @@
    "p_value": 5.785056016621276e-34
   },
   {
+   "reference": "embedded@ollaya:jeb:4b",
+   "run": "embedded@openai:gpt-6-luna",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.06645320687048775,
+   "p_value": 2.9387547298171946e-31
+  },
+  {
    "reference": "embedded@ollaya:winnow:e4b",
    "run": "embedded@decider:strands-decider-2b",
    "metric": "score",
@@ -3112,52 +3575,78 @@
    "p_value": 2.924082450233084e-69
   },
   {
+   "reference": "embedded@ollaya:winnow:e4b",
+   "run": "embedded@openai:gpt-6-luna",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.0928622374384405,
+   "p_value": 4.775542562202079e-65
+  },
+  {
    "reference": "embedded@decider:strands-decider-2b",
    "run": "embedded@jev:jev-latest",
    "metric": "score",
    "mean_diff_reference_minus_run": -0.22597255688273776,
    "p_value": 7.006875545575386e-92
+  },
+  {
+   "reference": "embedded@decider:strands-decider-2b",
+   "run": "embedded@openai:gpt-6-luna",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.22466898287039863,
+   "p_value": 2.8665542645627007e-95
+  },
+  {
+   "reference": "embedded@jev:jev-latest",
+   "run": "embedded@openai:gpt-6-luna",
+   "metric": "score",
+   "mean_diff_reference_minus_run": 0.0013035740123391406,
+   "p_value": 0.7142101569871211
   }
  ],
  "score_rank_ranges": {
   "embedded@ollama:nimble": {
-   "min": 2,
-   "max": 4,
-   "mode": 2
-  },
-  "router@ollama:nimble": {
-   "min": 3,
-   "max": 6,
-   "mode": 5
-  },
-  "embedded@ollama:tev1": {
-   "min": 3,
-   "max": 5,
-   "mode": 4
-  },
-  "embedded@ollama:tev1:0.8b": {
-   "min": 8,
-   "max": 8,
-   "mode": 8
-  },
-  "embedded@ollaya:jeb:4b": {
    "min": 3,
    "max": 5,
    "mode": 3
   },
-  "embedded@ollaya:winnow:e4b": {
-   "min": 2,
-   "max": 6,
+  "router@ollama:nimble": {
+   "min": 4,
+   "max": 7,
    "mode": 6
   },
-  "embedded@decider:strands-decider-2b": {
-   "min": 7,
+  "embedded@ollama:tev1": {
+   "min": 4,
+   "max": 6,
+   "mode": 5
+  },
+  "embedded@ollama:tev1:0.8b": {
+   "min": 9,
+   "max": 9,
+   "mode": 9
+  },
+  "embedded@ollaya:jeb:4b": {
+   "min": 4,
+   "max": 6,
+   "mode": 4
+  },
+  "embedded@ollaya:winnow:e4b": {
+   "min": 3,
    "max": 7,
    "mode": 7
   },
+  "embedded@decider:strands-decider-2b": {
+   "min": 8,
+   "max": 8,
+   "mode": 8
+  },
   "embedded@jev:jev-latest": {
    "min": 1,
-   "max": 1,
+   "max": 2,
+   "mode": 2
+  },
+  "embedded@openai:gpt-6-luna": {
+   "min": 1,
+   "max": 2,
    "mode": 1
   }
  }

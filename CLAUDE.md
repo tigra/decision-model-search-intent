@@ -61,6 +61,7 @@ uv run python -m sidm.schema                  # rebuild data/schema.json and run
   - Run only one local backend at a time: `serve.sh` runs `ollama stop nimble`, because memory is tight.
 - **The `decider` backend** is AWS Strands Labs' Strands Decider on :11600, served by `decider_backend/serve.sh` (`make decider-setup` / `decider-serve`). It uses its own Python 3.12 env installed from GitHub at a pinned commit, with weights in `~/sidm-models/hf-home`. It encodes the state once and only adds each question's suffix.
 - **The `ollaya` backend** is the Ollaya server on :11435 (`scripts/ollaya_serve.sh`). The binary is `~/sidm-models/ollaya/bin/ollaya`, and models go in `OLLAYA_MODELS=~/sidm-models/ollaya-models`. Pull models before use; Ollaya never pulls implicitly.
+- **The `openai` backend** is OpenAI's hosted Decisions API (`POST /v1/decisions`, `gpt-6-luna`, `OPENAI_API_KEY`). `Backend.api == "decisions"`: `to_decisions` / `from_decisions` convert to and from the `/v1/systemone` shape (state as JSON text; refusals mapped to the "nothing" option and counted in `refusals`). A no-credit 429 stops at once.
 - **Oversized prompts are split automatically.** `ollama_client.system_one_split` handles them, e.g. tev1's 2k context in Ollama.
 - **Per-model tuned decoding** lives in `results/tuned_settings.json` (keys `"<backend>:<model>"`), written by `evaluate tune --apply` on a dev run.
 - **The `jev` backend** is TypeSafe's hosted `/v1/systemone`.

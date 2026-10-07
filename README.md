@@ -16,8 +16,8 @@ words:     cheap/R grey/F oak/F coffee/C table/C with/F storage/F      (C catego
 
 ## TL;DR
 The main results: 
-* TypeSafe's hosted Jev is both the *most accurate* and *the fastest* (~0.3 s, including the network).
-* Jev's latency stays flat as questions are added (0.34 s for 1 question, 0.35 s for 29), while every local model gets slower with each question.
+* The two hosted decision APIs, TypeSafe's Jev and OpenAI's Decisions API (`gpt-6-luna`), are the *most accurate* (whole query 0.535 and 0.512, statistically tied) and *the fastest* (0.3–0.4 s, including the network).
+* Their latency stays flat as questions are added (Jev: 0.34 s for 1 question, 0.35 s for 29), while every local model gets slower with each question.
 * Among local models on the M3 Max, accuracy costs time: nimble reaches 0.42 at ~16 s, and the 4–7× faster models are much less accurate.
 
 ## Problem formulation
@@ -73,19 +73,20 @@ One assumption is that Jev's value comes in parallelization of question answerin
    - Ollama's `nimble`;
    - nimble's own batched MLX scorer (`ParallelScorer`);
    - other open decision models (Together AI's `tev1`, and Ollaya's encoders and decoders);
-   - TypeSafe's hosted Jev (`jev-1.13.0`), as the reference these open models imitate.
+   - two hosted decision APIs as references: TypeSafe's Jev (`jev-1.13.0`), which these open models imitate, and OpenAI's Decisions API (`gpt-6-luna`, public beta since 2026-10-06).
 
 ## Key findings
-- **Best overall: TypeSafe's hosted Jev (`jev-1.13.0`), and it's also the fastest.**
-  - 1,000 eval queries: category exact 0.987, filters F1 0.921, word roles 0.854, **whole query exactly right 0.535**, at **0.3 s per query** including the network round trip.
-  - It's significantly better than every other run on both the whole query and category (McNemar p ≤ 0.0001). Its only weaker part is residual words (F1 0.695 vs nimble's 0.733): it labels 38% of residual words as filters.
-  - Its decoding wasn't changed: tuning on dev kept nimble's settings.
+- **Best overall: the two hosted APIs, statistically tied, and also the fastest.**
+  - **OpenAI's Decisions API** (`gpt-6-luna`): category 0.987, filters F1 0.891, word roles 0.884, residual words F1 0.748, **whole query 0.512**, at **0.4 s per query** including the network. It's best on word roles and residual words, weaker on filters.
+  - **TypeSafe's Jev** (`jev-1.13.0`): category 0.987, filters F1 0.921, word roles 0.854, **whole query 0.535**, at **0.3 s**. It's best on filters, weaker on residual words (F1 0.695 vs nimble's 0.733: it labels 38% of residual words as filters). Tuning on dev kept nimble's decoding settings.
+  - **Jev vs OpenAI:** no significant difference on the whole query (128 vs 105 queries, p = 0.15), on category (6 vs 6) or on the weighted score (p = 0.71).
+  - **Each is significantly better than every local run** on both the whole query and category (McNemar p ≤ 0.0001).
 - **Best local: `nimble` (9B) on Ollama with the `embedded` category scheme.**
   - 1,000 eval queries: category exact 0.917, filters F1 0.912, word roles 0.841, **whole query exactly right 0.424**, at ~16 s per query on the M3 Max.
   - It's significantly better on the whole query than every other local run (McNemar p < 0.001), mainly thanks to filters and word roles.
 - **Embedding the group decision beats an explicit top-level question:** category 0.917 vs 0.836. The top-level question picked wrong groups confidently.
 - **Among local models, others win on parts.**
-  - `winnow:e4b` (Ollaya) has the best local category accuracy (0.966; Jev 0.987) and is fast (6 s), but barely finds residual words.
+  - `winnow:e4b` (Ollaya) has the best local category accuracy (0.966; Jev and OpenAI 0.987) and is fast (6 s), but barely finds residual words.
   - `tev1` 4B is also better at category (0.942) and ~35% faster (9.9 s vs 15.6 s), but weaker at filters and word roles.
 - **Encoders and small models fail the word-role questions:** their role probabilities are nearly uniform, so they give an effectively constant answer. They can't resolve "role of word N" against the numbered word list in the state.
 - **Latency is dominated by one prefill of the whole question set.** A query takes ~16 s with nimble.
@@ -94,7 +95,7 @@ One assumption is that Jev's value comes in parallelization of question answerin
   - The real levers are fewer or shorter questions, or a server that puts the static questions before the query, so they could be cached across queries.
   - **AWS's Strands Decider 2B shows the other layout:** it encodes the state once and adds only each question's suffix, at **3.9 s per query**. But its accuracy is much lower (whole query 0.193).
   - **Jev answers the same 24-question request in 0.3 s, and its latency stays flat from 20 to 30 questions** (~0.33 s), while every local model gets slower with each question. That fits the assumption that Jev evaluates questions in parallel. So the slowness is in the local runtimes, not in the one-request design. How Jev works internally isn't published.
-- **A forgiving whole-query score tells the same story at the top:** Jev 0.920, nimble 0.880 (weighted partial credit for category, filters and words; see "A forgiving whole-query score"). The middle of the local ranking depends on the weights.
+- **A forgiving whole-query score tells the same story at the top:** Jev 0.920, OpenAI 0.919, nimble 0.880 (weighted partial credit for category, filters and words; see "A forgiving whole-query score"). The middle of the local ranking depends on the weights.
 - **The data are synthetic and cleaner than real queries,** so the accuracies are upper bounds.
 
 ## First 15 minutes
@@ -235,16 +236,17 @@ The decoder lives in `src/sidm/parser.py`.
 | nimble, router | 0.197 | **0.373** | category 0.626 → 0.836 (group-max instead of top-down), filters |
 | jeb:4b | 0.230 | **0.365** | filters F1 0.852 → 0.888 |
 | Jev | 0.452 | **0.535** | filters F1 0.892 → 0.921 (nimble's settings; tuning on dev kept them) |
+| OpenAI | 0.467 | **0.512** | filters F1 0.882 → 0.891 (filter threshold 0.80; nimble's 0.95 cut its F1 to 0.77 on dev) |
 
 **Eval is never used for tuning.** Dev results are optimistic because dev is the tuning set.
 
 ![Calibration of raw probabilities](docs/figures/calibration_eval.svg)
 
-*Why thresholds are tuned per model: models are calibrated very differently. nimble's and tev1 4B's filter probabilities are close to honest (ECE ≤ 0.01). Strands Decider and tev1 0.8B are under-confident on filters (curve above the diagonal), so a high threshold would throw away correct filters. jeb and winnow are over-confident on word roles (curve below the diagonal). Jev's filter probabilities are as honest as nimble's (ECE 0.00), and it's slightly over-confident on word roles (0.07).*
+*Why thresholds are tuned per model: models are calibrated very differently. nimble's and tev1 4B's filter probabilities are close to honest (ECE ≤ 0.01). Strands Decider and tev1 0.8B are under-confident on filters (curve above the diagonal), so a high threshold would throw away correct filters. jeb and winnow are over-confident on word roles (curve below the diagonal). Jev's filter probabilities are as honest as nimble's (ECE 0.00), and it's slightly over-confident on word roles (0.07). OpenAI is similar (0.02 and 0.06), but under-confident on filters below 0.8, hence its lower filter threshold.*
 
 ![Effect of tuning](docs/figures/tuning_effect.svg)
 
-*Left: tuning helps every run except winnow, most of all nimble router (+0.18, from group-max category decoding) and jeb (+0.13); Jev gains +0.08 from nimble's settings. Right: for nimble, the filter threshold trades recall for precision; F1 peaks near the chosen 0.95.*
+*Left: tuning helps every run except winnow, most of all nimble router (+0.18, from group-max category decoding) and jeb (+0.13); Jev gains +0.08 from nimble's settings, OpenAI +0.05 from its own. Right: for nimble, the filter threshold trades recall for precision; F1 peaks near the chosen 0.95.*
 
 ## Backends and models
 The same request can be served by five ablatable backends (`--backend`). A run is named `<scheme>@<backend>:<model>`, e.g. `embedded@ollaya:jeb:4b`.
@@ -256,6 +258,7 @@ The same request can be served by five ablatable backends (`--backend`). A run i
 | `ollaya` | [Ollaya](https://github.com/ollaya-dev/ollaya) 0.9, `localhost:11435` | per model family: most score all questions in one batched pass; `winnow` shares the state prefix and runs questions sequentially |
 | `decider` | [Strands Decider](https://github.com/strands-labs/strands-decider)'s own server (`decider_backend/serve.sh`), `localhost:11600` | **the state is encoded once, then only each question's short suffix is added**, batched up to 32 per pass |
 | `jev` | TypeSafe's hosted API, `https://api.typesafe.ai` | hosted Jev, needs `TYPESAFE_API_KEY` |
+| `openai` | OpenAI's Decisions API, `POST https://api.openai.com/v1/decisions` | hosted `gpt-6-luna`, needs `OPENAI_API_KEY`; a different request shape, converted in `ollama_client.py` |
 
 ### Models tested
 | Model | Backend | Type, size, precision | Evaluated on |
@@ -275,6 +278,7 @@ The same request can be served by five ablatable backends (`--backend`). A run i
 | `nli:modernbert-large` | ollaya | NLI cross-encoder, one pair per option | dev |
 | `strands-decider-2b` (AWS Strands Labs) | decider | Qwen3.5-2B-Base, LoRA + pointer head, MLX (`StrandsAgents/strands-decider-2B-hobson-v19`) | dev + eval |
 | `jev-latest` (TypeSafe), served as `jev-1.13.0` | jev | hosted API; architecture not published | dev + eval |
+| `gpt-6-luna` (OpenAI Decisions API) | openai | hosted API; architecture not published | dev + eval |
 
 **Not tested:**
 - **Too few options for our 24-option questions:** Ollaya's `jevk5` (≤ 16 options), `cygnet` (≤ 20) and `decider:2b-vision` (≤ 10).
@@ -334,6 +338,18 @@ make dev BACKEND=jev && make tune BACKEND=jev && make eval BACKEND=jev
 - **Retries:** HTTP 429 and 5xx are retried with backoff.
 - **Model:** `jev-latest` moves with releases, so each prediction records the versioned model that answered (`served_model`). Pin a version with `MODEL=jev-1.13.0`.
 
+### OpenAI Decisions API (hosted)
+Needs `OPENAI_API_KEY` in `.env` (template `.env.example`) and credits on the account; without credits the API answers HTTP 429 `insufficient_quota`, which stops the run with the fix.
+```bash
+make parse BACKEND=openai
+make dev BACKEND=openai LIMIT=5                   # paid API: try a few rows first
+make dev BACKEND=openai && make tune BACKEND=openai && make eval BACKEND=openai
+```
+- **Request:** `POST /v1/decisions` with `model: gpt-6-luna`, `input` and a `questions` array. The client converts our `/v1/systemone` request: the state goes in as the same JSON, but as text (Jev gets it as an object), and each `criteria` dict becomes a `choices` array. Answers are converted back, so decoding, tuning and metrics are shared.
+- **Refusals:** the API may answer a question with `refusal`. A refused category or filter question becomes its "nothing" option, a refused word question residual; the count is stored per query. None occurred in our 1,100 queries.
+- **Limits:** not published; our full requests (up to 30 questions, up to 24 options) went through in one call.
+- **Cost:** $0.10 per 1M input tokens, output tokens free; ~5.2k input tokens per query, so the 1,000-query eval cost about $0.52.
+
 **Run only one model on the GPU at a time.** Memory is tight with 36 GB; `make status` shows what's loaded where.
 
 ## Results
@@ -349,10 +365,10 @@ make dev BACKEND=jev && make tune BACKEND=jev && make eval BACKEND=jev
 ### Eval: 1,000 queries (decoding tuned per model on dev)
 ![Eval results](docs/figures/eval_results.svg)
 
-*Exact numbers with counts and definitions: [`results/results_eval.md`](results/results_eval.md). Bold marks the best run in each row; darker cells are closer to the row's best (for latency, faster). Jev leads every row except residual words, where tev1 4B and both nimble runs score higher. Among local runs, nimble embedded leads on filters, word roles and the whole query; winnow and tev1 4B on category; tev1 0.8B and Strands Decider on speed.*
+*Exact numbers with counts and definitions: [`results/results_eval.md`](results/results_eval.md). Bold marks the best run in each row; darker cells are closer to the row's best (for latency, faster). The two hosted APIs lead: Jev on filters, filter sets and the whole query, OpenAI on word roles and residual words, both on category. Among local runs, nimble embedded leads on filters, word roles and the whole query; winnow and tev1 4B on category; tev1 0.8B and Strands Decider on speed.*
 
 - **Low "whole query exactly right" scores are expected, for every model.** It's the strictest possible measure: one query counts only if the category node, the whole filter set and the role of every single word are all right.
-  - **Errors compound across the parts.** nimble embedded gets the category right on 0.917 of the queries, the filter set on 0.770, and every residual word on 0.527. Jev gets 0.987, 0.800 and 0.651. Multiplied, that's 0.37 and 0.51, close to their whole-query scores of 0.424 and 0.535 (errors are somewhat correlated, so the real score is a bit higher than the product).
+  - **Errors compound across the parts.** nimble embedded gets the category right on 0.917 of the queries, the filter set on 0.770, and every residual word on 0.527. Jev gets 0.987, 0.800 and 0.651; OpenAI 0.987, 0.726 and 0.697. Multiplied, that's 0.37, 0.51 and 0.50, close to their whole-query scores of 0.424, 0.535 and 0.512 (errors are somewhat correlated, so the real score is a bit higher than the product).
   - **The word roles are the bottleneck.** A 7-word query needs 7 roles right, and the boundary between filter, category and residual words follows the dataset's labeling convention (e.g. "furniture" is residual, "with" in "with storage" belongs to the filter). The models are used as they are, never trained on that convention.
   - **So compare runs with each other, and per part,** rather than reading whole-query accuracy as "how often the parse is usable". A search engine would act on the category and filters, which are right far more often.
 - **Latency** is the p50 over the same 1,000 queries, one request at a time, with nothing else running. tev1 4B's first eval ran alongside CPU jobs (p50 13.0 s); its re-run gave identical answers in 9.9 s, and that's what is reported. jeb's and winnow's evals overlapped CPU jobs too, but match their clean benchmarks within 1%.
@@ -363,7 +379,8 @@ make dev BACKEND=jev && make tune BACKEND=jev && make eval BACKEND=jev
   - Every model except tev1 0.8B beats it on the whole query (p ≤ 0.0002); it beats tev1 0.8B (141 vs 38 queries).
 - **Jev is best on the whole query and on category.** Against nimble embedded: 215 queries only Jev got right vs 104 only nimble got right (whole query), and 74 vs 4 (category); p < 0.0001. Against winnow, the best local model on category: 25 vs 4 (p = 0.0001).
 - **Jev's weak part is residual words** (F1 0.695, below tev1 4B's 0.744 and nimble's 0.733): it labels 38% of the residual words as filters, against 14% for nimble.
-- **Jev's latency isn't comparable to the local runs:** it's a hosted API on unknown hardware, measured from this Mac including the network round trip.
+- **OpenAI vs Jev: tied overall, different strengths.** OpenAI has the best residual words F1 of all runs (0.748) and the best word roles (0.884), but weaker filters (F1 0.891 vs 0.921; filter set exact 0.726 vs 0.800). Against nimble embedded it's significantly better: 214 vs 126 queries on the whole query, 72 vs 2 on category (p < 0.0001).
+- **The hosted APIs' latency isn't comparable to the local runs:** Jev and OpenAI run on unknown hardware, measured from this Mac including the network round trip. They're kept out of the local Pareto frontier.
 - **nimble with the `embedded` scheme is the best local run on the whole query.** Every other local run is significantly worse (McNemar p < 0.001).
 - **On category, winnow:e4b and tev1 4B are significantly better than nimble** (p < 0.0001 and p = 0.002). jeb:4b ties nimble on category (p = 1.0).
 - **jeb:4b beats tev1 4B on the whole query** (116 vs 87 queries, p = 0.049), but tev1 is better at category.
@@ -372,19 +389,19 @@ make dev BACKEND=jev && make tune BACKEND=jev && make eval BACKEND=jev
 
 ![Accuracy vs latency](docs/figures/accuracy_vs_latency.svg)
 
-*Locally, accuracy grows steadily with latency. The Pareto frontier of the local runs goes tev1 0.8B → Strands Decider → winnow → tev1 4B → jeb → nimble embedded; only nimble router is dominated. The hosted Jev sits above and to the left of all of them.*
+*Locally, accuracy grows steadily with latency. The Pareto frontier of the local runs goes tev1 0.8B → Strands Decider → winnow → tev1 4B → jeb → nimble embedded; only nimble router is dominated. The hosted Jev and OpenAI sit above and to the left of all of them.*
 
 ![Accuracy by part](docs/figures/accuracy_by_part.svg)
 
-*Jev leads on every part except residual words, where tev1 4B and nimble are ahead. Among local models none wins every part: winnow and tev1 4B lead on category, nimble on filters, word roles and the whole query. Residual words separate the models most: from 0 (tev1 0.8B) to 0.74 (tev1 4B). The last accuracy row is the weighted query score (see "A forgiving whole-query score"): the same order at the top, with the local models much closer together. The bottom panel adds each run's p50 latency on its own log axis.*
+*The hosted APIs lead on every part: Jev on filters and the whole query, OpenAI on word roles and residual words, both on category. Among local models none wins every part: winnow and tev1 4B lead on category, nimble on filters, word roles and the whole query. Residual words separate the models most: from 0 (tev1 0.8B) to 0.75 (OpenAI). The last accuracy row is the weighted query score (see "A forgiving whole-query score"): the same order at the top, with the local models much closer together. The bottom panel adds each run's p50 latency on its own log axis.*
 
 ![Accuracy by difficulty](docs/figures/accuracy_by_difficulty.svg)
 
-*The whole query gets much harder with more filters (nimble: 0.73 with none, 0.19 with three) and more words (0.82 for 1–3 words, 0.18 for 7+). Jev degrades much less (0.68 → 0.41 with filters, 0.82 → 0.31 with words); that's where its lead comes from. Typos cost the local models ~0.1, and Jev 0.21 (0.56 → 0.35). Queries that name only an L1 group are harder than specific ones. No run gets a query without a product type right: models tag the word "furniture" as category, while the gold labels make it residual (a labeling convention worth revisiting, see `backlog.md`).*
+*The whole query gets much harder with more filters (nimble: 0.73 with none, 0.19 with three) and more words (0.82 for 1–3 words, 0.18 for 7+). Jev degrades much less (0.68 → 0.41 with filters, 0.82 → 0.31 with words), and so does OpenAI (0.68 → 0.37, 0.74 → 0.30); that's where the hosted APIs' lead comes from. Typos cost the local models ~0.1, and the hosted APIs about 0.2 (Jev 0.56 → 0.35, OpenAI 0.54 → 0.32). Queries that name only an L1 group are harder than specific ones. No run gets a query without a product type right: models tag the word "furniture" as category, while the gold labels make it residual (a labeling convention worth revisiting, see `backlog.md`).*
 
 ![Filter F1 per attribute](docs/figures/filter_f1_by_attribute.svg)
 
-*Width (inches mapped to a bucket) is nimble's weakest attribute (0.43); Jev handles it best (0.90), and among local models jeb and winnow do much better than nimble (0.79, 0.78). Room is weak for winnow and Strands Decider. A hybrid could take each attribute from the model best at it.*
+*Width (inches mapped to a bucket) is nimble's weakest attribute (0.43); Jev handles it best (0.90; OpenAI 0.75), and among local models jeb and winnow do much better than nimble (0.79, 0.78). Room is weak for winnow and Strands Decider. A hybrid could take each attribute from the model best at it.*
 
 ![Category errors by scheme](docs/figures/category_scheme_errors.svg)
 
@@ -410,11 +427,11 @@ make dev BACKEND=jev && make tune BACKEND=jev && make eval BACKEND=jev
 
 ![Weighted query score vs latency](docs/figures/score_vs_latency.svg)
 
-*The counterpart of "Accuracy vs latency". The same picture: Jev on top at 0.920, then nimble embedded (0.880) as the best local run. The gaps between the local models are much smaller than on exact match, because most of their parses are near misses rather than failures.*
+*The counterpart of "Accuracy vs latency". The same picture: Jev (0.920) and OpenAI (0.919) on top, then nimble embedded (0.880) as the best local run. The gaps between the local models are much smaller than on exact match, because most of their parses are near misses rather than failures.*
 
 ![Where the score comes from](docs/figures/score_breakdown.svg)
 
-*Points earned per part, adding up to the score. Category earns most of every run's points. winnow and Strands Decider lose most on residual words, tev1 0.8B on everything but category. The rank ranges on the right show the robust ends (Jev 1st, Strands Decider 7th, tev1 0.8B 8th in every weighting) and a weight-dependent middle: winnow ranks anywhere from 2nd to 6th.*
+*Points earned per part, adding up to the score. Category earns most of every run's points. winnow and Strands Decider lose most on residual words, tev1 0.8B on everything but category. The rank ranges on the right show the robust ends (Jev and OpenAI 1st–2nd, Strands Decider 8th, tev1 0.8B 9th in every weighting) and a weight-dependent middle: winnow ranks anywhere from 3rd to 7th.*
 
 ![Score by difficulty](docs/figures/score_by_difficulty.svg)
 
@@ -445,7 +462,7 @@ McNemar's test checks whether **two runs scored on the same queries** really dif
 
 ![Pairwise McNemar tests on eval](docs/figures/mcnemar_eval.svg)
 
-*Each cell is "queries only the row run got right : only the column run got right" with its p-value. Jev's row is all blue on both metrics: it is significantly better than every other run. Among the local runs, nimble embedded's row is all blue on the whole query, and winnow's nearly all blue on category.*
+*Each cell is "queries only the row run got right : only the column run got right" with its p-value. Jev's and OpenAI's rows are all blue on both metrics, except against each other (grey: no significant difference): each is significantly better than every local run. Among the local runs, nimble embedded's row is all blue on the whole query, and winnow's nearly all blue on category.*
 
 #### Sign-flip test for the weighted query score
 
@@ -453,7 +470,7 @@ McNemar's test checks whether **two runs scored on the same queries** really dif
 
 ![Pairwise score tests](docs/figures/score_tests_eval.svg)
 
-*Row run's mean score minus the column run's, with the paired test's p-value. Jev is significantly ahead of every run. Two pairs that differ significantly on exact match tie on the score: nimble router vs winnow (−0.002, p = 0.80) and tev1 4B vs jeb (−0.003, p = 0.57).*
+*Row run's mean score minus the column run's, with the paired test's p-value. Jev and OpenAI are significantly ahead of every local run and tie with each other (+0.001, p = 0.71). Two pairs that differ significantly on exact match tie on the score: nimble router vs winnow (−0.002, p = 0.80) and tev1 4B vs jeb (−0.003, p = 0.57).*
 
 #### Where to find the tests
 - The tables test every run against the first one, then show all-pairs matrices for category and whole-query exact match. Each cell is "only row right : only column right", with the p-value, and is bold when p < 0.05.
@@ -473,6 +490,7 @@ Ranked by whole-query exact match. Latency is from clean runs.
 
 | Model | Backend | Whole query | Category | p50 latency (M3 Max) |
 |---|---|---|---|---|
+| OpenAI (`gpt-6-luna`) | openai (hosted) | 0.59 | 0.99 | 0.4 s (hosted, incl. network) |
 | Jev (`jev-1.13.0`) | jev (hosted) | 0.57 | 0.97 | 0.3 s (hosted, incl. network) |
 | nimble (embedded) | ollama | 0.44 | 0.91 | 16.1 s |
 | nimble (embedded) | mlx | 0.43 | 0.92 | 17.4 s |
@@ -492,12 +510,12 @@ Ranked by whole-query exact match. Latency is from clean runs.
 
 - **Dev is the tuning set,** so these numbers are optimistic.
 - **The encoders and small decoders answer word-role questions almost uniformly** (word accuracy ≈ 0.33, residual F1 = 0), and they are weak on filters.
-- **Models scoring at least 0.24 on dev got the 1,000-query eval,** plus tev1 0.8B as the fastest local decoder, Strands Decider as a newly released model, and Jev as the hosted reference.
+- **Models scoring at least 0.24 on dev got the 1,000-query eval,** plus tev1 0.8B as the fastest local decoder, Strands Decider as a newly released model, and Jev and OpenAI as the hosted references.
 
 
 ![Word-role confusion on dev](docs/figures/word_role_confusion_dev.svg)
 
-*The encoders and small decoders answer every word-role question with the same role (one dark column). winnow and Strands Decider label most residual words as filters, which is why their residual F1 is low. Jev does so too, less often (28% of residual words on dev, vs 76% for winnow and 11% for nimble).*
+*The encoders and small decoders answer every word-role question with the same role (one dark column). winnow and Strands Decider label most residual words as filters, which is why their residual F1 is low. Jev and OpenAI do so too, less often (28% and 26% of residual words on dev, vs 76% for winnow and 11% for nimble).*
 
 ## Latency analysis
 - **All models were timed end to end:** p50 latencies are in "Results". Two figures below show latency vs request size: as it varies naturally over the eval queries, and in a controlled sweep over the number of questions.
@@ -509,7 +527,7 @@ Ranked by whole-query exact match. Latency is from clean runs.
 ### All models: latency vs request size
 ![Latency vs request size on eval](docs/figures/latency_vs_eval_request_size.svg)
 
-*Over the eval queries, every model gets slower with each extra question, i.e. each extra query word. nimble goes from ~14 s at 20 questions to ~18 s at 31; Strands Decider from 3.4 s to 5.1 s. Jev's line is flat (~0.33 s from 20 to 30 questions, network included). The question count here varies only with query length (19–34).*
+*Over the eval queries, every model gets slower with each extra question, i.e. each extra query word. nimble goes from ~14 s at 20 questions to ~18 s at 31; Strands Decider from 3.4 s to 5.1 s. Jev's and OpenAI's lines are flat (Jev ~0.33 s, OpenAI 0.40–0.48 s from 20 to 30 questions, network included). The question count here varies only with query length (19–34).*
 
 ![Latency vs number of questions, controlled sweep](docs/figures/latency_sweep.svg)
 

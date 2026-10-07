@@ -527,7 +527,7 @@ Ranked by whole-query exact match. Latency is from clean runs.
 ### All models: latency vs request size
 ![Latency vs request size on eval](docs/figures/latency_vs_eval_request_size.svg)
 
-*Over the eval queries, every model gets slower with each extra question, i.e. each extra query word. nimble goes from ~14 s at 20 questions to ~18 s at 31; Strands Decider from 3.4 s to 5.1 s. Jev's and OpenAI's lines are flat (Jev ~0.33 s, OpenAI 0.40–0.48 s from 20 to 30 questions, network included). The question count here varies only with query length (19–34).*
+*Over the eval queries, every model gets slower with each extra question, i.e. each extra query word. nimble goes from ~14 s at 20 questions to ~18 s at 31; Strands Decider from 3.4 s to 5.1 s. Jev's and OpenAI's lines are flat (Jev ~0.33 s, OpenAI 0.40–0.48 s from 20 to 30 questions, network included). The question count here varies only with query length (19–34). The bands are the 95% intervals of each median; for the local models they're barely wider than the lines, since their latency hardly varies between queries of the same size.*
 
 ![Latency vs number of questions, controlled sweep](docs/figures/latency_sweep.svg)
 

@@ -619,8 +619,11 @@ def fig_latency_questions():
         for l, q in zip(lat, nq):
             by[q].append(l)
         xs = sorted(q for q in by if len(by[q]) >= 10)
-        med = [statistics.median(by[q]) for q in xs]
+        stats = [median_ci(by[q]) for q in xs]
+        med = [m for m, _, _ in stats]
         ax.scatter(nq, lat, s=6, color=COLOR[run], alpha=0.18, linewidth=0, rasterized=True)
+        ax.fill_between(xs, [lo for _, lo, _ in stats], [hi for _, _, hi in stats], color=COLOR[run], alpha=0.2,
+                        linewidth=0)
         ax.plot(xs, med, color=COLOR[run], marker=MARKER[split_run(run)[1]], markersize=5,
                 linestyle="--" if run in INFLATED else "-", markeredgecolor="white", markeredgewidth=1,
                 label=name(run) + (" (%s)" % INFLATED[run] if run in INFLATED else ""))
@@ -634,8 +637,9 @@ def fig_latency_questions():
     ax.set_ylabel("latency per query (log scale)")
     ax.set_title("Latency vs request size, 1,000 eval queries, M3 Max")
     ax.legend(loc="upper left", bbox_to_anchor=(1.01, 1), fontsize=8.5)
-    save(fig, "latency_vs_eval_request_size.svg", "Dots: single queries; lines: median per question count "
-                                                  "(counts with ≥ 10 queries). Question counts vary only with query length.")
+    save(fig, "latency_vs_eval_request_size.svg", "Dots: single queries; lines: median per question count (counts "
+                                                  "with ≥ 10 queries); bands: its 95% interval (distribution-free). "
+                                                  "Question counts vary only with query length.")
 
 
 # ---------------------------------------------------------------- 7b. controlled sweep (make sweep)

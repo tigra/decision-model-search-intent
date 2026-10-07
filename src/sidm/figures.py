@@ -619,7 +619,7 @@ def fig_latency_questions():
         for l, q in zip(lat, nq):
             by[q].append(l)
         xs = sorted(q for q in by if len(by[q]) >= 10)
-        stats = [median_ci(by[q]) for q in xs]
+        stats = [median_range(by[q]) for q in xs]
         med = [m for m, _, _ in stats]
         ax.scatter(nq, lat, s=6, color=COLOR[run], alpha=0.18, linewidth=0, rasterized=True)
         ax.fill_between(xs, [lo for _, lo, _ in stats], [hi for _, _, hi in stats], color=COLOR[run], alpha=0.2,
@@ -638,7 +638,7 @@ def fig_latency_questions():
     ax.set_title("Latency vs request size, 1,000 eval queries, M3 Max")
     ax.legend(loc="upper left", bbox_to_anchor=(1.01, 1), fontsize=8.5)
     save(fig, "latency_vs_eval_request_size.svg", "Dots: single queries; lines: median per question count (counts "
-                                                  "with ≥ 10 queries); bands: its 95% interval (distribution-free). "
+                                                  "with ≥ 10 queries); bands: where 95% of the queries land (2.5th–97.5th percentile). "
                                                   "Question counts vary only with query length.")
 
 
@@ -695,14 +695,18 @@ def fig_latency_sweep():
 HOSTED_RUNS = [r for r in FIG_RUNS if BACKENDS[split_run(r)[1]].remote]
 
 
-def median_ci(values, z=1.96):
-    """Median with a distribution-free 95% interval from order statistics (binomial ranks around n/2)."""
+def median_range(values, share=0.95):
+    """Median and the range holding the middle `share` of the values (2.5th-97.5th percentile for 95%),
+    by linear interpolation between order statistics: where most points land, not the median's uncertainty."""
     xs = sorted(values)
-    n = len(xs)
-    half = z * math.sqrt(n) / 2
-    lo = max(0, int(math.floor(n / 2 - half)))
-    hi = min(n - 1, int(math.ceil(n / 2 + half)) - 1)
-    return statistics.median(xs), xs[lo], xs[hi]
+
+    def pct(q):
+        pos = q * (len(xs) - 1)
+        i = int(pos)
+        return xs[i] + (xs[min(i + 1, len(xs) - 1)] - xs[i]) * (pos - i)
+
+    tail = (1 - share) / 2
+    return statistics.median(xs), pct(tail), pct(1 - tail)
 
 
 def _hosted_axes(ax, ylabel):
@@ -722,7 +726,7 @@ def fig_hosted_latency_eval():
         for l, q in zip(lat, nq):
             by[q].append(l)
         xs = sorted(q for q in by if len(by[q]) >= 10)
-        stats = [median_ci(by[q]) for q in xs]
+        stats = [median_range(by[q]) for q in xs]
         off = (k - (len(HOSTED_RUNS) - 1) / 2) * 0.12  # keep the two runs' dots apart
         ax.scatter([q + off for q in nq], lat, s=6, color=COLOR[run], alpha=0.2, linewidth=0, rasterized=True)
         ax.fill_between(xs, [s_[1] for s_ in stats], [s_[2] for s_ in stats], color=COLOR[run], alpha=0.18,
@@ -734,8 +738,8 @@ def fig_hosted_latency_eval():
     ax.set_xlabel("questions in the request (18 fixed + 1 per query word)")
     ax.set_title("Hosted APIs: latency vs request size, 1,000 eval queries")
     _hosted_axes(ax, "latency per query (network included)")
-    save(fig, "hosted_latency_eval.svg", "Lines: median per question count (counts with ≥ 10 queries); bands: its "
-                                         "95% interval (distribution-free, order statistics). Dots: single queries; "
+    save(fig, "hosted_latency_eval.svg", "Lines: median per question count (counts with ≥ 10 queries); bands: where "
+                                         "95% of the queries land (2.5th–97.5th percentile). Dots: single queries; "
                                          "the slowest 1% are above the plot.")
 
 

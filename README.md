@@ -527,7 +527,7 @@ Ranked by whole-query exact match. Latency is from clean runs.
 ### All models: latency vs request size
 ![Latency vs request size on eval](docs/figures/latency_vs_eval_request_size.svg)
 
-*Over the eval queries, every model gets slower with each extra question, i.e. each extra query word. nimble goes from ~14 s at 20 questions to ~18 s at 31; Strands Decider from 3.4 s to 5.1 s. Jev's and OpenAI's lines are flat (Jev ~0.33 s, OpenAI 0.40–0.48 s from 20 to 30 questions, network included). The question count here varies only with query length (19–34). The bands are the 95% intervals of each median; for the local models they're barely wider than the lines, since their latency hardly varies between queries of the same size.*
+*Over the eval queries, every model gets slower with each extra question, i.e. each extra query word. nimble goes from ~14 s at 20 questions to ~18 s at 31; Strands Decider from 3.4 s to 5.1 s. Jev's and OpenAI's lines are flat (Jev ~0.33 s, OpenAI 0.40–0.48 s from 20 to 30 questions, network included). The question count here varies only with query length (19–34). The bands show where 95% of the queries land (2.5th–97.5th percentile) at each question count. Local models vary little (nimble: 95% of queries in 14.2–17.8 s); OpenAI varies most relative to its median (0.28–0.93 s around 0.44 s).*
 
 ![Latency vs number of questions, controlled sweep](docs/figures/latency_sweep.svg)
 
@@ -559,7 +559,7 @@ The figures above squeeze the two hosted APIs onto the bottom line, so here they
 
 ![Hosted APIs: latency vs request size on eval](docs/figures/hosted_latency_eval.svg)
 
-*Over the 1,000 eval queries, neither API gets slower with longer queries (more word questions): Jev stays at 0.33–0.35 s from 20 to 30 questions, OpenAI at 0.40–0.48 s. The bands are the 95% intervals of each median; the two APIs' bands are apart at every question count except 29, where only a few queries remain. Jev is consistently ~0.1 s faster.*
+*Over the 1,000 eval queries, neither API gets slower with longer queries (more word questions): Jev stays at 0.33–0.35 s from 20 to 30 questions, OpenAI at 0.40–0.48 s. The bands show where 95% of the queries land (2.5th–97.5th percentile). Jev is fast and steady: 95% of its queries take 0.31–0.45 s. OpenAI's median is ~0.1 s higher (0.44 s) and its spread much wider (0.28–0.93 s): some queries are as fast as Jev's, but a long tail reaches about a second.*
 
 ![Hosted APIs: latency vs number of questions, controlled sweep](docs/figures/hosted_latency_sweep.svg)
 

@@ -86,7 +86,7 @@ One assumption is that Jev's value comes in parallelization of question answerin
 - **Embedding the group decision beats an explicit top-level question:** category 0.917 vs 0.836. The top-level question picked wrong groups confidently.
 - **Among local models, others win on parts.**
   - `winnow:e4b` (Ollaya) has the best local category accuracy (0.966; Jev 0.987) and is fast (6 s), but barely finds residual words.
-  - `tev1` 4B is also better at category (0.942) and ~30% faster (10.7 s in a clean benchmark), but weaker at filters and word roles.
+  - `tev1` 4B is also better at category (0.942) and ~35% faster (9.9 s vs 15.6 s), but weaker at filters and word roles.
 - **Encoders and small models fail the word-role questions:** their role probabilities are nearly uniform, so they give an effectively constant answer. They can't resolve "role of word N" against the numbered word list in the state.
 - **Latency is dominated by one prefill of the whole question set.** A query takes ~16 s with nimble.
   - Every question's text is in one shared prompt (~5.4k tokens), prefilled once at ~500 tok/s (~11 s). Then each question is answered from a ~13-token suffix (~0.18 s each, sequential).
@@ -355,7 +355,7 @@ make dev BACKEND=jev && make tune BACKEND=jev && make eval BACKEND=jev
   - **Errors compound across the parts.** nimble embedded gets the category right on 0.917 of the queries, the filter set on 0.770, and every residual word on 0.527. Jev gets 0.987, 0.800 and 0.651. Multiplied, that's 0.37 and 0.51, close to their whole-query scores of 0.424 and 0.535 (errors are somewhat correlated, so the real score is a bit higher than the product).
   - **The word roles are the bottleneck.** A 7-word query needs 7 roles right, and the boundary between filter, category and residual words follows the dataset's labeling convention (e.g. "furniture" is residual, "with" in "with storage" belongs to the filter). The models are used as they are, never trained on that convention.
   - **So compare runs with each other, and per part,** rather than reading whole-query accuracy as "how often the parse is usable". A search engine would act on the category and filters, which are right far more often.
-- **Latency** is the p50 over the same 1,000 queries, one request at a time. tev1 4B's eval ran alongside CPU jobs: at the same question count it is ~19% slower than in a 30-query benchmark with nothing else running (`make bench`: 10.7 s), so its 13.0 s is labeled inflated. jeb's and winnow's evals overlapped too, but match their benchmarks within 1%.
+- **Latency** is the p50 over the same 1,000 queries, one request at a time, with nothing else running. tev1 4B's first eval ran alongside CPU jobs (p50 13.0 s); its re-run gave identical answers in 9.9 s, and that's what is reported. jeb's and winnow's evals overlapped CPU jobs too, but match their clean benchmarks within 1%.
 - **tev1 0.8B is the fastest local decoder (2.2 s) but far behind:** whole query 0.090, with near-uniform word roles and no residual words found.
 - **Strands Decider 2B is ~4× faster than nimble (3.9 s vs 15.6 s) but much less accurate** (whole query 0.193).
   - Its engine encodes the state once and adds only each question's suffix, so it avoids re-reading all question texts per query.
@@ -372,7 +372,7 @@ make dev BACKEND=jev && make tune BACKEND=jev && make eval BACKEND=jev
 
 ![Accuracy vs latency](docs/figures/accuracy_vs_latency.svg)
 
-*Locally, accuracy grows steadily with latency. The Pareto frontier of the local runs goes tev1 0.8B → Strands Decider → winnow → jeb → nimble embedded; tev1 4B and nimble router are dominated. The hosted Jev sits above and to the left of all of them.*
+*Locally, accuracy grows steadily with latency. The Pareto frontier of the local runs goes tev1 0.8B → Strands Decider → winnow → tev1 4B → jeb → nimble embedded; only nimble router is dominated. The hosted Jev sits above and to the left of all of them.*
 
 ![Accuracy by part](docs/figures/accuracy_by_part.svg)
 

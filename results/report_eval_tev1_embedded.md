@@ -67,9 +67,9 @@
 
 | mean | p50 | p90 | p95 | p99 | max | queries/s | ms per question | mean input tokens |
 |---|---|---|---|---|---|---|---|---|
-| 13.075s | 12.961s | 14.143s | 15.585s | 16.958s | 17.440s | 0.08 | 554.6 | 19264 |
+| 9.987s | 9.917s | 10.591s | 10.906s | 11.543s | 12.675s | 0.10 | 423.6 | 19264 |
 
-p50 latency by query length: 1-3 words: 12.660s (n=185), 4-6 words: 12.770s (n=505), 7-9 words: 13.356s (n=258), 10-12 words: 14.111s (n=47), 13-15 words: 15.259s (n=5)
+p50 latency by query length: 1-3 words: 9.616s (n=185), 4-6 words: 9.842s (n=505), 7-9 words: 10.265s (n=258), 10-12 words: 10.973s (n=47), 13-15 words: 11.541s (n=5)
 
 Truncated queries (more than the word-question budget): 0
 

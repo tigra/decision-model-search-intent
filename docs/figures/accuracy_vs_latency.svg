@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
   "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="523.707557pt" height="321.345375pt" viewBox="0 0 523.707557 321.345375" xmlns="http://www.w3.org/2000/svg" version="1.1">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="511.796484pt" height="321.345375pt" viewBox="0 0 511.796484 321.345375" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
@@ -21,8 +21,8 @@
  <g id="figure_1">
   <g id="patch_1">
    <path d="M 0 321.345375 
-L 523.707557 321.345375 
-L 523.707557 0 
+L 511.796484 321.345375 
+L 511.796484 0 
 L 0 0 
 z
 " style="fill: #ffffff"/>
@@ -317,6 +317,7 @@ L 445.703906 26.332109
     <path d="M 236.370746 233.677709 
 L 286.814021 191.802029 
 L 325.394639 170.660909 
+L 364.460986 133.663949 
 L 371.41249 121.873709 
 L 402.451945 97.886669 
 " clip-path="url(#pc145cb39bb)" style="fill: none; stroke: #c3c2b7; stroke-width: 1.2; stroke-linecap: square"/>
@@ -337,8 +338,8 @@ L 404.013538 106.259153
 " clip-path="url(#pc145cb39bb)" style="fill: none; stroke: #eb6834; stroke-width: 1.4"/>
    </g>
    <g id="LineCollection_4">
-    <path d="M 387.025838 145.291127 
-L 387.025838 121.526448 
+    <path d="M 364.460986 145.291127 
+L 364.460986 121.526448 
 " clip-path="url(#pc145cb39bb)" style="fill: none; stroke: #1baf7a; stroke-width: 1.4"/>
    </g>
    <g id="LineCollection_5">
@@ -452,11 +453,11 @@ z
 " style="stroke: #ffffff; stroke-width: 2"/>
     </defs>
     <g clip-path="url(#pc145cb39bb)">
-     <use xlink:href="#mab2448efdc" x="387.025838" y="133.663949" style="fill: #1baf7a; stroke: #ffffff; stroke-width: 2"/>
+     <use xlink:href="#mab2448efdc" x="364.460986" y="133.663949" style="fill: #1baf7a; stroke: #ffffff; stroke-width: 2"/>
     </g>
    </g>
    <g id="text_20">
-    <text style="fill: #52514e; font: 8.5px 'Helvetica', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Avant Garde', sans-serif; text-anchor: start" x="395.025838" y="129.663949" transform="rotate(-0 395.025838 129.663949)">tev1 4B (latency inflated ~19%)</text>
+    <text style="fill: #52514e; font: 8.5px 'Helvetica', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Avant Garde', sans-serif; text-anchor: start" x="372.460986" y="129.663949" transform="rotate(-0 372.460986 129.663949)">tev1 4B</text>
    </g>
    <g id="PathCollection_5">
     <defs>

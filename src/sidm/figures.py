@@ -59,10 +59,10 @@ FIG_RUNS = _best_first(EVAL_RUNS)
 FIG_DEV_RUNS = _best_first(DEV_RUNS)
 MARKER = {"ollama": "o", "ollaya": "s", "decider": "D", "mlx": "^", "jev": "P"}
 
-# Latency comes from the 1,000-query eval runs. tev1 4B's eval overlapped CPU jobs: at the same question count
-# it is ~19% slower than in a 30-query run with nothing else running (results/bench/ollama-tev1.jsonl), so it is
-# labeled. jeb and winnow overlapped too but match their clean benchmarks (within 1%).
-INFLATED = {"embedded@ollama:tev1": "inflated ~19%"}
+# Latency comes from the 1,000-query eval runs, all measured with nothing else running (tev1 4B's first eval
+# overlapped CPU jobs and was re-run on 2026-10-07: identical answers, 9.9 s instead of 13.0 s). A run whose
+# latency is known to be distorted goes here with a short note; figures then mark it.
+INFLATED = {}
 
 
 def name(run):
@@ -196,7 +196,7 @@ def fig_eval_table():
     ax.set_title("Eval results, 1,000 queries (decoding tuned per model on dev)", pad=6)
     save(fig, "eval_results.svg", "Bold: best run in the row. Shade: position between the row's worst (light) and "
                                   "best (dark) run; for latency, faster is darker. Small text: 95% Wilson interval. "
-                                  "tev1 4B's latency is inflated by CPU jobs that ran alongside it.")
+                                  "Jev's latency is a hosted API, network included.")
 
 
 # ---------------------------------------------------------------- weighted query score: pairwise tests, breakdown
@@ -395,8 +395,7 @@ def fig_accuracy_by_part():
     lat_ax.spines["left"].set_visible(False)
     save(fig, "accuracy_by_part.svg", "Lines: 95% intervals (Wilson for proportions, normal for the mean score; F1 "
                                        "has none). Weighted query score: see sidm/score.py. Decoding tuned "
-                                       "per model on dev.\nLatency: log scale, own axis; hollow = inflated by CPU jobs "
-                                       "running alongside (tev1 4B); Jev is a hosted API incl. network.")
+                                       "per model on dev.\nLatency: log scale, own axis; Jev is a hosted API incl. network.")
 
 
 # ---------------------------------------------------------------- 4. McNemar heatmaps

@@ -24,6 +24,7 @@ EVAL_RUNS = [
     "embedded@decider:strands-decider-2b",
     "embedded@jev:jev-latest",
     "embedded@openai:gpt-6-luna",
+    "embedded@kev:kev-latest",
 ]
 DEV_RUNS = [
     "embedded@ollama:nimble",
@@ -44,6 +45,7 @@ DEV_RUNS = [
     "embedded@decider:strands-decider-2b",
     "embedded@jev:jev-latest",
     "embedded@openai:gpt-6-luna",
+    "embedded@kev:kev-latest",
 ]
 PRESETS = {"eval": EVAL_RUNS, "dev": DEV_RUNS}
 SPLIT_SIZES = {"dev": 100, "eval": 1000}

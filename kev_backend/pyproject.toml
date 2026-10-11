@@ -1,0 +1,11 @@
+[project]
+name = "sidm-kev-backend"
+version = "0.1.0"
+description = "Kev (jaredpalmer/kev) served by its TypeSafe-compatible kev.serve (/v1/systemone, MLX on Apple Silicon)"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+    "kev[serve] @ git+https://github.com/jaredpalmer/kev@3e1cd3bb588a388a06827443380befece23e68c7",
+]
+
+[tool.uv]
+package = false

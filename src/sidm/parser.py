@@ -188,6 +188,7 @@ TUNED_BY_BACKEND = {
     "mlx": {},
     "ollaya": {},
     "jev": {},
+    "kev": {},
 }
 # Per-model settings found by `evaluate tune --apply` on that model's dev run, keyed "<backend>:<model>".
 # They take precedence over the backend entry above (models are calibrated very differently).

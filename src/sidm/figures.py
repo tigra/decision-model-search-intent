@@ -44,6 +44,7 @@ NAMES = {
     "embedded@ollaya:winnow:e4b": "winnow:e4b",
     "embedded@decider:strands-decider-2b": "Strands Decider 2B",
     "embedded@mlx:nimble": "nimble (MLX)",
+    "embedded@kev:kev-latest": "Kev-9B",
     "embedded@jev:jev-latest": "Jev (hosted)",
     "embedded@openai:gpt-6-luna": "OpenAI (hosted)",
 }
@@ -73,7 +74,7 @@ def _best_first(runs):
 
 FIG_RUNS = _best_first(EVAL_RUNS)
 FIG_DEV_RUNS = _best_first(DEV_RUNS)
-MARKER = {"ollama": "o", "ollaya": "s", "decider": "D", "mlx": "^", "jev": "P", "openai": "X"}
+MARKER = {"ollama": "o", "ollaya": "s", "decider": "D", "mlx": "^", "jev": "P", "openai": "X", "kev": "v"}
 
 # Latency comes from the 1,000-query eval runs, all measured with nothing else running (tev1 4B's first eval
 # overlapped CPU jobs and was re-run on 2026-10-07: identical answers, 9.9 s instead of 13.0 s). A run whose
@@ -341,6 +342,7 @@ def _latency_scatter(value, ylabel, title, filename, note, ylim):
     ax.set_title(title)
     handles = [plt.Line2D([], [], marker=MARKER[b], linestyle="", color=MUTED, markersize=7, label=lbl)
                for b, lbl in (("ollama", "Ollama"), ("ollaya", "Ollaya"), ("decider", "Strands Decider server"),
+                              ("kev", "Kev server (kev.serve, MLX)"),
                               ("jev", "TypeSafe API (hosted, incl. network)"),
                               ("openai", "OpenAI API (hosted, incl. network)"))
                if any(split_run(r)[1] == b for r in EVAL_RUNS)]

@@ -102,6 +102,14 @@ def main():
     _line(OK if up else BAD, "server running" if up else "server not running",
           None if up else "make decider-serve   (first start downloads ~4 GB)")
 
+    print("\nKev (backend `kev`, %s)" % BACKENDS["kev"].url)
+    if not Path("kev_backend/.venv").exists():
+        _line(BAD, "environment not set up", "make kev-setup")
+    kup = _get(BACKENDS["kev"].url + "/v1/models") is not None
+    state["kev"] = kup
+    _line(OK if kup else BAD, "server running" if kup else "server not running",
+          None if kup else "make kev-serve   (first start downloads ~18 GB)")
+
     print("\nJev (backend `jev`, %s)" % BACKENDS["jev"].url)
     key = os.environ.get("TYPESAFE_API_KEY")
     state["jev"] = bool(key)
@@ -137,6 +145,8 @@ def main():
             fix = None if avail else ("make mlx-serve" if configs else "make mlx-convert, then make mlx-serve")
         elif backend == "decider":
             avail, fix = state["decider"], None if state["decider"] else "make decider-serve"
+        elif backend == "kev":
+            avail, fix = state["kev"], None if state["kev"] else "make kev-serve"
         elif backend == "jev":
             avail, fix = state["jev"], None if state["jev"] else "put TYPESAFE_API_KEY=<key> in .env"
         elif backend == "openai":

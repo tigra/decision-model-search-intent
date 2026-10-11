@@ -5,6 +5,7 @@
   mlx:    nimble's MLX ParallelScorer via mlx_backend/server.py
   ollaya: Ollaya's local server (encoder classifiers and decoders; scripts/ollaya_serve.sh)
   decider: AWS Strands Labs' Strands Decider server (decider_backend/serve.sh)
+  kev:    Kev's own TypeSafe-compatible kev.serve (jaredpalmer/kev, MLX; kev_backend/serve.sh)
   jev:    TypeSafe's hosted Jev API (needs TYPESAFE_API_KEY)
   openai: OpenAI's hosted Decisions API, POST /v1/decisions (needs OPENAI_API_KEY); a different request and
           response shape, converted to and from the /v1/systemone one here (to_decisions / from_decisions)
@@ -103,6 +104,8 @@ BACKENDS = {
     "ollaya": Backend(os.environ.get("SIDM_OLLAYA_URL", "http://localhost:11435"), "jeb:4b"),
     # serves one checkpoint (StrandsAgents/strands-decider-2B-hobson-v19); the model field is a label
     "decider": Backend(os.environ.get("SIDM_DECIDER_URL", "http://localhost:11600"), "strands-decider-2b"),
+    # serves one checkpoint (jaredpalmer/kev-9b by default); the model field is a label kev.serve accepts
+    "kev": Backend(os.environ.get("SIDM_KEV_URL", "http://localhost:11700"), "kev-latest"),
     # jev-latest moves with releases; the versioned model that answered is recorded from the response.
     "jev": Backend(os.environ.get("TYPESAFE_BASE_URL", "https://api.typesafe.ai"),
                    os.environ.get("TYPESAFE_DEFAULT_MODEL", "jev-latest"), api_key_env="TYPESAFE_API_KEY",
@@ -150,6 +153,7 @@ START_FIX = {
     "mlx": "make mlx-serve   (first time: make mlx-convert)",
     "ollaya": "make ollaya-serve",
     "decider": "make decider-serve   (first time: make decider-setup)",
+    "kev": "make kev-serve   (first time: make kev-setup)",
     "jev": "check the network connection and TYPESAFE_BASE_URL",
     "openai": "check the network connection and OPENAI_BASE_URL",
 }
@@ -158,6 +162,7 @@ PULL_FIX = {
     "ollaya": "make ollaya-pull MODEL=%s",
     "mlx": "make mlx-convert   (the MLX server serves one converted nimble model)",
     "decider": "make decider-serve   (it serves one checkpoint; weights download on first start)",
+    "kev": "kev.serve accepts kev-latest or jev-latest",
     "jev": "check the model name (e.g. jev-latest, jev-1.13.0)",
     "openai": "the Decisions API serves gpt-6-luna only",
 }

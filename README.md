@@ -324,6 +324,17 @@ make parse BACKEND=decider
 - **Options:** our 24-option questions are accepted.
 - **Window:** the server runs with `--strict-window`, so a prompt longer than its window is refused rather than silently cut. Our requests fit.
 
+### Kev (jaredpalmer/kev)
+Jared Palmer's open, Jev-compatible decision model (LoRA + pointer head on Qwen3.5-9B-Base). On Ollaya it is CPU-only and too slow here; this backend runs it on MLX through Kev's own TypeSafe-compatible server, `kev.serve`, in its own environment, `kev_backend/`, installed from its GitHub repo at a pinned commit.
+```bash
+make kev-setup          # once: uv sync of kev_backend/
+make kev-serve          # unloads Ollama/Ollaya; first start downloads ~18 GB (bf16) into ~/sidm-models/hf-home
+make parse BACKEND=kev
+```
+- **Window:** Kev is trained on requests up to 2,048 tokens. Ours are 3,032–3,458 Kev tokens, so every query runs outside its training envelope.
+- **Low memory:** if the Mac swaps with the 9B model loaded, `make kev-serve LOWMEM=1` runs `kev_backend/serve_lowmem.py`: one question row per forward pass (rows are independent, answers don't change), a 256 MB MLX buffer cache, no state-prefix cache. On an M3 Pro 36 GB it cut p50 from 47 s to 12 s per query.
+- `KEV_RUN=jaredpalmer/kev-4b` serves the 4B checkpoint instead.
+
 ### Jev (TypeSafe hosted)
 Needs an API key. Put it in `.env` at the repo root, which git ignores and every `sidm` command reads:
 ```bash
@@ -758,6 +769,7 @@ This is read from the log. The prompt format is confirmed by nimble's source.
 | `embedded@ollama:tev1` | 4.5 GB | ~3 h |
 | `embedded@ollama:tev1:0.8b` | 0.8 GB | ~40 min |
 | `embedded@decider:strands-decider-2b` | 4.3 GB (downloaded on first `make decider-serve`) | ~1.1 h |
+| `embedded@kev:kev-latest` | ~18 GB (downloaded on first `make kev-serve`) | not measured on M3 Max (~3.2 h on an M3 Pro 36 GB with `LOWMEM=1`) |
 | `embedded@ollaya:jeb:4b` | 4.5 GB | ~3 h |
 | `embedded@ollaya:winnow:e4b` | 8 GB | ~1.7 h |
 | Ollaya CPU models (dev only) | 0.8–3.6 GB | 20–47 s per query |

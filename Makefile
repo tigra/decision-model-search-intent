@@ -30,10 +30,10 @@ PRED           = $(shell $(PY) -c "from sidm.evaluate import pred_path; print(pr
 LIMIT_ARG      = $(if $(LIMIT),--limit $(LIMIT))
 
 .PHONY: help doctor runs setup schema parse data preview run dev eval tune report bench sweep independence results mcnemar figures example-doc \
-        ollama-pull ollama-rm ollama-unload mlx-convert mlx-serve mlx-stop ollaya-serve ollaya-pull ollaya-rm ollaya-stop decider-setup decider-serve decider-stop status
+        ollama-pull ollama-rm ollama-unload mlx-convert mlx-serve mlx-stop ollaya-serve ollaya-pull ollaya-rm ollaya-stop decider-setup decider-serve decider-stop kev-setup kev-serve kev-stop status
 
 help: ## List targets and variables
-	@echo "Usage: make <target> [BACKEND=ollama|mlx|ollaya|decider|jev] [MODEL=...] [SCHEME=embedded|router] [SPLIT=dev|eval] [LIMIT=N] [OVERWRITE=1] [Q=\"query\"]"
+	@echo "Usage: make <target> [BACKEND=ollama|mlx|ollaya|decider|kev|jev|openai] [MODEL=...] [SCHEME=embedded|router] [SPLIT=dev|eval] [LIMIT=N] [OVERWRITE=1] [Q=\"query\"]"
 	@echo "New here? Start with: make doctor, make runs; shipped results: results/results_eval.md, results/mcnemar_eval.txt"
 	@awk 'BEGIN {FS = ":.*?## "} /^##@/ {printf "\n%s\n", substr($$0, 5)} /^[a-z0-9-]+:.*?## / {printf "  %-14s %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
@@ -147,9 +147,19 @@ decider-serve: ## Serve Strands Decider on :11600 (foreground; unloads Ollama/Ol
 decider-stop: ## Stop the Strands Decider server
 	-pkill -f "strands-decider serve"
 
+kev-setup: ## Create the Kev environment (kev_backend/, MLX)
+	cd kev_backend && uv sync
+
+kev-serve: ## Serve Kev-9B on :11700 (foreground; unloads Ollama/Ollaya; LOWMEM=1 if it swaps, KEV_RUN=jaredpalmer/kev-4b)
+	kev_backend/serve.sh
+
+kev-stop: ## Stop the Kev server
+	-pkill -f "kev.serve|kev_backend/serve_lowmem.py"
+
 status: ## Show which models are loaded where, and free disk
 	@echo "== Ollama";  ollama ps 2>/dev/null || echo "not running"
 	@echo "== Ollaya";  $(OLLAYA_ENV) $(OLLAYA) ps 2>/dev/null || echo "not running"
 	@echo "== MLX";     curl -s -m 2 localhost:11500/health || echo "not running"; echo
 	@echo "== Strands Decider"; curl -s -m 2 -o /dev/null -w "running (HTTP %{http_code})\n" localhost:11600/docs || echo "not running"
+	@echo "== Kev"; curl -s -m 2 -o /dev/null -w "running (HTTP %{http_code})\n" localhost:11700/v1/models || echo "not running"
 	@echo "== Disk";    df -h ~ | tail -1

@@ -856,10 +856,10 @@
      ]
     },
     "weighted_score": {
-     "mean": 0.8891071475646174,
+     "mean": 0.8891071475646175,
      "ci95": [
-      0.8608847438481076,
-      0.9173295512811271
+      0.8608847438481078,
+      0.9173295512811273
      ],
      "n": 100,
      "parts": {
@@ -1572,9 +1572,9 @@
      "p99_s": 2.858442500989974,
      "min_s": 1.969671250999987,
      "max_s": 2.9544106249999516,
-     "queries_per_s": 0.4363009307198133,
+     "queries_per_s": 0.43630093071981335,
      "mean_questions": 23.72,
-     "ms_per_question": 96.62715124325446,
+     "ms_per_question": 96.62715124325445,
      "mean_input_tokens": 25331.8,
      "truncated_queries": 0
     }
@@ -2051,10 +2051,10 @@
      ]
     },
     "weighted_score": {
-     "mean": 0.830015613252355,
+     "mean": 0.8300156132523551,
      "ci95": [
       0.7996704450594949,
-      0.860360781445215
+      0.8603607814452152
      ],
      "n": 100,
      "parts": {
@@ -2169,9 +2169,9 @@
      "p99_s": 6.842707149579973,
      "min_s": 5.990620749999948,
      "max_s": 6.918370332999984,
-     "queries_per_s": 0.15617434913503014,
+     "queries_per_s": 0.15617434913503012,
      "mean_questions": 23.72,
-     "ms_per_question": 269.9452006922426,
+     "ms_per_question": 269.9452006922427,
      "mean_input_tokens": 9142.84,
      "truncated_queries": 0
     }
@@ -2754,9 +2754,9 @@
      "p99_s": 42.872375699580026,
      "min_s": 27.01075412499995,
      "max_s": 43.296635208,
-     "queries_per_s": 0.028745593542924344,
+     "queries_per_s": 0.02874559354292434,
      "mean_questions": 23.72,
-     "ms_per_question": 1466.6079500944345,
+     "ms_per_question": 1466.6079500944347,
      "mean_input_tokens": 10461.68,
      "truncated_queries": 0
     }
@@ -3045,7 +3045,7 @@
      "p99_s": 53.61429388509008,
      "min_s": 25.19124479200002,
      "max_s": 55.980448541999976,
-     "queries_per_s": 0.030260836413685474,
+     "queries_per_s": 0.03026083641368547,
      "mean_questions": 23.72,
      "ms_per_question": 1393.1708774966276,
      "mean_input_tokens": 7325.39,
@@ -3912,9 +3912,9 @@
      "p99_s": 17.034227430089928,
      "min_s": 11.143836083000053,
      "max_s": 17.317612166999993,
-     "queries_per_s": 0.07607722552917036,
+     "queries_per_s": 0.07607722552917037,
      "mean_questions": 23.72,
-     "ms_per_question": 554.1542258802697,
+     "ms_per_question": 554.1542258802696,
      "mean_input_tokens": 6288.42,
      "truncated_queries": 0
     }
@@ -4500,9 +4500,9 @@
      "p99_s": 4.593918674249968,
      "min_s": 3.196642582999999,
      "max_s": 4.729000832999986,
-     "queries_per_s": 0.25618385023764956,
+     "queries_per_s": 0.2561838502376495,
      "mean_questions": 23.72,
-     "ms_per_question": 164.5635194456155,
+     "ms_per_question": 164.56351944561553,
      "mean_input_tokens": 4043.74,
      "truncated_queries": 0
     }
@@ -4800,9 +4800,9 @@
      "p99_s": 0.5074913353299997,
      "min_s": 0.2977700419999998,
      "max_s": 0.5846042499999999,
-     "queries_per_s": 2.8661275421717614,
+     "queries_per_s": 2.866127542171762,
      "mean_questions": 23.72,
-     "ms_per_question": 14.709225392074199,
+     "ms_per_question": 14.709225392074197,
      "mean_input_tokens": 5309.96,
      "truncated_queries": 0
     }
@@ -5106,6 +5106,306 @@
      "truncated_queries": 0
     }
    }
+  },
+  {
+   "run": "embedded@kev:kev-latest",
+   "scheme": "embedded",
+   "backend": "kev",
+   "model": "kev-latest",
+   "served_models": [
+    "kev-latest"
+   ],
+   "backend_info": "Kev-9B (`jaredpalmer/kev-9b`, LoRA + pointer head on Qwen3.5-9B-Base, MLX bf16) via `kev.serve` on 127.0.0.1:8009; measured on a MacBook Pro M3 Pro 36 GB",
+   "decoding": {
+    "none_thr": 0.7,
+    "filter_min_prob": 0.7,
+    "word_weights": {
+     "category": 4,
+     "filter": 1.0,
+     "residual": 1.0
+    }
+   },
+   "metrics": {
+    "category_exact": {
+     "value": 0.84,
+     "correct": 84,
+     "counted": 100,
+     "ci95": [
+      0.7557955544110557,
+      0.8990479765052628
+     ]
+    },
+    "category_level": {
+     "L1": {
+      "value": 0.968421052631579,
+      "correct": 92,
+      "counted": 95,
+      "ci95": [
+       0.9112275317602905,
+       0.9892030561702976
+      ]
+     },
+     "L2": {
+      "value": 0.9545454545454546,
+      "correct": 84,
+      "counted": 88,
+      "ci95": [
+       0.888880924960137,
+       0.9821840390648802
+      ]
+     },
+     "L3": {
+      "value": 0.8181818181818182,
+      "correct": 45,
+      "counted": 55,
+      "ci95": [
+       0.6966928866143076,
+       0.898124385519693
+      ]
+     }
+    },
+    "no_category": {
+     "precision": {
+      "value": 1.0,
+      "correct": 4,
+      "counted": 4,
+      "ci95": [
+       0.5100999795960008,
+       1.0
+      ]
+     },
+     "recall": {
+      "value": 0.8,
+      "correct": 4,
+      "counted": 5,
+      "ci95": [
+       0.3755282641185388,
+       0.9637768390302125
+      ]
+     },
+     "f1": 0.888888888888889,
+     "counts": {
+      "tp": 4,
+      "fp": 0,
+      "fn": 1
+     }
+    },
+    "filters_micro": {
+     "precision": {
+      "value": 0.9111111111111111,
+      "correct": 123,
+      "counted": 135,
+      "ci95": [
+       0.8510510589063756,
+       0.9484211453897433
+      ]
+     },
+     "recall": {
+      "value": 0.8145695364238411,
+      "correct": 123,
+      "counted": 151,
+      "ci95": [
+       0.7450533501325145,
+       0.8684768639701557
+      ]
+     },
+     "f1": 0.8601398601398601,
+     "counts": {
+      "tp": 123,
+      "fp": 12,
+      "fn": 28
+     }
+    },
+    "filter_set_exact": {
+     "value": 0.69,
+     "correct": 69,
+     "counted": 100,
+     "ci95": [
+      0.5937376052204429,
+      0.7722043679386762
+     ]
+    },
+    "word_role_accuracy": {
+     "value": 0.5926573426573427,
+     "correct": 339,
+     "counted": 572,
+     "ci95": [
+      0.5519028523561812,
+      0.6321755469814144
+     ]
+    },
+    "word_role_confusion": {
+     "category->category": 173,
+     "category->filter": 3,
+     "category->residual": 12,
+     "filter->category": 172,
+     "filter->filter": 67,
+     "filter->residual": 15,
+     "residual->category": 23,
+     "residual->filter": 8,
+     "residual->residual": 99
+    },
+    "residual_words": {
+     "precision": {
+      "value": 0.7857142857142857,
+      "correct": 99,
+      "counted": 126,
+      "ci95": [
+       0.7061770574215046,
+       0.8483447599313315
+      ]
+     },
+     "recall": {
+      "value": 0.7615384615384615,
+      "correct": 99,
+      "counted": 130,
+      "ci95": [
+       0.6814459983091364,
+       0.8266172645329096
+      ]
+     },
+     "f1": 0.7734375000000001,
+     "counts": {
+      "tp": 99,
+      "fp": 27,
+      "fn": 31
+     }
+    },
+    "whole_query_exact": {
+     "value": 0.37,
+     "correct": 37,
+     "counted": 100,
+     "ci95": [
+      0.28182212569509163,
+      0.46779652424866885
+     ]
+    },
+    "weighted_score": {
+     "mean": 0.8287479576203054,
+     "ci95": [
+      0.7929645557271211,
+      0.8645313595134897
+     ],
+     "n": 100,
+     "parts": {
+      "category": {
+       "mean": 0.9116666666666666,
+       "present_in": 100
+      },
+      "filters": {
+       "mean": 0.8254128587461921,
+       "present_in": 90
+      },
+      "residual": {
+       "mean": 0.6110709247983404,
+       "present_in": 67
+      },
+      "other_roles": {
+       "mean": 0.5818928571428571,
+       "present_in": 100
+      }
+     },
+     "weights": {
+      "category": 0.45,
+      "filters": 0.3,
+      "residual": 0.17,
+      "other_roles": 0.08
+     },
+     "beta": {
+      "filters": 0.5,
+      "residual": 2.0
+     }
+    },
+    "per_attribute_filters": {
+     "color": {
+      "P": 0.8,
+      "R": 0.8571428571428571,
+      "F1": 0.8275862068965518,
+      "support": 14
+     },
+     "leg_color": {
+      "P": 0.8636363636363636,
+      "R": 0.9047619047619048,
+      "F1": 0.8837209302325582,
+      "support": 21
+     },
+     "width": {
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "support": 5
+     },
+     "material": {
+      "P": 0.75,
+      "R": 0.46153846153846156,
+      "F1": 0.5714285714285714,
+      "support": 13
+     },
+     "leg_material": {
+      "P": 0.5,
+      "R": 0.4444444444444444,
+      "F1": 0.47058823529411764,
+      "support": 9
+     },
+     "bed_size": {
+      "P": 1.0,
+      "R": 0.8,
+      "F1": 0.888888888888889,
+      "support": 10
+     },
+     "firmness": {
+      "P": 1.0,
+      "R": 0.75,
+      "F1": 0.8571428571428571,
+      "support": 4
+     },
+     "feature": {
+      "P": 1.0,
+      "R": 0.96,
+      "F1": 0.9795918367346939,
+      "support": 25
+     },
+     "style": {
+      "P": 1.0,
+      "R": 0.9444444444444444,
+      "F1": 0.9714285714285714,
+      "support": 18
+     },
+     "shape": {
+      "P": 1.0,
+      "R": 0.9,
+      "F1": 0.9473684210526316,
+      "support": 10
+     },
+     "room": {
+      "P": 1.0,
+      "R": 0.7142857142857143,
+      "F1": 0.8333333333333333,
+      "support": 21
+     },
+     "seat_count": {
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "support": 1
+     }
+    },
+    "latency": {
+     "n": 100,
+     "mean_s": 13.705926638330203,
+     "p50_s": 11.696696125000017,
+     "p90_s": 13.34572300359887,
+     "p95_s": 15.95858516220082,
+     "p99_s": 56.82330390401397,
+     "min_s": 10.438932875000319,
+     "max_s": 73.73887158298749,
+     "queries_per_s": 0.07296113764416226,
+     "mean_questions": 23.72,
+     "ms_per_question": 577.8215277542243,
+     "mean_input_tokens": 3167.49,
+     "truncated_queries": 0
+    }
+   }
   }
  ],
  "paired_mcnemar": [
@@ -5366,6 +5666,22 @@
    "p_value": 0.013530986849218607
   },
   {
+   "reference": "embedded@ollama:nimble",
+   "run": "embedded@kev:kev-latest",
+   "metric": "category",
+   "correct_only_reference": 12,
+   "correct_only_run": 5,
+   "p_value": 0.143463134765625
+  },
+  {
+   "reference": "embedded@ollama:nimble",
+   "run": "embedded@kev:kev-latest",
+   "metric": "full",
+   "correct_only_reference": 16,
+   "correct_only_run": 9,
+   "p_value": 0.2295229434967041
+  },
+  {
    "reference": "router@ollama:nimble",
    "run": "embedded@mlx:nimble",
    "metric": "category",
@@ -5606,6 +5922,22 @@
    "p_value": 0.0001821658297558315
   },
   {
+   "reference": "router@ollama:nimble",
+   "run": "embedded@kev:kev-latest",
+   "metric": "category",
+   "correct_only_reference": 12,
+   "correct_only_run": 11,
+   "p_value": 1.0
+  },
+  {
+   "reference": "router@ollama:nimble",
+   "run": "embedded@kev:kev-latest",
+   "metric": "full",
+   "correct_only_reference": 12,
+   "correct_only_run": 14,
+   "p_value": 0.8450189828872681
+  },
+  {
    "reference": "embedded@mlx:nimble",
    "run": "embedded@ollama:tev1",
    "metric": "category",
@@ -5830,6 +6162,22 @@
    "p_value": 0.011330984183587134
   },
   {
+   "reference": "embedded@mlx:nimble",
+   "run": "embedded@kev:kev-latest",
+   "metric": "category",
+   "correct_only_reference": 13,
+   "correct_only_run": 5,
+   "p_value": 0.09625244140625
+  },
+  {
+   "reference": "embedded@mlx:nimble",
+   "run": "embedded@kev:kev-latest",
+   "metric": "full",
+   "correct_only_reference": 17,
+   "correct_only_run": 11,
+   "p_value": 0.34492845088243484
+  },
+  {
    "reference": "embedded@ollama:tev1",
    "run": "embedded@ollama:tev1:0.8b",
    "metric": "category",
@@ -6038,6 +6386,22 @@
    "p_value": 0.0059881205670535564
   },
   {
+   "reference": "embedded@ollama:tev1",
+   "run": "embedded@kev:kev-latest",
+   "metric": "category",
+   "correct_only_reference": 14,
+   "correct_only_run": 7,
+   "p_value": 0.18924713134765625
+  },
+  {
+   "reference": "embedded@ollama:tev1",
+   "run": "embedded@kev:kev-latest",
+   "metric": "full",
+   "correct_only_reference": 17,
+   "correct_only_run": 12,
+   "p_value": 0.45825831964612007
+  },
+  {
    "reference": "embedded@ollama:tev1:0.8b",
    "run": "embedded@ollaya:jeb:4b",
    "metric": "category",
@@ -6230,6 +6594,22 @@
    "p_value": 3.552713678800501e-15
   },
   {
+   "reference": "embedded@ollama:tev1:0.8b",
+   "run": "embedded@kev:kev-latest",
+   "metric": "category",
+   "correct_only_reference": 11,
+   "correct_only_run": 20,
+   "p_value": 0.14961278438568115
+  },
+  {
+   "reference": "embedded@ollama:tev1:0.8b",
+   "run": "embedded@kev:kev-latest",
+   "metric": "full",
+   "correct_only_reference": 3,
+   "correct_only_run": 30,
+   "p_value": 1.4011748135089874e-06
+  },
+  {
    "reference": "embedded@ollaya:jeb:4b",
    "run": "embedded@ollaya:winnow:e4b",
    "metric": "category",
@@ -6406,6 +6786,22 @@
    "p_value": 0.00019512558355927467
   },
   {
+   "reference": "embedded@ollaya:jeb:4b",
+   "run": "embedded@kev:kev-latest",
+   "metric": "category",
+   "correct_only_reference": 13,
+   "correct_only_run": 7,
+   "p_value": 0.26317596435546875
+  },
+  {
+   "reference": "embedded@ollaya:jeb:4b",
+   "run": "embedded@kev:kev-latest",
+   "metric": "full",
+   "correct_only_reference": 12,
+   "correct_only_run": 12,
+   "p_value": 1.0
+  },
+  {
    "reference": "embedded@ollaya:winnow:e4b",
    "run": "embedded@ollaya:decider:2b",
    "metric": "category",
@@ -6566,6 +6962,22 @@
    "p_value": 1.862645149230957e-09
   },
   {
+   "reference": "embedded@ollaya:winnow:e4b",
+   "run": "embedded@kev:kev-latest",
+   "metric": "category",
+   "correct_only_reference": 13,
+   "correct_only_run": 1,
+   "p_value": 0.0018310546875
+  },
+  {
+   "reference": "embedded@ollaya:winnow:e4b",
+   "run": "embedded@kev:kev-latest",
+   "metric": "full",
+   "correct_only_reference": 11,
+   "correct_only_run": 19,
+   "p_value": 0.20048842206597328
+  },
+  {
    "reference": "embedded@ollaya:decider:2b",
    "run": "embedded@ollaya:decision:eos",
    "metric": "category",
@@ -6710,6 +7122,22 @@
    "p_value": 1.0479197953827679e-08
   },
   {
+   "reference": "embedded@ollaya:decider:2b",
+   "run": "embedded@kev:kev-latest",
+   "metric": "category",
+   "correct_only_reference": 11,
+   "correct_only_run": 13,
+   "p_value": 0.8388197422027588
+  },
+  {
+   "reference": "embedded@ollaya:decider:2b",
+   "run": "embedded@kev:kev-latest",
+   "metric": "full",
+   "correct_only_reference": 10,
+   "correct_only_run": 23,
+   "p_value": 0.03508203336969018
+  },
+  {
    "reference": "embedded@ollaya:decision:eos",
    "run": "embedded@ollaya:kev:0.8b",
    "metric": "category",
@@ -6838,6 +7266,22 @@
    "p_value": 7.105427357601002e-15
   },
   {
+   "reference": "embedded@ollaya:decision:eos",
+   "run": "embedded@kev:kev-latest",
+   "metric": "category",
+   "correct_only_reference": 7,
+   "correct_only_run": 15,
+   "p_value": 0.13380050659179688
+  },
+  {
+   "reference": "embedded@ollaya:decision:eos",
+   "run": "embedded@kev:kev-latest",
+   "metric": "full",
+   "correct_only_reference": 6,
+   "correct_only_run": 32,
+   "p_value": 2.4342560209333897e-05
+  },
+  {
    "reference": "embedded@ollaya:kev:0.8b",
    "run": "embedded@ollaya:laya:en",
    "metric": "category",
@@ -6950,6 +7394,22 @@
    "p_value": 7.105427357601002e-15
   },
   {
+   "reference": "embedded@ollaya:kev:0.8b",
+   "run": "embedded@kev:kev-latest",
+   "metric": "category",
+   "correct_only_reference": 10,
+   "correct_only_run": 18,
+   "p_value": 0.1849333420395851
+  },
+  {
+   "reference": "embedded@ollaya:kev:0.8b",
+   "run": "embedded@kev:kev-latest",
+   "metric": "full",
+   "correct_only_reference": 3,
+   "correct_only_run": 29,
+   "p_value": 2.5560148060321808e-06
+  },
+  {
    "reference": "embedded@ollaya:laya:en",
    "run": "embedded@ollaya:laya:typed-decisions",
    "metric": "category",
@@ -7046,6 +7506,22 @@
    "p_value": 3.552713678800501e-15
   },
   {
+   "reference": "embedded@ollaya:laya:en",
+   "run": "embedded@kev:kev-latest",
+   "metric": "category",
+   "correct_only_reference": 11,
+   "correct_only_run": 19,
+   "p_value": 0.20048842206597328
+  },
+  {
+   "reference": "embedded@ollaya:laya:en",
+   "run": "embedded@kev:kev-latest",
+   "metric": "full",
+   "correct_only_reference": 5,
+   "correct_only_run": 32,
+   "p_value": 7.427530363202095e-06
+  },
+  {
    "reference": "embedded@ollaya:laya:typed-decisions",
    "run": "embedded@ollaya:von",
    "metric": "category",
@@ -7126,6 +7602,22 @@
    "p_value": 2.220446049250313e-16
   },
   {
+   "reference": "embedded@ollaya:laya:typed-decisions",
+   "run": "embedded@kev:kev-latest",
+   "metric": "category",
+   "correct_only_reference": 9,
+   "correct_only_run": 20,
+   "p_value": 0.06142834573984146
+  },
+  {
+   "reference": "embedded@ollaya:laya:typed-decisions",
+   "run": "embedded@kev:kev-latest",
+   "metric": "full",
+   "correct_only_reference": 1,
+   "correct_only_run": 32,
+   "p_value": 7.916241884231567e-09
+  },
+  {
    "reference": "embedded@ollaya:von",
    "run": "embedded@ollaya:nli:modernbert-large",
    "metric": "category",
@@ -7190,6 +7682,22 @@
    "p_value": 2.220446049250313e-16
   },
   {
+   "reference": "embedded@ollaya:von",
+   "run": "embedded@kev:kev-latest",
+   "metric": "category",
+   "correct_only_reference": 10,
+   "correct_only_run": 39,
+   "p_value": 3.845911694355664e-05
+  },
+  {
+   "reference": "embedded@ollaya:von",
+   "run": "embedded@kev:kev-latest",
+   "metric": "full",
+   "correct_only_reference": 2,
+   "correct_only_run": 33,
+   "p_value": 3.6729034036397934e-08
+  },
+  {
    "reference": "embedded@ollaya:nli:modernbert-large",
    "run": "embedded@decider:strands-decider-2b",
    "metric": "category",
@@ -7238,6 +7746,22 @@
    "p_value": 5.551115123125783e-17
   },
   {
+   "reference": "embedded@ollaya:nli:modernbert-large",
+   "run": "embedded@kev:kev-latest",
+   "metric": "category",
+   "correct_only_reference": 9,
+   "correct_only_run": 39,
+   "p_value": 1.5221826110689562e-05
+  },
+  {
+   "reference": "embedded@ollaya:nli:modernbert-large",
+   "run": "embedded@kev:kev-latest",
+   "metric": "full",
+   "correct_only_reference": 1,
+   "correct_only_run": 34,
+   "p_value": 2.0954757928848267e-09
+  },
+  {
    "reference": "embedded@decider:strands-decider-2b",
    "run": "embedded@jev:jev-latest",
    "metric": "category",
@@ -7270,6 +7794,22 @@
    "p_value": 3.0213413992896676e-09
   },
   {
+   "reference": "embedded@decider:strands-decider-2b",
+   "run": "embedded@kev:kev-latest",
+   "metric": "category",
+   "correct_only_reference": 9,
+   "correct_only_run": 17,
+   "p_value": 0.16863754391670227
+  },
+  {
+   "reference": "embedded@decider:strands-decider-2b",
+   "run": "embedded@kev:kev-latest",
+   "metric": "full",
+   "correct_only_reference": 9,
+   "correct_only_run": 24,
+   "p_value": 0.013530986849218607
+  },
+  {
    "reference": "embedded@jev:jev-latest",
    "run": "embedded@openai:gpt-6-luna",
    "metric": "category",
@@ -7284,6 +7824,38 @@
    "correct_only_reference": 8,
    "correct_only_run": 10,
    "p_value": 0.8145294189453125
+  },
+  {
+   "reference": "embedded@jev:jev-latest",
+   "run": "embedded@kev:kev-latest",
+   "metric": "category",
+   "correct_only_reference": 13,
+   "correct_only_run": 0,
+   "p_value": 0.000244140625
+  },
+  {
+   "reference": "embedded@jev:jev-latest",
+   "run": "embedded@kev:kev-latest",
+   "metric": "full",
+   "correct_only_reference": 25,
+   "correct_only_run": 5,
+   "p_value": 0.00032491423189640045
+  },
+  {
+   "reference": "embedded@openai:gpt-6-luna",
+   "run": "embedded@kev:kev-latest",
+   "metric": "category",
+   "correct_only_reference": 15,
+   "correct_only_run": 0,
+   "p_value": 6.103515625e-05
+  },
+  {
+   "reference": "embedded@openai:gpt-6-luna",
+   "run": "embedded@kev:kev-latest",
+   "metric": "full",
+   "correct_only_reference": 30,
+   "correct_only_run": 8,
+   "p_value": 0.0004719867429230362
   }
  ],
  "paired_score_tests": [
@@ -7291,448 +7863,476 @@
    "reference": "embedded@ollama:nimble",
    "run": "router@ollama:nimble",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.04861362756957817,
+   "mean_diff_reference_minus_run": 0.04861362756957746,
    "p_value": 0.010498950104989501
   },
   {
    "reference": "embedded@ollama:nimble",
    "run": "embedded@mlx:nimble",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.006191602059038815,
+   "mean_diff_reference_minus_run": -0.006191602059038956,
    "p_value": 0.5641435856414359
   },
   {
    "reference": "embedded@ollama:nimble",
    "run": "embedded@ollama:tev1",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.04187342067650178,
-   "p_value": 0.04195663048756303
+   "mean_diff_reference_minus_run": 0.04187342067650164,
+   "p_value": 0.041956630487563
   },
   {
    "reference": "embedded@ollama:nimble",
    "run": "embedded@ollama:tev1:0.8b",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.2520885281360928,
-   "p_value": 6.671785677634385e-12
+   "mean_diff_reference_minus_run": 0.25208852813609234,
+   "p_value": 6.671785677634267e-12
   },
   {
    "reference": "embedded@ollama:nimble",
    "run": "embedded@ollaya:jeb:4b",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.0352981228238076,
-   "p_value": 0.022202219599203037
+   "mean_diff_reference_minus_run": 0.035298122823807315,
+   "p_value": 0.022202219599202946
   },
   {
    "reference": "embedded@ollama:nimble",
    "run": "embedded@ollaya:winnow:e4b",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.052899932253223626,
-   "p_value": 0.00517380198647278
+   "mean_diff_reference_minus_run": 0.05289993225322348,
+   "p_value": 0.005173801986472795
   },
   {
    "reference": "embedded@ollama:nimble",
    "run": "embedded@ollaya:decider:2b",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.12137838909464534,
-   "p_value": 9.139823382071143e-07
+   "mean_diff_reference_minus_run": 0.12137838909464492,
+   "p_value": 9.139823382071114e-07
   },
   {
    "reference": "embedded@ollama:nimble",
    "run": "embedded@ollaya:decision:eos",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.2652101992360769,
-   "p_value": 1.2064881956873552e-11
+   "mean_diff_reference_minus_run": 0.2652101992360767,
+   "p_value": 1.206488195687387e-11
   },
   {
    "reference": "embedded@ollama:nimble",
    "run": "embedded@ollaya:kev:0.8b",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.26517252739479963,
+   "mean_diff_reference_minus_run": 0.2651725273947993,
    "p_value": 1.117668607953486e-12
   },
   {
    "reference": "embedded@ollama:nimble",
    "run": "embedded@ollaya:laya:en",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.30737573671065066,
-   "p_value": 9.904452870208654e-14
+   "mean_diff_reference_minus_run": 0.3073757367106504,
+   "p_value": 9.904452870208937e-14
   },
   {
    "reference": "embedded@ollama:nimble",
    "run": "embedded@ollaya:laya:typed-decisions",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.41444635828048804,
+   "mean_diff_reference_minus_run": 0.4144463582804876,
    "p_value": 4.184513006761674e-17
   },
   {
    "reference": "embedded@ollama:nimble",
    "run": "embedded@ollaya:von",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.4797845411592141,
-   "p_value": 4.676998287266011e-17
+   "mean_diff_reference_minus_run": 0.4797845411592138,
+   "p_value": 4.67699828726606e-17
   },
   {
    "reference": "embedded@ollama:nimble",
    "run": "embedded@ollaya:nli:modernbert-large",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.4875384962629874,
-   "p_value": 5.186936392798802e-17
+   "mean_diff_reference_minus_run": 0.4875384962629871,
+   "p_value": 5.186936392799023e-17
   },
   {
    "reference": "embedded@ollama:nimble",
    "run": "embedded@decider:strands-decider-2b",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.1569499107161829,
-   "p_value": 7.742565764398189e-07
+   "mean_diff_reference_minus_run": 0.1569499107161826,
+   "p_value": 7.742565764398065e-07
   },
   {
    "reference": "embedded@ollama:nimble",
    "run": "embedded@jev:jev-latest",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.03318128099790428,
-   "p_value": 0.03369099215848292
+   "mean_diff_reference_minus_run": -0.03318128099790471,
+   "p_value": 0.03369099215848281
   },
   {
    "reference": "embedded@ollama:nimble",
    "run": "embedded@openai:gpt-6-luna",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.06483824077507477,
-   "p_value": 3.2795350423213206e-05
+   "mean_diff_reference_minus_run": -0.0648382407750752,
+   "p_value": 3.279535042321276e-05
+  },
+  {
+   "reference": "embedded@ollama:nimble",
+   "run": "embedded@kev:kev-latest",
+   "metric": "score",
+   "mean_diff_reference_minus_run": 0.05416758788527304,
+   "p_value": 0.004099309279568429
   },
   {
    "reference": "router@ollama:nimble",
    "run": "embedded@mlx:nimble",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.05480522962861698,
+   "mean_diff_reference_minus_run": -0.05480522962861642,
    "p_value": 0.006799320067993201
   },
   {
    "reference": "router@ollama:nimble",
    "run": "embedded@ollama:tev1",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.00674020689307639,
-   "p_value": 0.80773856320115
+   "mean_diff_reference_minus_run": -0.006740206893075822,
+   "p_value": 0.8077385632011502
   },
   {
    "reference": "router@ollama:nimble",
    "run": "embedded@ollama:tev1:0.8b",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.2034749005665146,
-   "p_value": 6.554594153694233e-08
+   "mean_diff_reference_minus_run": 0.20347490056651488,
+   "p_value": 6.554594153694145e-08
   },
   {
    "reference": "router@ollama:nimble",
    "run": "embedded@ollaya:jeb:4b",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.013315504745770567,
-   "p_value": 0.5399950133144081
+   "mean_diff_reference_minus_run": -0.01331550474577014,
+   "p_value": 0.539995013314408
   },
   {
    "reference": "router@ollama:nimble",
    "run": "embedded@ollaya:winnow:e4b",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.004286304683645454,
-   "p_value": 0.8575585478567569
+   "mean_diff_reference_minus_run": 0.004286304683646023,
+   "p_value": 0.8575585478567573
   },
   {
    "reference": "router@ollama:nimble",
    "run": "embedded@ollaya:decider:2b",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.07276476152506717,
-   "p_value": 0.007088092999339072
+   "mean_diff_reference_minus_run": 0.07276476152506746,
+   "p_value": 0.0070880929993390445
   },
   {
    "reference": "router@ollama:nimble",
    "run": "embedded@ollaya:decision:eos",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.2165965716664987,
-   "p_value": 8.809821293009248e-08
+   "mean_diff_reference_minus_run": 0.2165965716664992,
+   "p_value": 8.809821293009308e-08
   },
   {
    "reference": "router@ollama:nimble",
    "run": "embedded@ollaya:kev:0.8b",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.21655889982522147,
-   "p_value": 2.317656301950681e-08
+   "mean_diff_reference_minus_run": 0.21655889982522183,
+   "p_value": 2.3176563019507052e-08
   },
   {
    "reference": "router@ollama:nimble",
    "run": "embedded@ollaya:laya:en",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.25876210914107245,
-   "p_value": 2.3441757550337234e-10
+   "mean_diff_reference_minus_run": 0.2587621091410729,
+   "p_value": 2.344175755033742e-10
   },
   {
    "reference": "router@ollama:nimble",
    "run": "embedded@ollaya:laya:typed-decisions",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.3658327307109099,
+   "mean_diff_reference_minus_run": 0.36583273071091016,
    "p_value": 1.9642924246388826e-14
   },
   {
    "reference": "router@ollama:nimble",
    "run": "embedded@ollaya:von",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.43117091358963594,
-   "p_value": 1.8581464286601295e-14
+   "mean_diff_reference_minus_run": 0.43117091358963633,
+   "p_value": 1.8581464286601475e-14
   },
   {
    "reference": "router@ollama:nimble",
    "run": "embedded@ollaya:nli:modernbert-large",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.4389248686934092,
-   "p_value": 4.67245445054189e-15
+   "mean_diff_reference_minus_run": 0.43892486869340963,
+   "p_value": 4.672454450542031e-15
   },
   {
    "reference": "router@ollama:nimble",
    "run": "embedded@decider:strands-decider-2b",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.10833628314660473,
+   "mean_diff_reference_minus_run": 0.10833628314660515,
    "p_value": 0.0005641487238349274
   },
   {
    "reference": "router@ollama:nimble",
    "run": "embedded@jev:jev-latest",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.08179490856748245,
-   "p_value": 0.0003533027032966264
+   "mean_diff_reference_minus_run": -0.08179490856748217,
+   "p_value": 0.00035330270329662547
   },
   {
    "reference": "router@ollama:nimble",
    "run": "embedded@openai:gpt-6-luna",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.11345186834465296,
-   "p_value": 9.339949030110828e-07
+   "mean_diff_reference_minus_run": -0.11345186834465266,
+   "p_value": 9.33994903011065e-07
+  },
+  {
+   "reference": "router@ollama:nimble",
+   "run": "embedded@kev:kev-latest",
+   "metric": "score",
+   "mean_diff_reference_minus_run": 0.005553960315695577,
+   "p_value": 0.8143644441673435
   },
   {
    "reference": "embedded@mlx:nimble",
    "run": "embedded@ollama:tev1",
    "metric": "score",
    "mean_diff_reference_minus_run": 0.04806502273554059,
-   "p_value": 0.010028963641823417
+   "p_value": 0.010028963641823409
   },
   {
    "reference": "embedded@mlx:nimble",
    "run": "embedded@ollama:tev1:0.8b",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.2582801301951316,
-   "p_value": 7.221300882320685e-12
+   "mean_diff_reference_minus_run": 0.2582801301951313,
+   "p_value": 7.221300882320621e-12
   },
   {
    "reference": "embedded@mlx:nimble",
    "run": "embedded@ollaya:jeb:4b",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.04148972488284642,
-   "p_value": 0.006599372421394472
+   "mean_diff_reference_minus_run": 0.041489724882846274,
+   "p_value": 0.00659937242139446
   },
   {
    "reference": "embedded@mlx:nimble",
    "run": "embedded@ollaya:winnow:e4b",
    "metric": "score",
    "mean_diff_reference_minus_run": 0.05909153431226244,
-   "p_value": 0.0010113167770303022
+   "p_value": 0.0010113167770303092
   },
   {
    "reference": "embedded@mlx:nimble",
    "run": "embedded@ollaya:decider:2b",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.12756999115368417,
+   "mean_diff_reference_minus_run": 0.12756999115368386,
    "p_value": 1.0279982670981588e-07
   },
   {
    "reference": "embedded@mlx:nimble",
    "run": "embedded@ollaya:decision:eos",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.2714018012951157,
-   "p_value": 2.3125655001163545e-12
+   "mean_diff_reference_minus_run": 0.27140180129511565,
+   "p_value": 2.3125655001164373e-12
   },
   {
    "reference": "embedded@mlx:nimble",
    "run": "embedded@ollaya:kev:0.8b",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.2713641294538385,
+   "mean_diff_reference_minus_run": 0.27136412945383825,
    "p_value": 1.7983131143035789e-12
   },
   {
    "reference": "embedded@mlx:nimble",
    "run": "embedded@ollaya:laya:en",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.31356733876968945,
-   "p_value": 2.4533530945170178e-14
+   "mean_diff_reference_minus_run": 0.31356733876968934,
+   "p_value": 2.4533530945170657e-14
   },
   {
    "reference": "embedded@mlx:nimble",
    "run": "embedded@ollaya:laya:typed-decisions",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.42063796033952683,
-   "p_value": 2.2192952790041936e-17
+   "mean_diff_reference_minus_run": 0.42063796033952655,
+   "p_value": 2.2192952790042176e-17
   },
   {
    "reference": "embedded@mlx:nimble",
    "run": "embedded@ollaya:von",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.4859761432182529,
-   "p_value": 1.8138636196120072e-17
+   "mean_diff_reference_minus_run": 0.4859761432182528,
+   "p_value": 1.8138636196120273e-17
   },
   {
    "reference": "embedded@mlx:nimble",
    "run": "embedded@ollaya:nli:modernbert-large",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.4937300983220262,
-   "p_value": 1.3159699940431732e-17
+   "mean_diff_reference_minus_run": 0.4937300983220261,
+   "p_value": 1.315969994043216e-17
   },
   {
    "reference": "embedded@mlx:nimble",
    "run": "embedded@decider:strands-decider-2b",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.1631415127752217,
-   "p_value": 8.155184570626683e-08
+   "mean_diff_reference_minus_run": 0.16314151277522157,
+   "p_value": 8.155184570626599e-08
   },
   {
    "reference": "embedded@mlx:nimble",
    "run": "embedded@jev:jev-latest",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.026989678938865468,
-   "p_value": 0.06771294986196663
+   "mean_diff_reference_minus_run": -0.026989678938865752,
+   "p_value": 0.06771294986196646
   },
   {
    "reference": "embedded@mlx:nimble",
    "run": "embedded@openai:gpt-6-luna",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.05864663871603597,
-   "p_value": 9.065779589521883e-05
+   "mean_diff_reference_minus_run": -0.05864663871603625,
+   "p_value": 9.065779589521834e-05
+  },
+  {
+   "reference": "embedded@mlx:nimble",
+   "run": "embedded@kev:kev-latest",
+   "metric": "score",
+   "mean_diff_reference_minus_run": 0.06035918994431199,
+   "p_value": 0.0024845794530547207
   },
   {
    "reference": "embedded@ollama:tev1",
    "run": "embedded@ollama:tev1:0.8b",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.210215107459591,
-   "p_value": 8.661924120729448e-10
+   "mean_diff_reference_minus_run": 0.2102151074595907,
+   "p_value": 8.66192412072931e-10
   },
   {
    "reference": "embedded@ollama:tev1",
    "run": "embedded@ollaya:jeb:4b",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.006575297852694177,
-   "p_value": 0.6970838643008708
+   "mean_diff_reference_minus_run": -0.00657529785269432,
+   "p_value": 0.6970838643008707
   },
   {
    "reference": "embedded@ollama:tev1",
    "run": "embedded@ollaya:winnow:e4b",
    "metric": "score",
    "mean_diff_reference_minus_run": 0.011026511576721845,
-   "p_value": 0.62730942800066
+   "p_value": 0.6273094280006606
   },
   {
    "reference": "embedded@ollama:tev1",
    "run": "embedded@ollaya:decider:2b",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.07950496841814356,
-   "p_value": 0.0007382005241837575
+   "mean_diff_reference_minus_run": 0.07950496841814328,
+   "p_value": 0.0007382005241837543
   },
   {
    "reference": "embedded@ollama:tev1",
    "run": "embedded@ollaya:decision:eos",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.22333677855957512,
-   "p_value": 5.303096325742161e-10
+   "mean_diff_reference_minus_run": 0.22333677855957504,
+   "p_value": 5.303096325742203e-10
   },
   {
    "reference": "embedded@ollama:tev1",
    "run": "embedded@ollaya:kev:0.8b",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.22329910671829786,
-   "p_value": 2.171366527117438e-09
+   "mean_diff_reference_minus_run": 0.22329910671829764,
+   "p_value": 2.1713665271174048e-09
   },
   {
    "reference": "embedded@ollama:tev1",
    "run": "embedded@ollaya:laya:en",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.26550231603414887,
-   "p_value": 3.1627968654374327e-12
+   "mean_diff_reference_minus_run": 0.2655023160341487,
+   "p_value": 3.162796865437405e-12
   },
   {
    "reference": "embedded@ollama:tev1",
    "run": "embedded@ollaya:laya:typed-decisions",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.37257293760398624,
-   "p_value": 2.970290053194679e-16
+   "mean_diff_reference_minus_run": 0.37257293760398597,
+   "p_value": 2.9702900531945864e-16
   },
   {
    "reference": "embedded@ollama:tev1",
    "run": "embedded@ollaya:von",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.4379111204827123,
-   "p_value": 4.564495811320147e-16
+   "mean_diff_reference_minus_run": 0.4379111204827122,
+   "p_value": 4.564495811320196e-16
   },
   {
    "reference": "embedded@ollama:tev1",
    "run": "embedded@ollaya:nli:modernbert-large",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.4456650755864856,
+   "mean_diff_reference_minus_run": 0.44566507558648544,
    "p_value": 3.1315149021846965e-16
   },
   {
    "reference": "embedded@ollama:tev1",
    "run": "embedded@decider:strands-decider-2b",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.11507649003968112,
+   "mean_diff_reference_minus_run": 0.11507649003968097,
    "p_value": 2.6007708525513295e-05
   },
   {
    "reference": "embedded@ollama:tev1",
    "run": "embedded@jev:jev-latest",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.07505470167440606,
-   "p_value": 0.0007545086495243847
+   "mean_diff_reference_minus_run": -0.07505470167440635,
+   "p_value": 0.0007545086495243796
   },
   {
    "reference": "embedded@ollama:tev1",
    "run": "embedded@openai:gpt-6-luna",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.10671166145157657,
+   "mean_diff_reference_minus_run": -0.10671166145157684,
    "p_value": 3.853970396443666e-06
+  },
+  {
+   "reference": "embedded@ollama:tev1",
+   "run": "embedded@kev:kev-latest",
+   "metric": "score",
+   "mean_diff_reference_minus_run": 0.012294167208771398,
+   "p_value": 0.612090374063184
   },
   {
    "reference": "embedded@ollama:tev1:0.8b",
    "run": "embedded@ollaya:jeb:4b",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.21679040531228516,
-   "p_value": 1.0131638700419119e-10
+   "mean_diff_reference_minus_run": -0.21679040531228502,
+   "p_value": 1.0131638700419204e-10
   },
   {
    "reference": "embedded@ollama:tev1:0.8b",
    "run": "embedded@ollaya:winnow:e4b",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.19918859588286913,
-   "p_value": 1.7089064246845941e-09
+   "mean_diff_reference_minus_run": -0.19918859588286886,
+   "p_value": 1.7089064246845674e-09
   },
   {
    "reference": "embedded@ollama:tev1:0.8b",
    "run": "embedded@ollaya:decider:2b",
    "metric": "score",
    "mean_diff_reference_minus_run": -0.13071013904144743,
-   "p_value": 9.5730364568754e-06
+   "p_value": 9.573036456875346e-06
   },
   {
    "reference": "embedded@ollama:tev1:0.8b",
    "run": "embedded@ollaya:decision:eos",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.013121671099984127,
-   "p_value": 0.6389033799079872
+   "mean_diff_reference_minus_run": 0.01312167109998434,
+   "p_value": 0.6389033799079875
   },
   {
    "reference": "embedded@ollama:tev1:0.8b",
    "run": "embedded@ollaya:kev:0.8b",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.013083999258706881,
-   "p_value": 0.6313982891046953
+   "mean_diff_reference_minus_run": 0.013083999258706952,
+   "p_value": 0.6313982891046955
   },
   {
    "reference": "embedded@ollama:tev1:0.8b",
    "run": "embedded@ollaya:laya:en",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.05528720857455788,
+   "mean_diff_reference_minus_run": 0.055287208574558024,
    "p_value": 0.10291026166013816
   },
   {
@@ -7740,209 +8340,230 @@
    "run": "embedded@ollaya:laya:typed-decisions",
    "metric": "score",
    "mean_diff_reference_minus_run": 0.16235783014439525,
-   "p_value": 7.883671626306086e-06
+   "p_value": 7.88367162630615e-06
   },
   {
    "reference": "embedded@ollama:tev1:0.8b",
    "run": "embedded@ollaya:von",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.2276960130231213,
-   "p_value": 2.090362882874058e-08
+   "mean_diff_reference_minus_run": 0.22769601302312148,
+   "p_value": 2.0903628828740805e-08
   },
   {
    "reference": "embedded@ollama:tev1:0.8b",
    "run": "embedded@ollaya:nli:modernbert-large",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.23544996812689462,
-   "p_value": 3.953104814975403e-08
+   "mean_diff_reference_minus_run": 0.23544996812689475,
+   "p_value": 3.95310481497546e-08
   },
   {
    "reference": "embedded@ollama:tev1:0.8b",
    "run": "embedded@decider:strands-decider-2b",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.09513861741990987,
-   "p_value": 0.00398172727434232
+   "mean_diff_reference_minus_run": -0.09513861741990973,
+   "p_value": 0.003981727274342329
   },
   {
    "reference": "embedded@ollama:tev1:0.8b",
    "run": "embedded@jev:jev-latest",
    "metric": "score",
    "mean_diff_reference_minus_run": -0.285269809133997,
-   "p_value": 6.499614464881228e-14
+   "p_value": 6.499614464881353e-14
   },
   {
    "reference": "embedded@ollama:tev1:0.8b",
    "run": "embedded@openai:gpt-6-luna",
    "metric": "score",
    "mean_diff_reference_minus_run": -0.31692676891116756,
-   "p_value": 4.075902995677197e-15
+   "p_value": 4.075902995677073e-15
+  },
+  {
+   "reference": "embedded@ollama:tev1:0.8b",
+   "run": "embedded@kev:kev-latest",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.1979209402508193,
+   "p_value": 1.3267417437851052e-08
   },
   {
    "reference": "embedded@ollaya:jeb:4b",
    "run": "embedded@ollaya:winnow:e4b",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.017601809429416023,
-   "p_value": 0.38980070147585033
+   "mean_diff_reference_minus_run": 0.017601809429416165,
+   "p_value": 0.38980070147585055
   },
   {
    "reference": "embedded@ollaya:jeb:4b",
    "run": "embedded@ollaya:decider:2b",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.08608026627083774,
-   "p_value": 0.00046096693739644344
+   "mean_diff_reference_minus_run": 0.08608026627083759,
+   "p_value": 0.0004609669373964413
   },
   {
    "reference": "embedded@ollaya:jeb:4b",
    "run": "embedded@ollaya:decision:eos",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.2299120764122693,
-   "p_value": 7.734045460936161e-10
+   "mean_diff_reference_minus_run": 0.22991207641226935,
+   "p_value": 7.734045460936345e-10
   },
   {
    "reference": "embedded@ollaya:jeb:4b",
    "run": "embedded@ollaya:kev:0.8b",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.22987440457099204,
-   "p_value": 1.4790813231721236e-10
+   "mean_diff_reference_minus_run": 0.22987440457099198,
+   "p_value": 1.4790813231721476e-10
   },
   {
    "reference": "embedded@ollaya:jeb:4b",
    "run": "embedded@ollaya:laya:en",
    "metric": "score",
    "mean_diff_reference_minus_run": 0.27207761388684304,
-   "p_value": 4.375186791149844e-12
+   "p_value": 4.375186791149961e-12
   },
   {
    "reference": "embedded@ollaya:jeb:4b",
    "run": "embedded@ollaya:laya:typed-decisions",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.3791482354566804,
-   "p_value": 6.595948687735421e-16
+   "mean_diff_reference_minus_run": 0.3791482354566803,
+   "p_value": 6.59594868773549e-16
   },
   {
    "reference": "embedded@ollaya:jeb:4b",
    "run": "embedded@ollaya:von",
    "metric": "score",
    "mean_diff_reference_minus_run": 0.4444864183354065,
-   "p_value": 3.417350469228938e-16
+   "p_value": 3.4173504692288313e-16
   },
   {
    "reference": "embedded@ollaya:jeb:4b",
    "run": "embedded@ollaya:nli:modernbert-large",
    "metric": "score",
    "mean_diff_reference_minus_run": 0.4522403734391798,
-   "p_value": 2.0849153426134477e-16
+   "p_value": 2.0849153426134694e-16
   },
   {
    "reference": "embedded@ollaya:jeb:4b",
    "run": "embedded@decider:strands-decider-2b",
    "metric": "score",
    "mean_diff_reference_minus_run": 0.1216517878923753,
-   "p_value": 5.804260732703365e-05
+   "p_value": 5.804260732703333e-05
   },
   {
    "reference": "embedded@ollaya:jeb:4b",
    "run": "embedded@jev:jev-latest",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.06847940382171189,
-   "p_value": 7.978871336894066e-05
+   "mean_diff_reference_minus_run": -0.06847940382171203,
+   "p_value": 7.978871336894046e-05
   },
   {
    "reference": "embedded@ollaya:jeb:4b",
    "run": "embedded@openai:gpt-6-luna",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.10013636359888238,
+   "mean_diff_reference_minus_run": -0.10013636359888252,
    "p_value": 1.266479459082805e-07
+  },
+  {
+   "reference": "embedded@ollaya:jeb:4b",
+   "run": "embedded@kev:kev-latest",
+   "metric": "score",
+   "mean_diff_reference_minus_run": 0.018869465061465716,
+   "p_value": 0.32304384324017865
   },
   {
    "reference": "embedded@ollaya:winnow:e4b",
    "run": "embedded@ollaya:decider:2b",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.06847845684142172,
+   "mean_diff_reference_minus_run": 0.06847845684142144,
    "p_value": 0.0010519803207811901
   },
   {
    "reference": "embedded@ollaya:winnow:e4b",
    "run": "embedded@ollaya:decision:eos",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.21231026698285327,
-   "p_value": 2.4365728256474917e-10
+   "mean_diff_reference_minus_run": 0.21231026698285319,
+   "p_value": 2.436572825647551e-10
   },
   {
    "reference": "embedded@ollaya:winnow:e4b",
    "run": "embedded@ollaya:kev:0.8b",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.212272595141576,
-   "p_value": 7.441414799295094e-11
+   "mean_diff_reference_minus_run": 0.21227259514157581,
+   "p_value": 7.441414799295218e-11
   },
   {
    "reference": "embedded@ollaya:winnow:e4b",
    "run": "embedded@ollaya:laya:en",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.254475804457427,
-   "p_value": 5.328615159223485e-12
+   "mean_diff_reference_minus_run": 0.2544758044574269,
+   "p_value": 5.328615159223438e-12
   },
   {
    "reference": "embedded@ollaya:winnow:e4b",
    "run": "embedded@ollaya:laya:typed-decisions",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.3615464260272644,
-   "p_value": 8.542811198063335e-16
+   "mean_diff_reference_minus_run": 0.3615464260272641,
+   "p_value": 8.542811198063162e-16
   },
   {
    "reference": "embedded@ollaya:winnow:e4b",
    "run": "embedded@ollaya:von",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.42688460890599045,
-   "p_value": 1.767944465166485e-16
+   "mean_diff_reference_minus_run": 0.42688460890599034,
+   "p_value": 1.767944465166522e-16
   },
   {
    "reference": "embedded@ollaya:winnow:e4b",
    "run": "embedded@ollaya:nli:modernbert-large",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.43463856400976375,
-   "p_value": 2.503405777743806e-16
+   "mean_diff_reference_minus_run": 0.43463856400976364,
+   "p_value": 2.503405777743832e-16
   },
   {
    "reference": "embedded@ollaya:winnow:e4b",
    "run": "embedded@decider:strands-decider-2b",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.10404997846295927,
-   "p_value": 0.0002537850672391389
+   "mean_diff_reference_minus_run": 0.10404997846295913,
+   "p_value": 0.00025378506723913827
   },
   {
    "reference": "embedded@ollaya:winnow:e4b",
    "run": "embedded@jev:jev-latest",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.0860812132511279,
-   "p_value": 2.1386113859100116e-08
+   "mean_diff_reference_minus_run": -0.08608121325112819,
+   "p_value": 2.1386113859099722e-08
   },
   {
    "reference": "embedded@ollaya:winnow:e4b",
    "run": "embedded@openai:gpt-6-luna",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.1177381730282984,
-   "p_value": 3.3315604103528785e-11
+   "mean_diff_reference_minus_run": -0.11773817302829868,
+   "p_value": 3.331560410352935e-11
+  },
+  {
+   "reference": "embedded@ollaya:winnow:e4b",
+   "run": "embedded@kev:kev-latest",
+   "metric": "score",
+   "mean_diff_reference_minus_run": 0.0012676556320495537,
+   "p_value": 0.9478728764773294
   },
   {
    "reference": "embedded@ollaya:decider:2b",
    "run": "embedded@ollaya:decision:eos",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.14383181014143154,
-   "p_value": 9.470393895528532e-07
+   "mean_diff_reference_minus_run": 0.14383181014143176,
+   "p_value": 9.470393895528441e-07
   },
   {
    "reference": "embedded@ollaya:decider:2b",
    "run": "embedded@ollaya:kev:0.8b",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.1437941383001543,
-   "p_value": 2.055403020831288e-06
+   "mean_diff_reference_minus_run": 0.14379413830015436,
+   "p_value": 2.0554030208312944e-06
   },
   {
    "reference": "embedded@ollaya:decider:2b",
    "run": "embedded@ollaya:laya:en",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.1859973476160053,
+   "mean_diff_reference_minus_run": 0.18599734761600545,
    "p_value": 6.468343102716729e-09
   },
   {
@@ -7956,29 +8577,29 @@
    "reference": "embedded@ollaya:decider:2b",
    "run": "embedded@ollaya:von",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.3584061520645687,
-   "p_value": 6.982755795747745e-14
+   "mean_diff_reference_minus_run": 0.3584061520645689,
+   "p_value": 6.982755795747878e-14
   },
   {
    "reference": "embedded@ollaya:decider:2b",
    "run": "embedded@ollaya:nli:modernbert-large",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.366160107168342,
-   "p_value": 9.481494235753054e-15
+   "mean_diff_reference_minus_run": 0.3661601071683422,
+   "p_value": 9.481494235753149e-15
   },
   {
    "reference": "embedded@ollaya:decider:2b",
    "run": "embedded@decider:strands-decider-2b",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.03557152162153756,
-   "p_value": 0.13031708613194123
+   "mean_diff_reference_minus_run": 0.0355715216215377,
+   "p_value": 0.13031708613194157
   },
   {
    "reference": "embedded@ollaya:decider:2b",
    "run": "embedded@jev:jev-latest",
    "metric": "score",
    "mean_diff_reference_minus_run": -0.15455967009254962,
-   "p_value": 1.609506809661984e-08
+   "p_value": 1.60950680966196e-08
   },
   {
    "reference": "embedded@ollaya:decider:2b",
@@ -7988,193 +8609,228 @@
    "p_value": 3.323011704392531e-11
   },
   {
+   "reference": "embedded@ollaya:decider:2b",
+   "run": "embedded@kev:kev-latest",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.06721080120937188,
+   "p_value": 0.010591059185632823
+  },
+  {
    "reference": "embedded@ollaya:decision:eos",
    "run": "embedded@ollaya:kev:0.8b",
    "metric": "score",
-   "mean_diff_reference_minus_run": -3.7671841277244766e-05,
-   "p_value": 0.9989556812286535
+   "mean_diff_reference_minus_run": -3.767184127738688e-05,
+   "p_value": 0.9989556812286536
   },
   {
    "reference": "embedded@ollaya:decision:eos",
    "run": "embedded@ollaya:laya:en",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.04216553747457375,
-   "p_value": 0.1702694998041439
+   "mean_diff_reference_minus_run": 0.04216553747457368,
+   "p_value": 0.17026949980414377
   },
   {
    "reference": "embedded@ollaya:decision:eos",
    "run": "embedded@ollaya:laya:typed-decisions",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.14923615904441115,
-   "p_value": 7.756145169457767e-06
+   "mean_diff_reference_minus_run": 0.14923615904441093,
+   "p_value": 7.756145169457793e-06
   },
   {
    "reference": "embedded@ollaya:decision:eos",
    "run": "embedded@ollaya:von",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.2145743419231372,
-   "p_value": 1.4033695517014175e-07
+   "mean_diff_reference_minus_run": 0.21457434192313712,
+   "p_value": 1.4033695517014228e-07
   },
   {
    "reference": "embedded@ollaya:decision:eos",
    "run": "embedded@ollaya:nli:modernbert-large",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.22232829702691048,
-   "p_value": 1.6298756140182473e-07
+   "mean_diff_reference_minus_run": 0.22232829702691043,
+   "p_value": 1.6298756140182406e-07
   },
   {
    "reference": "embedded@ollaya:decision:eos",
    "run": "embedded@decider:strands-decider-2b",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.10826028851989399,
+   "mean_diff_reference_minus_run": -0.10826028851989405,
    "p_value": 0.0007585686257795577
   },
   {
    "reference": "embedded@ollaya:decision:eos",
    "run": "embedded@jev:jev-latest",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.29839148023398115,
-   "p_value": 1.253565015512791e-13
+   "mean_diff_reference_minus_run": -0.2983914802339814,
+   "p_value": 1.2535650155128387e-13
   },
   {
    "reference": "embedded@ollaya:decision:eos",
    "run": "embedded@openai:gpt-6-luna",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.3300484400111517,
-   "p_value": 3.7187917776235355e-15
+   "mean_diff_reference_minus_run": -0.33004844001115186,
+   "p_value": 3.718791777623609e-15
+  },
+  {
+   "reference": "embedded@ollaya:decision:eos",
+   "run": "embedded@kev:kev-latest",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.21104261135080363,
+   "p_value": 1.4581367480989426e-09
   },
   {
    "reference": "embedded@ollaya:kev:0.8b",
    "run": "embedded@ollaya:laya:en",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.042203209315851,
-   "p_value": 0.21661069252562684
+   "mean_diff_reference_minus_run": 0.042203209315851066,
+   "p_value": 0.21661069252562662
   },
   {
    "reference": "embedded@ollaya:kev:0.8b",
    "run": "embedded@ollaya:laya:typed-decisions",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.14927383088568838,
-   "p_value": 1.725800161010854e-05
+   "mean_diff_reference_minus_run": 0.14927383088568832,
+   "p_value": 1.7258001610108348e-05
   },
   {
    "reference": "embedded@ollaya:kev:0.8b",
    "run": "embedded@ollaya:von",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.21461201376441444,
-   "p_value": 6.053114052863386e-08
+   "mean_diff_reference_minus_run": 0.21461201376441452,
+   "p_value": 6.053114052863408e-08
   },
   {
    "reference": "embedded@ollaya:kev:0.8b",
    "run": "embedded@ollaya:nli:modernbert-large",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.22236596886818774,
-   "p_value": 6.354110914056899e-09
+   "mean_diff_reference_minus_run": 0.2223659688681878,
+   "p_value": 6.35411091405685e-09
   },
   {
    "reference": "embedded@ollaya:kev:0.8b",
    "run": "embedded@decider:strands-decider-2b",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.10822261667861674,
-   "p_value": 0.0009061665641995627
+   "mean_diff_reference_minus_run": -0.10822261667861667,
+   "p_value": 0.0009061665641995603
   },
   {
    "reference": "embedded@ollaya:kev:0.8b",
    "run": "embedded@jev:jev-latest",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.2983538083927039,
-   "p_value": 2.52389651833065e-14
+   "mean_diff_reference_minus_run": -0.298353808392704,
+   "p_value": 2.5238965183306742e-14
   },
   {
    "reference": "embedded@ollaya:kev:0.8b",
    "run": "embedded@openai:gpt-6-luna",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.3300107681698744,
-   "p_value": 9.005703436402798e-16
+   "mean_diff_reference_minus_run": -0.3300107681698745,
+   "p_value": 9.00570343640289e-16
+  },
+  {
+   "reference": "embedded@ollaya:kev:0.8b",
+   "run": "embedded@kev:kev-latest",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.21100493950952626,
+   "p_value": 1.22230255463854e-10
   },
   {
    "reference": "embedded@ollaya:laya:en",
    "run": "embedded@ollaya:laya:typed-decisions",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.10707062156983739,
-   "p_value": 0.00015126495415343144
+   "mean_diff_reference_minus_run": 0.10707062156983724,
+   "p_value": 0.0001512649541534329
   },
   {
    "reference": "embedded@ollaya:laya:en",
    "run": "embedded@ollaya:von",
    "metric": "score",
    "mean_diff_reference_minus_run": 0.17240880444856344,
-   "p_value": 3.073746003531144e-06
+   "p_value": 3.073746003531162e-06
   },
   {
    "reference": "embedded@ollaya:laya:en",
    "run": "embedded@ollaya:nli:modernbert-large",
    "metric": "score",
    "mean_diff_reference_minus_run": 0.18016275955233674,
-   "p_value": 2.414705262525137e-06
+   "p_value": 2.4147052625251212e-06
   },
   {
    "reference": "embedded@ollaya:laya:en",
    "run": "embedded@decider:strands-decider-2b",
    "metric": "score",
    "mean_diff_reference_minus_run": -0.15042582599446774,
-   "p_value": 6.661156199868948e-06
+   "p_value": 6.661156199868987e-06
   },
   {
    "reference": "embedded@ollaya:laya:en",
    "run": "embedded@jev:jev-latest",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.3405570177085549,
-   "p_value": 1.2153665557859413e-14
+   "mean_diff_reference_minus_run": -0.34055701770855507,
+   "p_value": 1.2153665557859773e-14
   },
   {
    "reference": "embedded@ollaya:laya:en",
    "run": "embedded@openai:gpt-6-luna",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.37221397748572543,
-   "p_value": 2.384709064464257e-15
+   "mean_diff_reference_minus_run": -0.37221397748572554,
+   "p_value": 2.3847090644642816e-15
+  },
+  {
+   "reference": "embedded@ollaya:laya:en",
+   "run": "embedded@kev:kev-latest",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.25320814882537734,
+   "p_value": 8.791203649132529e-11
   },
   {
    "reference": "embedded@ollaya:laya:typed-decisions",
    "run": "embedded@ollaya:von",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.06533818287872606,
-   "p_value": 0.06369462123059086
+   "mean_diff_reference_minus_run": 0.0653381828787262,
+   "p_value": 0.06369462123059093
   },
   {
    "reference": "embedded@ollaya:laya:typed-decisions",
    "run": "embedded@ollaya:nli:modernbert-large",
    "metric": "score",
-   "mean_diff_reference_minus_run": 0.07309213798249935,
+   "mean_diff_reference_minus_run": 0.0730921379824995,
    "p_value": 0.052935729682268735
   },
   {
    "reference": "embedded@ollaya:laya:typed-decisions",
    "run": "embedded@decider:strands-decider-2b",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.2574964475643051,
-   "p_value": 1.7126307400881534e-12
+   "mean_diff_reference_minus_run": -0.257496447564305,
+   "p_value": 1.712630740088231e-12
   },
   {
    "reference": "embedded@ollaya:laya:typed-decisions",
    "run": "embedded@jev:jev-latest",
    "metric": "score",
    "mean_diff_reference_minus_run": -0.44762763927839233,
-   "p_value": 1.531399396449598e-17
+   "p_value": 1.5313993964496147e-17
   },
   {
    "reference": "embedded@ollaya:laya:typed-decisions",
    "run": "embedded@openai:gpt-6-luna",
    "metric": "score",
    "mean_diff_reference_minus_run": -0.4792845990555628,
-   "p_value": 2.064468799851389e-18
+   "p_value": 2.064468799851412e-18
+  },
+  {
+   "reference": "embedded@ollaya:laya:typed-decisions",
+   "run": "embedded@kev:kev-latest",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.36027877039521455,
+   "p_value": 2.700163477947179e-15
   },
   {
    "reference": "embedded@ollaya:von",
    "run": "embedded@ollaya:nli:modernbert-large",
    "metric": "score",
    "mean_diff_reference_minus_run": 0.007753955103773294,
-   "p_value": 0.8213990949277438
+   "p_value": 0.8213990949277435
   },
   {
    "reference": "embedded@ollaya:von",
@@ -8187,50 +8843,71 @@
    "reference": "embedded@ollaya:von",
    "run": "embedded@jev:jev-latest",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.5129658221571184,
-   "p_value": 9.258639404609561e-18
+   "mean_diff_reference_minus_run": -0.5129658221571185,
+   "p_value": 9.25863940460966e-18
   },
   {
    "reference": "embedded@ollaya:von",
    "run": "embedded@openai:gpt-6-luna",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.5446227819342888,
-   "p_value": 1.242239951044537e-18
+   "mean_diff_reference_minus_run": -0.544622781934289,
+   "p_value": 1.2422399510445648e-18
+  },
+  {
+   "reference": "embedded@ollaya:von",
+   "run": "embedded@kev:kev-latest",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.4256169532739408,
+   "p_value": 8.368791526321164e-15
   },
   {
    "reference": "embedded@ollaya:nli:modernbert-large",
    "run": "embedded@decider:strands-decider-2b",
    "metric": "score",
    "mean_diff_reference_minus_run": -0.3305885855468045,
-   "p_value": 7.311438388515347e-12
+   "p_value": 7.311438388515218e-12
   },
   {
    "reference": "embedded@ollaya:nli:modernbert-large",
    "run": "embedded@jev:jev-latest",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.5207197772608917,
-   "p_value": 4.070180141272107e-18
+   "mean_diff_reference_minus_run": -0.5207197772608918,
+   "p_value": 4.070180141272152e-18
   },
   {
    "reference": "embedded@ollaya:nli:modernbert-large",
    "run": "embedded@openai:gpt-6-luna",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.5523767370380621,
-   "p_value": 8.716246610853389e-19
+   "mean_diff_reference_minus_run": -0.5523767370380623,
+   "p_value": 8.71624661085388e-19
+  },
+  {
+   "reference": "embedded@ollaya:nli:modernbert-large",
+   "run": "embedded@kev:kev-latest",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.4333709083777141,
+   "p_value": 3.767739093358308e-15
   },
   {
    "reference": "embedded@decider:strands-decider-2b",
    "run": "embedded@jev:jev-latest",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.19013119171408718,
-   "p_value": 1.2139052991701475e-08
+   "mean_diff_reference_minus_run": -0.19013119171408732,
+   "p_value": 1.2139052991701298e-08
   },
   {
    "reference": "embedded@decider:strands-decider-2b",
    "run": "embedded@openai:gpt-6-luna",
    "metric": "score",
-   "mean_diff_reference_minus_run": -0.2217881514912577,
-   "p_value": 1.627906426855707e-10
+   "mean_diff_reference_minus_run": -0.22178815149125783,
+   "p_value": 1.6279064268557203e-10
+  },
+  {
+   "reference": "embedded@decider:strands-decider-2b",
+   "run": "embedded@kev:kev-latest",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.10278232283090957,
+   "p_value": 0.001024619282206375
   },
   {
    "reference": "embedded@jev:jev-latest",
@@ -8238,6 +8915,20 @@
    "metric": "score",
    "mean_diff_reference_minus_run": -0.0316569597771705,
    "p_value": 0.0026997300269973002
+  },
+  {
+   "reference": "embedded@jev:jev-latest",
+   "run": "embedded@kev:kev-latest",
+   "metric": "score",
+   "mean_diff_reference_minus_run": 0.08734886888317775,
+   "p_value": 1.716785279527859e-06
+  },
+  {
+   "reference": "embedded@openai:gpt-6-luna",
+   "run": "embedded@kev:kev-latest",
+   "metric": "score",
+   "mean_diff_reference_minus_run": 0.11900582866034824,
+   "p_value": 1.449056894426775e-08
   }
  ],
  "score_rank_ranges": {
@@ -8248,8 +8939,8 @@
   },
   "router@ollama:nimble": {
    "min": 5,
-   "max": 8,
-   "mode": 7
+   "max": 9,
+   "mode": 8
   },
   "embedded@mlx:nimble": {
    "min": 3,
@@ -8262,9 +8953,9 @@
    "mode": 7
   },
   "embedded@ollama:tev1:0.8b": {
-   "min": 11,
-   "max": 12,
-   "mode": 11
+   "min": 12,
+   "max": 13,
+   "mode": 12
   },
   "embedded@ollaya:jeb:4b": {
    "min": 5,
@@ -8273,48 +8964,48 @@
   },
   "embedded@ollaya:winnow:e4b": {
    "min": 3,
-   "max": 8,
-   "mode": 8
-  },
-  "embedded@ollaya:decider:2b": {
-   "min": 9,
-   "max": 10,
+   "max": 9,
    "mode": 9
   },
-  "embedded@ollaya:decision:eos": {
-   "min": 12,
-   "max": 13,
-   "mode": 12
+  "embedded@ollaya:decider:2b": {
+   "min": 10,
+   "max": 11,
+   "mode": 10
   },
-  "embedded@ollaya:kev:0.8b": {
-   "min": 11,
-   "max": 13,
+  "embedded@ollaya:decision:eos": {
+   "min": 13,
+   "max": 14,
    "mode": 13
   },
-  "embedded@ollaya:laya:en": {
-   "min": 14,
+  "embedded@ollaya:kev:0.8b": {
+   "min": 12,
    "max": 14,
    "mode": 14
   },
-  "embedded@ollaya:laya:typed-decisions": {
+  "embedded@ollaya:laya:en": {
    "min": 15,
    "max": 15,
    "mode": 15
   },
-  "embedded@ollaya:von": {
+  "embedded@ollaya:laya:typed-decisions": {
    "min": 16,
    "max": 16,
    "mode": 16
   },
-  "embedded@ollaya:nli:modernbert-large": {
+  "embedded@ollaya:von": {
    "min": 17,
    "max": 17,
    "mode": 17
   },
+  "embedded@ollaya:nli:modernbert-large": {
+   "min": 18,
+   "max": 18,
+   "mode": 18
+  },
   "embedded@decider:strands-decider-2b": {
-   "min": 9,
-   "max": 10,
-   "mode": 10
+   "min": 10,
+   "max": 11,
+   "mode": 11
   },
   "embedded@jev:jev-latest": {
    "min": 2,
@@ -8325,6 +9016,11 @@
    "min": 1,
    "max": 1,
    "mode": 1
+  },
+  "embedded@kev:kev-latest": {
+   "min": 6,
+   "max": 9,
+   "mode": 9
   }
  }
 }

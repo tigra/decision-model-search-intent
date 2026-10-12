@@ -39,7 +39,9 @@ BACKEND_INFO = {
     "decider": "AWS Strands Labs' Strands Decider 2B (`StrandsAgents/strands-decider-2B-hobson-v19`, MLX) via its own "
                "`/v1/systemone` server; the state is encoded once and only each question's suffix is added, batched",
     "kev": "Kev-9B (`jaredpalmer/kev-9b`, LoRA + pointer head on Qwen3.5-9B-Base, MLX bf16) via its own "
-           "`/v1/systemone` server `kev.serve`; Kev is trained on requests up to 2,048 tokens, these are ~3,000-3,500",
+           "`/v1/systemone` server `kev.serve`, low-memory mode (`LOWMEM=1`: one question row per pass; on the "
+           "36 GB M3 Max 2.5x faster than the default, which swaps); Kev is trained on requests up to 2,048 tokens, "
+           "these are ~3,000-3,500",
     "jev": "TypeSafe's hosted Jev API (`https://api.typesafe.ai`); latency includes the network round trip",
     "openai": "OpenAI's hosted Decisions API (`POST /v1/decisions`, gpt-6-luna); the state is sent as JSON text; "
               "latency includes the network round trip",

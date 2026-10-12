@@ -51,7 +51,10 @@ NAMES = {
 # Fixed per run, never by rank (validated palette slots on white). nimble router, an ablation of nimble, is the dark
 # neutral. Jev (red) and OpenAI (violet) are the pair compared most, so they get two slots that separate well
 # (red/orange fail the normal-vision floor, ΔE 7); red, violet and nimble's blue pass all-pairs. Strands Decider takes
-# the orange. Runs not listed (e.g. MLX nimble in the sweep) are dark neutral too.
+# the orange. Kev, the 10th run, is plum (outside the 8 slots): every pair passes the normal-vision floor (closest is
+# violet, ΔE 17.5); its colorblind ΔE vs violet is 6.8, legal with its own marker as the second cue. Runs not listed
+# (e.g. MLX nimble in the sweep) are dark neutral too.
+KEV_PLUM = "#a33a8f"
 COLOR = {
     "embedded@ollama:nimble": PALETTE[0],
     "embedded@openai:gpt-6-luna": PALETTE[6],
@@ -61,6 +64,7 @@ COLOR = {
     "embedded@ollaya:winnow:e4b": PALETTE[5],
     "embedded@decider:strands-decider-2b": PALETTE[1],
     "embedded@jev:jev-latest": PALETTE[7],
+    "embedded@kev:kev-latest": KEV_PLUM,
     "router@ollama:nimble": INK2,
 }
 COLOR = defaultdict(lambda: INK2, COLOR)

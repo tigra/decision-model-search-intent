@@ -9,6 +9,8 @@
   jev:    TypeSafe's hosted Jev API (needs TYPESAFE_API_KEY)
   openai: OpenAI's hosted Decisions API, POST /v1/decisions (needs OPENAI_API_KEY); a different request and
           response shape, converted to and from the /v1/systemone one here (to_decisions / from_decisions)
+  gemini: Google's hosted Gemini Decisions API, POST /v1beta/decisions (needs GEMINI_API_KEY); the questions map
+          is the /v1/systemone one, the state goes in as JSON text (to_gemini / from_gemini)
 """
 import json
 import os
@@ -54,9 +56,15 @@ HOST = os.environ.get("OLLAMA_HOST_URL", "http://localhost:11434")
 class SidmError(RuntimeError):
     """A user-facing problem with a known fix; entry points print it without a traceback."""
 
-    def __init__(self, message, fix=None):
+    def __init__(self, message, fix=None, response=None):
         super().__init__(message)
         self.fix = fix
+        self.response = response  # the server's raw reply (status line + body), shown as evidence
+
+
+def http_response(e):
+    """The status line and body of an HTTPError raised by _post, as the server sent them."""
+    return "HTTP %d %s\n%s" % (e.code, getattr(e, "status_text", ""), getattr(e, "body", e.reason))
 
 
 def friendly_main(main):
@@ -71,6 +79,8 @@ def friendly_main(main):
             print("error: %s" % e, file=sys.stderr)
             if e.fix:
                 print("fix:   %s" % e.fix, file=sys.stderr)
+            if e.response:
+                print("server response:\n%s" % e.response.rstrip(), file=sys.stderr)
         except FileNotFoundError as e:
             print("error: file not found: %s" % (e.filename or e), file=sys.stderr)
             if str(e.filename or "").endswith(".jsonl"):
@@ -85,7 +95,7 @@ def friendly_main(main):
 class Backend:
     def __init__(self, url, default_model, api_key_env=None, remote=False, api="systemone"):
         self.url, self.default_model, self.api_key_env, self.remote = url, default_model, api_key_env, remote
-        self.api = api  # "systemone" (Jev / TypeSafe contract) or "decisions" (OpenAI)
+        self.api = api  # "systemone" (Jev / TypeSafe contract), "decisions" (OpenAI) or "gemini" (Google)
 
     def headers(self):
         h = {"Content-Type": "application/json"}
@@ -94,7 +104,10 @@ class Backend:
             if not key:
                 raise SidmError("%s is not set (needed for this backend)" % self.api_key_env,
                                 "put %s=<your key> in .env (see .env.example), or export it" % self.api_key_env)
-            h["Authorization"] = "Bearer " + key
+            if self.api == "gemini":
+                h["x-goog-api-key"] = key
+            else:
+                h["Authorization"] = "Bearer " + key
         return h
 
 
@@ -113,6 +126,9 @@ BACKENDS = {
     # OpenAI's Decisions API serves gpt-6-luna only (public beta since 2026-10-06)
     "openai": Backend(os.environ.get("OPENAI_BASE_URL", "https://api.openai.com"), "gpt-6-luna",
                       api_key_env="OPENAI_API_KEY", remote=True, api="decisions"),
+    # Google's Gemini Decisions API (v1beta) serves gemini-decision-1 only; the response names no model version
+    "gemini": Backend(os.environ.get("GEMINI_BASE_URL", "https://generativelanguage.googleapis.com"),
+                      "gemini-decision-1", api_key_env="GEMINI_API_KEY", remote=True, api="gemini"),
 }
 DEFAULT_MODELS = {name: b.default_model for name, b in BACKENDS.items()}
 
@@ -127,8 +143,10 @@ def _post(path, payload, timeout=600, host=HOST, headers=None):
         with urllib.request.urlopen(req, timeout=timeout) as resp:
             return json.loads(resp.read())
     except urllib.error.HTTPError as e:  # keep the server's error message (e.g. prompt too long, bad key)
-        body = e.read().decode(errors="replace")[:500]
-        raise urllib.error.HTTPError(e.url, e.code, "%s: %s" % (e.reason, body), e.headers, None) from None
+        body = e.read().decode(errors="replace")
+        err = urllib.error.HTTPError(e.url, e.code, "%s: %s" % (e.reason, body[:500]), e.headers, None)
+        err.status_text, err.body = e.reason, body  # the full reply, for http_response()
+        raise err from None
 
 
 def chat(model, messages, fmt=None, temperature=0.8, seed=None, think=False, num_ctx=4096):
@@ -156,6 +174,7 @@ START_FIX = {
     "kev": "make kev-serve   (first time: make kev-setup)",
     "jev": "check the network connection and TYPESAFE_BASE_URL",
     "openai": "check the network connection and OPENAI_BASE_URL",
+    "gemini": "check the network connection and GEMINI_BASE_URL",
 }
 PULL_FIX = {
     "ollama": "make ollama-pull MODEL=%s",
@@ -165,6 +184,7 @@ PULL_FIX = {
     "kev": "kev.serve accepts kev-latest or jev-latest",
     "jev": "check the model name (e.g. jev-latest, jev-1.13.0)",
     "openai": "the Decisions API serves gpt-6-luna only",
+    "gemini": "the Gemini Decisions API serves gemini-decision-1 only",
 }
 
 
@@ -176,8 +196,9 @@ def _friendly(e, backend, model):
             return SidmError("model '%s' isn't available on the %s backend" % (model, backend),
                              PULL_FIX[backend] % model if "%s" in PULL_FIX[backend] else PULL_FIX[backend])
         if e.code in (401, 403):
-            return SidmError("%s rejected the request (HTTP %d): %s" % (backend, e.code, e.reason),
-                             "check %s" % (b.api_key_env or "the server's API key settings"))
+            return SidmError("%s rejected the request (HTTP %d)" % (backend, e.code),
+                             "check %s" % (b.api_key_env or "the server's API key settings"),
+                             response=http_response(e))
         return None
     if isinstance(e, urllib.error.URLError):
         return SidmError("%s server not reachable at %s (%s)" % (backend, b.url, e.reason), START_FIX[backend])
@@ -212,6 +233,42 @@ def from_decisions(resp, questions):
     return out
 
 
+GEMINI_SAFETY_CODES = ("safety", "prohibited_content", "blocklist", "image_safety", "content_blocked")
+
+
+def to_gemini(model, state, questions):
+    """/v1/systemone request -> Gemini /v1beta/decisions request: the same questions map (type, instructions,
+    criteria); the state goes in as the same JSON, as text. Gemini sorts option keys itself; we read by key."""
+    return {"model": model, "input": json.dumps(state, ensure_ascii=False), "questions": {
+        name: {"type": q["type"], "instructions": q["instructions"], "criteria": q["criteria"]}
+        for name, q in questions.items()}}
+
+
+def from_gemini(resp, questions, model):
+    """Gemini /v1beta/decisions response -> /v1/systemone shape. Choice answers already carry `probabilities`
+    over every option; usage is renamed to input_tokens / output_tokens. The response names no model version,
+    so the requested model is recorded."""
+    u = resp.get("usage") or {}
+    answers = {name: {"type": "choice", "choice": a["choice"], "confidence": a.get("confidence"),
+                      "probabilities": a["probabilities"]}
+               for name, a in (resp.get("answers") or {}).items()}
+    return {"model": model, "answers": answers, "refusals": 0,
+            "usage": {"input_tokens": u.get("total_input_tokens", 0), "output_tokens": u.get("total_output_tokens", 0)}}
+
+
+def gemini_blocked(questions, model):
+    """A safety block refuses the whole request (HTTP 400): every question is refused, mapped as in
+    from_decisions (first option at confidence 0; word questions left out, so the words decode as residual)."""
+    answers = {}
+    for name, q in questions.items():
+        if not name.startswith("word_"):
+            first = next(iter(q["criteria"]))
+            answers[name] = {"type": "choice", "choice": first, "confidence": 0.0, "refused": True,
+                             "probabilities": {v: float(v == first) for v in q["criteria"]}}
+    return {"model": model, "answers": answers, "refusals": len(questions),
+            "usage": {"input_tokens": 0, "output_tokens": 0}}
+
+
 def system_one(model, state, questions, keep_alive="30m", backend="ollama", max_retries=5):
     """Returns (response_json, wall_latency_seconds of the successful attempt).
 
@@ -220,6 +277,8 @@ def system_one(model, state, questions, keep_alive="30m", backend="ollama", max_
     b = BACKENDS[backend]
     if b.api == "decisions":
         path, payload = "/v1/decisions", to_decisions(model, state, questions)
+    elif b.api == "gemini":
+        path, payload = "/v1beta/decisions", to_gemini(model, state, questions)
     else:
         path, payload = "/v1/systemone", {"model": model, "state": state, "questions": questions}
     if backend == "ollama":
@@ -229,11 +288,25 @@ def system_one(model, state, questions, keep_alive="30m", backend="ollama", max_
         try:
             resp = _post(path, payload, host=b.url, headers=b.headers())
             latency = time.perf_counter() - t0
-            return (from_decisions(resp, questions) if b.api == "decisions" else resp), latency
+            if b.api == "decisions":
+                resp = from_decisions(resp, questions)
+            elif b.api == "gemini":
+                resp = from_gemini(resp, questions, model)
+            return resp, latency
         except urllib.error.HTTPError as e:
+            if b.api == "gemini" and e.code == 400 and any('"%s"' % c in str(e.reason).lower()
+                                                           for c in GEMINI_SAFETY_CODES):
+                print("%s: request blocked by safety filter: %s" % (backend, e.reason), file=sys.stderr, flush=True)
+                return gemini_blocked(questions, model), time.perf_counter() - t0
+            if b.api == "gemini" and (e.code == 402 or "credits are depleted" in str(e.reason)):
+                raise SidmError("%s: the project's prepaid credits are depleted (HTTP 402)" % backend,
+                                "add credits in AI Studio: https://ai.studio/projects   "
+                                "(billing: https://ai.google.dev/gemini-api/docs/billing#prepay)",
+                                response=http_response(e)) from None
             if "insufficient_quota" in str(e.reason) or "credit_balance_exhausted" in str(e.reason):
                 raise SidmError("%s: the account has no credits left" % backend,
-                                "add credits (OpenAI: https://platform.openai.com/settings/organization/billing/)") from None
+                                "add credits (OpenAI: https://platform.openai.com/settings/organization/billing/)",
+                                response=http_response(e)) from None
             if not b.remote or e.code not in RETRY_CODES or attempt == max_retries:
                 friendly = _friendly(e, backend, model)
                 if friendly:
@@ -297,7 +370,7 @@ def system_one_split(model, state, questions, backend="ollama", learned=True, st
             _LEARNED_CHUNKS[(backend, model)] = k
             continue
         merged = {"model": "/".join(sorted(m for m in models if m)), "answers": answers, "usage": usage}
-        if BACKENDS[backend].api == "decisions":
+        if BACKENDS[backend].api != "systemone":
             merged["refusals"] = refusals
         if len(parts) == 1 and "metrics" in resp:  # server-side timings (mlx backend) are per request
             merged["metrics"] = resp["metrics"]

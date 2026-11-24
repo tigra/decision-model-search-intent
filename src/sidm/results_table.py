@@ -45,6 +45,8 @@ BACKEND_INFO = {
     "jev": "TypeSafe's hosted Jev API (`https://api.typesafe.ai`); latency includes the network round trip",
     "openai": "OpenAI's hosted Decisions API (`POST /v1/decisions`, gpt-6-luna); the state is sent as JSON text; "
               "latency includes the network round trip",
+    "gemini": "Google's hosted Gemini Decisions API (`POST /v1beta/decisions`, gemini-decision-1); the state is sent "
+              "as JSON text; latency includes the network round trip",
 }
 
 

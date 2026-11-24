@@ -125,9 +125,17 @@ def main():
     _line(OK if okey else BAD, "OPENAI_API_KEY %s" % ("set (%s)" % osource if okey else "not set"),
           None if okey else "put OPENAI_API_KEY=<key> in .env   (only needed for openai runs; paid API, needs credits)")
 
+    print("\nGemini Decisions API (backend `gemini`, %s)" % BACKENDS["gemini"].url)
+    gkey = os.environ.get("GEMINI_API_KEY")
+    state["gemini"] = bool(gkey)
+    gsource = "from .env" if "GEMINI_API_KEY" in ENV_LOADED else "from the environment"
+    _line(OK if gkey else BAD, "GEMINI_API_KEY %s" % ("set (%s)" % gsource if gkey else "not set"),
+          None if gkey else "put GEMINI_API_KEY=<key> in .env   (only needed for gemini runs; key from AI Studio)")
+
     print("\nRuns of the study (src/sidm/runs.py): can they be re-run here?")
     runnable = 0
-    runs = list(dict.fromkeys(DEV_RUNS + EVAL_RUNS + ["embedded@jev:jev-latest", "embedded@openai:gpt-6-luna"]))
+    runs = list(dict.fromkeys(DEV_RUNS + EVAL_RUNS + ["embedded@jev:jev-latest", "embedded@openai:gpt-6-luna",
+                                         "embedded@gemini:gemini-decision-1"]))
     width = max(map(len, runs))
     for run in runs:
         scheme, backend, model = split_run(run)
@@ -151,6 +159,8 @@ def main():
             avail, fix = state["jev"], None if state["jev"] else "put TYPESAFE_API_KEY=<key> in .env"
         elif backend == "openai":
             avail, fix = state["openai"], None if state["openai"] else "put OPENAI_API_KEY=<key> in .env"
+        elif backend == "gemini":
+            avail, fix = state["gemini"], None if state["gemini"] else "put GEMINI_API_KEY=<key> in .env"
         runnable += avail
         _line(OK if avail else BAD, "%-*s  %s" % (width, run, stored), fix)
     print("\n%d of %d runs can be re-run on this machine right now (one model on the GPU at a time)." % (runnable, len(runs)))

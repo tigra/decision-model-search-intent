@@ -266,7 +266,7 @@ def parse(query, model=None, scheme=DEFAULT_SCHEME, backend="ollama"):
                latency_s=latency, n_requests=n_requests, n_questions=len(questions),
                n_word_questions=sum(q.startswith("word_") for q in questions),
                usage=resp.get("usage"), raw_answers=resp["answers"])
-    if "refusals" in resp:  # openai backend: questions the model refused to answer
+    if "refusals" in resp:  # openai / gemini backends: questions the model refused to answer
         out["refusals"] = resp["refusals"]
     if "metrics" in resp:  # mlx backend: prefill vs batched field evaluation timings
         m = resp["metrics"]

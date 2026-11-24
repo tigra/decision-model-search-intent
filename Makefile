@@ -33,7 +33,7 @@ LIMIT_ARG      = $(if $(LIMIT),--limit $(LIMIT))
         ollama-pull ollama-rm ollama-unload mlx-convert mlx-serve mlx-stop ollaya-serve ollaya-pull ollaya-rm ollaya-stop decider-setup decider-serve decider-stop kev-setup kev-serve kev-stop status
 
 help: ## List targets and variables
-	@echo "Usage: make <target> [BACKEND=ollama|mlx|ollaya|decider|kev|jev|openai] [MODEL=...] [SCHEME=embedded|router] [SPLIT=dev|eval] [LIMIT=N] [OVERWRITE=1] [Q=\"query\"]"
+	@echo "Usage: make <target> [BACKEND=ollama|mlx|ollaya|decider|kev|jev|openai|gemini] [MODEL=...] [SCHEME=embedded|router] [SPLIT=dev|eval] [LIMIT=N] [OVERWRITE=1] [Q=\"query\"]"
 	@echo "New here? Start with: make doctor, make runs; shipped results: results/results_eval.md, results/mcnemar_eval.txt"
 	@awk 'BEGIN {FS = ":.*?## "} /^##@/ {printf "\n%s\n", substr($$0, 5)} /^[a-z0-9-]+:.*?## / {printf "  %-14s %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 

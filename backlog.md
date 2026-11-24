@@ -179,6 +179,7 @@ The original plan follows.
   - Residual words F1 0.695 (nimble 0.733): check which residual words it labels as filters.
   - A hybrid with Jev's category and filters plus a local model's residual words would be cheap to test (re-decoding only).
   - `jev-latest` moves; re-running later gives a newer model. Pin `MODEL=jev-1.13.0` to reproduce.
+  - **Done (2026-11-24):** runs now always pin a version (`jev-latest` / `jev-preview` are refused); the 1.13 files were renamed to `jev-1.13.0`, and Jev 1.14 (`jev-1.14.0`) was added: eval whole query 0.519 (tied with 1.13's 0.535, p = 0.07), category 0.991 (best of all runs), p50 0.26 s.
 - **Third-party reference:** 236–276 ms median for a 5-question request ([search result](https://www.kunalganglani.com/blog/ollaya-ollama-decision-setup)). Our requests have ~24 questions.
 
 ## Next, from the model comparison (see README "Results")

@@ -20,6 +20,7 @@ Ideas deliberately left out of the first experiment.
 - Multilingual queries; heavier typo noise.
 
 - **"furniture" in queries without a product type.** Gold labels it residual ("modern plastic furniture"), but every model tags it as category, so no run gets any of the 48 no-category eval queries right (docs/figures/accuracy_by_difficulty.svg). Decide the convention (a category word for the root, or a stop word) and relabel, or describe it in the word-role question.
+- **Gemini's "no category" misses.** Gemini Decision 1 picks a category for 6 of the 48 eval queries without a product type (Jev and OpenAI: 0), all built around "furniture" ("plastic furniture" → seating), with a no-category signal of 0.53–0.67 against the dev-tuned threshold of 0.70. Dev has only 5 such queries, too few to tune that threshold. Add more no-category queries to dev, or ask "does the query name a product type?" as its own yes/no question (Google's docs suggest a scope check like that, since choice questions never abstain).
 
 ## Serving
 - Concurrency / throughput tests (`OLLAMA_NUM_PARALLEL`), batching several queries per request as separate question groups.

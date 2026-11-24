@@ -1,0 +1,2958 @@
+{
+ "backend": "gemini",
+ "model": "gemini-decision-1",
+ "query": "grey mid century modern sectional with oak legs cheap free shipping",
+ "targets": [
+  "filter_leg_color",
+  "word_6",
+  "filter_material"
+ ],
+ "summary": {
+  "filter_leg_color": {
+   "full_answer": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.5489306678707737,
+    "probabilities": {
+     "silver": 7.385894604137878e-05,
+     "black": 0.0004349471867757786,
+     "brass": 0.000410686679298948,
+     "gold": 0.0003747362850864103,
+     "dark_brown": 0.0009105696923687108,
+     "not_specified": 0.5489306678707737,
+     "white": 0.0001023058256847953,
+     "natural": 0.4487622275139703
+    }
+   },
+   "vs_full": {
+    "full_again": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    },
+    "reversed": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    },
+    "reworded_filter_color": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    },
+    "plus_10_extra": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    },
+    "alone_filter_leg_color": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    },
+    "with_5_filter_leg_color": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    }
+   }
+  },
+  "word_6": {
+   "full_answer": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9173264706024524,
+    "probabilities": {
+     "filter": 0.9173264706024524,
+     "category": 0.000923955609508761,
+     "residual": 0.08174957378803889
+    }
+   },
+   "vs_full": {
+    "full_again": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    },
+    "reversed": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    },
+    "reworded_filter_color": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    },
+    "plus_10_extra": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    },
+    "alone_word_6": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    },
+    "with_5_word_6": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    }
+   }
+  },
+  "filter_material": {
+   "full_answer": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9243506086738446,
+    "probabilities": {
+     "acacia": 7.87389503006953e-05,
+     "walnut": 3.102990069588067e-05,
+     "mango_wood": 1.778349177985032e-05,
+     "linen": 0.0001361081427524985,
+     "bamboo": 9.339484211599675e-05,
+     "rattan": 4.226022723641663e-05,
+     "not_specified": 0.9243506086738446,
+     "solid_wood": 0.00015544956914895176,
+     "pine": 8.211166111205001e-06,
+     "glass": 8.322659132410063e-06,
+     "leather": 8.67150023979358e-05,
+     "microfiber": 0.00023669706391044553,
+     "marble": 6.947133945783307e-06,
+     "velvet": 0.0001077523748551832,
+     "boucle": 1.8701212534105508e-05,
+     "engineered_wood": 2.7440048910875758e-05,
+     "metal": 1.980761211764031e-05,
+     "plastic": 1.0849081074526814e-05,
+     "faux_leather": 0.00011355354696799468,
+     "oak": 0.0002850165738024667,
+     "fabric": 0.0741646127263647
+    }
+   },
+   "vs_full": {
+    "full_again": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    },
+    "reversed": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    },
+    "reworded_filter_color": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    },
+    "plus_10_extra": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    },
+    "alone_filter_material": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    },
+    "with_5_filter_material": {
+     "max_prob_diff": 0.0,
+     "choice_changed": false
+    }
+   }
+  }
+ },
+ "answers": {
+  "full": {
+   "filter_feature": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.990014490433918,
+    "probabilities": {
+     "not_specified": 0.990014490433918,
+     "wheels": 2.590095440211508e-05,
+     "with_drawers": 0.00024138488723673802,
+     "tufted": 9.11870122537913e-05,
+     "foldable": 2.1639819157262486e-05,
+     "usb_charging": 4.2006371374731176e-05,
+     "glass_doors": 0.00020764748530907384,
+     "extendable": 6.19291846062611e-05,
+     "cooling": 5.852778530913405e-05,
+     "reclining": 0.00021622419252245926,
+     "adjustable_height": 0.0001543991251895575,
+     "with_storage": 0.008705400591126343,
+     "stackable": 1.7140984545759347e-05,
+     "swivel": 0.00014212117304850984
+    }
+   },
+   "filter_leg_color": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.5489306678707737,
+    "probabilities": {
+     "silver": 7.385894604137878e-05,
+     "black": 0.0004349471867757786,
+     "brass": 0.000410686679298948,
+     "gold": 0.0003747362850864103,
+     "dark_brown": 0.0009105696923687108,
+     "not_specified": 0.5489306678707737,
+     "white": 0.0001023058256847953,
+     "natural": 0.4487622275139703
+    }
+   },
+   "cat_desks": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.9990843447727148,
+    "probabilities": {
+     "desk": 0.00044537194080516236,
+     "unspecified": 7.572474167308251e-05,
+     "filing_cabinets": 3.38101775094643e-05,
+     "desk_hutches": 2.9542399063867854e-05,
+     "computer_desk": 7.57695292923214e-05,
+     "writing_desk": 0.0001868024082221637,
+     "drafting_tables": 7.347964158664109e-06,
+     "other_product": 0.9990843447727148,
+     "gaming_desk": 8.052769570924564e-06,
+     "l_shaped_desk": 8.499889576857853e-06,
+     "standing_desk": 4.473340741260479e-05
+    }
+   },
+   "filter_seat_count": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.998934728485631,
+    "probabilities": {
+     "seats_6": 0.0001465919270157803,
+     "seats_2": 7.09539122270726e-05,
+     "not_specified": 0.998934728485631,
+     "seats_8": 0.00017878378933035229,
+     "seats_4": 0.00041527664407933925,
+     "seats_3": 0.0002536652417162003
+    }
+   },
+   "filter_bed_size": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9992702627453572,
+    "probabilities": {
+     "queen": 0.0001367967515862826,
+     "twin_xl": 8.336701085953097e-06,
+     "california_king": 0.00016953406954654975,
+     "king": 0.00014200512184157392,
+     "not_specified": 0.9992702627453572,
+     "twin": 2.7829023750428904e-05,
+     "full": 0.00024523558683187824
+    }
+   },
+   "cat_seating": {
+    "type": "choice",
+    "choice": "sectional_sofa",
+    "confidence": 0.9997944855402288,
+    "probabilities": {
+     "benches": 9.836487462687388e-07,
+     "stools": 3.1291581087348575e-06,
+     "lounge_chair": 4.828512420894926e-07,
+     "ottomans": 1.66287027036156e-05,
+     "chesterfield": 7.421126291809031e-07,
+     "sectional_sofa": 0.9997944855402288,
+     "chairs": 4.371353199431771e-06,
+     "futon": 2.4917768470698967e-06,
+     "step_stool": 2.844000105591308e-06,
+     "unspecified": 2.35042212903849e-06,
+     "dining_chair": 1.4355741907687097e-05,
+     "chaise_lounges": 3.412650385367049e-06,
+     "other_product": 2.5508251418461896e-05,
+     "rocking_chair": 1.5171877097278936e-06,
+     "office_chair": 6.222160089182785e-06,
+     "accent_chair": 9.412121968044431e-06,
+     "counter_stool": 1.5343341805153969e-06,
+     "loveseat": 1.529368628790757e-06,
+     "gaming_chair": 5.995293944832892e-07,
+     "bean_bags": 6.656776523710312e-06,
+     "recliners": 3.830628079959685e-06,
+     "sofas": 6.781473257371443e-05,
+     "bar_stool": 3.1242142185645227e-06,
+     "sleeper_sofa": 2.597273698228091e-05
+    }
+   },
+   "word_4": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9981113849878377,
+    "probabilities": {
+     "residual": 0.001723566137439407,
+     "filter": 0.9981113849878377,
+     "category": 0.00016504887472302765
+    }
+   },
+   "word_5": {
+    "type": "choice",
+    "choice": "category",
+    "confidence": 0.9882613369140455,
+    "probabilities": {
+     "residual": 0.002569572549555758,
+     "filter": 0.009169090536398587,
+     "category": 0.9882613369140455
+    }
+   },
+   "filter_width": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9962172136075095,
+    "probabilities": {
+     "48_to_72in": 0.0007025811030791321,
+     "not_specified": 0.9962172136075095,
+     "72_to_90in": 0.0020703721497843763,
+     "under_30in": 0.00014253417033730604,
+     "30_to_48in": 0.00020776330313945472,
+     "over_90in": 0.0006595356661501472
+    }
+   },
+   "word_7": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.999745546823996,
+    "probabilities": {
+     "category": 2.695777484304925e-05,
+     "residual": 0.0002274954011610191,
+     "filter": 0.999745546823996
+    }
+   },
+   "word_11": {
+    "type": "choice",
+    "choice": "residual",
+    "confidence": 0.9951081459394865,
+    "probabilities": {
+     "residual": 0.9951081459394865,
+     "category": 9.702688924745826e-05,
+     "filter": 0.004794827171265939
+    }
+   },
+   "word_1": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9992084056356036,
+    "probabilities": {
+     "residual": 0.0007144224975096442,
+     "filter": 0.9992084056356036,
+     "category": 7.717186688676103e-05
+    }
+   },
+   "filter_shape": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9284638272833212,
+    "probabilities": {
+     "curved": 0.0034095963658344517,
+     "oval": 0.0012345113019071006,
+     "rectangular": 0.06349903847556339,
+     "not_specified": 0.9284638272833212,
+     "hexagonal": 0.0011799802783706247,
+     "square": 0.0010148771716679357,
+     "round": 0.0011981691233351813
+    }
+   },
+   "word_2": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9995000104466015,
+    "probabilities": {
+     "filter": 0.9995000104466015,
+     "category": 0.00013395365013423263,
+     "residual": 0.000366035903264254
+    }
+   },
+   "filter_material": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9243506086738446,
+    "probabilities": {
+     "acacia": 7.87389503006953e-05,
+     "walnut": 3.102990069588067e-05,
+     "mango_wood": 1.778349177985032e-05,
+     "linen": 0.0001361081427524985,
+     "bamboo": 9.339484211599675e-05,
+     "rattan": 4.226022723641663e-05,
+     "not_specified": 0.9243506086738446,
+     "solid_wood": 0.00015544956914895176,
+     "pine": 8.211166111205001e-06,
+     "glass": 8.322659132410063e-06,
+     "leather": 8.67150023979358e-05,
+     "microfiber": 0.00023669706391044553,
+     "marble": 6.947133945783307e-06,
+     "velvet": 0.0001077523748551832,
+     "boucle": 1.8701212534105508e-05,
+     "engineered_wood": 2.7440048910875758e-05,
+     "metal": 1.980761211764031e-05,
+     "plastic": 1.0849081074526814e-05,
+     "faux_leather": 0.00011355354696799468,
+     "oak": 0.0002850165738024667,
+     "fabric": 0.0741646127263647
+    }
+   },
+   "word_10": {
+    "type": "choice",
+    "choice": "residual",
+    "confidence": 0.998725111421523,
+    "probabilities": {
+     "filter": 0.0012529932258661409,
+     "category": 2.1895352610809295e-05,
+     "residual": 0.998725111421523
+    }
+   },
+   "filter_room": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9696759056014788,
+    "probabilities": {
+     "kids_room": 0.00020466389008476886,
+     "bedroom": 0.00014015232289670733,
+     "outdoor": 6.545132527883644e-05,
+     "dining_room": 5.8069891854048304e-05,
+     "entryway": 1.6837239017326373e-05,
+     "not_specified": 0.9696759056014788,
+     "office": 3.418444130866238e-05,
+     "bathroom": 7.243267611826741e-05,
+     "living_room": 0.02973230261196245
+    }
+   },
+   "cat_beds": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.9977365505208379,
+    "probabilities": {
+     "trundle_bed": 6.942506627395773e-06,
+     "unspecified": 0.0009896988179208012,
+     "other_product": 0.9977365505208379,
+     "platform_bed": 2.8062477735308144e-05,
+     "sleigh_bed": 6.337836134780455e-06,
+     "headboards": 2.089228370433574e-05,
+     "upholstered_bed": 7.263500274881326e-05,
+     "daybeds": 8.899935812504864e-05,
+     "bunk_bed": 6.0827765137558284e-05,
+     "murphy_beds": 0.00012860228186954576,
+     "canopy_bed": 1.153183061283494e-05,
+     "bed_frames": 0.0007515085052062101,
+     "kids_beds": 5.0037081760262835e-05,
+     "loft_bed": 2.1008406038489516e-05,
+     "cribs": 2.6365325540940155e-05
+    }
+   },
+   "filter_color": {
+    "type": "choice",
+    "choice": "grey",
+    "confidence": 0.9875487672955813,
+    "probabilities": {
+     "red": 4.0613046990353137e-07,
+     "orange": 9.777230543164898e-06,
+     "yellow": 3.162786006593768e-06,
+     "pink": 1.852054638643392e-05,
+     "white": 1.9761476269084144e-05,
+     "teal": 5.804087186220568e-06,
+     "brown": 1.1950239335368207e-05,
+     "blue": 7.74190897010558e-06,
+     "emerald": 2.6854967405522443e-06,
+     "beige": 1.3177973910218962e-05,
+     "purple": 1.2168934807037164e-05,
+     "not_specified": 0.001892747473330651,
+     "charcoal": 0.010120317554845111,
+     "green": 3.398072133378209e-05,
+     "black": 8.29669255561818e-05,
+     "navy": 0.00017671527732214838,
+     "cream": 3.9347941406372434e-05,
+     "grey": 0.9875487672955813
+    }
+   },
+   "word_3": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9997220757851456,
+    "probabilities": {
+     "residual": 0.0002237205944088549,
+     "filter": 0.9997220757851456,
+     "category": 5.4203620445580596e-05
+    }
+   },
+   "cat_storage": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.99946732669359,
+    "probabilities": {
+     "cube_organizer": 2.1330432779448262e-05,
+     "cabinets": 4.073603983596702e-05,
+     "nightstands": 1.870821330880142e-05,
+     "bookcases": 0.00011096037291467173,
+     "other_product": 0.99946732669359,
+     "tv_stands": 2.2033573937482403e-05,
+     "shoe_storage": 5.385273351031132e-06,
+     "pantry_cabinet": 1.5843179873169647e-05,
+     "sideboards": 1.5451249999891067e-05,
+     "curio_cabinet": 1.7577488913966703e-05,
+     "unspecified": 0.0001258024622069071,
+     "ladder_shelf": 5.020325676197704e-06,
+     "dressers": 3.1491763612586006e-05,
+     "wardrobes": 3.701574334946844e-05,
+     "wall_shelf": 4.989653638233285e-06,
+     "accent_cabinet": 6.032753301242133e-05
+    }
+   },
+   "word_9": {
+    "type": "choice",
+    "choice": "residual",
+    "confidence": 0.9963556369218546,
+    "probabilities": {
+     "residual": 0.9963556369218546,
+     "filter": 0.003618475635894378,
+     "category": 2.588744225110496e-05
+    }
+   },
+   "filter_style": {
+    "type": "choice",
+    "choice": "mid_century",
+    "confidence": 0.9849241910169436,
+    "probabilities": {
+     "mid_century": 0.9849241910169436,
+     "minimalist": 0.0004997565975203033,
+     "farmhouse": 4.855938770819818e-05,
+     "vintage": 0.0007159583965852207,
+     "contemporary": 0.0021013467225215283,
+     "bohemian": 0.00026202634153519856,
+     "not_specified": 0.0003090264527871339,
+     "industrial": 9.858760284678355e-06,
+     "glam": 3.6826025864997314e-05,
+     "art_deco": 8.189713475681352e-05,
+     "japandi": 0.0002200800411439749,
+     "coastal": 5.301096992892313e-05,
+     "traditional": 1.2371388341306814e-05,
+     "modern": 0.01030070538916817,
+     "rustic": 6.846652197340472e-05,
+     "scandinavian": 0.0003559188529365109
+    }
+   },
+   "cat_mattresses": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.9984870083051792,
+    "probabilities": {
+     "adjustable_bases": 4.910458226853472e-05,
+     "latex_mattress": 4.808450946113902e-05,
+     "unspecified": 0.00021811451914194728,
+     "other_product": 0.9984870083051792,
+     "box_springs": 0.0001563144022937349,
+     "innerspring_mattress": 5.030685504556534e-05,
+     "memory_foam_mattress": 2.9881531821000928e-05,
+     "mattress_toppers": 1.8102437984356737e-05,
+     "mattress": 0.0009000455720584528,
+     "hybrid_mattress": 4.3037284745968295e-05
+    }
+   },
+   "word_6": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9173264706024524,
+    "probabilities": {
+     "filter": 0.9173264706024524,
+     "category": 0.000923955609508761,
+     "residual": 0.08174957378803889
+    }
+   },
+   "filter_leg_material": {
+    "type": "choice",
+    "choice": "oak",
+    "confidence": 0.9954615684080451,
+    "probabilities": {
+     "hairpin": 8.450469217624284e-05,
+     "oak": 0.9954615684080451,
+     "not_specified": 0.0032590355085748294,
+     "metal": 4.2364413665390614e-05,
+     "acrylic": 0.00017767768030470352,
+     "walnut": 5.08439869620124e-05,
+     "chrome": 0.00020398334931697024,
+     "wood": 0.0007200219609548094
+    }
+   },
+   "filter_firmness": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9994256981549937,
+    "probabilities": {
+     "soft": 9.957286319320168e-05,
+     "not_specified": 0.9994256981549937,
+     "firm": 0.00011125754833343489,
+     "extra_firm": 8.050102265023341e-05,
+     "medium": 0.0002829704108294293
+    }
+   },
+   "word_8": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9925144179869724,
+    "probabilities": {
+     "residual": 0.007235599014218027,
+     "filter": 0.9925144179869724,
+     "category": 0.0002499829988095739
+    }
+   },
+   "cat_tables": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.9992912638655964,
+    "probabilities": {
+     "console_tables": 4.483371750799015e-05,
+     "drop_leaf_table": 1.397791958271145e-05,
+     "nesting_coffee_table": 1.2045491731388419e-05,
+     "other_product": 0.9992912638655964,
+     "trestle_table": 6.505359581212685e-06,
+     "kitchen_islands": 3.5792380325391385e-05,
+     "vanity_tables": 7.927474557161214e-06,
+     "unspecified": 5.318005609958136e-05,
+     "side_tables": 4.169201275723781e-05,
+     "dining_tables": 0.00011429883117032145,
+     "coffee_tables": 0.0003033394321241279,
+     "pub_table": 5.282239461635869e-05,
+     "lift_top_coffee_table": 2.2321064349956033e-05
+    }
+   }
+  },
+  "full_again": {
+   "word_6": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9173264706024524,
+    "probabilities": {
+     "residual": 0.08174957378803889,
+     "filter": 0.9173264706024524,
+     "category": 0.000923955609508761
+    }
+   },
+   "filter_material": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9243506086738446,
+    "probabilities": {
+     "oak": 0.0002850165738024667,
+     "mango_wood": 1.778349177985032e-05,
+     "plastic": 1.0849081074526814e-05,
+     "linen": 0.0001361081427524985,
+     "bamboo": 9.339484211599675e-05,
+     "velvet": 0.0001077523748551832,
+     "walnut": 3.102990069588067e-05,
+     "marble": 6.947133945783307e-06,
+     "faux_leather": 0.00011355354696799468,
+     "solid_wood": 0.00015544956914895176,
+     "microfiber": 0.00023669706391044553,
+     "acacia": 7.87389503006953e-05,
+     "not_specified": 0.9243506086738446,
+     "pine": 8.211166111205001e-06,
+     "rattan": 4.226022723641663e-05,
+     "metal": 1.980761211764031e-05,
+     "leather": 8.67150023979358e-05,
+     "glass": 8.322659132410063e-06,
+     "fabric": 0.0741646127263647,
+     "engineered_wood": 2.7440048910875758e-05,
+     "boucle": 1.8701212534105508e-05
+    }
+   },
+   "cat_tables": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.9992912638655964,
+    "probabilities": {
+     "drop_leaf_table": 1.397791958271145e-05,
+     "coffee_tables": 0.0003033394321241279,
+     "console_tables": 4.483371750799015e-05,
+     "nesting_coffee_table": 1.2045491731388419e-05,
+     "kitchen_islands": 3.5792380325391385e-05,
+     "vanity_tables": 7.927474557161214e-06,
+     "trestle_table": 6.505359581212685e-06,
+     "dining_tables": 0.00011429883117032145,
+     "side_tables": 4.169201275723781e-05,
+     "pub_table": 5.282239461635869e-05,
+     "other_product": 0.9992912638655964,
+     "lift_top_coffee_table": 2.2321064349956033e-05,
+     "unspecified": 5.318005609958136e-05
+    }
+   },
+   "cat_mattresses": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.9984870083051792,
+    "probabilities": {
+     "mattress": 0.0009000455720584528,
+     "mattress_toppers": 1.8102437984356737e-05,
+     "unspecified": 0.00021811451914194728,
+     "hybrid_mattress": 4.3037284745968295e-05,
+     "innerspring_mattress": 5.030685504556534e-05,
+     "box_springs": 0.0001563144022937349,
+     "memory_foam_mattress": 2.9881531821000928e-05,
+     "other_product": 0.9984870083051792,
+     "latex_mattress": 4.808450946113902e-05,
+     "adjustable_bases": 4.910458226853472e-05
+    }
+   },
+   "cat_desks": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.9990843447727148,
+    "probabilities": {
+     "writing_desk": 0.0001868024082221637,
+     "unspecified": 7.572474167308251e-05,
+     "l_shaped_desk": 8.499889576857853e-06,
+     "standing_desk": 4.473340741260479e-05,
+     "desk_hutches": 2.9542399063867854e-05,
+     "drafting_tables": 7.347964158664109e-06,
+     "desk": 0.00044537194080516236,
+     "computer_desk": 7.57695292923214e-05,
+     "other_product": 0.9990843447727148,
+     "filing_cabinets": 3.38101775094643e-05,
+     "gaming_desk": 8.052769570924564e-06
+    }
+   },
+   "word_11": {
+    "type": "choice",
+    "choice": "residual",
+    "confidence": 0.9951081459394865,
+    "probabilities": {
+     "category": 9.702688924745826e-05,
+     "residual": 0.9951081459394865,
+     "filter": 0.004794827171265939
+    }
+   },
+   "filter_bed_size": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9992702627453572,
+    "probabilities": {
+     "twin": 2.7829023750428904e-05,
+     "full": 0.00024523558683187824,
+     "twin_xl": 8.336701085953097e-06,
+     "queen": 0.0001367967515862826,
+     "not_specified": 0.9992702627453572,
+     "king": 0.00014200512184157392,
+     "california_king": 0.00016953406954654975
+    }
+   },
+   "cat_seating": {
+    "type": "choice",
+    "choice": "sectional_sofa",
+    "confidence": 0.9997944855402288,
+    "probabilities": {
+     "recliners": 3.830628079959685e-06,
+     "gaming_chair": 5.995293944832892e-07,
+     "dining_chair": 1.4355741907687097e-05,
+     "chesterfield": 7.421126291809031e-07,
+     "step_stool": 2.844000105591308e-06,
+     "chaise_lounges": 3.412650385367049e-06,
+     "bean_bags": 6.656776523710312e-06,
+     "bar_stool": 3.1242142185645227e-06,
+     "lounge_chair": 4.828512420894926e-07,
+     "office_chair": 6.222160089182785e-06,
+     "stools": 3.1291581087348575e-06,
+     "counter_stool": 1.5343341805153969e-06,
+     "other_product": 2.5508251418461896e-05,
+     "ottomans": 1.66287027036156e-05,
+     "sleeper_sofa": 2.597273698228091e-05,
+     "sectional_sofa": 0.9997944855402288,
+     "loveseat": 1.529368628790757e-06,
+     "futon": 2.4917768470698967e-06,
+     "benches": 9.836487462687388e-07,
+     "accent_chair": 9.412121968044431e-06,
+     "unspecified": 2.35042212903849e-06,
+     "chairs": 4.371353199431771e-06,
+     "sofas": 6.781473257371443e-05,
+     "rocking_chair": 1.5171877097278936e-06
+    }
+   },
+   "filter_feature": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.990014490433918,
+    "probabilities": {
+     "not_specified": 0.990014490433918,
+     "adjustable_height": 0.0001543991251895575,
+     "stackable": 1.7140984545759347e-05,
+     "wheels": 2.590095440211508e-05,
+     "tufted": 9.11870122537913e-05,
+     "glass_doors": 0.00020764748530907384,
+     "swivel": 0.00014212117304850984,
+     "cooling": 5.852778530913405e-05,
+     "with_storage": 0.008705400591126343,
+     "usb_charging": 4.2006371374731176e-05,
+     "foldable": 2.1639819157262486e-05,
+     "with_drawers": 0.00024138488723673802,
+     "extendable": 6.19291846062611e-05,
+     "reclining": 0.00021622419252245926
+    }
+   },
+   "word_9": {
+    "type": "choice",
+    "choice": "residual",
+    "confidence": 0.9963556369218546,
+    "probabilities": {
+     "residual": 0.9963556369218546,
+     "category": 2.588744225110496e-05,
+     "filter": 0.003618475635894378
+    }
+   },
+   "filter_seat_count": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.998934728485631,
+    "probabilities": {
+     "seats_4": 0.00041527664407933925,
+     "seats_3": 0.0002536652417162003,
+     "seats_2": 7.09539122270726e-05,
+     "seats_8": 0.00017878378933035229,
+     "not_specified": 0.998934728485631,
+     "seats_6": 0.0001465919270157803
+    }
+   },
+   "filter_leg_color": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.5489306678707737,
+    "probabilities": {
+     "natural": 0.4487622275139703,
+     "silver": 7.385894604137878e-05,
+     "white": 0.0001023058256847953,
+     "not_specified": 0.5489306678707737,
+     "brass": 0.000410686679298948,
+     "dark_brown": 0.0009105696923687108,
+     "gold": 0.0003747362850864103,
+     "black": 0.0004349471867757786
+    }
+   },
+   "filter_leg_material": {
+    "type": "choice",
+    "choice": "oak",
+    "confidence": 0.9954615684080451,
+    "probabilities": {
+     "chrome": 0.00020398334931697024,
+     "oak": 0.9954615684080451,
+     "acrylic": 0.00017767768030470352,
+     "metal": 4.2364413665390614e-05,
+     "wood": 0.0007200219609548094,
+     "not_specified": 0.0032590355085748294,
+     "walnut": 5.08439869620124e-05,
+     "hairpin": 8.450469217624284e-05
+    }
+   },
+   "cat_beds": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.9977365505208379,
+    "probabilities": {
+     "trundle_bed": 6.942506627395773e-06,
+     "other_product": 0.9977365505208379,
+     "platform_bed": 2.8062477735308144e-05,
+     "unspecified": 0.0009896988179208012,
+     "sleigh_bed": 6.337836134780455e-06,
+     "murphy_beds": 0.00012860228186954576,
+     "upholstered_bed": 7.263500274881326e-05,
+     "loft_bed": 2.1008406038489516e-05,
+     "daybeds": 8.899935812504864e-05,
+     "canopy_bed": 1.153183061283494e-05,
+     "headboards": 2.089228370433574e-05,
+     "bed_frames": 0.0007515085052062101,
+     "cribs": 2.6365325540940155e-05,
+     "kids_beds": 5.0037081760262835e-05,
+     "bunk_bed": 6.0827765137558284e-05
+    }
+   },
+   "filter_width": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9962172136075095,
+    "probabilities": {
+     "30_to_48in": 0.00020776330313945472,
+     "not_specified": 0.9962172136075095,
+     "under_30in": 0.00014253417033730604,
+     "over_90in": 0.0006595356661501472,
+     "48_to_72in": 0.0007025811030791321,
+     "72_to_90in": 0.0020703721497843763
+    }
+   },
+   "word_10": {
+    "type": "choice",
+    "choice": "residual",
+    "confidence": 0.998725111421523,
+    "probabilities": {
+     "residual": 0.998725111421523,
+     "filter": 0.0012529932258661409,
+     "category": 2.1895352610809295e-05
+    }
+   },
+   "filter_style": {
+    "type": "choice",
+    "choice": "mid_century",
+    "confidence": 0.9849241910169436,
+    "probabilities": {
+     "minimalist": 0.0004997565975203033,
+     "scandinavian": 0.0003559188529365109,
+     "glam": 3.6826025864997314e-05,
+     "modern": 0.01030070538916817,
+     "contemporary": 0.0021013467225215283,
+     "mid_century": 0.9849241910169436,
+     "traditional": 1.2371388341306814e-05,
+     "farmhouse": 4.855938770819818e-05,
+     "rustic": 6.846652197340472e-05,
+     "vintage": 0.0007159583965852207,
+     "not_specified": 0.0003090264527871339,
+     "art_deco": 8.189713475681352e-05,
+     "bohemian": 0.00026202634153519856,
+     "industrial": 9.858760284678355e-06,
+     "japandi": 0.0002200800411439749,
+     "coastal": 5.301096992892313e-05
+    }
+   },
+   "word_3": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9997220757851456,
+    "probabilities": {
+     "residual": 0.0002237205944088549,
+     "filter": 0.9997220757851456,
+     "category": 5.4203620445580596e-05
+    }
+   },
+   "word_8": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9925144179869724,
+    "probabilities": {
+     "category": 0.0002499829988095739,
+     "filter": 0.9925144179869724,
+     "residual": 0.007235599014218027
+    }
+   },
+   "filter_firmness": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9994256981549937,
+    "probabilities": {
+     "not_specified": 0.9994256981549937,
+     "extra_firm": 8.050102265023341e-05,
+     "medium": 0.0002829704108294293,
+     "soft": 9.957286319320168e-05,
+     "firm": 0.00011125754833343489
+    }
+   },
+   "filter_room": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9696759056014788,
+    "probabilities": {
+     "kids_room": 0.00020466389008476886,
+     "dining_room": 5.8069891854048304e-05,
+     "office": 3.418444130866238e-05,
+     "entryway": 1.6837239017326373e-05,
+     "not_specified": 0.9696759056014788,
+     "bathroom": 7.243267611826741e-05,
+     "living_room": 0.02973230261196245,
+     "outdoor": 6.545132527883644e-05,
+     "bedroom": 0.00014015232289670733
+    }
+   },
+   "word_7": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.999745546823996,
+    "probabilities": {
+     "filter": 0.999745546823996,
+     "category": 2.695777484304925e-05,
+     "residual": 0.0002274954011610191
+    }
+   },
+   "cat_storage": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.99946732669359,
+    "probabilities": {
+     "bookcases": 0.00011096037291467173,
+     "cube_organizer": 2.1330432779448262e-05,
+     "nightstands": 1.870821330880142e-05,
+     "shoe_storage": 5.385273351031132e-06,
+     "sideboards": 1.5451249999891067e-05,
+     "dressers": 3.1491763612586006e-05,
+     "pantry_cabinet": 1.5843179873169647e-05,
+     "curio_cabinet": 1.7577488913966703e-05,
+     "wardrobes": 3.701574334946844e-05,
+     "ladder_shelf": 5.020325676197704e-06,
+     "cabinets": 4.073603983596702e-05,
+     "unspecified": 0.0001258024622069071,
+     "accent_cabinet": 6.032753301242133e-05,
+     "wall_shelf": 4.989653638233285e-06,
+     "other_product": 0.99946732669359,
+     "tv_stands": 2.2033573937482403e-05
+    }
+   },
+   "filter_color": {
+    "type": "choice",
+    "choice": "grey",
+    "confidence": 0.9875487672955813,
+    "probabilities": {
+     "emerald": 2.6854967405522443e-06,
+     "yellow": 3.162786006593768e-06,
+     "pink": 1.852054638643392e-05,
+     "green": 3.398072133378209e-05,
+     "charcoal": 0.010120317554845111,
+     "red": 4.0613046990353137e-07,
+     "not_specified": 0.001892747473330651,
+     "teal": 5.804087186220568e-06,
+     "blue": 7.74190897010558e-06,
+     "brown": 1.1950239335368207e-05,
+     "grey": 0.9875487672955813,
+     "purple": 1.2168934807037164e-05,
+     "cream": 3.9347941406372434e-05,
+     "white": 1.9761476269084144e-05,
+     "beige": 1.3177973910218962e-05,
+     "orange": 9.777230543164898e-06,
+     "navy": 0.00017671527732214838,
+     "black": 8.29669255561818e-05
+    }
+   },
+   "word_1": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9992084056356036,
+    "probabilities": {
+     "category": 7.717186688676103e-05,
+     "residual": 0.0007144224975096442,
+     "filter": 0.9992084056356036
+    }
+   },
+   "filter_shape": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9284638272833212,
+    "probabilities": {
+     "curved": 0.0034095963658344517,
+     "rectangular": 0.06349903847556339,
+     "round": 0.0011981691233351813,
+     "hexagonal": 0.0011799802783706247,
+     "oval": 0.0012345113019071006,
+     "square": 0.0010148771716679357,
+     "not_specified": 0.9284638272833212
+    }
+   },
+   "word_2": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9995000104466015,
+    "probabilities": {
+     "filter": 0.9995000104466015,
+     "residual": 0.000366035903264254,
+     "category": 0.00013395365013423263
+    }
+   },
+   "word_4": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9981113849878377,
+    "probabilities": {
+     "filter": 0.9981113849878377,
+     "category": 0.00016504887472302765,
+     "residual": 0.001723566137439407
+    }
+   },
+   "word_5": {
+    "type": "choice",
+    "choice": "category",
+    "confidence": 0.9882613369140455,
+    "probabilities": {
+     "residual": 0.002569572549555758,
+     "filter": 0.009169090536398587,
+     "category": 0.9882613369140455
+    }
+   }
+  },
+  "reversed": {
+   "filter_material": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9243506086738446,
+    "probabilities": {
+     "faux_leather": 0.00011355354696799468,
+     "fabric": 0.0741646127263647,
+     "metal": 1.980761211764031e-05,
+     "linen": 0.0001361081427524985,
+     "velvet": 0.0001077523748551832,
+     "pine": 8.211166111205001e-06,
+     "microfiber": 0.00023669706391044553,
+     "engineered_wood": 2.7440048910875758e-05,
+     "acacia": 7.87389503006953e-05,
+     "walnut": 3.102990069588067e-05,
+     "glass": 8.322659132410063e-06,
+     "leather": 8.67150023979358e-05,
+     "plastic": 1.0849081074526814e-05,
+     "boucle": 1.8701212534105508e-05,
+     "solid_wood": 0.00015544956914895176,
+     "oak": 0.0002850165738024667,
+     "not_specified": 0.9243506086738446,
+     "mango_wood": 1.778349177985032e-05,
+     "rattan": 4.226022723641663e-05,
+     "marble": 6.947133945783307e-06,
+     "bamboo": 9.339484211599675e-05
+    }
+   },
+   "filter_leg_material": {
+    "type": "choice",
+    "choice": "oak",
+    "confidence": 0.9954615684080451,
+    "probabilities": {
+     "chrome": 0.00020398334931697024,
+     "oak": 0.9954615684080451,
+     "metal": 4.2364413665390614e-05,
+     "walnut": 5.08439869620124e-05,
+     "wood": 0.0007200219609548094,
+     "acrylic": 0.00017767768030470352,
+     "not_specified": 0.0032590355085748294,
+     "hairpin": 8.450469217624284e-05
+    }
+   },
+   "cat_desks": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.9990843447727148,
+    "probabilities": {
+     "standing_desk": 4.473340741260479e-05,
+     "unspecified": 7.572474167308251e-05,
+     "desk": 0.00044537194080516236,
+     "other_product": 0.9990843447727148,
+     "filing_cabinets": 3.38101775094643e-05,
+     "writing_desk": 0.0001868024082221637,
+     "desk_hutches": 2.9542399063867854e-05,
+     "drafting_tables": 7.347964158664109e-06,
+     "computer_desk": 7.57695292923214e-05,
+     "l_shaped_desk": 8.499889576857853e-06,
+     "gaming_desk": 8.052769570924564e-06
+    }
+   },
+   "word_9": {
+    "type": "choice",
+    "choice": "residual",
+    "confidence": 0.9963556369218546,
+    "probabilities": {
+     "category": 2.588744225110496e-05,
+     "filter": 0.003618475635894378,
+     "residual": 0.9963556369218546
+    }
+   },
+   "filter_bed_size": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9992702627453572,
+    "probabilities": {
+     "king": 0.00014200512184157392,
+     "california_king": 0.00016953406954654975,
+     "queen": 0.0001367967515862826,
+     "not_specified": 0.9992702627453572,
+     "full": 0.00024523558683187824,
+     "twin": 2.7829023750428904e-05,
+     "twin_xl": 8.336701085953097e-06
+    }
+   },
+   "word_5": {
+    "type": "choice",
+    "choice": "category",
+    "confidence": 0.9882613369140455,
+    "probabilities": {
+     "filter": 0.009169090536398587,
+     "residual": 0.002569572549555758,
+     "category": 0.9882613369140455
+    }
+   },
+   "word_7": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.999745546823996,
+    "probabilities": {
+     "category": 2.695777484304925e-05,
+     "filter": 0.999745546823996,
+     "residual": 0.0002274954011610191
+    }
+   },
+   "filter_feature": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.990014490433918,
+    "probabilities": {
+     "extendable": 6.19291846062611e-05,
+     "reclining": 0.00021622419252245926,
+     "swivel": 0.00014212117304850984,
+     "tufted": 9.11870122537913e-05,
+     "stackable": 1.7140984545759347e-05,
+     "wheels": 2.590095440211508e-05,
+     "cooling": 5.852778530913405e-05,
+     "with_drawers": 0.00024138488723673802,
+     "foldable": 2.1639819157262486e-05,
+     "usb_charging": 4.2006371374731176e-05,
+     "not_specified": 0.990014490433918,
+     "with_storage": 0.008705400591126343,
+     "adjustable_height": 0.0001543991251895575,
+     "glass_doors": 0.00020764748530907384
+    }
+   },
+   "word_10": {
+    "type": "choice",
+    "choice": "residual",
+    "confidence": 0.998725111421523,
+    "probabilities": {
+     "filter": 0.0012529932258661409,
+     "residual": 0.998725111421523,
+     "category": 2.1895352610809295e-05
+    }
+   },
+   "word_11": {
+    "type": "choice",
+    "choice": "residual",
+    "confidence": 0.9951081459394865,
+    "probabilities": {
+     "category": 9.702688924745826e-05,
+     "residual": 0.9951081459394865,
+     "filter": 0.004794827171265939
+    }
+   },
+   "word_4": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9981113849878377,
+    "probabilities": {
+     "category": 0.00016504887472302765,
+     "filter": 0.9981113849878377,
+     "residual": 0.001723566137439407
+    }
+   },
+   "word_8": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9925144179869724,
+    "probabilities": {
+     "residual": 0.007235599014218027,
+     "filter": 0.9925144179869724,
+     "category": 0.0002499829988095739
+    }
+   },
+   "cat_mattresses": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.9984870083051792,
+    "probabilities": {
+     "memory_foam_mattress": 2.9881531821000928e-05,
+     "mattress_toppers": 1.8102437984356737e-05,
+     "latex_mattress": 4.808450946113902e-05,
+     "box_springs": 0.0001563144022937349,
+     "innerspring_mattress": 5.030685504556534e-05,
+     "adjustable_bases": 4.910458226853472e-05,
+     "other_product": 0.9984870083051792,
+     "unspecified": 0.00021811451914194728,
+     "hybrid_mattress": 4.3037284745968295e-05,
+     "mattress": 0.0009000455720584528
+    }
+   },
+   "filter_shape": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9284638272833212,
+    "probabilities": {
+     "hexagonal": 0.0011799802783706247,
+     "oval": 0.0012345113019071006,
+     "not_specified": 0.9284638272833212,
+     "curved": 0.0034095963658344517,
+     "square": 0.0010148771716679357,
+     "rectangular": 0.06349903847556339,
+     "round": 0.0011981691233351813
+    }
+   },
+   "filter_color": {
+    "type": "choice",
+    "choice": "grey",
+    "confidence": 0.9875487672955813,
+    "probabilities": {
+     "grey": 0.9875487672955813,
+     "teal": 5.804087186220568e-06,
+     "charcoal": 0.010120317554845111,
+     "blue": 7.74190897010558e-06,
+     "beige": 1.3177973910218962e-05,
+     "not_specified": 0.001892747473330651,
+     "pink": 1.852054638643392e-05,
+     "red": 4.0613046990353137e-07,
+     "cream": 3.9347941406372434e-05,
+     "green": 3.398072133378209e-05,
+     "navy": 0.00017671527732214838,
+     "white": 1.9761476269084144e-05,
+     "emerald": 2.6854967405522443e-06,
+     "brown": 1.1950239335368207e-05,
+     "yellow": 3.162786006593768e-06,
+     "purple": 1.2168934807037164e-05,
+     "black": 8.29669255561818e-05,
+     "orange": 9.777230543164898e-06
+    }
+   },
+   "word_6": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9173264706024524,
+    "probabilities": {
+     "residual": 0.08174957378803889,
+     "filter": 0.9173264706024524,
+     "category": 0.000923955609508761
+    }
+   },
+   "word_2": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9995000104466015,
+    "probabilities": {
+     "category": 0.00013395365013423263,
+     "residual": 0.000366035903264254,
+     "filter": 0.9995000104466015
+    }
+   },
+   "filter_leg_color": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.5489306678707737,
+    "probabilities": {
+     "black": 0.0004349471867757786,
+     "gold": 0.0003747362850864103,
+     "brass": 0.000410686679298948,
+     "silver": 7.385894604137878e-05,
+     "dark_brown": 0.0009105696923687108,
+     "white": 0.0001023058256847953,
+     "not_specified": 0.5489306678707737,
+     "natural": 0.4487622275139703
+    }
+   },
+   "filter_width": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9962172136075095,
+    "probabilities": {
+     "48_to_72in": 0.0007025811030791321,
+     "72_to_90in": 0.0020703721497843763,
+     "30_to_48in": 0.00020776330313945472,
+     "not_specified": 0.9962172136075095,
+     "under_30in": 0.00014253417033730604,
+     "over_90in": 0.0006595356661501472
+    }
+   },
+   "filter_firmness": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9994256981549937,
+    "probabilities": {
+     "medium": 0.0002829704108294293,
+     "extra_firm": 8.050102265023341e-05,
+     "soft": 9.957286319320168e-05,
+     "not_specified": 0.9994256981549937,
+     "firm": 0.00011125754833343489
+    }
+   },
+   "word_3": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9997220757851456,
+    "probabilities": {
+     "filter": 0.9997220757851456,
+     "residual": 0.0002237205944088549,
+     "category": 5.4203620445580596e-05
+    }
+   },
+   "cat_tables": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.9992912638655964,
+    "probabilities": {
+     "pub_table": 5.282239461635869e-05,
+     "trestle_table": 6.505359581212685e-06,
+     "lift_top_coffee_table": 2.2321064349956033e-05,
+     "side_tables": 4.169201275723781e-05,
+     "vanity_tables": 7.927474557161214e-06,
+     "console_tables": 4.483371750799015e-05,
+     "other_product": 0.9992912638655964,
+     "dining_tables": 0.00011429883117032145,
+     "drop_leaf_table": 1.397791958271145e-05,
+     "nesting_coffee_table": 1.2045491731388419e-05,
+     "kitchen_islands": 3.5792380325391385e-05,
+     "coffee_tables": 0.0003033394321241279,
+     "unspecified": 5.318005609958136e-05
+    }
+   },
+   "cat_seating": {
+    "type": "choice",
+    "choice": "sectional_sofa",
+    "confidence": 0.9997944855402288,
+    "probabilities": {
+     "unspecified": 2.35042212903849e-06,
+     "lounge_chair": 4.828512420894926e-07,
+     "rocking_chair": 1.5171877097278936e-06,
+     "stools": 3.1291581087348575e-06,
+     "chairs": 4.371353199431771e-06,
+     "bean_bags": 6.656776523710312e-06,
+     "dining_chair": 1.4355741907687097e-05,
+     "office_chair": 6.222160089182785e-06,
+     "ottomans": 1.66287027036156e-05,
+     "sleeper_sofa": 2.597273698228091e-05,
+     "bar_stool": 3.1242142185645227e-06,
+     "gaming_chair": 5.995293944832892e-07,
+     "recliners": 3.830628079959685e-06,
+     "other_product": 2.5508251418461896e-05,
+     "accent_chair": 9.412121968044431e-06,
+     "step_stool": 2.844000105591308e-06,
+     "sectional_sofa": 0.9997944855402288,
+     "sofas": 6.781473257371443e-05,
+     "futon": 2.4917768470698967e-06,
+     "benches": 9.836487462687388e-07,
+     "loveseat": 1.529368628790757e-06,
+     "chaise_lounges": 3.412650385367049e-06,
+     "counter_stool": 1.5343341805153969e-06,
+     "chesterfield": 7.421126291809031e-07
+    }
+   },
+   "word_1": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9992084056356036,
+    "probabilities": {
+     "category": 7.717186688676103e-05,
+     "residual": 0.0007144224975096442,
+     "filter": 0.9992084056356036
+    }
+   },
+   "cat_storage": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.99946732669359,
+    "probabilities": {
+     "wardrobes": 3.701574334946844e-05,
+     "dressers": 3.1491763612586006e-05,
+     "pantry_cabinet": 1.5843179873169647e-05,
+     "cube_organizer": 2.1330432779448262e-05,
+     "cabinets": 4.073603983596702e-05,
+     "sideboards": 1.5451249999891067e-05,
+     "bookcases": 0.00011096037291467173,
+     "curio_cabinet": 1.7577488913966703e-05,
+     "shoe_storage": 5.385273351031132e-06,
+     "tv_stands": 2.2033573937482403e-05,
+     "other_product": 0.99946732669359,
+     "ladder_shelf": 5.020325676197704e-06,
+     "accent_cabinet": 6.032753301242133e-05,
+     "nightstands": 1.870821330880142e-05,
+     "unspecified": 0.0001258024622069071,
+     "wall_shelf": 4.989653638233285e-06
+    }
+   },
+   "filter_room": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9696759056014788,
+    "probabilities": {
+     "not_specified": 0.9696759056014788,
+     "office": 3.418444130866238e-05,
+     "outdoor": 6.545132527883644e-05,
+     "kids_room": 0.00020466389008476886,
+     "living_room": 0.02973230261196245,
+     "bathroom": 7.243267611826741e-05,
+     "entryway": 1.6837239017326373e-05,
+     "bedroom": 0.00014015232289670733,
+     "dining_room": 5.8069891854048304e-05
+    }
+   },
+   "filter_style": {
+    "type": "choice",
+    "choice": "mid_century",
+    "confidence": 0.9849241910169436,
+    "probabilities": {
+     "glam": 3.6826025864997314e-05,
+     "modern": 0.01030070538916817,
+     "industrial": 9.858760284678355e-06,
+     "contemporary": 0.0021013467225215283,
+     "japandi": 0.0002200800411439749,
+     "traditional": 1.2371388341306814e-05,
+     "bohemian": 0.00026202634153519856,
+     "coastal": 5.301096992892313e-05,
+     "not_specified": 0.0003090264527871339,
+     "minimalist": 0.0004997565975203033,
+     "art_deco": 8.189713475681352e-05,
+     "rustic": 6.846652197340472e-05,
+     "vintage": 0.0007159583965852207,
+     "farmhouse": 4.855938770819818e-05,
+     "scandinavian": 0.0003559188529365109,
+     "mid_century": 0.9849241910169436
+    }
+   },
+   "cat_beds": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.9977365505208379,
+    "probabilities": {
+     "upholstered_bed": 7.263500274881326e-05,
+     "canopy_bed": 1.153183061283494e-05,
+     "platform_bed": 2.8062477735308144e-05,
+     "trundle_bed": 6.942506627395773e-06,
+     "loft_bed": 2.1008406038489516e-05,
+     "cribs": 2.6365325540940155e-05,
+     "bed_frames": 0.0007515085052062101,
+     "kids_beds": 5.0037081760262835e-05,
+     "murphy_beds": 0.00012860228186954576,
+     "headboards": 2.089228370433574e-05,
+     "daybeds": 8.899935812504864e-05,
+     "unspecified": 0.0009896988179208012,
+     "sleigh_bed": 6.337836134780455e-06,
+     "other_product": 0.9977365505208379,
+     "bunk_bed": 6.0827765137558284e-05
+    }
+   },
+   "filter_seat_count": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.998934728485631,
+    "probabilities": {
+     "seats_2": 7.09539122270726e-05,
+     "seats_8": 0.00017878378933035229,
+     "seats_4": 0.00041527664407933925,
+     "seats_6": 0.0001465919270157803,
+     "not_specified": 0.998934728485631,
+     "seats_3": 0.0002536652417162003
+    }
+   }
+  },
+  "reworded_filter_color": {
+   "filter_material": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9243506086738446,
+    "probabilities": {
+     "leather": 8.67150023979358e-05,
+     "marble": 6.947133945783307e-06,
+     "walnut": 3.102990069588067e-05,
+     "pine": 8.211166111205001e-06,
+     "solid_wood": 0.00015544956914895176,
+     "not_specified": 0.9243506086738446,
+     "bamboo": 9.339484211599675e-05,
+     "mango_wood": 1.778349177985032e-05,
+     "linen": 0.0001361081427524985,
+     "glass": 8.322659132410063e-06,
+     "fabric": 0.0741646127263647,
+     "rattan": 4.226022723641663e-05,
+     "faux_leather": 0.00011355354696799468,
+     "oak": 0.0002850165738024667,
+     "plastic": 1.0849081074526814e-05,
+     "engineered_wood": 2.7440048910875758e-05,
+     "microfiber": 0.00023669706391044553,
+     "velvet": 0.0001077523748551832,
+     "boucle": 1.8701212534105508e-05,
+     "metal": 1.980761211764031e-05,
+     "acacia": 7.87389503006953e-05
+    }
+   },
+   "word_2": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9995000104466015,
+    "probabilities": {
+     "category": 0.00013395365013423263,
+     "filter": 0.9995000104466015,
+     "residual": 0.000366035903264254
+    }
+   },
+   "cat_beds": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.9977365505208379,
+    "probabilities": {
+     "daybeds": 8.899935812504864e-05,
+     "upholstered_bed": 7.263500274881326e-05,
+     "bunk_bed": 6.0827765137558284e-05,
+     "canopy_bed": 1.153183061283494e-05,
+     "bed_frames": 0.0007515085052062101,
+     "platform_bed": 2.8062477735308144e-05,
+     "other_product": 0.9977365505208379,
+     "sleigh_bed": 6.337836134780455e-06,
+     "kids_beds": 5.0037081760262835e-05,
+     "murphy_beds": 0.00012860228186954576,
+     "headboards": 2.089228370433574e-05,
+     "cribs": 2.6365325540940155e-05,
+     "trundle_bed": 6.942506627395773e-06,
+     "unspecified": 0.0009896988179208012,
+     "loft_bed": 2.1008406038489516e-05
+    }
+   },
+   "word_8": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9925144179869724,
+    "probabilities": {
+     "residual": 0.007235599014218027,
+     "category": 0.0002499829988095739,
+     "filter": 0.9925144179869724
+    }
+   },
+   "filter_firmness": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9994256981549937,
+    "probabilities": {
+     "medium": 0.0002829704108294293,
+     "not_specified": 0.9994256981549937,
+     "firm": 0.00011125754833343489,
+     "extra_firm": 8.050102265023341e-05,
+     "soft": 9.957286319320168e-05
+    }
+   },
+   "filter_style": {
+    "type": "choice",
+    "choice": "mid_century",
+    "confidence": 0.9849241910169436,
+    "probabilities": {
+     "scandinavian": 0.0003559188529365109,
+     "mid_century": 0.9849241910169436,
+     "rustic": 6.846652197340472e-05,
+     "farmhouse": 4.855938770819818e-05,
+     "coastal": 5.301096992892313e-05,
+     "industrial": 9.858760284678355e-06,
+     "not_specified": 0.0003090264527871339,
+     "modern": 0.01030070538916817,
+     "glam": 3.6826025864997314e-05,
+     "japandi": 0.0002200800411439749,
+     "contemporary": 0.0021013467225215283,
+     "art_deco": 8.189713475681352e-05,
+     "bohemian": 0.00026202634153519856,
+     "minimalist": 0.0004997565975203033,
+     "vintage": 0.0007159583965852207,
+     "traditional": 1.2371388341306814e-05
+    }
+   },
+   "filter_width": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9962172136075095,
+    "probabilities": {
+     "72_to_90in": 0.0020703721497843763,
+     "under_30in": 0.00014253417033730604,
+     "30_to_48in": 0.00020776330313945472,
+     "not_specified": 0.9962172136075095,
+     "48_to_72in": 0.0007025811030791321,
+     "over_90in": 0.0006595356661501472
+    }
+   },
+   "filter_seat_count": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.998934728485631,
+    "probabilities": {
+     "seats_3": 0.0002536652417162003,
+     "seats_8": 0.00017878378933035229,
+     "seats_4": 0.00041527664407933925,
+     "not_specified": 0.998934728485631,
+     "seats_6": 0.0001465919270157803,
+     "seats_2": 7.09539122270726e-05
+    }
+   },
+   "filter_color": {
+    "type": "choice",
+    "choice": "grey",
+    "confidence": 0.9570909398938082,
+    "probabilities": {
+     "charcoal": 0.02995800337892783,
+     "pink": 2.4564322101158124e-05,
+     "white": 6.216762371872939e-05,
+     "teal": 5.040345977698541e-06,
+     "emerald": 1.4269605269636625e-05,
+     "yellow": 1.3060328733859807e-05,
+     "black": 0.00017689044812062358,
+     "cream": 9.83627639844134e-05,
+     "beige": 3.262036818748338e-05,
+     "red": 1.9104722855351053e-06,
+     "purple": 4.523752818173729e-05,
+     "navy": 0.00034209759181569484,
+     "green": 5.576295450336576e-05,
+     "orange": 4.338286398448021e-05,
+     "not_specified": 0.012009362671987062,
+     "blue": 1.3364487368320634e-05,
+     "brown": 1.2962351043835311e-05,
+     "grey": 0.9570909398938082
+    }
+   },
+   "filter_room": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9696759056014788,
+    "probabilities": {
+     "bathroom": 7.243267611826741e-05,
+     "dining_room": 5.8069891854048304e-05,
+     "outdoor": 6.545132527883644e-05,
+     "not_specified": 0.9696759056014788,
+     "office": 3.418444130866238e-05,
+     "kids_room": 0.00020466389008476886,
+     "living_room": 0.02973230261196245,
+     "bedroom": 0.00014015232289670733,
+     "entryway": 1.6837239017326373e-05
+    }
+   },
+   "cat_mattresses": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.9984870083051792,
+    "probabilities": {
+     "box_springs": 0.0001563144022937349,
+     "other_product": 0.9984870083051792,
+     "innerspring_mattress": 5.030685504556534e-05,
+     "mattress": 0.0009000455720584528,
+     "memory_foam_mattress": 2.9881531821000928e-05,
+     "unspecified": 0.00021811451914194728,
+     "mattress_toppers": 1.8102437984356737e-05,
+     "hybrid_mattress": 4.3037284745968295e-05,
+     "latex_mattress": 4.808450946113902e-05,
+     "adjustable_bases": 4.910458226853472e-05
+    }
+   },
+   "word_9": {
+    "type": "choice",
+    "choice": "residual",
+    "confidence": 0.9963556369218546,
+    "probabilities": {
+     "residual": 0.9963556369218546,
+     "category": 2.588744225110496e-05,
+     "filter": 0.003618475635894378
+    }
+   },
+   "word_6": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9173264706024524,
+    "probabilities": {
+     "category": 0.000923955609508761,
+     "residual": 0.08174957378803889,
+     "filter": 0.9173264706024524
+    }
+   },
+   "word_4": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9981113849878377,
+    "probabilities": {
+     "category": 0.00016504887472302765,
+     "filter": 0.9981113849878377,
+     "residual": 0.001723566137439407
+    }
+   },
+   "cat_desks": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.9990843447727148,
+    "probabilities": {
+     "filing_cabinets": 3.38101775094643e-05,
+     "l_shaped_desk": 8.499889576857853e-06,
+     "desk_hutches": 2.9542399063867854e-05,
+     "gaming_desk": 8.052769570924564e-06,
+     "unspecified": 7.572474167308251e-05,
+     "drafting_tables": 7.347964158664109e-06,
+     "other_product": 0.9990843447727148,
+     "writing_desk": 0.0001868024082221637,
+     "standing_desk": 4.473340741260479e-05,
+     "desk": 0.00044537194080516236,
+     "computer_desk": 7.57695292923214e-05
+    }
+   },
+   "word_1": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9992084056356036,
+    "probabilities": {
+     "residual": 0.0007144224975096442,
+     "category": 7.717186688676103e-05,
+     "filter": 0.9992084056356036
+    }
+   },
+   "filter_feature": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.990014490433918,
+    "probabilities": {
+     "stackable": 1.7140984545759347e-05,
+     "extendable": 6.19291846062611e-05,
+     "wheels": 2.590095440211508e-05,
+     "tufted": 9.11870122537913e-05,
+     "foldable": 2.1639819157262486e-05,
+     "not_specified": 0.990014490433918,
+     "adjustable_height": 0.0001543991251895575,
+     "cooling": 5.852778530913405e-05,
+     "glass_doors": 0.00020764748530907384,
+     "reclining": 0.00021622419252245926,
+     "swivel": 0.00014212117304850984,
+     "with_drawers": 0.00024138488723673802,
+     "with_storage": 0.008705400591126343,
+     "usb_charging": 4.2006371374731176e-05
+    }
+   },
+   "filter_bed_size": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9992702627453572,
+    "probabilities": {
+     "twin_xl": 8.336701085953097e-06,
+     "queen": 0.0001367967515862826,
+     "california_king": 0.00016953406954654975,
+     "king": 0.00014200512184157392,
+     "twin": 2.7829023750428904e-05,
+     "full": 0.00024523558683187824,
+     "not_specified": 0.9992702627453572
+    }
+   },
+   "cat_seating": {
+    "type": "choice",
+    "choice": "sectional_sofa",
+    "confidence": 0.9997944855402288,
+    "probabilities": {
+     "chairs": 4.371353199431771e-06,
+     "chesterfield": 7.421126291809031e-07,
+     "recliners": 3.830628079959685e-06,
+     "benches": 9.836487462687388e-07,
+     "lounge_chair": 4.828512420894926e-07,
+     "futon": 2.4917768470698967e-06,
+     "sectional_sofa": 0.9997944855402288,
+     "sleeper_sofa": 2.597273698228091e-05,
+     "step_stool": 2.844000105591308e-06,
+     "office_chair": 6.222160089182785e-06,
+     "dining_chair": 1.4355741907687097e-05,
+     "accent_chair": 9.412121968044431e-06,
+     "rocking_chair": 1.5171877097278936e-06,
+     "other_product": 2.5508251418461896e-05,
+     "counter_stool": 1.5343341805153969e-06,
+     "sofas": 6.781473257371443e-05,
+     "stools": 3.1291581087348575e-06,
+     "unspecified": 2.35042212903849e-06,
+     "chaise_lounges": 3.412650385367049e-06,
+     "bar_stool": 3.1242142185645227e-06,
+     "gaming_chair": 5.995293944832892e-07,
+     "loveseat": 1.529368628790757e-06,
+     "bean_bags": 6.656776523710312e-06,
+     "ottomans": 1.66287027036156e-05
+    }
+   },
+   "cat_tables": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.9992912638655964,
+    "probabilities": {
+     "coffee_tables": 0.0003033394321241279,
+     "drop_leaf_table": 1.397791958271145e-05,
+     "console_tables": 4.483371750799015e-05,
+     "other_product": 0.9992912638655964,
+     "side_tables": 4.169201275723781e-05,
+     "kitchen_islands": 3.5792380325391385e-05,
+     "nesting_coffee_table": 1.2045491731388419e-05,
+     "trestle_table": 6.505359581212685e-06,
+     "dining_tables": 0.00011429883117032145,
+     "pub_table": 5.282239461635869e-05,
+     "lift_top_coffee_table": 2.2321064349956033e-05,
+     "vanity_tables": 7.927474557161214e-06,
+     "unspecified": 5.318005609958136e-05
+    }
+   },
+   "cat_storage": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.99946732669359,
+    "probabilities": {
+     "ladder_shelf": 5.020325676197704e-06,
+     "other_product": 0.99946732669359,
+     "pantry_cabinet": 1.5843179873169647e-05,
+     "unspecified": 0.0001258024622069071,
+     "accent_cabinet": 6.032753301242133e-05,
+     "nightstands": 1.870821330880142e-05,
+     "sideboards": 1.5451249999891067e-05,
+     "curio_cabinet": 1.7577488913966703e-05,
+     "bookcases": 0.00011096037291467173,
+     "wardrobes": 3.701574334946844e-05,
+     "cube_organizer": 2.1330432779448262e-05,
+     "wall_shelf": 4.989653638233285e-06,
+     "cabinets": 4.073603983596702e-05,
+     "dressers": 3.1491763612586006e-05,
+     "tv_stands": 2.2033573937482403e-05,
+     "shoe_storage": 5.385273351031132e-06
+    }
+   },
+   "word_11": {
+    "type": "choice",
+    "choice": "residual",
+    "confidence": 0.9951081459394865,
+    "probabilities": {
+     "category": 9.702688924745826e-05,
+     "residual": 0.9951081459394865,
+     "filter": 0.004794827171265939
+    }
+   },
+   "filter_leg_color": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.5489306678707737,
+    "probabilities": {
+     "dark_brown": 0.0009105696923687108,
+     "white": 0.0001023058256847953,
+     "black": 0.0004349471867757786,
+     "gold": 0.0003747362850864103,
+     "silver": 7.385894604137878e-05,
+     "brass": 0.000410686679298948,
+     "natural": 0.4487622275139703,
+     "not_specified": 0.5489306678707737
+    }
+   },
+   "filter_leg_material": {
+    "type": "choice",
+    "choice": "oak",
+    "confidence": 0.9954615684080451,
+    "probabilities": {
+     "chrome": 0.00020398334931697024,
+     "oak": 0.9954615684080451,
+     "wood": 0.0007200219609548094,
+     "walnut": 5.08439869620124e-05,
+     "hairpin": 8.450469217624284e-05,
+     "metal": 4.2364413665390614e-05,
+     "acrylic": 0.00017767768030470352,
+     "not_specified": 0.0032590355085748294
+    }
+   },
+   "word_7": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.999745546823996,
+    "probabilities": {
+     "residual": 0.0002274954011610191,
+     "category": 2.695777484304925e-05,
+     "filter": 0.999745546823996
+    }
+   },
+   "filter_shape": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9284638272833212,
+    "probabilities": {
+     "hexagonal": 0.0011799802783706247,
+     "oval": 0.0012345113019071006,
+     "not_specified": 0.9284638272833212,
+     "rectangular": 0.06349903847556339,
+     "curved": 0.0034095963658344517,
+     "square": 0.0010148771716679357,
+     "round": 0.0011981691233351813
+    }
+   },
+   "word_10": {
+    "type": "choice",
+    "choice": "residual",
+    "confidence": 0.998725111421523,
+    "probabilities": {
+     "filter": 0.0012529932258661409,
+     "residual": 0.998725111421523,
+     "category": 2.1895352610809295e-05
+    }
+   },
+   "word_3": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9997220757851456,
+    "probabilities": {
+     "residual": 0.0002237205944088549,
+     "filter": 0.9997220757851456,
+     "category": 5.4203620445580596e-05
+    }
+   },
+   "word_5": {
+    "type": "choice",
+    "choice": "category",
+    "confidence": 0.9882613369140455,
+    "probabilities": {
+     "residual": 0.002569572549555758,
+     "filter": 0.009169090536398587,
+     "category": 0.9882613369140455
+    }
+   }
+  },
+  "plus_10_extra": {
+   "word_6": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9173264706024524,
+    "probabilities": {
+     "residual": 0.08174957378803889,
+     "category": 0.000923955609508761,
+     "filter": 0.9173264706024524
+    }
+   },
+   "word_10": {
+    "type": "choice",
+    "choice": "residual",
+    "confidence": 0.998725111421523,
+    "probabilities": {
+     "residual": 0.998725111421523,
+     "category": 2.1895352610809295e-05,
+     "filter": 0.0012529932258661409
+    }
+   },
+   "word_1": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9992084056356036,
+    "probabilities": {
+     "residual": 0.0007144224975096442,
+     "filter": 0.9992084056356036,
+     "category": 7.717186688676103e-05
+    }
+   },
+   "filter_leg_material": {
+    "type": "choice",
+    "choice": "oak",
+    "confidence": 0.9954615684080451,
+    "probabilities": {
+     "hairpin": 8.450469217624284e-05,
+     "oak": 0.9954615684080451,
+     "chrome": 0.00020398334931697024,
+     "wood": 0.0007200219609548094,
+     "not_specified": 0.0032590355085748294,
+     "metal": 4.2364413665390614e-05,
+     "walnut": 5.08439869620124e-05,
+     "acrylic": 0.00017767768030470352
+    }
+   },
+   "word_4": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9981113849878377,
+    "probabilities": {
+     "category": 0.00016504887472302765,
+     "residual": 0.001723566137439407,
+     "filter": 0.9981113849878377
+    }
+   },
+   "cat_tables": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.9992912638655964,
+    "probabilities": {
+     "kitchen_islands": 3.5792380325391385e-05,
+     "pub_table": 5.282239461635869e-05,
+     "other_product": 0.9992912638655964,
+     "lift_top_coffee_table": 2.2321064349956033e-05,
+     "drop_leaf_table": 1.397791958271145e-05,
+     "coffee_tables": 0.0003033394321241279,
+     "vanity_tables": 7.927474557161214e-06,
+     "console_tables": 4.483371750799015e-05,
+     "unspecified": 5.318005609958136e-05,
+     "dining_tables": 0.00011429883117032145,
+     "side_tables": 4.169201275723781e-05,
+     "nesting_coffee_table": 1.2045491731388419e-05,
+     "trestle_table": 6.505359581212685e-06
+    }
+   },
+   "word_7": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.999745546823996,
+    "probabilities": {
+     "category": 2.695777484304925e-05,
+     "filter": 0.999745546823996,
+     "residual": 0.0002274954011610191
+    }
+   },
+   "extra_3": {
+    "type": "choice",
+    "choice": "no",
+    "confidence": 0.9979166645631715,
+    "probabilities": {
+     "yes": 0.0020833354368284098,
+     "no": 0.9979166645631715
+    }
+   },
+   "word_9": {
+    "type": "choice",
+    "choice": "residual",
+    "confidence": 0.9963556369218546,
+    "probabilities": {
+     "residual": 0.9963556369218546,
+     "category": 2.588744225110496e-05,
+     "filter": 0.003618475635894378
+    }
+   },
+   "extra_2": {
+    "type": "choice",
+    "choice": "no",
+    "confidence": 0.9995927575116331,
+    "probabilities": {
+     "no": 0.9995927575116331,
+     "yes": 0.0004072424883667846
+    }
+   },
+   "word_3": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9997220757851456,
+    "probabilities": {
+     "residual": 0.0002237205944088549,
+     "category": 5.4203620445580596e-05,
+     "filter": 0.9997220757851456
+    }
+   },
+   "extra_9": {
+    "type": "choice",
+    "choice": "no",
+    "confidence": 0.9952623609008597,
+    "probabilities": {
+     "yes": 0.004737639099140387,
+     "no": 0.9952623609008597
+    }
+   },
+   "filter_bed_size": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9992702627453572,
+    "probabilities": {
+     "not_specified": 0.9992702627453572,
+     "california_king": 0.00016953406954654975,
+     "twin": 2.7829023750428904e-05,
+     "twin_xl": 8.336701085953097e-06,
+     "king": 0.00014200512184157392,
+     "full": 0.00024523558683187824,
+     "queen": 0.0001367967515862826
+    }
+   },
+   "filter_firmness": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9994256981549937,
+    "probabilities": {
+     "medium": 0.0002829704108294293,
+     "soft": 9.957286319320168e-05,
+     "not_specified": 0.9994256981549937,
+     "extra_firm": 8.050102265023341e-05,
+     "firm": 0.00011125754833343489
+    }
+   },
+   "filter_seat_count": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.998934728485631,
+    "probabilities": {
+     "seats_8": 0.00017878378933035229,
+     "seats_2": 7.09539122270726e-05,
+     "seats_4": 0.00041527664407933925,
+     "seats_3": 0.0002536652417162003,
+     "not_specified": 0.998934728485631,
+     "seats_6": 0.0001465919270157803
+    }
+   },
+   "filter_feature": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.990014490433918,
+    "probabilities": {
+     "with_drawers": 0.00024138488723673802,
+     "stackable": 1.7140984545759347e-05,
+     "adjustable_height": 0.0001543991251895575,
+     "tufted": 9.11870122537913e-05,
+     "swivel": 0.00014212117304850984,
+     "not_specified": 0.990014490433918,
+     "glass_doors": 0.00020764748530907384,
+     "cooling": 5.852778530913405e-05,
+     "foldable": 2.1639819157262486e-05,
+     "usb_charging": 4.2006371374731176e-05,
+     "extendable": 6.19291846062611e-05,
+     "wheels": 2.590095440211508e-05,
+     "with_storage": 0.008705400591126343,
+     "reclining": 0.00021622419252245926
+    }
+   },
+   "filter_material": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9243506086738446,
+    "probabilities": {
+     "velvet": 0.0001077523748551832,
+     "bamboo": 9.339484211599675e-05,
+     "linen": 0.0001361081427524985,
+     "rattan": 4.226022723641663e-05,
+     "acacia": 7.87389503006953e-05,
+     "metal": 1.980761211764031e-05,
+     "not_specified": 0.9243506086738446,
+     "faux_leather": 0.00011355354696799468,
+     "marble": 6.947133945783307e-06,
+     "fabric": 0.0741646127263647,
+     "plastic": 1.0849081074526814e-05,
+     "solid_wood": 0.00015544956914895176,
+     "glass": 8.322659132410063e-06,
+     "oak": 0.0002850165738024667,
+     "mango_wood": 1.778349177985032e-05,
+     "pine": 8.211166111205001e-06,
+     "boucle": 1.8701212534105508e-05,
+     "microfiber": 0.00023669706391044553,
+     "walnut": 3.102990069588067e-05,
+     "leather": 8.67150023979358e-05,
+     "engineered_wood": 2.7440048910875758e-05
+    }
+   },
+   "filter_width": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9962172136075095,
+    "probabilities": {
+     "over_90in": 0.0006595356661501472,
+     "48_to_72in": 0.0007025811030791321,
+     "72_to_90in": 0.0020703721497843763,
+     "under_30in": 0.00014253417033730604,
+     "not_specified": 0.9962172136075095,
+     "30_to_48in": 0.00020776330313945472
+    }
+   },
+   "word_8": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9925144179869724,
+    "probabilities": {
+     "category": 0.0002499829988095739,
+     "residual": 0.007235599014218027,
+     "filter": 0.9925144179869724
+    }
+   },
+   "word_5": {
+    "type": "choice",
+    "choice": "category",
+    "confidence": 0.9882613369140455,
+    "probabilities": {
+     "category": 0.9882613369140455,
+     "residual": 0.002569572549555758,
+     "filter": 0.009169090536398587
+    }
+   },
+   "extra_4": {
+    "type": "choice",
+    "choice": "yes",
+    "confidence": 0.9991205310540254,
+    "probabilities": {
+     "yes": 0.9991205310540254,
+     "no": 0.0008794689459746757
+    }
+   },
+   "extra_5": {
+    "type": "choice",
+    "choice": "yes",
+    "confidence": 0.9999700207090418,
+    "probabilities": {
+     "yes": 0.9999700207090418,
+     "no": 2.997929095821604e-05
+    }
+   },
+   "cat_desks": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.9990843447727148,
+    "probabilities": {
+     "computer_desk": 7.57695292923214e-05,
+     "drafting_tables": 7.347964158664109e-06,
+     "desk_hutches": 2.9542399063867854e-05,
+     "standing_desk": 4.473340741260479e-05,
+     "filing_cabinets": 3.38101775094643e-05,
+     "desk": 0.00044537194080516236,
+     "gaming_desk": 8.052769570924564e-06,
+     "l_shaped_desk": 8.499889576857853e-06,
+     "writing_desk": 0.0001868024082221637,
+     "unspecified": 7.572474167308251e-05,
+     "other_product": 0.9990843447727148
+    }
+   },
+   "cat_mattresses": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.9984870083051792,
+    "probabilities": {
+     "innerspring_mattress": 5.030685504556534e-05,
+     "mattress_toppers": 1.8102437984356737e-05,
+     "latex_mattress": 4.808450946113902e-05,
+     "box_springs": 0.0001563144022937349,
+     "unspecified": 0.00021811451914194728,
+     "memory_foam_mattress": 2.9881531821000928e-05,
+     "adjustable_bases": 4.910458226853472e-05,
+     "hybrid_mattress": 4.3037284745968295e-05,
+     "other_product": 0.9984870083051792,
+     "mattress": 0.0009000455720584528
+    }
+   },
+   "filter_leg_color": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.5489306678707737,
+    "probabilities": {
+     "gold": 0.0003747362850864103,
+     "dark_brown": 0.0009105696923687108,
+     "brass": 0.000410686679298948,
+     "silver": 7.385894604137878e-05,
+     "natural": 0.4487622275139703,
+     "not_specified": 0.5489306678707737,
+     "white": 0.0001023058256847953,
+     "black": 0.0004349471867757786
+    }
+   },
+   "cat_seating": {
+    "type": "choice",
+    "choice": "sectional_sofa",
+    "confidence": 0.9997944855402288,
+    "probabilities": {
+     "futon": 2.4917768470698967e-06,
+     "office_chair": 6.222160089182785e-06,
+     "benches": 9.836487462687388e-07,
+     "recliners": 3.830628079959685e-06,
+     "counter_stool": 1.5343341805153969e-06,
+     "bean_bags": 6.656776523710312e-06,
+     "loveseat": 1.529368628790757e-06,
+     "other_product": 2.5508251418461896e-05,
+     "rocking_chair": 1.5171877097278936e-06,
+     "dining_chair": 1.4355741907687097e-05,
+     "sectional_sofa": 0.9997944855402288,
+     "chairs": 4.371353199431771e-06,
+     "stools": 3.1291581087348575e-06,
+     "chesterfield": 7.421126291809031e-07,
+     "lounge_chair": 4.828512420894926e-07,
+     "gaming_chair": 5.995293944832892e-07,
+     "ottomans": 1.66287027036156e-05,
+     "chaise_lounges": 3.412650385367049e-06,
+     "unspecified": 2.35042212903849e-06,
+     "sofas": 6.781473257371443e-05,
+     "sleeper_sofa": 2.597273698228091e-05,
+     "accent_chair": 9.412121968044431e-06,
+     "bar_stool": 3.1242142185645227e-06,
+     "step_stool": 2.844000105591308e-06
+    }
+   },
+   "extra_6": {
+    "type": "choice",
+    "choice": "yes",
+    "confidence": 0.9524012363408931,
+    "probabilities": {
+     "no": 0.047598763659106834,
+     "yes": 0.9524012363408931
+    }
+   },
+   "cat_storage": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.99946732669359,
+    "probabilities": {
+     "cabinets": 4.073603983596702e-05,
+     "sideboards": 1.5451249999891067e-05,
+     "ladder_shelf": 5.020325676197704e-06,
+     "nightstands": 1.870821330880142e-05,
+     "dressers": 3.1491763612586006e-05,
+     "bookcases": 0.00011096037291467173,
+     "unspecified": 0.0001258024622069071,
+     "shoe_storage": 5.385273351031132e-06,
+     "other_product": 0.99946732669359,
+     "tv_stands": 2.2033573937482403e-05,
+     "wall_shelf": 4.989653638233285e-06,
+     "wardrobes": 3.701574334946844e-05,
+     "accent_cabinet": 6.032753301242133e-05,
+     "curio_cabinet": 1.7577488913966703e-05,
+     "cube_organizer": 2.1330432779448262e-05,
+     "pantry_cabinet": 1.5843179873169647e-05
+    }
+   },
+   "extra_1": {
+    "type": "choice",
+    "choice": "yes",
+    "confidence": 0.9491210233289115,
+    "probabilities": {
+     "no": 0.05087897667108847,
+     "yes": 0.9491210233289115
+    }
+   },
+   "extra_0": {
+    "type": "choice",
+    "choice": "yes",
+    "confidence": 0.9997384183651382,
+    "probabilities": {
+     "no": 0.0002615816348617106,
+     "yes": 0.9997384183651382
+    }
+   },
+   "filter_style": {
+    "type": "choice",
+    "choice": "mid_century",
+    "confidence": 0.9849241910169436,
+    "probabilities": {
+     "industrial": 9.858760284678355e-06,
+     "modern": 0.01030070538916817,
+     "rustic": 6.846652197340472e-05,
+     "scandinavian": 0.0003559188529365109,
+     "vintage": 0.0007159583965852207,
+     "mid_century": 0.9849241910169436,
+     "minimalist": 0.0004997565975203033,
+     "contemporary": 0.0021013467225215283,
+     "art_deco": 8.189713475681352e-05,
+     "farmhouse": 4.855938770819818e-05,
+     "not_specified": 0.0003090264527871339,
+     "glam": 3.6826025864997314e-05,
+     "japandi": 0.0002200800411439749,
+     "bohemian": 0.00026202634153519856,
+     "traditional": 1.2371388341306814e-05,
+     "coastal": 5.301096992892313e-05
+    }
+   },
+   "filter_color": {
+    "type": "choice",
+    "choice": "grey",
+    "confidence": 0.9875487672955813,
+    "probabilities": {
+     "green": 3.398072133378209e-05,
+     "grey": 0.9875487672955813,
+     "cream": 3.9347941406372434e-05,
+     "charcoal": 0.010120317554845111,
+     "purple": 1.2168934807037164e-05,
+     "not_specified": 0.001892747473330651,
+     "pink": 1.852054638643392e-05,
+     "red": 4.0613046990353137e-07,
+     "navy": 0.00017671527732214838,
+     "yellow": 3.162786006593768e-06,
+     "white": 1.9761476269084144e-05,
+     "black": 8.29669255561818e-05,
+     "beige": 1.3177973910218962e-05,
+     "blue": 7.74190897010558e-06,
+     "brown": 1.1950239335368207e-05,
+     "teal": 5.804087186220568e-06,
+     "emerald": 2.6854967405522443e-06,
+     "orange": 9.777230543164898e-06
+    }
+   },
+   "filter_room": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9696759056014788,
+    "probabilities": {
+     "bathroom": 7.243267611826741e-05,
+     "entryway": 1.6837239017326373e-05,
+     "office": 3.418444130866238e-05,
+     "not_specified": 0.9696759056014788,
+     "dining_room": 5.8069891854048304e-05,
+     "kids_room": 0.00020466389008476886,
+     "living_room": 0.02973230261196245,
+     "bedroom": 0.00014015232289670733,
+     "outdoor": 6.545132527883644e-05
+    }
+   },
+   "filter_shape": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9284638272833212,
+    "probabilities": {
+     "oval": 0.0012345113019071006,
+     "round": 0.0011981691233351813,
+     "square": 0.0010148771716679357,
+     "not_specified": 0.9284638272833212,
+     "rectangular": 0.06349903847556339,
+     "hexagonal": 0.0011799802783706247,
+     "curved": 0.0034095963658344517
+    }
+   },
+   "cat_beds": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.9977365505208379,
+    "probabilities": {
+     "bunk_bed": 6.0827765137558284e-05,
+     "bed_frames": 0.0007515085052062101,
+     "murphy_beds": 0.00012860228186954576,
+     "kids_beds": 5.0037081760262835e-05,
+     "canopy_bed": 1.153183061283494e-05,
+     "cribs": 2.6365325540940155e-05,
+     "daybeds": 8.899935812504864e-05,
+     "platform_bed": 2.8062477735308144e-05,
+     "upholstered_bed": 7.263500274881326e-05,
+     "headboards": 2.089228370433574e-05,
+     "unspecified": 0.0009896988179208012,
+     "loft_bed": 2.1008406038489516e-05,
+     "other_product": 0.9977365505208379,
+     "sleigh_bed": 6.337836134780455e-06,
+     "trundle_bed": 6.942506627395773e-06
+    }
+   },
+   "extra_7": {
+    "type": "choice",
+    "choice": "no",
+    "confidence": 0.9966559524699535,
+    "probabilities": {
+     "yes": 0.0033440475300464856,
+     "no": 0.9966559524699535
+    }
+   },
+   "word_2": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9995000104466015,
+    "probabilities": {
+     "category": 0.00013395365013423263,
+     "filter": 0.9995000104466015,
+     "residual": 0.000366035903264254
+    }
+   },
+   "extra_8": {
+    "type": "choice",
+    "choice": "yes",
+    "confidence": 0.9991510164295772,
+    "probabilities": {
+     "yes": 0.9991510164295772,
+     "no": 0.0008489835704228335
+    }
+   },
+   "word_11": {
+    "type": "choice",
+    "choice": "residual",
+    "confidence": 0.9951081459394865,
+    "probabilities": {
+     "filter": 0.004794827171265939,
+     "category": 9.702688924745826e-05,
+     "residual": 0.9951081459394865
+    }
+   }
+  },
+  "alone_filter_leg_color": {
+   "filter_leg_color": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.5489306678707737,
+    "probabilities": {
+     "gold": 0.0003747362850864103,
+     "natural": 0.4487622275139703,
+     "black": 0.0004349471867757786,
+     "not_specified": 0.5489306678707737,
+     "dark_brown": 0.0009105696923687108,
+     "white": 0.0001023058256847953,
+     "brass": 0.000410686679298948,
+     "silver": 7.385894604137878e-05
+    }
+   }
+  },
+  "with_5_filter_leg_color": {
+   "cat_seating": {
+    "type": "choice",
+    "choice": "sectional_sofa",
+    "confidence": 0.9997944855402288,
+    "probabilities": {
+     "chesterfield": 7.421126291809031e-07,
+     "bean_bags": 6.656776523710312e-06,
+     "bar_stool": 3.1242142185645227e-06,
+     "counter_stool": 1.5343341805153969e-06,
+     "futon": 2.4917768470698967e-06,
+     "dining_chair": 1.4355741907687097e-05,
+     "step_stool": 2.844000105591308e-06,
+     "rocking_chair": 1.5171877097278936e-06,
+     "office_chair": 6.222160089182785e-06,
+     "sectional_sofa": 0.9997944855402288,
+     "chairs": 4.371353199431771e-06,
+     "lounge_chair": 4.828512420894926e-07,
+     "gaming_chair": 5.995293944832892e-07,
+     "sofas": 6.781473257371443e-05,
+     "loveseat": 1.529368628790757e-06,
+     "unspecified": 2.35042212903849e-06,
+     "accent_chair": 9.412121968044431e-06,
+     "benches": 9.836487462687388e-07,
+     "chaise_lounges": 3.412650385367049e-06,
+     "ottomans": 1.66287027036156e-05,
+     "stools": 3.1291581087348575e-06,
+     "other_product": 2.5508251418461896e-05,
+     "sleeper_sofa": 2.597273698228091e-05,
+     "recliners": 3.830628079959685e-06
+    }
+   },
+   "cat_beds": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.9977365505208379,
+    "probabilities": {
+     "loft_bed": 2.1008406038489516e-05,
+     "kids_beds": 5.0037081760262835e-05,
+     "trundle_bed": 6.942506627395773e-06,
+     "murphy_beds": 0.00012860228186954576,
+     "upholstered_bed": 7.263500274881326e-05,
+     "unspecified": 0.0009896988179208012,
+     "daybeds": 8.899935812504864e-05,
+     "other_product": 0.9977365505208379,
+     "platform_bed": 2.8062477735308144e-05,
+     "canopy_bed": 1.153183061283494e-05,
+     "headboards": 2.089228370433574e-05,
+     "bed_frames": 0.0007515085052062101,
+     "bunk_bed": 6.0827765137558284e-05,
+     "cribs": 2.6365325540940155e-05,
+     "sleigh_bed": 6.337836134780455e-06
+    }
+   },
+   "cat_tables": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.9992912638655964,
+    "probabilities": {
+     "vanity_tables": 7.927474557161214e-06,
+     "side_tables": 4.169201275723781e-05,
+     "drop_leaf_table": 1.397791958271145e-05,
+     "coffee_tables": 0.0003033394321241279,
+     "nesting_coffee_table": 1.2045491731388419e-05,
+     "lift_top_coffee_table": 2.2321064349956033e-05,
+     "pub_table": 5.282239461635869e-05,
+     "dining_tables": 0.00011429883117032145,
+     "unspecified": 5.318005609958136e-05,
+     "kitchen_islands": 3.5792380325391385e-05,
+     "console_tables": 4.483371750799015e-05,
+     "trestle_table": 6.505359581212685e-06,
+     "other_product": 0.9992912638655964
+    }
+   },
+   "cat_storage": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.99946732669359,
+    "probabilities": {
+     "cabinets": 4.073603983596702e-05,
+     "bookcases": 0.00011096037291467173,
+     "accent_cabinet": 6.032753301242133e-05,
+     "shoe_storage": 5.385273351031132e-06,
+     "pantry_cabinet": 1.5843179873169647e-05,
+     "other_product": 0.99946732669359,
+     "cube_organizer": 2.1330432779448262e-05,
+     "nightstands": 1.870821330880142e-05,
+     "unspecified": 0.0001258024622069071,
+     "curio_cabinet": 1.7577488913966703e-05,
+     "sideboards": 1.5451249999891067e-05,
+     "wall_shelf": 4.989653638233285e-06,
+     "wardrobes": 3.701574334946844e-05,
+     "ladder_shelf": 5.020325676197704e-06,
+     "tv_stands": 2.2033573937482403e-05,
+     "dressers": 3.1491763612586006e-05
+    }
+   },
+   "cat_mattresses": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.9984870083051792,
+    "probabilities": {
+     "box_springs": 0.0001563144022937349,
+     "other_product": 0.9984870083051792,
+     "latex_mattress": 4.808450946113902e-05,
+     "mattress": 0.0009000455720584528,
+     "unspecified": 0.00021811451914194728,
+     "mattress_toppers": 1.8102437984356737e-05,
+     "memory_foam_mattress": 2.9881531821000928e-05,
+     "hybrid_mattress": 4.3037284745968295e-05,
+     "innerspring_mattress": 5.030685504556534e-05,
+     "adjustable_bases": 4.910458226853472e-05
+    }
+   },
+   "filter_leg_color": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.5489306678707737,
+    "probabilities": {
+     "dark_brown": 0.0009105696923687108,
+     "brass": 0.000410686679298948,
+     "white": 0.0001023058256847953,
+     "natural": 0.4487622275139703,
+     "silver": 7.385894604137878e-05,
+     "not_specified": 0.5489306678707737,
+     "black": 0.0004349471867757786,
+     "gold": 0.0003747362850864103
+    }
+   }
+  },
+  "alone_word_6": {
+   "word_6": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9173264706024524,
+    "probabilities": {
+     "residual": 0.08174957378803889,
+     "category": 0.000923955609508761,
+     "filter": 0.9173264706024524
+    }
+   }
+  },
+  "with_5_word_6": {
+   "cat_mattresses": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.9984870083051792,
+    "probabilities": {
+     "memory_foam_mattress": 2.9881531821000928e-05,
+     "other_product": 0.9984870083051792,
+     "hybrid_mattress": 4.3037284745968295e-05,
+     "mattress_toppers": 1.8102437984356737e-05,
+     "box_springs": 0.0001563144022937349,
+     "mattress": 0.0009000455720584528,
+     "innerspring_mattress": 5.030685504556534e-05,
+     "latex_mattress": 4.808450946113902e-05,
+     "adjustable_bases": 4.910458226853472e-05,
+     "unspecified": 0.00021811451914194728
+    }
+   },
+   "cat_storage": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.99946732669359,
+    "probabilities": {
+     "nightstands": 1.870821330880142e-05,
+     "shoe_storage": 5.385273351031132e-06,
+     "dressers": 3.1491763612586006e-05,
+     "cube_organizer": 2.1330432779448262e-05,
+     "tv_stands": 2.2033573937482403e-05,
+     "unspecified": 0.0001258024622069071,
+     "wardrobes": 3.701574334946844e-05,
+     "pantry_cabinet": 1.5843179873169647e-05,
+     "other_product": 0.99946732669359,
+     "bookcases": 0.00011096037291467173,
+     "accent_cabinet": 6.032753301242133e-05,
+     "wall_shelf": 4.989653638233285e-06,
+     "ladder_shelf": 5.020325676197704e-06,
+     "curio_cabinet": 1.7577488913966703e-05,
+     "cabinets": 4.073603983596702e-05,
+     "sideboards": 1.5451249999891067e-05
+    }
+   },
+   "word_6": {
+    "type": "choice",
+    "choice": "filter",
+    "confidence": 0.9173264706024524,
+    "probabilities": {
+     "filter": 0.9173264706024524,
+     "residual": 0.08174957378803889,
+     "category": 0.000923955609508761
+    }
+   },
+   "cat_seating": {
+    "type": "choice",
+    "choice": "sectional_sofa",
+    "confidence": 0.9997944855402288,
+    "probabilities": {
+     "loveseat": 1.529368628790757e-06,
+     "bar_stool": 3.1242142185645227e-06,
+     "futon": 2.4917768470698967e-06,
+     "sleeper_sofa": 2.597273698228091e-05,
+     "chesterfield": 7.421126291809031e-07,
+     "gaming_chair": 5.995293944832892e-07,
+     "unspecified": 2.35042212903849e-06,
+     "dining_chair": 1.4355741907687097e-05,
+     "office_chair": 6.222160089182785e-06,
+     "benches": 9.836487462687388e-07,
+     "sectional_sofa": 0.9997944855402288,
+     "other_product": 2.5508251418461896e-05,
+     "step_stool": 2.844000105591308e-06,
+     "lounge_chair": 4.828512420894926e-07,
+     "bean_bags": 6.656776523710312e-06,
+     "recliners": 3.830628079959685e-06,
+     "ottomans": 1.66287027036156e-05,
+     "chaise_lounges": 3.412650385367049e-06,
+     "counter_stool": 1.5343341805153969e-06,
+     "chairs": 4.371353199431771e-06,
+     "sofas": 6.781473257371443e-05,
+     "stools": 3.1291581087348575e-06,
+     "rocking_chair": 1.5171877097278936e-06,
+     "accent_chair": 9.412121968044431e-06
+    }
+   },
+   "cat_tables": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.9992912638655964,
+    "probabilities": {
+     "other_product": 0.9992912638655964,
+     "trestle_table": 6.505359581212685e-06,
+     "kitchen_islands": 3.5792380325391385e-05,
+     "side_tables": 4.169201275723781e-05,
+     "nesting_coffee_table": 1.2045491731388419e-05,
+     "dining_tables": 0.00011429883117032145,
+     "coffee_tables": 0.0003033394321241279,
+     "pub_table": 5.282239461635869e-05,
+     "console_tables": 4.483371750799015e-05,
+     "unspecified": 5.318005609958136e-05,
+     "vanity_tables": 7.927474557161214e-06,
+     "lift_top_coffee_table": 2.2321064349956033e-05,
+     "drop_leaf_table": 1.397791958271145e-05
+    }
+   },
+   "cat_beds": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.9977365505208379,
+    "probabilities": {
+     "canopy_bed": 1.153183061283494e-05,
+     "platform_bed": 2.8062477735308144e-05,
+     "sleigh_bed": 6.337836134780455e-06,
+     "loft_bed": 2.1008406038489516e-05,
+     "cribs": 2.6365325540940155e-05,
+     "unspecified": 0.0009896988179208012,
+     "upholstered_bed": 7.263500274881326e-05,
+     "headboards": 2.089228370433574e-05,
+     "trundle_bed": 6.942506627395773e-06,
+     "other_product": 0.9977365505208379,
+     "murphy_beds": 0.00012860228186954576,
+     "daybeds": 8.899935812504864e-05,
+     "kids_beds": 5.0037081760262835e-05,
+     "bunk_bed": 6.0827765137558284e-05,
+     "bed_frames": 0.0007515085052062101
+    }
+   }
+  },
+  "alone_filter_material": {
+   "filter_material": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9243506086738446,
+    "probabilities": {
+     "oak": 0.0002850165738024667,
+     "not_specified": 0.9243506086738446,
+     "glass": 8.322659132410063e-06,
+     "boucle": 1.8701212534105508e-05,
+     "metal": 1.980761211764031e-05,
+     "pine": 8.211166111205001e-06,
+     "walnut": 3.102990069588067e-05,
+     "velvet": 0.0001077523748551832,
+     "leather": 8.67150023979358e-05,
+     "engineered_wood": 2.7440048910875758e-05,
+     "bamboo": 9.339484211599675e-05,
+     "fabric": 0.0741646127263647,
+     "mango_wood": 1.778349177985032e-05,
+     "plastic": 1.0849081074526814e-05,
+     "acacia": 7.87389503006953e-05,
+     "faux_leather": 0.00011355354696799468,
+     "linen": 0.0001361081427524985,
+     "rattan": 4.226022723641663e-05,
+     "solid_wood": 0.00015544956914895176,
+     "marble": 6.947133945783307e-06,
+     "microfiber": 0.00023669706391044553
+    }
+   }
+  },
+  "with_5_filter_material": {
+   "filter_material": {
+    "type": "choice",
+    "choice": "not_specified",
+    "confidence": 0.9243506086738446,
+    "probabilities": {
+     "bamboo": 9.339484211599675e-05,
+     "microfiber": 0.00023669706391044553,
+     "not_specified": 0.9243506086738446,
+     "glass": 8.322659132410063e-06,
+     "mango_wood": 1.778349177985032e-05,
+     "leather": 8.67150023979358e-05,
+     "faux_leather": 0.00011355354696799468,
+     "boucle": 1.8701212534105508e-05,
+     "linen": 0.0001361081427524985,
+     "walnut": 3.102990069588067e-05,
+     "pine": 8.211166111205001e-06,
+     "marble": 6.947133945783307e-06,
+     "acacia": 7.87389503006953e-05,
+     "oak": 0.0002850165738024667,
+     "plastic": 1.0849081074526814e-05,
+     "solid_wood": 0.00015544956914895176,
+     "metal": 1.980761211764031e-05,
+     "velvet": 0.0001077523748551832,
+     "rattan": 4.226022723641663e-05,
+     "fabric": 0.0741646127263647,
+     "engineered_wood": 2.7440048910875758e-05
+    }
+   },
+   "cat_beds": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.9977365505208379,
+    "probabilities": {
+     "daybeds": 8.899935812504864e-05,
+     "canopy_bed": 1.153183061283494e-05,
+     "cribs": 2.6365325540940155e-05,
+     "trundle_bed": 6.942506627395773e-06,
+     "loft_bed": 2.1008406038489516e-05,
+     "sleigh_bed": 6.337836134780455e-06,
+     "unspecified": 0.0009896988179208012,
+     "upholstered_bed": 7.263500274881326e-05,
+     "murphy_beds": 0.00012860228186954576,
+     "bunk_bed": 6.0827765137558284e-05,
+     "kids_beds": 5.0037081760262835e-05,
+     "other_product": 0.9977365505208379,
+     "headboards": 2.089228370433574e-05,
+     "platform_bed": 2.8062477735308144e-05,
+     "bed_frames": 0.0007515085052062101
+    }
+   },
+   "cat_tables": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.9992912638655964,
+    "probabilities": {
+     "other_product": 0.9992912638655964,
+     "drop_leaf_table": 1.397791958271145e-05,
+     "vanity_tables": 7.927474557161214e-06,
+     "side_tables": 4.169201275723781e-05,
+     "console_tables": 4.483371750799015e-05,
+     "dining_tables": 0.00011429883117032145,
+     "pub_table": 5.282239461635869e-05,
+     "trestle_table": 6.505359581212685e-06,
+     "lift_top_coffee_table": 2.2321064349956033e-05,
+     "kitchen_islands": 3.5792380325391385e-05,
+     "coffee_tables": 0.0003033394321241279,
+     "nesting_coffee_table": 1.2045491731388419e-05,
+     "unspecified": 5.318005609958136e-05
+    }
+   },
+   "cat_storage": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.99946732669359,
+    "probabilities": {
+     "tv_stands": 2.2033573937482403e-05,
+     "unspecified": 0.0001258024622069071,
+     "dressers": 3.1491763612586006e-05,
+     "shoe_storage": 5.385273351031132e-06,
+     "accent_cabinet": 6.032753301242133e-05,
+     "sideboards": 1.5451249999891067e-05,
+     "other_product": 0.99946732669359,
+     "pantry_cabinet": 1.5843179873169647e-05,
+     "cube_organizer": 2.1330432779448262e-05,
+     "curio_cabinet": 1.7577488913966703e-05,
+     "wall_shelf": 4.989653638233285e-06,
+     "bookcases": 0.00011096037291467173,
+     "wardrobes": 3.701574334946844e-05,
+     "ladder_shelf": 5.020325676197704e-06,
+     "nightstands": 1.870821330880142e-05,
+     "cabinets": 4.073603983596702e-05
+    }
+   },
+   "cat_seating": {
+    "type": "choice",
+    "choice": "sectional_sofa",
+    "confidence": 0.9997944855402288,
+    "probabilities": {
+     "chesterfield": 7.421126291809031e-07,
+     "accent_chair": 9.412121968044431e-06,
+     "futon": 2.4917768470698967e-06,
+     "lounge_chair": 4.828512420894926e-07,
+     "recliners": 3.830628079959685e-06,
+     "loveseat": 1.529368628790757e-06,
+     "chaise_lounges": 3.412650385367049e-06,
+     "chairs": 4.371353199431771e-06,
+     "ottomans": 1.66287027036156e-05,
+     "step_stool": 2.844000105591308e-06,
+     "dining_chair": 1.4355741907687097e-05,
+     "gaming_chair": 5.995293944832892e-07,
+     "unspecified": 2.35042212903849e-06,
+     "rocking_chair": 1.5171877097278936e-06,
+     "office_chair": 6.222160089182785e-06,
+     "benches": 9.836487462687388e-07,
+     "sleeper_sofa": 2.597273698228091e-05,
+     "bar_stool": 3.1242142185645227e-06,
+     "bean_bags": 6.656776523710312e-06,
+     "counter_stool": 1.5343341805153969e-06,
+     "other_product": 2.5508251418461896e-05,
+     "sectional_sofa": 0.9997944855402288,
+     "stools": 3.1291581087348575e-06,
+     "sofas": 6.781473257371443e-05
+    }
+   },
+   "cat_mattresses": {
+    "type": "choice",
+    "choice": "other_product",
+    "confidence": 0.9984870083051792,
+    "probabilities": {
+     "mattress_toppers": 1.8102437984356737e-05,
+     "adjustable_bases": 4.910458226853472e-05,
+     "memory_foam_mattress": 2.9881531821000928e-05,
+     "other_product": 0.9984870083051792,
+     "latex_mattress": 4.808450946113902e-05,
+     "mattress": 0.0009000455720584528,
+     "box_springs": 0.0001563144022937349,
+     "unspecified": 0.00021811451914194728,
+     "hybrid_mattress": 4.3037284745968295e-05,
+     "innerspring_mattress": 5.030685504556534e-05
+    }
+   }
+  }
+ }
+}

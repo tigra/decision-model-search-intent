@@ -45,16 +45,21 @@ NAMES = {
     "embedded@decider:strands-decider-2b": "Strands Decider 2B",
     "embedded@mlx:nimble": "nimble (MLX)",
     "embedded@kev:kev-latest": "Kev-9B",
-    "embedded@jev:jev-latest": "Jev (hosted)",
-    "embedded@openai:gpt-6-luna": "OpenAI (hosted)",
+    # hosted models under their providers' own names (served as jev-1.13.0, gpt-6-luna, gemini-decision-1)
+    "embedded@jev:jev-latest": "Jev 1.13",
+    "embedded@openai:gpt-6-luna": "GPT-6 Luna",
+    "embedded@gemini:gemini-decision-1": "Gemini Decision 1",
 }
 # Fixed per run, never by rank (validated palette slots on white). nimble router, an ablation of nimble, is the dark
 # neutral. Jev (red) and OpenAI (violet) are the pair compared most, so they get two slots that separate well
 # (red/orange fail the normal-vision floor, ΔE 7); red, violet and nimble's blue pass all-pairs. Strands Decider takes
 # the orange. Kev, the 10th run, is plum (outside the 8 slots): every pair passes the normal-vision floor (closest is
 # violet, ΔE 17.5); its colorblind ΔE vs violet is 6.8, legal with its own marker as the second cue. Runs not listed
-# (e.g. MLX nimble in the sweep) are dark neutral too.
+# (e.g. MLX nimble in the sweep) are dark neutral too. Gemini, the 11th run, is sky blue (also outside the 8 slots), from
+# a grid search over the light lightness band: normal-vision ΔE >= 18.4 to every other run (closest teal-green),
+# colorblind ΔE >= 12.3 (closest pink); contrast on white is 2.0:1, so it relies on the run labels every figure has.
 KEV_PLUM = "#a33a8f"
+GEMINI_SKY = "#48c0f8"
 COLOR = {
     "embedded@ollama:nimble": PALETTE[0],
     "embedded@openai:gpt-6-luna": PALETTE[6],
@@ -65,20 +70,21 @@ COLOR = {
     "embedded@decider:strands-decider-2b": PALETTE[1],
     "embedded@jev:jev-latest": PALETTE[7],
     "embedded@kev:kev-latest": KEV_PLUM,
+    "embedded@gemini:gemini-decision-1": GEMINI_SKY,
     "router@ollama:nimble": INK2,
 }
 COLOR = defaultdict(lambda: INK2, COLOR)
 
 
 def _best_first(runs):
-    """Display order for figures: hosted APIs first (Jev, OpenAI), next to the best local run (nimble embedded),
+    """Display order for figures: hosted APIs first (Jev, OpenAI, Gemini), next to the best local run (nimble embedded),
     then the registry order. Colors don't depend on it."""
     return sorted(runs, key=lambda r: (not BACKENDS[split_run(r)[1]].remote, runs.index(r)))
 
 
 FIG_RUNS = _best_first(EVAL_RUNS)
 FIG_DEV_RUNS = _best_first(DEV_RUNS)
-MARKER = {"ollama": "o", "ollaya": "s", "decider": "D", "mlx": "^", "jev": "P", "openai": "X", "kev": "v"}
+MARKER = {"ollama": "o", "ollaya": "s", "decider": "D", "mlx": "^", "jev": "P", "openai": "X", "kev": "v", "gemini": "h"}
 
 # Latency comes from the 1,000-query eval runs, all measured with nothing else running (tev1 4B's first eval
 # overlapped CPU jobs and was re-run on 2026-10-07: identical answers, 9.9 s instead of 13.0 s). A run whose
@@ -347,8 +353,9 @@ def _latency_scatter(value, ylabel, title, filename, note, ylim):
     handles = [plt.Line2D([], [], marker=MARKER[b], linestyle="", color=MUTED, markersize=7, label=lbl)
                for b, lbl in (("ollama", "Ollama"), ("ollaya", "Ollaya"), ("decider", "Strands Decider server"),
                               ("kev", "Kev server (kev.serve, MLX)"),
-                              ("jev", "TypeSafe API (hosted, incl. network)"),
-                              ("openai", "OpenAI API (hosted, incl. network)"))
+                              ("jev", "TypeSafe Jev API (hosted, incl. network)"),
+                              ("openai", "OpenAI Decisions API (hosted, incl. network)"),
+                              ("gemini", "Gemini Decisions API (hosted, incl. network)"))
                if any(split_run(r)[1] == b for r in EVAL_RUNS)]
     ax.legend(handles=handles, title="backend (marker)", loc="center left", bbox_to_anchor=(0.01, 0.42),
               title_fontsize=8.5)
@@ -430,7 +437,7 @@ def fig_accuracy_by_part():
     lat_ax.spines["left"].set_visible(False)
     save(fig, "accuracy_by_part.svg", "Lines: 95% intervals (Wilson for proportions, normal for the mean score; F1 "
                                        "has none). Weighted query score: see sidm/score.py. Decoding tuned "
-                                       "per model on dev.\nLatency: log scale, own axis; hosted APIs (Jev, OpenAI) include the network.")
+                                       "per model on dev.\nLatency: log scale, own axis; hosted APIs (Jev 1.13, GPT-6 Luna, Gemini Decision 1) include the network.")
 
 
 # ---------------------------------------------------------------- 4. McNemar heatmaps
@@ -690,7 +697,7 @@ def fig_latency_sweep():
     ax.set_xlim(0.5, 29.5)
     ax.set_xlabel("questions sent: the first N of the full 29-question request")
     ax.set_ylabel("latency per request")
-    ax.set_title("Latency vs number of questions, controlled sweep, M3 Max (Jev, OpenAI: hosted APIs)", pad=20)
+    ax.set_title("Latency vs number of questions, controlled sweep, M3 Max (Jev 1.13, GPT-6 Luna, Gemini Decision 1: hosted)", pad=20)
     ax.legend(loc="upper left", bbox_to_anchor=(1.01, 1), fontsize=8.5)
     save(fig, "latency_sweep.svg", 'One request ("%s") sent with its first N questions, 3 times per N in shuffled '
                                    "order.\nEvery request starts with a new first word, so no prefill is reused. "

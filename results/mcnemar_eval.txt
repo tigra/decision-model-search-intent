@@ -1,4 +1,4 @@
-eval split, 1000 queries; 90 tests
+eval split, 1000 queries; 110 tests
 category embedded@ollama:nimble              vs router@ollama:nimble                 112:31   p=<0.0001  embedded@ollama:nimble better
 full     embedded@ollama:nimble              vs router@ollama:nimble                  79:28   p=<0.0001  embedded@ollama:nimble better
 category embedded@ollama:nimble              vs embedded@ollama:tev1                  19:44   p=0.0022   embedded@ollama:tev1 better
@@ -17,6 +17,8 @@ category embedded@ollama:nimble              vs embedded@openai:gpt-6-luna      
 full     embedded@ollama:nimble              vs embedded@openai:gpt-6-luna           126:214  p=<0.0001  embedded@openai:gpt-6-luna better
 category embedded@ollama:nimble              vs embedded@kev:kev-latest               94:51   p=0.0004   embedded@ollama:nimble better
 full     embedded@ollama:nimble              vs embedded@kev:kev-latest              211:96   p=<0.0001  embedded@ollama:nimble better
+category embedded@ollama:nimble              vs embedded@gemini:gemini-decision-1      2:66   p=<0.0001  embedded@gemini:gemini-decision-1 better
+full     embedded@ollama:nimble              vs embedded@gemini:gemini-decision-1     57:255  p=<0.0001  embedded@gemini:gemini-decision-1 better
 category router@ollama:nimble                vs embedded@ollama:tev1                  24:130  p=<0.0001  embedded@ollama:tev1 better
 full     router@ollama:nimble                vs embedded@ollama:tev1                 162:125  p=0.0334   router@ollama:nimble better
 category router@ollama:nimble                vs embedded@ollama:tev1:0.8b            210:101  p=<0.0001  router@ollama:nimble better
@@ -33,6 +35,8 @@ category router@ollama:nimble                vs embedded@openai:gpt-6-luna      
 full     router@ollama:nimble                vs embedded@openai:gpt-6-luna           108:247  p=<0.0001  embedded@openai:gpt-6-luna better
 category router@ollama:nimble                vs embedded@kev:kev-latest               82:120  p=0.0091   embedded@kev:kev-latest better
 full     router@ollama:nimble                vs embedded@kev:kev-latest              178:114  p=0.0002   router@ollama:nimble better
+category router@ollama:nimble                vs embedded@gemini:gemini-decision-1      3:148  p=<0.0001  embedded@gemini:gemini-decision-1 better
+full     router@ollama:nimble                vs embedded@gemini:gemini-decision-1     55:304  p=<0.0001  embedded@gemini:gemini-decision-1 better
 category embedded@ollama:tev1                vs embedded@ollama:tev1:0.8b            225:10   p=<0.0001  embedded@ollama:tev1 better
 full     embedded@ollama:tev1                vs embedded@ollama:tev1:0.8b            269:23   p=<0.0001  embedded@ollama:tev1 better
 category embedded@ollama:tev1                vs embedded@ollaya:jeb:4b                36:12   p=0.0007   embedded@ollama:tev1 better
@@ -47,6 +51,8 @@ category embedded@ollama:tev1                vs embedded@openai:gpt-6-luna      
 full     embedded@ollama:tev1                vs embedded@openai:gpt-6-luna            80:256  p=<0.0001  embedded@openai:gpt-6-luna better
 category embedded@ollama:tev1                vs embedded@kev:kev-latest              106:38   p=<0.0001  embedded@ollama:tev1 better
 full     embedded@ollama:tev1                vs embedded@kev:kev-latest              145:118  p=0.1087   no significant difference
+category embedded@ollama:tev1                vs embedded@gemini:gemini-decision-1      4:43   p=<0.0001  embedded@gemini:gemini-decision-1 better
+full     embedded@ollama:tev1                vs embedded@gemini:gemini-decision-1     39:325  p=<0.0001  embedded@gemini:gemini-decision-1 better
 category embedded@ollama:tev1:0.8b           vs embedded@ollaya:jeb:4b                14:205  p=<0.0001  embedded@ollaya:jeb:4b better
 full     embedded@ollama:tev1:0.8b           vs embedded@ollaya:jeb:4b                25:300  p=<0.0001  embedded@ollaya:jeb:4b better
 category embedded@ollama:tev1:0.8b           vs embedded@ollaya:winnow:e4b             8:247  p=<0.0001  embedded@ollaya:winnow:e4b better
@@ -59,6 +65,8 @@ category embedded@ollama:tev1:0.8b           vs embedded@openai:gpt-6-luna      
 full     embedded@ollama:tev1:0.8b           vs embedded@openai:gpt-6-luna             8:430  p=<0.0001  embedded@openai:gpt-6-luna better
 category embedded@ollama:tev1:0.8b           vs embedded@kev:kev-latest               88:235  p=<0.0001  embedded@kev:kev-latest better
 full     embedded@ollama:tev1:0.8b           vs embedded@kev:kev-latest               29:248  p=<0.0001  embedded@kev:kev-latest better
+category embedded@ollama:tev1:0.8b           vs embedded@gemini:gemini-decision-1      2:256  p=<0.0001  embedded@gemini:gemini-decision-1 better
+full     embedded@ollama:tev1:0.8b           vs embedded@gemini:gemini-decision-1      9:541  p=<0.0001  embedded@gemini:gemini-decision-1 better
 category embedded@ollaya:jeb:4b              vs embedded@ollaya:winnow:e4b            11:59   p=<0.0001  embedded@ollaya:winnow:e4b better
 full     embedded@ollaya:jeb:4b              vs embedded@ollaya:winnow:e4b           200:80   p=<0.0001  embedded@ollaya:jeb:4b better
 category embedded@ollaya:jeb:4b              vs embedded@decider:strands-decider-2b  184:9    p=<0.0001  embedded@ollaya:jeb:4b better
@@ -69,6 +77,8 @@ category embedded@ollaya:jeb:4b              vs embedded@openai:gpt-6-luna      
 full     embedded@ollaya:jeb:4b              vs embedded@openai:gpt-6-luna            73:220  p=<0.0001  embedded@openai:gpt-6-luna better
 category embedded@ollaya:jeb:4b              vs embedded@kev:kev-latest              106:62   p=0.0009   embedded@ollaya:jeb:4b better
 full     embedded@ollaya:jeb:4b              vs embedded@kev:kev-latest              145:89   p=0.0003   embedded@ollaya:jeb:4b better
+category embedded@ollaya:jeb:4b              vs embedded@gemini:gemini-decision-1      2:65   p=<0.0001  embedded@gemini:gemini-decision-1 better
+full     embedded@ollaya:jeb:4b              vs embedded@gemini:gemini-decision-1     28:285  p=<0.0001  embedded@gemini:gemini-decision-1 better
 category embedded@ollaya:winnow:e4b          vs embedded@decider:strands-decider-2b  229:6    p=<0.0001  embedded@ollaya:winnow:e4b better
 full     embedded@ollaya:winnow:e4b          vs embedded@decider:strands-decider-2b  121:69   p=0.0002   embedded@ollaya:winnow:e4b better
 category embedded@ollaya:winnow:e4b          vs embedded@jev:jev-latest                4:25   p=0.0001   embedded@jev:jev-latest better
@@ -77,15 +87,25 @@ category embedded@ollaya:winnow:e4b          vs embedded@openai:gpt-6-luna      
 full     embedded@ollaya:winnow:e4b          vs embedded@openai:gpt-6-luna            32:299  p=<0.0001  embedded@openai:gpt-6-luna better
 category embedded@ollaya:winnow:e4b          vs embedded@kev:kev-latest              110:18   p=<0.0001  embedded@ollaya:winnow:e4b better
 full     embedded@ollaya:winnow:e4b          vs embedded@kev:kev-latest               97:161  p=<0.0001  embedded@kev:kev-latest better
+category embedded@ollaya:winnow:e4b          vs embedded@gemini:gemini-decision-1      7:22   p=0.0081   embedded@gemini:gemini-decision-1 better
+full     embedded@ollaya:winnow:e4b          vs embedded@gemini:gemini-decision-1     18:395  p=<0.0001  embedded@gemini:gemini-decision-1 better
 category embedded@decider:strands-decider-2b vs embedded@jev:jev-latest                4:248  p=<0.0001  embedded@jev:jev-latest better
 full     embedded@decider:strands-decider-2b vs embedded@jev:jev-latest               40:382  p=<0.0001  embedded@jev:jev-latest better
 category embedded@decider:strands-decider-2b vs embedded@openai:gpt-6-luna             0:244  p=<0.0001  embedded@openai:gpt-6-luna better
 full     embedded@decider:strands-decider-2b vs embedded@openai:gpt-6-luna            33:352  p=<0.0001  embedded@openai:gpt-6-luna better
 category embedded@decider:strands-decider-2b vs embedded@kev:kev-latest               62:193  p=<0.0001  embedded@kev:kev-latest better
 full     embedded@decider:strands-decider-2b vs embedded@kev:kev-latest               93:209  p=<0.0001  embedded@kev:kev-latest better
+category embedded@decider:strands-decider-2b vs embedded@gemini:gemini-decision-1      1:239  p=<0.0001  embedded@gemini:gemini-decision-1 better
+full     embedded@decider:strands-decider-2b vs embedded@gemini:gemini-decision-1     30:459  p=<0.0001  embedded@gemini:gemini-decision-1 better
 category embedded@jev:jev-latest             vs embedded@openai:gpt-6-luna             6:6    p=1.0000   no significant difference
 full     embedded@jev:jev-latest             vs embedded@openai:gpt-6-luna           128:105  p=0.1494   no significant difference
 category embedded@jev:jev-latest             vs embedded@kev:kev-latest              119:6    p=<0.0001  embedded@jev:jev-latest better
 full     embedded@jev:jev-latest             vs embedded@kev:kev-latest              258:32   p=<0.0001  embedded@jev:jev-latest better
+category embedded@jev:jev-latest             vs embedded@gemini:gemini-decision-1     12:6    p=0.2379   no significant difference
+full     embedded@jev:jev-latest             vs embedded@gemini:gemini-decision-1     80:167  p=<0.0001  embedded@gemini:gemini-decision-1 better
 category embedded@openai:gpt-6-luna          vs embedded@kev:kev-latest              118:5    p=<0.0001  embedded@openai:gpt-6-luna better
 full     embedded@openai:gpt-6-luna          vs embedded@kev:kev-latest              256:53   p=<0.0001  embedded@openai:gpt-6-luna better
+category embedded@openai:gpt-6-luna          vs embedded@gemini:gemini-decision-1     11:5    p=0.2101   no significant difference
+full     embedded@openai:gpt-6-luna          vs embedded@gemini:gemini-decision-1     75:185  p=<0.0001  embedded@gemini:gemini-decision-1 better
+category embedded@kev:kev-latest             vs embedded@gemini:gemini-decision-1      8:115  p=<0.0001  embedded@gemini:gemini-decision-1 better
+full     embedded@kev:kev-latest             vs embedded@gemini:gemini-decision-1     31:344  p=<0.0001  embedded@gemini:gemini-decision-1 better

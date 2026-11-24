@@ -51,8 +51,12 @@ def main():
     model = args.model or DEFAULT_MODELS[args.backend]
     state, questions, _ = build_request(QUERY, SCHEME)
 
+    served = set()  # the versioned model that answered (e.g. jev-latest -> jev-1.13.0)
+
     def ask(qs):
-        return system_one(model, state, qs, backend=args.backend)[0]["answers"]
+        resp = system_one(model, state, qs, backend=args.backend)[0]
+        served.add(resp.get("model"))
+        return resp["answers"]
 
     runs = {"full": ask(questions), "full_again": ask(questions)}
     conf = sorted(questions, key=lambda k: runs["full"][k]["confidence"])
@@ -81,7 +85,8 @@ def main():
         summary[t] = {"full_answer": base[t], "vs_full": rows}
     out = out_path(args.backend, model)
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps({"backend": args.backend, "model": model, "query": QUERY, "targets": targets,
+    out.write_text(json.dumps({"backend": args.backend, "model": model,
+                               "served_models": sorted(m for m in served if m), "query": QUERY, "targets": targets,
                                "summary": summary, "answers": runs}, indent=1))
     for t, s in summary.items():
         print("%s  (full: %s, confidence %.2f)" % (t, s["full_answer"]["choice"], s["full_answer"]["confidence"]))

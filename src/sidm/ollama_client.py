@@ -124,7 +124,8 @@ BACKENDS = {
     "jev": Backend(os.environ.get("TYPESAFE_BASE_URL", "https://api.typesafe.ai"),
                    os.environ.get("TYPESAFE_DEFAULT_MODEL", "jev-1.14.0"), api_key_env="TYPESAFE_API_KEY",
                    remote=True),
-    # OpenAI's Decisions API serves gpt-6-luna only (public beta since 2026-10-06)
+    # OpenAI's Decisions API serves gpt-6-luna only (public beta since 2026-10-06). OpenAI lists gpt-6-luna as its only
+    # snapshot (no dated IDs), and every response so far named it; check_served stops a run if that changes.
     "openai": Backend(os.environ.get("OPENAI_BASE_URL", "https://api.openai.com"), "gpt-6-luna",
                       api_key_env="OPENAI_API_KEY", remote=True, api="decisions"),
     # Google's Gemini Decisions API (v1beta) serves gemini-decision-1 only; the response names no model version
@@ -281,6 +282,20 @@ def check_pinned(backend, model):
                         "shows which version it serves now)" % (BACKENDS["jev"].default_model, model))
 
 
+PINNED_BACKENDS = ("jev", "openai")  # hosted models whose response names the model that answered
+
+
+def check_served(backend, model, resp):
+    """A pinned run must be answered by exactly the model it requested. If the provider reports another model (an
+    alias resolving to a dated snapshot, or a silent upgrade), stop rather than mix versions in one run. Gemini's
+    response names no model, so it can't be checked."""
+    served = resp.get("model")
+    if backend in PINNED_BACKENDS and served and served != model:
+        raise SidmError("%s: requested '%s' but '%s' answered; '%s' is not a pinned version"
+                        % (backend, model, served, model),
+                        "pin the version that answers: MODEL=%s (then re-run dev and tune for it as a new run)" % served)
+
+
 def system_one(model, state, questions, keep_alive="30m", backend="ollama", max_retries=5):
     """Returns (response_json, wall_latency_seconds of the successful attempt).
 
@@ -305,6 +320,7 @@ def system_one(model, state, questions, keep_alive="30m", backend="ollama", max_
                 resp = from_decisions(resp, questions)
             elif b.api == "gemini":
                 resp = from_gemini(resp, questions, model)
+            check_served(backend, model, resp)
             return resp, latency
         except urllib.error.HTTPError as e:
             if b.api == "gemini" and e.code == 400 and any('"%s"' % c in str(e.reason).lower()

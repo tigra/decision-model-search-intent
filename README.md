@@ -357,7 +357,7 @@ make dev BACKEND=jev && make tune BACKEND=jev && make eval BACKEND=jev
 - **Key:** sent as `Authorization: Bearer …`. A variable already set in the environment (`export TYPESAFE_API_KEY=…`) takes precedence over `.env`.
 - **Requests:** the same body as Ollama's, minus `keep_alive`.
 - **Retries:** HTTP 429 and 5xx are retried with backoff.
-- **Model: always a pinned version.** The default is `jev-1.14.0`; `MODEL=jev-1.13.0` reproduces the older run. The aliases `jev-latest` and `jev-preview` move with releases, so the client refuses them with a fix that names a version. Each prediction still records the model that answered (`served_model`).
+- **Model: always a pinned version.** The default is `jev-1.14.0`; `MODEL=jev-1.13.0` reproduces the older run. The aliases `jev-latest` and `jev-preview` move with releases, so the client refuses them with a fix that names a version. Each prediction still records the model that answered (`served_model`), and a run stops if it differs from the requested version (`check_served`).
 - **History:** the Jev 1.13 runs were requested as `jev-latest` on 2026-10-05 and answered by `jev-1.13.0` throughout; their rows keep `requested_model: "jev-latest"`. `GET /v1/models` lists only the aliases; a one-question request shows which version an alias serves (on 2026-11-24 both answered as `jev-1.14.0`).
 
 ### OpenAI Decisions API (hosted)
@@ -369,6 +369,7 @@ make dev BACKEND=openai && make tune BACKEND=openai && make eval BACKEND=openai
 ```
 - **Request:** `POST /v1/decisions` with `model: gpt-6-luna`, `input` and a `questions` array. The client converts our `/v1/systemone` request: the state goes in as the same JSON, but as text (Jev gets it as an object), and each `criteria` dict becomes a `choices` array. Answers are converted back, so decoding, tuning and metrics are shared.
 - **Refusals:** the API may answer a question with `refusal`. A refused category or filter question becomes its "nothing" option, a refused word question residual; the count is stored per query. None occurred in our 1,100 queries.
+- **Model: pinned as `gpt-6-luna`.** OpenAI's model page lists `gpt-6-luna` as the only snapshot of GPT-6 Luna (no dated IDs; the `-20261006`-style names exist only in third-party gateways), and all 1,187 of our responses named it as the model that answered. A run stops if a response ever names another model (`check_served`), e.g. if `gpt-6-luna` becomes an alias for a dated snapshot.
 - **Limits:** not published; our full requests (up to 30 questions, up to 24 options) went through in one call.
 - **Cost:** $0.10 per 1M input tokens, output tokens free; ~5.2k input tokens per query, so the 1,000-query eval cost about $0.52.
 
@@ -432,7 +433,7 @@ make dev BACKEND=gemini && make tune BACKEND=gemini && make eval BACKEND=gemini
 
 ![Accuracy vs latency](docs/figures/accuracy_vs_latency.svg)
 
-*Locally, accuracy grows steadily with latency. The Pareto frontier of the local runs goes tev1 0.8B → Strands Decider → winnow → Kev → tev1 4B → jeb → nimble embedded; only nimble router is dominated. The hosted APIs sit above and to the left of all of them, Gemini Decision 1 highest.*
+*Locally, accuracy grows steadily with latency. The Pareto frontier of the local runs goes tev1 0.8B → Strands Decider → winnow → Kev → tev1 4B → jeb → nimble embedded; only nimble router is dominated. The hosted APIs sit above and to the left of all of them, with their own frontier (dashed; their latency is unknown hardware plus the network, so the two frontiers aren't joined): Jev 1.14 (fastest) → Jev 1.13 → Gemini Decision 1 (most accurate). GPT-6 Luna is dominated: Jev 1.13 is both faster and, though not significantly, more accurate.*
 
 ![Accuracy by part](docs/figures/accuracy_by_part.svg)
 
@@ -470,7 +471,7 @@ make dev BACKEND=gemini && make tune BACKEND=gemini && make eval BACKEND=gemini
 
 ![Weighted query score vs latency](docs/figures/score_vs_latency.svg)
 
-*The counterpart of "Accuracy vs latency". The same picture: Gemini Decision 1 (0.937) on top, then Jev 1.14 (0.921), Jev 1.13 (0.920) and GPT-6 Luna (0.919), then nimble embedded (0.880) as the best local run. The gaps between the local models are much smaller than on exact match, because most of their parses are near misses rather than failures.*
+*The counterpart of "Accuracy vs latency". The same picture: Gemini Decision 1 (0.937) on top, then Jev 1.14 (0.921), Jev 1.13 (0.920) and GPT-6 Luna (0.919), then nimble embedded (0.880) as the best local run. On the score the hosted frontier is just Jev 1.14 → Gemini Decision 1: Jev 1.14 is the fastest and scores as high as Jev 1.13 and GPT-6 Luna. The gaps between the local models are much smaller than on exact match, because most of their parses are near misses rather than failures.*
 
 ![Where the score comes from](docs/figures/score_breakdown.svg)
 

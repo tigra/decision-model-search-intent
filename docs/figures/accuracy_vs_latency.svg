@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
   "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="512.070391pt" height="320.802484pt" viewBox="0 0 512.070391 320.802484" xmlns="http://www.w3.org/2000/svg" version="1.1">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="550.409453pt" height="328.887484pt" viewBox="0 0 550.409453 328.887484" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
@@ -20,9 +20,9 @@
  </defs>
  <g id="figure_1">
   <g id="patch_1">
-   <path d="M 0 320.802484 
-L 512.070391 320.802484 
-L 512.070391 0 
+   <path d="M 0 328.887484 
+L 550.409453 328.887484 
+L 550.409453 0 
 L 0 0 
 z
 " style="fill: #ffffff"/>
@@ -345,6 +345,12 @@ L 379.974165 143.072909
 L 407.436495 122.512589 
 " clip-path="url(#p0c2c29d4a4)" style="fill: none; stroke: #c3c2b7; stroke-width: 1.2; stroke-linecap: square"/>
    </g>
+   <g id="line2d_37">
+    <path d="M 102.741937 89.406989 
+L 120.48148 83.831309 
+L 141.530452 53.513549 
+" clip-path="url(#p0c2c29d4a4)" style="fill: none; stroke-dasharray: 4.44,1.92; stroke-dashoffset: 0; stroke: #c3c2b7; stroke-width: 1.2"/>
+   </g>
    <g id="LineCollection_1">
     <path d="M 120.48148 94.630469 
 L 120.48148 73.125502 
@@ -659,7 +665,7 @@ z
     <g id="text_31">
      <text style="fill: #0b0b0b; font: 8.5px 'Helvetica', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Avant Garde', sans-serif; text-anchor: start" x="119.008225" y="127.196943" transform="rotate(-0 119.008225 127.196943)">backend (marker)</text>
     </g>
-    <g id="line2d_37">
+    <g id="line2d_38">
      <defs>
       <path id="m20682d3e0f" d="M 0 3.5 
 C 0.928211 3.5 1.81853 3.131218 2.474874 2.474874 
@@ -680,7 +686,7 @@ z
     <g id="text_32">
      <text style="fill: #0b0b0b; font: 8.5px 'Helvetica', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Avant Garde', sans-serif; text-anchor: start" x="79.411506" y="139.316083" transform="rotate(-0 79.411506 139.316083)">Ollama</text>
     </g>
-    <g id="line2d_38">
+    <g id="line2d_39">
      <defs>
       <path id="maf56c9fa60" d="M -3.5 3.5 
 L 3.5 3.5 
@@ -696,7 +702,7 @@ z
     <g id="text_33">
      <text style="fill: #0b0b0b; font: 8.5px 'Helvetica', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Avant Garde', sans-serif; text-anchor: start" x="79.411506" y="151.601239" transform="rotate(-0 79.411506 151.601239)">Ollaya</text>
     </g>
-    <g id="line2d_39">
+    <g id="line2d_40">
      <defs>
       <path id="mb989921103" d="M -0 4.949747 
 L 4.949747 0 
@@ -712,7 +718,7 @@ z
     <g id="text_34">
      <text style="fill: #0b0b0b; font: 8.5px 'Helvetica', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Avant Garde', sans-serif; text-anchor: start" x="79.411506" y="163.770849" transform="rotate(-0 79.411506 163.770849)">Strands Decider server</text>
     </g>
-    <g id="line2d_40">
+    <g id="line2d_41">
      <defs>
       <path id="m4707ef5604" d="M -0 3.5 
 L 3.5 -3.5 
@@ -727,7 +733,7 @@ z
     <g id="text_35">
      <text style="fill: #0b0b0b; font: 8.5px 'Helvetica', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Avant Garde', sans-serif; text-anchor: start" x="79.411506" y="175.952411" transform="rotate(-0 79.411506 175.952411)">Kev server (kev.serve, MLX)</text>
     </g>
-    <g id="line2d_41">
+    <g id="line2d_42">
      <defs>
       <path id="mffddb95e78" d="M -1.166667 3.5 
 L 1.166667 3.5 
@@ -751,7 +757,7 @@ z
     <g id="text_36">
      <text style="fill: #0b0b0b; font: 8.5px 'Helvetica', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Avant Garde', sans-serif; text-anchor: start" x="79.411506" y="188.237568" transform="rotate(-0 79.411506 188.237568)">TypeSafe Jev API (hosted, incl. network)</text>
     </g>
-    <g id="line2d_42">
+    <g id="line2d_43">
      <defs>
       <path id="m24c53775fb" d="M -1.75 3.5 
 L 0 1.75 
@@ -775,7 +781,7 @@ z
     <g id="text_37">
      <text style="fill: #0b0b0b; font: 8.5px 'Helvetica', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Avant Garde', sans-serif; text-anchor: start" x="79.411506" y="200.573193" transform="rotate(-0 79.411506 200.573193)">OpenAI Decisions API (hosted, incl. network)</text>
     </g>
-    <g id="line2d_43">
+    <g id="line2d_44">
      <defs>
       <path id="m97f4915c7b" d="M 0 -3.5 
 L -3.031089 -1.75 
@@ -796,7 +802,8 @@ z
    </g>
   </g>
   <g id="text_39">
-   <text style="fill: #898781; font: 7.5px 'Helvetica', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Avant Garde', sans-serif; text-anchor: start" x="11.073906" y="308.394672" transform="rotate(-0 11.073906 308.394672)">Vertical lines: 95% Wilson intervals of the accuracy. Grey line: Pareto frontier of the local runs (M3 Max). Latency: p50 over the same 1,000 queries.</text>
+   <text style="fill: #898781; font: 7.5px 'Helvetica', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Avant Garde', sans-serif" transform="translate(11.073906 308.394672)">Vertical lines: 95% Wilson intervals of the accuracy. Grey lines: Pareto frontiers of the local runs (solid, M3 Max) and of the hosted APIs (dashed, incl. network).</text>
+   <text style="fill: #898781; font: 7.5px 'Helvetica', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Avant Garde', sans-serif" transform="translate(11.073906 316.479672)">Latency: p50 over the same 1,000 queries.</text>
   </g>
  </g>
  <defs>

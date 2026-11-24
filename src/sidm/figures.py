@@ -378,11 +378,14 @@ def _latency_scatter(value, ylabel, title, filename, note, ylim):
     bars = [(p[0], *value(metrics(p[2]))[1:]) for p in pts]
     pts_labels = [(p[0], p[1], p[3]) for p in pts]
     pts = [p[:3] for p in pts]
-    # Pareto frontier of the local runs (a hosted API's latency is another machine plus the network): no other
-    # local run is both faster and more accurate
-    local = [p for p in pts if not BACKENDS[split_run(p[2])[1]].remote]
-    front = sorted(p for p in local if not any(q[0] <= p[0] and q[1] > p[1] for q in local if q is not p))
-    ax.plot([p[0] for p in front], [p[1] for p in front], color=AXIS, linewidth=1.2, zorder=1)
+    # Pareto frontiers, one per group: no other run of the group is both faster and more accurate. The local runs
+    # (M3 Max, solid) and the hosted APIs (unknown hardware plus the network, dashed) aren't comparable in latency,
+    # so they get separate frontiers.
+    def frontier(group):
+        return sorted(p for p in group if not any(q[0] <= p[0] and q[1] > p[1] for q in group if q is not p))
+    for remote, style in ((False, "-"), (True, "--")):
+        front = frontier([p for p in pts if BACKENDS[split_run(p[2])[1]].remote == remote])
+        ax.plot([p[0] for p in front], [p[1] for p in front], color=AXIS, linewidth=1.2, linestyle=style, zorder=1)
     ax.set_xscale("log")
     ax.set_xticks([0.3, 0.5, 1, 2, 5, 10, 20])
     ax.get_xaxis().set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: "%g s" % v))
@@ -410,16 +413,16 @@ def _latency_scatter(value, ylabel, title, filename, note, ylim):
 def fig_accuracy_latency():
     _latency_scatter(lambda m: prop(m["full_query_exact_counts"]), "whole query exactly right",
                      "Accuracy vs latency, 1,000 eval queries", "accuracy_vs_latency.svg",
-                     "Vertical lines: 95% Wilson intervals of the accuracy. Grey line: Pareto frontier of the local runs "
-                     "(M3 Max). Latency: p50 over the same 1,000 queries.",
+                     "Vertical lines: 95% Wilson intervals of the accuracy. Grey lines: Pareto frontiers of the local "
+                     "runs (solid, M3 Max) and of the hosted APIs (dashed, incl. network).\nLatency: p50 over the same 1,000 queries.",
                      lambda ys: (0, math.ceil((max(ys) + 0.06) * 10) / 10))
 
 
 def fig_score_latency():
     _latency_scatter(lambda m: (m["weighted_score"]["mean"], *m["weighted_score"]["ci95"]), "weighted query score",
                      "Weighted query score vs latency, 1,000 eval queries", "score_vs_latency.svg",
-                     "Vertical lines: 95% intervals of the mean score. Grey line: Pareto frontier of the local runs "
-                     "(M3 Max). Latency: p50 over the same 1,000 queries. Score: see sidm/score.py.",
+                     "Vertical lines: 95% intervals of the mean score. Grey lines: Pareto frontiers of the local runs "
+                     "(solid, M3 Max) and of the hosted APIs (dashed, incl. network).\nLatency: p50 over the same 1,000 queries. Score: see sidm/score.py.",
                      lambda ys: (math.floor((min(ys) - 0.05) * 10) / 10, 1.0))
 
 

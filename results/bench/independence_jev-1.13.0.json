@@ -1,6 +1,8 @@
 {
  "backend": "jev",
- "model": "jev-latest",
+ "model": "jev-1.13.0",
+ "requested_model": "jev-latest",
+ "note": "served version not recorded; ran on 2026-10-05 like the eval, which jev-1.13.0 answered throughout",
  "query": "grey mid century modern sectional with oak legs cheap free shipping",
  "targets": [
   "word_3",

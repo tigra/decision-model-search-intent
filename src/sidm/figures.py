@@ -46,7 +46,8 @@ NAMES = {
     "embedded@mlx:nimble": "nimble (MLX)",
     "embedded@kev:kev-latest": "Kev-9B",
     # hosted models under their providers' own names (served as jev-1.13.0, gpt-6-luna, gemini-decision-1)
-    "embedded@jev:jev-latest": "Jev 1.13",
+    "embedded@jev:jev-1.13.0": "Jev 1.13",
+    "embedded@jev:jev-1.14.0": "Jev 1.14",
     "embedded@openai:gpt-6-luna": "GPT-6 Luna",
     "embedded@gemini:gemini-decision-1": "Gemini Decision 1",
 }
@@ -58,7 +59,11 @@ NAMES = {
 # (e.g. MLX nimble in the sweep) are dark neutral too. Gemini, the 11th run, is sky blue (also outside the 8 slots), from
 # a grid search over the light lightness band: normal-vision ΔE >= 18.4 to every other run (closest teal-green),
 # colorblind ΔE >= 12.3 (closest pink); contrast on white is 2.0:1, so it relies on the run labels every figure has.
+# Jev 1.14, the 12th run, is a deep red: the same family as Jev 1.13's red, so the two versions read as one model.
+# Against Jev 1.13 (same marker) it keeps ΔE >= 16.3 in normal vision and under protan/deutan; its closest pair overall
+# is colorblind ΔE 6.3 to winnow's green, legal with their different markers.
 KEV_PLUM = "#a33a8f"
+JEV14_DEEP_RED = "#a01818"
 GEMINI_SKY = "#48c0f8"
 COLOR = {
     "embedded@ollama:nimble": PALETTE[0],
@@ -68,7 +73,8 @@ COLOR = {
     "embedded@ollaya:jeb:4b": PALETTE[4],
     "embedded@ollaya:winnow:e4b": PALETTE[5],
     "embedded@decider:strands-decider-2b": PALETTE[1],
-    "embedded@jev:jev-latest": PALETTE[7],
+    "embedded@jev:jev-1.13.0": PALETTE[7],
+    "embedded@jev:jev-1.14.0": JEV14_DEEP_RED,
     "embedded@kev:kev-latest": KEV_PLUM,
     "embedded@gemini:gemini-decision-1": GEMINI_SKY,
     "router@ollama:nimble": INK2,
@@ -310,6 +316,51 @@ def fig_score_breakdown():
 
 
 # ---------------------------------------------------------------- 1. accuracy vs latency
+LABEL_OFFSETS = [(8, 4, "left"), (8, -12, "left"), (-8, 4, "right"), (-8, -12, "right"),
+                 (0, 9, "center"), (0, -18, "center"),
+                 (8, 16, "left"), (8, -24, "left"), (-8, 16, "right"), (-8, -24, "right")]
+
+
+def _place_labels(fig, ax, xy, labels, bars=()):
+    """Direct labels for a scatter: each label takes the first offset (LABEL_OFFSETS) whose text box overlaps no
+    marker, no error bar (`bars`: (x, y_low, y_high)), no label placed before it, is nearer its own point than any
+    other point (so it can't be read as another run's label), and stays right of the y axis and
+    within the plot's height (past the right edge is fine: the figure has room there); the last offset is the
+    fallback. Call after the scales and limits are final, since it works in display coordinates."""
+    from matplotlib.backends.backend_agg import FigureCanvasAgg
+    from matplotlib.transforms import Bbox
+    # text extents need a renderer; the SVG canvas has none, so measure on Agg (same points and dpi; savefig still
+    # writes SVG, it picks the backend from the file format)
+    renderer = FigureCanvasAgg(fig).get_renderer()
+    marker = 7  # half a marker's size in display pixels, with its white ring
+    taken = [Bbox.from_bounds(px - marker, py - marker, 2 * marker, 2 * marker)
+             for px, py in (ax.transData.transform(p) for p in xy)]
+    for x, lo, hi in bars:
+        (bx, by0), (_, by1) = ax.transData.transform([(x, lo), (x, hi)])
+        taken.append(Bbox.from_extents(bx - 2, by0, bx + 2, by1))
+    frame = ax.get_window_extent(renderer)
+    centers = [tuple(ax.transData.transform(p)) for p in xy]
+
+    def nearest_is_own(box, own):
+        cx, cy = (box.x0 + box.x1) / 2, (box.y0 + box.y1) / 2
+        # distance from the point to the nearest edge of the label, not its center: long labels reach far
+        dist = lambda px, py: math.hypot(max(box.x0 - px, 0, px - box.x1), max(box.y0 - py, 0, py - box.y1))
+        return all(dist(*own) <= dist(*c) for c in centers if c != own)
+
+    for x, y, label in sorted(labels, key=lambda p: p[0]):
+        for k, (dx, dy, ha) in enumerate(LABEL_OFFSETS):
+            text = ax.annotate(label, (x, y), xytext=(dx, dy), textcoords="offset points", fontsize=8.5,
+                               color=INK2, ha=ha)
+            box = text.get_window_extent(renderer).expanded(1.04, 1.1)
+            inside = box.x0 >= frame.x0 and box.y0 >= frame.y0 and box.y1 <= frame.y1
+            own = tuple(ax.transData.transform((x, y)))
+            if (inside and not any(box.overlaps(t) for t in taken) and nearest_is_own(box, own)) \
+                    or k == len(LABEL_OFFSETS) - 1:
+                taken.append(box)
+                break
+            text.remove()
+
+
 def _latency_scatter(value, ylabel, title, filename, note, ylim):
     """Shared by accuracy_vs_latency and score_vs_latency: value(metrics) -> (value, ci_low, ci_high)."""
     fig, ax = plt.subplots(figsize=(7.2, 4.4))
@@ -323,16 +374,9 @@ def _latency_scatter(value, ylabel, title, filename, note, ylim):
         ax.scatter(p50, acc, s=70, color=COLOR[run], marker=MARKER[split_run(run)[1]], edgecolor="white",
                    linewidth=2, zorder=3, label=name(run))
         pts[-1] = pts[-1] + (name(run) + (" (latency %s)" % INFLATED[run] if run in INFLATED else ""),)
-    # direct labels; a label that would sit on top of an earlier one (close in log-x and y) goes below its point
-    lo_y, hi_y = ylim([p[1] for p in pts])
-    placed = []
-    for x, y, run, label in sorted(pts, key=lambda p: p[0]):
-        clash = any(abs(math.log10(x) - math.log10(px)) < 0.25 and abs(y - py) < 0.045 * (hi_y - lo_y)
-                    for px, py in placed)
-        ax.annotate(label, (x, y), xytext=(8, -12 if clash else 4), textcoords="offset points", fontsize=8.5,
-                    color=INK2)
-        if not clash:
-            placed.append((x, y))
+    pts_xy = [p[:2] for p in pts]
+    bars = [(p[0], *value(metrics(p[2]))[1:]) for p in pts]
+    pts_labels = [(p[0], p[1], p[3]) for p in pts]
     pts = [p[:3] for p in pts]
     # Pareto frontier of the local runs (a hosted API's latency is another machine plus the network): no other
     # local run is both faster and more accurate
@@ -343,10 +387,11 @@ def _latency_scatter(value, ylabel, title, filename, note, ylim):
     ax.set_xticks([0.3, 0.5, 1, 2, 5, 10, 20])
     ax.get_xaxis().set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: "%g s" % v))
     ax.xaxis.set_minor_formatter(matplotlib.ticker.NullFormatter())
-    ax.set_xlim(min(p[0] for p in pts) / 1.5, 26)
+    ax.set_xlim(min(p[0] for p in pts) / 2.2, 26)  # room left of the hosted cluster for its labels
     ax.set_ylim(*ylim([p[1] for p in pts]))
     ax.yaxis.grid(True)
     ax.set_axisbelow(True)
+    _place_labels(fig, ax, pts_xy, pts_labels, bars)
     ax.set_xlabel("p50 latency per query: M3 Max, or the hosted API (log scale)")
     ax.set_ylabel(ylabel)
     ax.set_title(title)
@@ -391,16 +436,17 @@ PARTS = [
 
 def fig_accuracy_by_part():
     # accuracy rows share a 0-1 axis; latency gets its own panel and log axis below (never a second y-axis)
-    fig, (ax, lat_ax) = plt.subplots(2, 1, figsize=(7.6, 6.8), gridspec_kw={"height_ratios": [len(PARTS), 1.25],
-                                                                            "hspace": 0.32})
     runs = FIG_RUNS
+    step = min(0.1, 0.9 / len(runs))  # vertical spread of the runs within a row: it must fit in the row
+    fig, (ax, lat_ax) = plt.subplots(2, 1, figsize=(7.6, 6.8 * 0.1 / step),
+                                     gridspec_kw={"height_ratios": [len(PARTS), 1.25], "hspace": 0.32})
     for i, (label, fn) in enumerate(PARTS):
         y0 = len(PARTS) - 1 - i
         if i % 2 == 0:  # alternate row bands, so each metric's group of dots reads as one block
             ax.axhspan(y0 - 0.5, y0 + 0.5, color=BAND, linewidth=0, zorder=0)
         for j, run in enumerate(runs):
             v, lo, hi = fn(metrics(run))
-            y = y0 + ((len(runs) - 1) / 2 - j) * 0.1  # first run on top, as in the legend
+            y = y0 + ((len(runs) - 1) / 2 - j) * step  # first run on top, as in the legend
             if lo is not None:
                 ax.plot([lo, hi], [y, y], color=COLOR[run], linewidth=1.4, solid_capstyle="round")
             ax.scatter(v, y, s=42, color=COLOR[run], marker=MARKER[split_run(run)[1]], edgecolor="white",
@@ -419,7 +465,7 @@ def fig_accuracy_by_part():
     lat_ax.axhspan(-0.5, 0.5, color=BAND, linewidth=0, zorder=0)  # continues the row banding
     for j, run in enumerate(runs):
         p50 = statistics.median(eval_latencies(run)[0])
-        y = ((len(runs) - 1) / 2 - j) * 0.1
+        y = ((len(runs) - 1) / 2 - j) * step
         lat_ax.scatter(p50, y, s=42, color=COLOR[run], marker=MARKER[split_run(run)[1]],
                        facecolor="white" if run in INFLATED else COLOR[run], edgecolor=COLOR[run] if run in INFLATED
                        else "white", linewidth=1.5, zorder=3)
@@ -437,7 +483,8 @@ def fig_accuracy_by_part():
     lat_ax.spines["left"].set_visible(False)
     save(fig, "accuracy_by_part.svg", "Lines: 95% intervals (Wilson for proportions, normal for the mean score; F1 "
                                        "has none). Weighted query score: see sidm/score.py. Decoding tuned "
-                                       "per model on dev.\nLatency: log scale, own axis; hosted APIs (Jev 1.13, GPT-6 Luna, Gemini Decision 1) include the network.")
+                                       "per model on dev.\nLatency: log scale, own axis; hosted APIs ({}) include the network."
+                                       .format(", ".join(name(r) for r in runs if BACKENDS[split_run(r)[1]].remote)))
 
 
 # ---------------------------------------------------------------- 4. McNemar heatmaps
@@ -697,7 +744,7 @@ def fig_latency_sweep():
     ax.set_xlim(0.5, 29.5)
     ax.set_xlabel("questions sent: the first N of the full 29-question request")
     ax.set_ylabel("latency per request")
-    ax.set_title("Latency vs number of questions, controlled sweep, M3 Max (Jev 1.13, GPT-6 Luna, Gemini Decision 1: hosted)", pad=20)
+    ax.set_title("Latency vs number of questions, controlled sweep, M3 Max (hosted APIs incl. network)", pad=20)
     ax.legend(loc="upper left", bbox_to_anchor=(1.01, 1), fontsize=8.5)
     save(fig, "latency_sweep.svg", 'One request ("%s") sent with its first N questions, 3 times per N in shuffled '
                                    "order.\nEvery request starts with a new first word, so no prefill is reused. "

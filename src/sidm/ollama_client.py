@@ -119,9 +119,10 @@ BACKENDS = {
     "decider": Backend(os.environ.get("SIDM_DECIDER_URL", "http://localhost:11600"), "strands-decider-2b"),
     # serves one checkpoint (jaredpalmer/kev-9b by default); the model field is a label kev.serve accepts
     "kev": Backend(os.environ.get("SIDM_KEV_URL", "http://localhost:11700"), "kev-latest"),
-    # jev-latest moves with releases; the versioned model that answered is recorded from the response.
+    # Always a pinned version: the aliases jev-latest / jev-preview move with releases (JEV_ALIASES are refused).
+    # The versioned model that answered is still recorded from each response (served_model).
     "jev": Backend(os.environ.get("TYPESAFE_BASE_URL", "https://api.typesafe.ai"),
-                   os.environ.get("TYPESAFE_DEFAULT_MODEL", "jev-latest"), api_key_env="TYPESAFE_API_KEY",
+                   os.environ.get("TYPESAFE_DEFAULT_MODEL", "jev-1.14.0"), api_key_env="TYPESAFE_API_KEY",
                    remote=True),
     # OpenAI's Decisions API serves gpt-6-luna only (public beta since 2026-10-06)
     "openai": Backend(os.environ.get("OPENAI_BASE_URL", "https://api.openai.com"), "gpt-6-luna",
@@ -182,7 +183,7 @@ PULL_FIX = {
     "mlx": "make mlx-convert   (the MLX server serves one converted nimble model)",
     "decider": "make decider-serve   (it serves one checkpoint; weights download on first start)",
     "kev": "kev.serve accepts kev-latest or jev-latest",
-    "jev": "check the model name (e.g. jev-latest, jev-1.13.0)",
+    "jev": "check the model name: a pinned version such as jev-1.14.0 or jev-1.13.0 (x.y.z)",
     "openai": "the Decisions API serves gpt-6-luna only",
     "gemini": "the Gemini Decisions API serves gemini-decision-1 only",
 }
@@ -269,11 +270,23 @@ def gemini_blocked(questions, model):
             "usage": {"input_tokens": 0, "output_tokens": 0}}
 
 
+JEV_ALIASES = ("jev-latest", "jev-preview")  # moving aliases; benchmark runs pin a version instead
+
+
+def check_pinned(backend, model):
+    """Refuse TypeSafe's moving aliases: a run must name the version it measures, so it can be reproduced."""
+    if backend == "jev" and model in JEV_ALIASES:
+        raise SidmError("'%s' is an alias that moves with Jev releases; this benchmark pins versions" % model,
+                        "use a pinned version, e.g. MODEL=%s (curl $TYPESAFE_BASE_URL/v1/systemone with model %s "
+                        "shows which version it serves now)" % (BACKENDS["jev"].default_model, model))
+
+
 def system_one(model, state, questions, keep_alive="30m", backend="ollama", max_retries=5):
     """Returns (response_json, wall_latency_seconds of the successful attempt).
 
     Remote backends are retried with exponential backoff on rate limits and server errors.
     """
+    check_pinned(backend, model)
     b = BACKENDS[backend]
     if b.api == "decisions":
         path, payload = "/v1/decisions", to_decisions(model, state, questions)

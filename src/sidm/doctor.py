@@ -134,7 +134,7 @@ def main():
 
     print("\nRuns of the study (src/sidm/runs.py): can they be re-run here?")
     runnable = 0
-    runs = list(dict.fromkeys(DEV_RUNS + EVAL_RUNS + ["embedded@jev:jev-latest", "embedded@openai:gpt-6-luna",
+    runs = list(dict.fromkeys(DEV_RUNS + EVAL_RUNS + ["embedded@jev:jev-1.14.0", "embedded@openai:gpt-6-luna",
                                          "embedded@gemini:gemini-decision-1"]))
     width = max(map(len, runs))
     for run in runs:

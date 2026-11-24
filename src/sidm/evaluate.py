@@ -243,13 +243,13 @@ KEEP = ("scheme", "backend", "model", "served_model", "latency_s", "n_requests",
 
 def pred_path(split, model, scheme, backend="ollama"):
     """results/<split>_<label>_<scheme>.jsonl; label = model for Ollama (original names), else <backend>-<model>
-    (just the model when it already starts with the backend name, e.g. jev-latest). Colons in model tags become
+    (just the model when it already starts with the backend name, e.g. jev-1.14.0). Colons in model tags become
     '-' so file names work on every OS: tev1:0.8b -> results/dev_tev1-0.8b_embedded.jsonl."""
     return Path("results/%s_%s_%s.jsonl" % (split, run_label(model, backend), scheme))
 
 
 def run_label(model, backend="ollama"):
-    """The model part of result file names (see pred_path): nimble, tev1-0.8b, ollaya-jeb-4b, jev-latest."""
+    """The model part of result file names (see pred_path): nimble, tev1-0.8b, ollaya-jeb-4b, jev-1.14.0."""
     model = model or DEFAULT_MODELS[backend]
     label = model if backend == "ollama" or model.startswith(backend) else "%s-%s" % (backend, model)
     return label.replace(":", "-")

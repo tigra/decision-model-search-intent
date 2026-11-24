@@ -1,4 +1,4 @@
-# Search intent parsing: `embedded@jev:jev-latest` via /v1/systemone
+# Search intent parsing: `embedded@jev:jev-1.13.0` via /v1/systemone
 
 1000 queries, one request per query (23.6 questions on average).
 

@@ -4804,10 +4804,10 @@
    }
   },
   {
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "scheme": "embedded",
    "backend": "jev",
-   "model": "jev-latest",
+   "model": "jev-1.13.0",
    "served_models": [
     "jev-1.13.0"
    ],
@@ -5098,6 +5098,305 @@
      "queries_per_s": 2.8661275421717614,
      "mean_questions": 23.72,
      "ms_per_question": 14.709225392074199,
+     "mean_input_tokens": 5309.96,
+     "truncated_queries": 0
+    }
+   }
+  },
+  {
+   "run": "embedded@jev:jev-1.14.0",
+   "scheme": "embedded",
+   "backend": "jev",
+   "model": "jev-1.14.0",
+   "served_models": [
+    "jev-1.14.0"
+   ],
+   "backend_info": "TypeSafe's hosted Jev API (`https://api.typesafe.ai`); latency includes the network round trip",
+   "decoding": {
+    "none_thr": 0.7,
+    "filter_min_prob": 0.95,
+    "word_weights": {
+     "category": 8.0,
+     "filter": 1.0,
+     "residual": 1.0
+    }
+   },
+   "metrics": {
+    "category_exact": {
+     "value": 0.97,
+     "correct": 97,
+     "counted": 100,
+     "ci95": [
+      0.915479219195973,
+      0.9897456617765851
+     ]
+    },
+    "category_level": {
+     "L1": {
+      "value": 1.0,
+      "correct": 95,
+      "counted": 95,
+      "ci95": [
+       0.9611337736337738,
+       1.0000000000000002
+      ]
+     },
+     "L2": {
+      "value": 1.0,
+      "correct": 88,
+      "counted": 88,
+      "ci95": [
+       0.9581714604275188,
+       1.0
+      ]
+     },
+     "L3": {
+      "value": 1.0,
+      "correct": 55,
+      "counted": 55,
+      "ci95": [
+       0.9347128562105721,
+       0.9999999999999999
+      ]
+     }
+    },
+    "no_category": {
+     "precision": {
+      "value": 1.0,
+      "correct": 4,
+      "counted": 4,
+      "ci95": [
+       0.5100999795960008,
+       1.0
+      ]
+     },
+     "recall": {
+      "value": 0.8,
+      "correct": 4,
+      "counted": 5,
+      "ci95": [
+       0.3755282641185388,
+       0.9637768390302125
+      ]
+     },
+     "f1": 0.888888888888889,
+     "counts": {
+      "tp": 4,
+      "fp": 0,
+      "fn": 1
+     }
+    },
+    "filters_micro": {
+     "precision": {
+      "value": 0.9637681159420289,
+      "correct": 133,
+      "counted": 138,
+      "ci95": [
+       0.9179884461257888,
+       0.9844266422544887
+      ]
+     },
+     "recall": {
+      "value": 0.8807947019867549,
+      "correct": 133,
+      "counted": 151,
+      "ci95": [
+       0.8194417750525385,
+       0.9232526946506936
+      ]
+     },
+     "f1": 0.9204152249134947,
+     "counts": {
+      "tp": 133,
+      "fp": 5,
+      "fn": 18
+     }
+    },
+    "filter_set_exact": {
+     "value": 0.8,
+     "correct": 80,
+     "counted": 100,
+     "ci95": [
+      0.7111690380734977,
+      0.8666340774409013
+     ]
+    },
+    "word_role_accuracy": {
+     "value": 0.8951048951048951,
+     "correct": 512,
+     "counted": 572,
+     "ci95": [
+      0.8673030257759188,
+      0.9176350544183568
+     ]
+    },
+    "word_role_confusion": {
+     "category->category": 184,
+     "category->filter": 4,
+     "filter->category": 10,
+     "filter->filter": 240,
+     "filter->residual": 4,
+     "residual->category": 9,
+     "residual->filter": 33,
+     "residual->residual": 88
+    },
+    "residual_words": {
+     "precision": {
+      "value": 0.9565217391304348,
+      "correct": 88,
+      "counted": 92,
+      "ci95": [
+       0.8934815767361862,
+       0.9829645593884194
+      ]
+     },
+     "recall": {
+      "value": 0.676923076923077,
+      "correct": 88,
+      "counted": 130,
+      "ci95": [
+       0.5924535412326488,
+       0.751236313042853
+      ]
+     },
+     "f1": 0.7927927927927929,
+     "counts": {
+      "tp": 88,
+      "fp": 4,
+      "fn": 42
+     }
+    },
+    "whole_query_exact": {
+     "value": 0.61,
+     "correct": 61,
+     "counted": 100,
+     "ci95": [
+      0.5120283616749817,
+      0.699832780680298
+     ]
+    },
+    "weighted_score": {
+     "mean": 0.9183299319656247,
+     "ci95": [
+      0.8910069380770455,
+      0.945652925854204
+     ],
+     "n": 100,
+     "parts": {
+      "category": {
+       "mean": 0.9783333333333334,
+       "present_in": 100
+      },
+      "filters": {
+       "mean": 0.8817540484207151,
+       "present_in": 90
+      },
+      "residual": {
+       "mean": 0.6697747401347807,
+       "present_in": 58
+      },
+      "other_roles": {
+       "mean": 0.9545833333333333,
+       "present_in": 100
+      }
+     },
+     "weights": {
+      "category": 0.45,
+      "filters": 0.3,
+      "residual": 0.17,
+      "other_roles": 0.08
+     },
+     "beta": {
+      "filters": 0.5,
+      "residual": 2.0
+     }
+    },
+    "per_attribute_filters": {
+     "color": {
+      "P": 1.0,
+      "R": 0.9285714285714286,
+      "F1": 0.962962962962963,
+      "support": 14
+     },
+     "width": {
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "support": 5
+     },
+     "material": {
+      "P": 1.0,
+      "R": 0.7692307692307693,
+      "F1": 0.8695652173913044,
+      "support": 13
+     },
+     "bed_size": {
+      "P": 1.0,
+      "R": 0.9,
+      "F1": 0.9473684210526316,
+      "support": 10
+     },
+     "firmness": {
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "support": 4
+     },
+     "feature": {
+      "P": 0.96,
+      "R": 0.96,
+      "F1": 0.96,
+      "support": 25
+     },
+     "leg_color": {
+      "P": 0.95,
+      "R": 0.9047619047619048,
+      "F1": 0.9268292682926829,
+      "support": 21
+     },
+     "style": {
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "support": 18
+     },
+     "leg_material": {
+      "P": 0.6666666666666666,
+      "R": 0.6666666666666666,
+      "F1": 0.6666666666666666,
+      "support": 9
+     },
+     "shape": {
+      "P": 1.0,
+      "R": 0.8,
+      "F1": 0.888888888888889,
+      "support": 10
+     },
+     "room": {
+      "P": 1.0,
+      "R": 0.7619047619047619,
+      "F1": 0.8648648648648648,
+      "support": 21
+     },
+     "seat_count": {
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "support": 1
+     }
+    },
+    "latency": {
+     "n": 100,
+     "mean_s": 0.27999787621999983,
+     "p50_s": 0.2638664994999994,
+     "p90_s": 0.31886757119999853,
+     "p95_s": 0.4341446930999995,
+     "p99_s": 0.48027748325,
+     "min_s": 0.23160733299999947,
+     "max_s": 0.506333417,
+     "queries_per_s": 3.5714556606646553,
+     "mean_questions": 23.72,
+     "ms_per_question": 11.804294950252945,
      "mean_input_tokens": 5309.96,
      "truncated_queries": 0
     }
@@ -6245,7 +6544,7 @@
   },
   {
    "reference": "embedded@ollama:nimble",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "category",
    "correct_only_reference": 0,
    "correct_only_run": 6,
@@ -6253,11 +6552,27 @@
   },
   {
    "reference": "embedded@ollama:nimble",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "full",
    "correct_only_reference": 6,
    "correct_only_run": 19,
    "p_value": 0.01463329792022705
+  },
+  {
+   "reference": "embedded@ollama:nimble",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "category",
+   "correct_only_reference": 0,
+   "correct_only_run": 6,
+   "p_value": 0.03125
+  },
+  {
+   "reference": "embedded@ollama:nimble",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "full",
+   "correct_only_reference": 5,
+   "correct_only_run": 22,
+   "p_value": 0.0015137195587158203
   },
   {
    "reference": "embedded@ollama:nimble",
@@ -6533,7 +6848,7 @@
   },
   {
    "reference": "router@ollama:nimble",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "category",
    "correct_only_reference": 0,
    "correct_only_run": 12,
@@ -6541,11 +6856,27 @@
   },
   {
    "reference": "router@ollama:nimble",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "full",
    "correct_only_reference": 6,
    "correct_only_run": 28,
    "p_value": 0.00019512558355927467
+  },
+  {
+   "reference": "router@ollama:nimble",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "category",
+   "correct_only_reference": 0,
+   "correct_only_run": 12,
+   "p_value": 0.00048828125
+  },
+  {
+   "reference": "router@ollama:nimble",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "full",
+   "correct_only_reference": 5,
+   "correct_only_run": 31,
+   "p_value": 1.2913485988974571e-05
   },
   {
    "reference": "router@ollama:nimble",
@@ -6805,7 +7136,7 @@
   },
   {
    "reference": "embedded@mlx:nimble",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "category",
    "correct_only_reference": 0,
    "correct_only_run": 5,
@@ -6813,11 +7144,27 @@
   },
   {
    "reference": "embedded@mlx:nimble",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "full",
    "correct_only_reference": 7,
    "correct_only_run": 21,
    "p_value": 0.012540951371192932
+  },
+  {
+   "reference": "embedded@mlx:nimble",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "category",
+   "correct_only_reference": 0,
+   "correct_only_run": 5,
+   "p_value": 0.0625
+  },
+  {
+   "reference": "embedded@mlx:nimble",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "full",
+   "correct_only_reference": 6,
+   "correct_only_run": 24,
+   "p_value": 0.001430906355381012
   },
   {
    "reference": "embedded@mlx:nimble",
@@ -7061,7 +7408,7 @@
   },
   {
    "reference": "embedded@ollama:tev1",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "category",
    "correct_only_reference": 1,
    "correct_only_run": 7,
@@ -7069,11 +7416,27 @@
   },
   {
    "reference": "embedded@ollama:tev1",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "full",
    "correct_only_reference": 6,
    "correct_only_run": 21,
    "p_value": 0.005924612283706665
+  },
+  {
+   "reference": "embedded@ollama:tev1",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "category",
+   "correct_only_reference": 1,
+   "correct_only_run": 7,
+   "p_value": 0.0703125
+  },
+  {
+   "reference": "embedded@ollama:tev1",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "full",
+   "correct_only_reference": 6,
+   "correct_only_run": 25,
+   "p_value": 0.0008779102936387062
   },
   {
    "reference": "embedded@ollama:tev1",
@@ -7301,7 +7664,7 @@
   },
   {
    "reference": "embedded@ollama:tev1:0.8b",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "category",
    "correct_only_reference": 1,
    "correct_only_run": 23,
@@ -7309,11 +7672,27 @@
   },
   {
    "reference": "embedded@ollama:tev1:0.8b",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "full",
    "correct_only_reference": 0,
    "correct_only_run": 47,
    "p_value": 1.4210854715202004e-14
+  },
+  {
+   "reference": "embedded@ollama:tev1:0.8b",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "category",
+   "correct_only_reference": 1,
+   "correct_only_run": 23,
+   "p_value": 2.9802322387695312e-06
+  },
+  {
+   "reference": "embedded@ollama:tev1:0.8b",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "full",
+   "correct_only_reference": 0,
+   "correct_only_run": 51,
+   "p_value": 8.881784197001252e-16
   },
   {
    "reference": "embedded@ollama:tev1:0.8b",
@@ -7525,7 +7904,7 @@
   },
   {
    "reference": "embedded@ollaya:jeb:4b",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "category",
    "correct_only_reference": 0,
    "correct_only_run": 7,
@@ -7533,11 +7912,27 @@
   },
   {
    "reference": "embedded@ollaya:jeb:4b",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "full",
    "correct_only_reference": 3,
    "correct_only_run": 23,
    "p_value": 8.797645568847656e-05
+  },
+  {
+   "reference": "embedded@ollaya:jeb:4b",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "category",
+   "correct_only_reference": 0,
+   "correct_only_run": 7,
+   "p_value": 0.015625
+  },
+  {
+   "reference": "embedded@ollaya:jeb:4b",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "full",
+   "correct_only_reference": 3,
+   "correct_only_run": 27,
+   "p_value": 8.430331945419312e-06
   },
   {
    "reference": "embedded@ollaya:jeb:4b",
@@ -7733,7 +8128,7 @@
   },
   {
    "reference": "embedded@ollaya:winnow:e4b",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "category",
    "correct_only_reference": 0,
    "correct_only_run": 1,
@@ -7741,11 +8136,27 @@
   },
   {
    "reference": "embedded@ollaya:winnow:e4b",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "full",
    "correct_only_reference": 2,
    "correct_only_run": 30,
    "p_value": 2.4633482098579407e-07
+  },
+  {
+   "reference": "embedded@ollaya:winnow:e4b",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "category",
+   "correct_only_reference": 0,
+   "correct_only_run": 1,
+   "p_value": 1.0
+  },
+  {
+   "reference": "embedded@ollaya:winnow:e4b",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "full",
+   "correct_only_reference": 1,
+   "correct_only_run": 33,
+   "p_value": 4.0745362639427185e-09
   },
   {
    "reference": "embedded@ollaya:winnow:e4b",
@@ -7925,7 +8336,7 @@
   },
   {
    "reference": "embedded@ollaya:decider:2b",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "category",
    "correct_only_reference": 0,
    "correct_only_run": 15,
@@ -7933,11 +8344,27 @@
   },
   {
    "reference": "embedded@ollaya:decider:2b",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "full",
    "correct_only_reference": 2,
    "correct_only_run": 35,
    "p_value": 1.0244548320770264e-08
+  },
+  {
+   "reference": "embedded@ollaya:decider:2b",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "category",
+   "correct_only_reference": 0,
+   "correct_only_run": 15,
+   "p_value": 6.103515625e-05
+  },
+  {
+   "reference": "embedded@ollaya:decider:2b",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "full",
+   "correct_only_reference": 1,
+   "correct_only_run": 38,
+   "p_value": 1.4551915228366852e-10
   },
   {
    "reference": "embedded@ollaya:decider:2b",
@@ -8101,7 +8528,7 @@
   },
   {
    "reference": "embedded@ollaya:decision:eos",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "category",
    "correct_only_reference": 0,
    "correct_only_run": 21,
@@ -8109,11 +8536,27 @@
   },
   {
    "reference": "embedded@ollaya:decision:eos",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "full",
    "correct_only_reference": 2,
    "correct_only_run": 48,
    "p_value": 2.2666313270747196e-12
+  },
+  {
+   "reference": "embedded@ollaya:decision:eos",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "category",
+   "correct_only_reference": 0,
+   "correct_only_run": 21,
+   "p_value": 9.5367431640625e-07
+  },
+  {
+   "reference": "embedded@ollaya:decision:eos",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "full",
+   "correct_only_reference": 2,
+   "correct_only_run": 52,
+   "p_value": 1.6497914145929826e-13
   },
   {
    "reference": "embedded@ollaya:decision:eos",
@@ -8261,7 +8704,7 @@
   },
   {
    "reference": "embedded@ollaya:kev:0.8b",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "category",
    "correct_only_reference": 1,
    "correct_only_run": 22,
@@ -8269,11 +8712,27 @@
   },
   {
    "reference": "embedded@ollaya:kev:0.8b",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "full",
    "correct_only_reference": 1,
    "correct_only_run": 47,
    "p_value": 3.481659405224491e-13
+  },
+  {
+   "reference": "embedded@ollaya:kev:0.8b",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "category",
+   "correct_only_reference": 1,
+   "correct_only_run": 22,
+   "p_value": 5.7220458984375e-06
+  },
+  {
+   "reference": "embedded@ollaya:kev:0.8b",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "full",
+   "correct_only_reference": 1,
+   "correct_only_run": 51,
+   "p_value": 2.353672812205332e-14
   },
   {
    "reference": "embedded@ollaya:kev:0.8b",
@@ -8405,7 +8864,7 @@
   },
   {
    "reference": "embedded@ollaya:laya:en",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "category",
    "correct_only_reference": 0,
    "correct_only_run": 21,
@@ -8413,11 +8872,27 @@
   },
   {
    "reference": "embedded@ollaya:laya:en",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "full",
    "correct_only_reference": 2,
    "correct_only_run": 49,
    "p_value": 1.1786127629420662e-12
+  },
+  {
+   "reference": "embedded@ollaya:laya:en",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "category",
+   "correct_only_reference": 0,
+   "correct_only_run": 21,
+   "p_value": 9.5367431640625e-07
+  },
+  {
+   "reference": "embedded@ollaya:laya:en",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "full",
+   "correct_only_reference": 1,
+   "correct_only_run": 52,
+   "p_value": 1.199040866595169e-14
   },
   {
    "reference": "embedded@ollaya:laya:en",
@@ -8533,7 +9008,7 @@
   },
   {
    "reference": "embedded@ollaya:laya:typed-decisions",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "category",
    "correct_only_reference": 0,
    "correct_only_run": 24,
@@ -8541,11 +9016,27 @@
   },
   {
    "reference": "embedded@ollaya:laya:typed-decisions",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "full",
    "correct_only_reference": 0,
    "correct_only_run": 51,
    "p_value": 8.881784197001252e-16
+  },
+  {
+   "reference": "embedded@ollaya:laya:typed-decisions",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "category",
+   "correct_only_reference": 0,
+   "correct_only_run": 24,
+   "p_value": 1.1920928955078125e-07
+  },
+  {
+   "reference": "embedded@ollaya:laya:typed-decisions",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "full",
+   "correct_only_reference": 0,
+   "correct_only_run": 55,
+   "p_value": 5.551115123125783e-17
   },
   {
    "reference": "embedded@ollaya:laya:typed-decisions",
@@ -8645,7 +9136,7 @@
   },
   {
    "reference": "embedded@ollaya:laya:multilingual",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "category",
    "correct_only_reference": 0,
    "correct_only_run": 17,
@@ -8653,11 +9144,27 @@
   },
   {
    "reference": "embedded@ollaya:laya:multilingual",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "full",
    "correct_only_reference": 1,
    "correct_only_run": 50,
    "p_value": 4.618527782440651e-14
+  },
+  {
+   "reference": "embedded@ollaya:laya:multilingual",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "category",
+   "correct_only_reference": 0,
+   "correct_only_run": 17,
+   "p_value": 1.52587890625e-05
+  },
+  {
+   "reference": "embedded@ollaya:laya:multilingual",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "full",
+   "correct_only_reference": 0,
+   "correct_only_run": 53,
+   "p_value": 2.220446049250313e-16
   },
   {
    "reference": "embedded@ollaya:laya:multilingual",
@@ -8741,7 +9248,7 @@
   },
   {
    "reference": "embedded@ollaya:von",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "category",
    "correct_only_reference": 0,
    "correct_only_run": 42,
@@ -8749,11 +9256,27 @@
   },
   {
    "reference": "embedded@ollaya:von",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "full",
    "correct_only_reference": 0,
    "correct_only_run": 51,
    "p_value": 8.881784197001252e-16
+  },
+  {
+   "reference": "embedded@ollaya:von",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "category",
+   "correct_only_reference": 0,
+   "correct_only_run": 42,
+   "p_value": 4.547473508864641e-13
+  },
+  {
+   "reference": "embedded@ollaya:von",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "full",
+   "correct_only_reference": 0,
+   "correct_only_run": 55,
+   "p_value": 5.551115123125783e-17
   },
   {
    "reference": "embedded@ollaya:von",
@@ -8821,7 +9344,7 @@
   },
   {
    "reference": "embedded@ollaya:nli:modernbert-large",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "category",
    "correct_only_reference": 0,
    "correct_only_run": 43,
@@ -8829,11 +9352,27 @@
   },
   {
    "reference": "embedded@ollaya:nli:modernbert-large",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "full",
    "correct_only_reference": 0,
    "correct_only_run": 53,
    "p_value": 2.220446049250313e-16
+  },
+  {
+   "reference": "embedded@ollaya:nli:modernbert-large",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "category",
+   "correct_only_reference": 0,
+   "correct_only_run": 43,
+   "p_value": 2.2737367544323206e-13
+  },
+  {
+   "reference": "embedded@ollaya:nli:modernbert-large",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "full",
+   "correct_only_reference": 0,
+   "correct_only_run": 57,
+   "p_value": 1.3877787807814457e-17
   },
   {
    "reference": "embedded@ollaya:nli:modernbert-large",
@@ -8885,7 +9424,7 @@
   },
   {
    "reference": "embedded@decider:strands-decider-2b",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "category",
    "correct_only_reference": 0,
    "correct_only_run": 21,
@@ -8893,11 +9432,27 @@
   },
   {
    "reference": "embedded@decider:strands-decider-2b",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "full",
    "correct_only_reference": 5,
    "correct_only_run": 40,
    "p_value": 7.878384167270269e-08
+  },
+  {
+   "reference": "embedded@decider:strands-decider-2b",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "category",
+   "correct_only_reference": 0,
+   "correct_only_run": 21,
+   "p_value": 9.5367431640625e-07
+  },
+  {
+   "reference": "embedded@decider:strands-decider-2b",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "full",
+   "correct_only_reference": 4,
+   "correct_only_run": 43,
+   "p_value": 2.781192165457469e-09
   },
   {
    "reference": "embedded@decider:strands-decider-2b",
@@ -8948,7 +9503,23 @@
    "p_value": 3.1796787425264483e-13
   },
   {
-   "reference": "embedded@jev:jev-latest",
+   "reference": "embedded@jev:jev-1.13.0",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "category",
+   "correct_only_reference": 0,
+   "correct_only_run": 0,
+   "p_value": 1.0
+  },
+  {
+   "reference": "embedded@jev:jev-1.13.0",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "full",
+   "correct_only_reference": 1,
+   "correct_only_run": 5,
+   "p_value": 0.21875
+  },
+  {
+   "reference": "embedded@jev:jev-1.13.0",
    "run": "embedded@openai:gpt-6-luna",
    "metric": "category",
    "correct_only_reference": 0,
@@ -8956,7 +9527,7 @@
    "p_value": 0.5
   },
   {
-   "reference": "embedded@jev:jev-latest",
+   "reference": "embedded@jev:jev-1.13.0",
    "run": "embedded@openai:gpt-6-luna",
    "metric": "full",
    "correct_only_reference": 8,
@@ -8964,7 +9535,7 @@
    "p_value": 0.8145294189453125
   },
   {
-   "reference": "embedded@jev:jev-latest",
+   "reference": "embedded@jev:jev-1.13.0",
    "run": "embedded@kev:kev-latest",
    "metric": "category",
    "correct_only_reference": 13,
@@ -8972,7 +9543,7 @@
    "p_value": 0.000244140625
   },
   {
-   "reference": "embedded@jev:jev-latest",
+   "reference": "embedded@jev:jev-1.13.0",
    "run": "embedded@kev:kev-latest",
    "metric": "full",
    "correct_only_reference": 26,
@@ -8980,7 +9551,7 @@
    "p_value": 0.00019219517707824707
   },
   {
-   "reference": "embedded@jev:jev-latest",
+   "reference": "embedded@jev:jev-1.13.0",
    "run": "embedded@gemini:gemini-decision-1",
    "metric": "category",
    "correct_only_reference": 0,
@@ -8988,12 +9559,60 @@
    "p_value": 1.0
   },
   {
-   "reference": "embedded@jev:jev-latest",
+   "reference": "embedded@jev:jev-1.13.0",
    "run": "embedded@gemini:gemini-decision-1",
    "metric": "full",
    "correct_only_reference": 5,
    "correct_only_run": 19,
    "p_value": 0.006610751152038574
+  },
+  {
+   "reference": "embedded@jev:jev-1.14.0",
+   "run": "embedded@openai:gpt-6-luna",
+   "metric": "category",
+   "correct_only_reference": 0,
+   "correct_only_run": 2,
+   "p_value": 0.5
+  },
+  {
+   "reference": "embedded@jev:jev-1.14.0",
+   "run": "embedded@openai:gpt-6-luna",
+   "metric": "full",
+   "correct_only_reference": 10,
+   "correct_only_run": 8,
+   "p_value": 0.8145294189453125
+  },
+  {
+   "reference": "embedded@jev:jev-1.14.0",
+   "run": "embedded@kev:kev-latest",
+   "metric": "category",
+   "correct_only_reference": 13,
+   "correct_only_run": 0,
+   "p_value": 0.000244140625
+  },
+  {
+   "reference": "embedded@jev:jev-1.14.0",
+   "run": "embedded@kev:kev-latest",
+   "metric": "full",
+   "correct_only_reference": 28,
+   "correct_only_run": 3,
+   "p_value": 4.649162292480469e-06
+  },
+  {
+   "reference": "embedded@jev:jev-1.14.0",
+   "run": "embedded@gemini:gemini-decision-1",
+   "metric": "category",
+   "correct_only_reference": 0,
+   "correct_only_run": 1,
+   "p_value": 1.0
+  },
+  {
+   "reference": "embedded@jev:jev-1.14.0",
+   "run": "embedded@gemini:gemini-decision-1",
+   "metric": "full",
+   "correct_only_reference": 7,
+   "correct_only_run": 17,
+   "p_value": 0.06391465663909912
   },
   {
    "reference": "embedded@openai:gpt-6-luna",
@@ -9152,10 +9771,17 @@
   },
   {
    "reference": "embedded@ollama:nimble",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "score",
    "mean_diff_reference_minus_run": -0.03318128099790428,
    "p_value": 0.03369099215848292
+  },
+  {
+   "reference": "embedded@ollama:nimble",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.03541438646004593,
+   "p_value": 0.02430094937626004
   },
   {
    "reference": "embedded@ollama:nimble",
@@ -9278,10 +9904,17 @@
   },
   {
    "reference": "router@ollama:nimble",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "score",
    "mean_diff_reference_minus_run": -0.08179490856748245,
    "p_value": 0.0003533027032966264
+  },
+  {
+   "reference": "router@ollama:nimble",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.0840280140296241,
+   "p_value": 0.0002924108002829696
   },
   {
    "reference": "router@ollama:nimble",
@@ -9397,10 +10030,17 @@
   },
   {
    "reference": "embedded@mlx:nimble",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "score",
    "mean_diff_reference_minus_run": -0.026989678938865468,
    "p_value": 0.06771294986196663
+  },
+  {
+   "reference": "embedded@mlx:nimble",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.029222784401007118,
+   "p_value": 0.0527478729892626
   },
   {
    "reference": "embedded@mlx:nimble",
@@ -9509,10 +10149,17 @@
   },
   {
    "reference": "embedded@ollama:tev1",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "score",
    "mean_diff_reference_minus_run": -0.07505470167440606,
    "p_value": 0.0007545086495243847
+  },
+  {
+   "reference": "embedded@ollama:tev1",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.07728780713654772,
+   "p_value": 0.0005397522143545545
   },
   {
    "reference": "embedded@ollama:tev1",
@@ -9614,10 +10261,17 @@
   },
   {
    "reference": "embedded@ollama:tev1:0.8b",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "score",
    "mean_diff_reference_minus_run": -0.285269809133997,
    "p_value": 6.499614464881228e-14
+  },
+  {
+   "reference": "embedded@ollama:tev1:0.8b",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.2875029145961387,
+   "p_value": 4.732150033544293e-14
   },
   {
    "reference": "embedded@ollama:tev1:0.8b",
@@ -9712,10 +10366,17 @@
   },
   {
    "reference": "embedded@ollaya:jeb:4b",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "score",
    "mean_diff_reference_minus_run": -0.06847940382171189,
    "p_value": 7.978871336894066e-05
+  },
+  {
+   "reference": "embedded@ollaya:jeb:4b",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.07071250928385353,
+   "p_value": 6.236076369276859e-05
   },
   {
    "reference": "embedded@ollaya:jeb:4b",
@@ -9803,10 +10464,17 @@
   },
   {
    "reference": "embedded@ollaya:winnow:e4b",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "score",
    "mean_diff_reference_minus_run": -0.0860812132511279,
    "p_value": 2.1386113859100116e-08
+  },
+  {
+   "reference": "embedded@ollaya:winnow:e4b",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.08831431871326956,
+   "p_value": 8.405352511942651e-09
   },
   {
    "reference": "embedded@ollaya:winnow:e4b",
@@ -9887,10 +10555,17 @@
   },
   {
    "reference": "embedded@ollaya:decider:2b",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "score",
    "mean_diff_reference_minus_run": -0.15455967009254962,
    "p_value": 1.609506809661984e-08
+  },
+  {
+   "reference": "embedded@ollaya:decider:2b",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.1567927755546913,
+   "p_value": 9.75626204789182e-09
   },
   {
    "reference": "embedded@ollaya:decider:2b",
@@ -9964,10 +10639,17 @@
   },
   {
    "reference": "embedded@ollaya:decision:eos",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "score",
    "mean_diff_reference_minus_run": -0.29839148023398115,
    "p_value": 1.253565015512791e-13
+  },
+  {
+   "reference": "embedded@ollaya:decision:eos",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.3006245856961228,
+   "p_value": 1.0247602666343548e-13
   },
   {
    "reference": "embedded@ollaya:decision:eos",
@@ -10034,10 +10716,17 @@
   },
   {
    "reference": "embedded@ollaya:kev:0.8b",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "score",
    "mean_diff_reference_minus_run": -0.2983538083927039,
    "p_value": 2.52389651833065e-14
+  },
+  {
+   "reference": "embedded@ollaya:kev:0.8b",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.3005869138548456,
+   "p_value": 1.864576855041621e-14
   },
   {
    "reference": "embedded@ollaya:kev:0.8b",
@@ -10097,10 +10786,17 @@
   },
   {
    "reference": "embedded@ollaya:laya:en",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "score",
    "mean_diff_reference_minus_run": -0.3405570177085549,
    "p_value": 1.2153665557859413e-14
+  },
+  {
+   "reference": "embedded@ollaya:laya:en",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.34279012317069657,
+   "p_value": 7.965703084848824e-15
   },
   {
    "reference": "embedded@ollaya:laya:en",
@@ -10153,10 +10849,17 @@
   },
   {
    "reference": "embedded@ollaya:laya:typed-decisions",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "score",
    "mean_diff_reference_minus_run": -0.44762763927839233,
    "p_value": 1.531399396449598e-17
+  },
+  {
+   "reference": "embedded@ollaya:laya:typed-decisions",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.44986074474053395,
+   "p_value": 1.1221732650405491e-17
   },
   {
    "reference": "embedded@ollaya:laya:typed-decisions",
@@ -10202,10 +10905,17 @@
   },
   {
    "reference": "embedded@ollaya:laya:multilingual",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "score",
    "mean_diff_reference_minus_run": -0.31852626299108394,
    "p_value": 9.644585138781563e-16
+  },
+  {
+   "reference": "embedded@ollaya:laya:multilingual",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.3207593684532256,
+   "p_value": 5.728697502767895e-16
   },
   {
    "reference": "embedded@ollaya:laya:multilingual",
@@ -10244,10 +10954,17 @@
   },
   {
    "reference": "embedded@ollaya:von",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "score",
    "mean_diff_reference_minus_run": -0.5129658221571184,
    "p_value": 9.258639404609561e-18
+  },
+  {
+   "reference": "embedded@ollaya:von",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.51519892761926,
+   "p_value": 7.36816233974406e-18
   },
   {
    "reference": "embedded@ollaya:von",
@@ -10279,10 +10996,17 @@
   },
   {
    "reference": "embedded@ollaya:nli:modernbert-large",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "score",
    "mean_diff_reference_minus_run": -0.5207197772608917,
    "p_value": 4.070180141272107e-18
+  },
+  {
+   "reference": "embedded@ollaya:nli:modernbert-large",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.5229528827230333,
+   "p_value": 3.386580289886458e-18
   },
   {
    "reference": "embedded@ollaya:nli:modernbert-large",
@@ -10307,10 +11031,17 @@
   },
   {
    "reference": "embedded@decider:strands-decider-2b",
-   "run": "embedded@jev:jev-latest",
+   "run": "embedded@jev:jev-1.13.0",
    "metric": "score",
    "mean_diff_reference_minus_run": -0.19013119171408718,
    "p_value": 1.2139052991701475e-08
+  },
+  {
+   "reference": "embedded@decider:strands-decider-2b",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.19236429717622883,
+   "p_value": 9.100323741392546e-09
   },
   {
    "reference": "embedded@decider:strands-decider-2b",
@@ -10334,25 +11065,53 @@
    "p_value": 1.2628183130303375e-10
   },
   {
-   "reference": "embedded@jev:jev-latest",
+   "reference": "embedded@jev:jev-1.13.0",
+   "run": "embedded@jev:jev-1.14.0",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.0022331054621416513,
+   "p_value": 0.48135186481351866
+  },
+  {
+   "reference": "embedded@jev:jev-1.13.0",
    "run": "embedded@openai:gpt-6-luna",
    "metric": "score",
    "mean_diff_reference_minus_run": -0.0316569597771705,
    "p_value": 0.0026997300269973002
   },
   {
-   "reference": "embedded@jev:jev-latest",
+   "reference": "embedded@jev:jev-1.13.0",
    "run": "embedded@kev:kev-latest",
    "metric": "score",
    "mean_diff_reference_minus_run": 0.08523641908398033,
    "p_value": 8.904455073666507e-07
   },
   {
-   "reference": "embedded@jev:jev-latest",
+   "reference": "embedded@jev:jev-1.13.0",
    "run": "embedded@gemini:gemini-decision-1",
    "metric": "score",
    "mean_diff_reference_minus_run": -0.03477154984362528,
    "p_value": 0.0023357444417789817
+  },
+  {
+   "reference": "embedded@jev:jev-1.14.0",
+   "run": "embedded@openai:gpt-6-luna",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.02942385431502885,
+   "p_value": 0.0047995200479952005
+  },
+  {
+   "reference": "embedded@jev:jev-1.14.0",
+   "run": "embedded@kev:kev-latest",
+   "metric": "score",
+   "mean_diff_reference_minus_run": 0.08746952454612199,
+   "p_value": 5.547841021275094e-07
+  },
+  {
+   "reference": "embedded@jev:jev-1.14.0",
+   "run": "embedded@gemini:gemini-decision-1",
+   "metric": "score",
+   "mean_diff_reference_minus_run": -0.03253844438148363,
+   "p_value": 0.0040995900409959
   },
   {
    "reference": "embedded@openai:gpt-6-luna",
@@ -10378,86 +11137,91 @@
  ],
  "score_rank_ranges": {
   "embedded@ollama:nimble": {
-   "min": 4,
+   "min": 5,
+   "max": 7,
+   "mode": 6
+  },
+  "router@ollama:nimble": {
+   "min": 7,
+   "max": 11,
+   "mode": 10
+  },
+  "embedded@mlx:nimble": {
+   "min": 5,
    "max": 6,
    "mode": 5
   },
-  "router@ollama:nimble": {
-   "min": 6,
+  "embedded@ollama:tev1": {
+   "min": 7,
    "max": 10,
    "mode": 9
   },
-  "embedded@mlx:nimble": {
-   "min": 4,
-   "max": 5,
-   "mode": 4
-  },
-  "embedded@ollama:tev1": {
-   "min": 6,
-   "max": 9,
-   "mode": 8
-  },
   "embedded@ollama:tev1:0.8b": {
-   "min": 13,
-   "max": 15,
-   "mode": 13
-  },
-  "embedded@ollaya:jeb:4b": {
-   "min": 6,
-   "max": 9,
-   "mode": 6
-  },
-  "embedded@ollaya:winnow:e4b": {
-   "min": 4,
-   "max": 10,
-   "mode": 10
-  },
-  "embedded@ollaya:decider:2b": {
-   "min": 11,
-   "max": 12,
-   "mode": 11
-  },
-  "embedded@ollaya:decision:eos": {
    "min": 14,
    "max": 16,
    "mode": 14
   },
-  "embedded@ollaya:kev:0.8b": {
-   "min": 14,
-   "max": 15,
+  "embedded@ollaya:jeb:4b": {
+   "min": 7,
+   "max": 10,
+   "mode": 7
+  },
+  "embedded@ollaya:winnow:e4b": {
+   "min": 5,
+   "max": 11,
+   "mode": 11
+  },
+  "embedded@ollaya:decider:2b": {
+   "min": 12,
+   "max": 13,
+   "mode": 12
+  },
+  "embedded@ollaya:decision:eos": {
+   "min": 15,
+   "max": 17,
    "mode": 15
   },
-  "embedded@ollaya:laya:en": {
-   "min": 17,
-   "max": 17,
-   "mode": 17
+  "embedded@ollaya:kev:0.8b": {
+   "min": 15,
+   "max": 16,
+   "mode": 16
   },
-  "embedded@ollaya:laya:typed-decisions": {
+  "embedded@ollaya:laya:en": {
    "min": 18,
    "max": 18,
    "mode": 18
   },
-  "embedded@ollaya:laya:multilingual": {
-   "min": 12,
-   "max": 16,
-   "mode": 16
-  },
-  "embedded@ollaya:von": {
+  "embedded@ollaya:laya:typed-decisions": {
    "min": 19,
    "max": 19,
    "mode": 19
   },
-  "embedded@ollaya:nli:modernbert-large": {
+  "embedded@ollaya:laya:multilingual": {
+   "min": 13,
+   "max": 17,
+   "mode": 17
+  },
+  "embedded@ollaya:von": {
    "min": 20,
    "max": 20,
    "mode": 20
   },
-  "embedded@decider:strands-decider-2b": {
-   "min": 11,
-   "max": 13,
-   "mode": 12
+  "embedded@ollaya:nli:modernbert-large": {
+   "min": 21,
+   "max": 21,
+   "mode": 21
   },
-  "embedded@jev:jev-latest": {
+  "embedded@decider:strands-decider-2b": {
+   "min": 12,
+   "max": 14,
+   "mode": 13
+  },
+  "embedded@jev:jev-1.13.0": {
+   "min": 4,
+   "max": 4,
+   "mode": 4
+  },
+  "embedded@jev:jev-1.14.0": {
    "min": 3,
    "max": 3,
    "mode": 3
@@ -10468,9 +11232,9 @@
    "mode": 2
   },
   "embedded@kev:kev-latest": {
-   "min": 7,
-   "max": 10,
-   "mode": 10
+   "min": 8,
+   "max": 11,
+   "mode": 11
   },
   "embedded@gemini:gemini-decision-1": {
    "min": 1,

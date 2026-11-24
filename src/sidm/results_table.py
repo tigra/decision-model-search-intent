@@ -30,7 +30,7 @@ from sidm.parser import SCHEMES, tuned_settings
 from sidm.runs import PRESETS
 from sidm.score import paired_permutation_p, rank_ranges
 
-DEFAULT_RUNS = ["embedded@ollama:nimble", "router@ollama:nimble", "embedded@mlx:nimble", "embedded@jev:jev-latest"]
+DEFAULT_RUNS = ["embedded@ollama:nimble", "router@ollama:nimble", "embedded@mlx:nimble", "embedded@jev:jev-1.14.0"]
 BACKEND_INFO = {
     "ollama": "Ollama 0.35 `/v1/systemone` (llama.cpp, GGUF); questions scored one after another, split into several requests when the prompt exceeds the model context",
     "mlx": "nimble's MLX `ParallelScorer` (8-bit, `lm_head` in bf16) via `mlx_backend/server.py`; "

@@ -51,7 +51,7 @@ def main():
     model = args.model or DEFAULT_MODELS[args.backend]
     state, questions, _ = build_request(QUERY, SCHEME)
 
-    served = set()  # the versioned model that answered (e.g. jev-latest -> jev-1.13.0)
+    served = set()  # the versioned model that answered (e.g. kev-latest -> the checkpoint kev.serve loaded)
 
     def ask(qs):
         resp = system_one(model, state, qs, backend=args.backend)[0]

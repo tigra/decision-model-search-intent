@@ -70,17 +70,17 @@ One assumption is that Jev's value comes in parallelization of question answerin
 2. **Question design.** Does the way the category is asked matter: an explicit top-level "which group?" question, or the group decision embedded in the group questions?
 3. **Latency on local hardware** (a MacBook Pro M3 Max, 36 GB): where does the time go, and what would reduce it?
 4. **Runtimes and models.** The same request served by:
-   - Ollama's `nimble`;
+   - Ollama's [`nimble`](https://ollama.com/library/nimble) (Bespoke Labs, [model card](https://huggingface.co/bespokelabs/Bespoke-Nimble-9B));
    - nimble's own batched MLX scorer (`ParallelScorer`);
-   - other open decision models (Together AI's `tev1`, Jared Palmer's Kev, AWS's Strands Decider, and Ollaya's encoders and decoders);
-   - three hosted decision APIs as references: TypeSafe's Jev 1.13 and 1.14 (`jev-1.13.0`, `jev-1.14.0`; Jev is what these open models imitate), OpenAI's GPT-6 Luna (`gpt-6-luna`) through its Decisions API (public beta since 2026-10-06) and Google's Gemini Decision 1 (`gemini-decision-1`) through the Gemini Decisions API (v1beta, November 2026).
+   - other open decision models (Together AI's [`tev1`](https://huggingface.co/togethercomputer/Tev1-4B-experimental), Jared Palmer's [Kev](https://huggingface.co/jaredpalmer/kev-9b), AWS's [Strands Decider](https://huggingface.co/StrandsAgents/strands-decider-2B-hobson-v19), and [Ollaya's encoders and decoders](https://ollaya.dev/));
+   - three hosted decision APIs as references: TypeSafe's [Jev 1.13 and 1.14](https://docs.typesafe.ai/models) (`jev-1.13.0`, `jev-1.14.0`; Jev is what these open models imitate), OpenAI's [GPT-6 Luna](https://developers.openai.com/api/docs/models/gpt-6-luna) (`gpt-6-luna`) through its Decisions API (public beta since 2026-10-06) and Google's [Gemini Decision 1](https://aistudio.google.com/docs/models/gemini-decision-1) (`gemini-decision-1`) through the Gemini Decisions API (v1beta, November 2026).
 
 ## Key findings
 - **Best overall: the three hosted APIs, and also the fastest. Gemini Decision 1 leads; Jev 1.13, Jev 1.14 and GPT-6 Luna are tied.**
-  - **Google's Gemini Decision 1** (`gemini-decision-1`): category 0.981, filters F1 0.929, word roles 0.910, residual words F1 0.855, **whole query 0.622**, at **0.4 s per query** including the network. It's best on filters, word roles, residual words and the whole query, significantly ahead of Jev 1.13 (167 vs 80 queries, p < 0.0001) and GPT-6 Luna (185 vs 75); on category it ties both. Its weak spot is queries without a product type ("no category" recall 42/48, Jev 1.13 and GPT-6 Luna 48/48).
-  - **OpenAI's GPT-6 Luna** (`gpt-6-luna`, Decisions API): category 0.987, filters F1 0.891, word roles 0.884, residual words F1 0.748, **whole query 0.512**, at **0.4 s per query** including the network. After Gemini Decision 1, it's best on word roles and residual words; it's weaker on filters.
-  - **TypeSafe's Jev 1.13** (`jev-1.13.0`): category 0.987, filters F1 0.921, word roles 0.854, **whole query 0.535**, at **0.3 s**. It has the most precise filters (0.963), but is weaker on residual words (F1 0.695 vs nimble's 0.733: it labels 38% of residual words as filters). Tuning on dev kept nimble's decoding settings.
-  - **TypeSafe's Jev 1.14** (`jev-1.14.0`, released 2026-10-22): category **0.991** (the best of all runs), filters F1 0.916, word roles 0.868, residual words F1 0.707, **whole query 0.519**, at **0.26 s** (the fastest run). Against 1.13 it's faster (0.26 vs 0.33 s) but not more accurate: whole query 27 vs 43 queries in 1.13's favor (p = 0.07), category 4 vs 0 in 1.14's (p = 0.12), weighted score tied (p = 0.69). It's the only run significantly better than Gemini Decision 1 on category (12 vs 2 queries, p = 0.01). Its dev gain (0.61 vs 0.57) didn't hold on eval. Tuning on dev again kept nimble's settings.
+  - **Google's [Gemini Decision 1](https://aistudio.google.com/docs/models/gemini-decision-1)** (`gemini-decision-1`): category 0.981, filters F1 0.929, word roles 0.910, residual words F1 0.855, **whole query 0.622**, at **0.4 s per query** including the network. It's best on filters, word roles, residual words and the whole query, significantly ahead of Jev 1.13 (167 vs 80 queries, p < 0.0001) and GPT-6 Luna (185 vs 75); on category it ties both. Its weak spot is queries without a product type ("no category" recall 42/48, Jev 1.13 and GPT-6 Luna 48/48).
+  - **OpenAI's [GPT-6 Luna](https://developers.openai.com/api/docs/models/gpt-6-luna)** (`gpt-6-luna`, Decisions API): category 0.987, filters F1 0.891, word roles 0.884, residual words F1 0.748, **whole query 0.512**, at **0.4 s per query** including the network. After Gemini Decision 1, it's best on word roles and residual words; it's weaker on filters.
+  - **TypeSafe's [Jev 1.13](https://docs.typesafe.ai/models)** (`jev-1.13.0`): category 0.987, filters F1 0.921, word roles 0.854, **whole query 0.535**, at **0.3 s**. It has the most precise filters (0.963), but is weaker on residual words (F1 0.695 vs nimble's 0.733: it labels 38% of residual words as filters). Tuning on dev kept nimble's decoding settings.
+  - **TypeSafe's [Jev 1.14](https://docs.typesafe.ai/models)** (`jev-1.14.0`, available since 2026-10-14, `jev-latest` since 2026-10-22): category **0.991** (the best of all runs), filters F1 0.916, word roles 0.868, residual words F1 0.707, **whole query 0.519**, at **0.26 s** (the fastest run). Against 1.13 it's faster (0.26 vs 0.33 s) but not more accurate: whole query 27 vs 43 queries in 1.13's favor (p = 0.07), category 4 vs 0 in 1.14's (p = 0.12), weighted score tied (p = 0.69). It's the only run significantly better than Gemini Decision 1 on category (12 vs 2 queries, p = 0.01). Its dev gain (0.61 vs 0.57) didn't hold on eval. Tuning on dev again kept nimble's settings.
   - **Jev 1.13 vs GPT-6 Luna:** no significant difference on the whole query (128 vs 105 queries, p = 0.15), on category (6 vs 6) or on the weighted score (p = 0.71). Jev 1.14 ties GPT-6 Luna too (117 vs 110, p = 0.69).
   - **Each is significantly better than every local run** on both the whole query and category (McNemar p ≤ 0.0001).
 - **Best local: `nimble` (9B) on Ollama with the `embedded` category scheme.**
@@ -90,14 +90,14 @@ One assumption is that Jev's value comes in parallelization of question answerin
 - **Among local models, others win on parts.**
   - `winnow:e4b` (Ollaya) has the best local category accuracy (0.966; the hosted APIs 0.981–0.991) and is fast (6 s), but barely finds residual words.
   - `tev1` 4B is also better at category (0.942) and ~35% faster (9.9 s vs 15.6 s), but weaker at filters and word roles.
-  - **Kev-9B** (Jared Palmer's open Jev-compatible model, on MLX) is 2.4× faster than nimble (6.6 s) and on the local Pareto frontier, with whole query 0.309 (tied with tev1 4B, p = 0.11). But it's weaker at category (0.874) and has the least honest filter probabilities of all runs.
+  - **[Kev-9B](https://huggingface.co/jaredpalmer/kev-9b)** (Jared Palmer's open Jev-compatible model, on MLX) is 2.4× faster than nimble (6.6 s) and on the local Pareto frontier, with whole query 0.309 (tied with tev1 4B, p = 0.11). But it's weaker at category (0.874) and has the least honest filter probabilities of all runs.
 - **Encoders and small models fail the word-role questions:** their role probabilities are nearly uniform, so they give an effectively constant answer. They can't resolve "role of word N" against the numbered word list in the state.
 - **Latency is dominated by one prefill of the whole question set.** A query takes ~16 s with nimble.
   - Every question's text is in one shared prompt (~5.4k tokens), prefilled once at ~500 tok/s (~11 s). Then each question is answered from a ~13-token suffix (~0.18 s each, sequential).
   - nimble's batched MLX `ParallelScorer` is no faster here (17.4 s): batching the suffixes saves little at this prompt length.
   - The real levers are fewer or shorter questions, or a server that puts the static questions before the query, so they could be cached across queries.
   - **AWS's Strands Decider 2B shows the other layout:** it encodes the state once and adds only each question's suffix, at **3.9 s per query**. But its accuracy is much lower (whole query 0.193).
-  - **Jev 1.13 answers the same 24-question request in 0.3 s, and its latency stays flat from 20 to 30 questions** (~0.33 s), while every local model gets slower with each question. That fits the assumption that Jev 1.13 evaluates questions in parallel. So the slowness is in the local runtimes, not in the one-request design. How Jev 1.13 works internally isn't published.
+  - **Jev 1.13 answers the same 24-question request in 0.3 s, and its latency stays flat from 20 to 30 questions** (~0.33 s), while every local model gets slower with each question. That fits the assumption that Jev 1.13 evaluates questions in parallel, which TypeSafe's [models page](https://docs.typesafe.ai/models) now confirms: Jev "ingests the `state` once and evaluates every question against it in parallel". So the slowness is in the local runtimes, not in the one-request design.
 - **A forgiving whole-query score tells the same story at the top:** Gemini Decision 1 0.937, Jev 1.14 0.921, Jev 1.13 0.920, GPT-6 Luna 0.919, nimble 0.880 (weighted partial credit for category, filters and words; see "A forgiving whole-query score"). The middle of the local ranking depends on the weights.
 - **The data are synthetic and cleaner than real queries,** so the accuracies are upper bounds.
 
@@ -269,26 +269,26 @@ The same request can be served by five ablatable backends (`--backend`). A run i
 ### Models tested
 | Model | Backend | Type, size, precision | Evaluated on |
 |---|---|---|---|
-| `nimble` (Bespoke Labs) | ollama | Qwen3.5-9B LoRA, GGUF | dev + eval, both schemes |
-| `nimble` (Bespoke Labs) | mlx | the same adapter merged and converted by us: 8-bit MLX, `lm_head` in bf16 | dev |
-| `tev1` (Together AI) | ollama | Qwen3.5-4B fine-tune | dev + eval |
-| `tev1:0.8b` (Together AI) | ollama | Qwen3.5-0.8B fine-tune | dev + eval |
-| `jeb:4b` | ollaya | Qwen3.5-4B, merged LoRA, GGUF Q8, llama.cpp Metal | dev + eval |
-| `winnow:e4b` | ollaya | Gemma 4 E4B fine-tune, GGUF Q8, llama.cpp Metal | dev + eval |
-| `decider:2b` | ollaya | Qwen3.5-2B decoder, ONNX on the CPU | dev |
-| `decision:eos` | ollaya | Qwen3.5-0.8B with an endpoint head, ONNX on the CPU | dev |
-| `kev:0.8b` | ollaya | Qwen3.5-0.8B LoRA with a pointer head, ONNX on the CPU | dev |
-| `laya:en` | ollaya | ModernBERT-large encoder (421M), MLX | dev |
-| `laya:typed-decisions` | ollaya | ModernBERT-large fine-tune, ONNX on the CPU | dev |
-| `laya:multilingual` | ollaya | mmBERT-base encoder (322M), ONNX via onnxruntime | dev |
-| `von` | ollaya | ModernBERT-large encoder (395M), ONNX on the CPU | dev |
-| `nli:modernbert-large` | ollaya | NLI cross-encoder, one pair per option | dev |
-| `kev-9b` (Jared Palmer, `jaredpalmer/kev-9b`) | kev | Qwen3.5-9B-Base, LoRA + pointer head, MLX bf16, through Kev's own server | dev + eval |
-| `strands-decider-2b` (AWS Strands Labs) | decider | Qwen3.5-2B-Base, LoRA + pointer head, MLX (`StrandsAgents/strands-decider-2B-hobson-v19`) | dev + eval |
-| Jev 1.13: `jev-1.13.0` (TypeSafe; requested as `jev-latest` on 2026-10-05) | jev | hosted API; architecture not published | dev + eval |
-| Jev 1.14: `jev-1.14.0` (TypeSafe, released 2026-10-22) | jev | hosted API; architecture not published | dev + eval |
-| GPT-6 Luna: `gpt-6-luna` (OpenAI Decisions API) | openai | hosted API; architecture not published | dev + eval |
-| Gemini Decision 1: `gemini-decision-1` (Google Gemini Decisions API) | gemini | hosted API; architecture not published | dev + eval |
+| [`nimble`](https://ollama.com/library/nimble) (Bespoke Labs) | ollama | Qwen3.5-9B LoRA, GGUF | dev + eval, both schemes |
+| [`nimble`](https://huggingface.co/bespokelabs/Bespoke-Nimble-9B) (Bespoke Labs) | mlx | the same adapter merged and converted by us: 8-bit MLX, `lm_head` in bf16 | dev |
+| [`tev1`](https://huggingface.co/togethercomputer/Tev1-4B-experimental) (Together AI) | ollama | Qwen3.5-4B fine-tune | dev + eval |
+| [`tev1:0.8b`](https://huggingface.co/togethercomputer/Tev1-0.8B-experimental) (Together AI) | ollama | Qwen3.5-0.8B fine-tune | dev + eval |
+| [`jeb:4b`](https://ollaya.dev/library/jeb) | ollaya | Qwen3.5-4B, merged LoRA, GGUF Q8, llama.cpp Metal | dev + eval |
+| [`winnow:e4b`](https://ollaya.dev/library/winnow) | ollaya | Gemma 4 E4B fine-tune, GGUF Q8, llama.cpp Metal | dev + eval |
+| [`decider:2b`](https://ollaya.dev/library/decider) | ollaya | Qwen3.5-2B decoder, ONNX on the CPU | dev |
+| [`decision:eos`](https://ollaya.dev/library/decision) | ollaya | Qwen3.5-0.8B with an endpoint head, ONNX on the CPU | dev |
+| [`kev:0.8b`](https://ollaya.dev/library/kev) | ollaya | Qwen3.5-0.8B LoRA with a pointer head, ONNX on the CPU | dev |
+| [`laya:en`](https://ollaya.dev/library/laya) | ollaya | ModernBERT-large encoder (421M), MLX | dev |
+| [`laya:typed-decisions`](https://ollaya.dev/library/laya) | ollaya | ModernBERT-large fine-tune, ONNX on the CPU | dev |
+| [`laya:multilingual`](https://ollaya.dev/library/laya) | ollaya | mmBERT-base encoder (322M), ONNX via onnxruntime | dev |
+| [`von`](https://ollaya.dev/library/von) | ollaya | ModernBERT-large encoder (395M), ONNX on the CPU | dev |
+| [`nli:modernbert-large`](https://ollaya.dev/library/nli) | ollaya | NLI cross-encoder, one pair per option | dev |
+| [`kev-9b`](https://huggingface.co/jaredpalmer/kev-9b) (Jared Palmer, `jaredpalmer/kev-9b`) | kev | Qwen3.5-9B-Base, LoRA + pointer head, MLX bf16, through Kev's own server | dev + eval |
+| [`strands-decider-2b`](https://huggingface.co/StrandsAgents/strands-decider-2B-hobson-v19) (AWS Strands Labs) | decider | Qwen3.5-2B-Base, LoRA + pointer head, MLX (`StrandsAgents/strands-decider-2B-hobson-v19`) | dev + eval |
+| [Jev 1.13](https://docs.typesafe.ai/models): `jev-1.13.0` (TypeSafe; requested as `jev-latest` on 2026-10-05) | jev | hosted API; per TypeSafe, the state is read once and the questions evaluated in parallel | dev + eval |
+| [Jev 1.14](https://docs.typesafe.ai/models): `jev-1.14.0` (TypeSafe, available since 2026-10-14) | jev | hosted API; as Jev 1.13; adds Box questions | dev + eval |
+| [GPT-6 Luna](https://developers.openai.com/api/docs/models/gpt-6-luna): `gpt-6-luna` (OpenAI Decisions API) | openai | hosted API; architecture not published | dev + eval |
+| [Gemini Decision 1](https://aistudio.google.com/docs/models/gemini-decision-1): `gemini-decision-1` (Google Gemini Decisions API) | gemini | hosted API; architecture not published | dev + eval |
 
 **Not tested:**
 - **Too few options for our 24-option questions:** Ollaya's `jevk5` (≤ 16 options), `cygnet` (≤ 20) and `decider:2b-vision` (≤ 10).
